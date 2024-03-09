@@ -23,4 +23,6 @@ enum class TokenType {
     MULTIPLY,
     DIVIDE,
 
+
+    UNKNOWN
 }
