@@ -12,6 +12,6 @@ class IdentifierLexer (private val constraints:List<String>):Lexer{
             if (!constraints.contains(matchResult.value)){
                 createToken(matchResult,code,TokenType.IDENTIFIER)
             }else null
-        }.toList();
+        }.toList()
     }
 }
