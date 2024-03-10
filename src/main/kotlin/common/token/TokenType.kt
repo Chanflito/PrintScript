@@ -23,6 +23,7 @@ enum class TokenType {
     MULTIPLY,
     DIVIDE,
 
-
+    EOF, //End Of File
+    LF, //Line feed
     UNKNOWN
 }
