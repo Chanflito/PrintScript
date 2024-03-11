@@ -3,9 +3,7 @@ package lexer
 import common.token.Position
 import common.token.Token
 import common.token.TokenType
-import lexer.imp.IdentifierLexer
-import lexer.imp.KeywordLexer
-import lexer.imp.TypeLexer
+import lexer.imp.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
@@ -37,9 +35,9 @@ class LexerTest() {
     }
 
     @Test
-    fun test003_identifier(){
-        val input= """let n : number = 5; """
-        val identifierLexer= IdentifierLexer(listOf("let","println","number","string"))
+    fun test003_identifier() {
+        val input = """let n : number = 5; """
+        val identifierLexer = IdentifierLexer(listOf("let", "println", "number", "string"))
 
         val result = identifierLexer.splitIntoTokens(input);
         assert(result.contains(Token("n", TokenType.IDENTIFIER, Position(1, 5), Position(1, 6))))
@@ -47,8 +45,8 @@ class LexerTest() {
     }
 
     @Test
-    fun test004_typeNumber(){
-        val input= """let n : number = 19; """
+    fun test004_typeNumber() {
+        val input = """ let n : number = 19; """
         val typeLexer = TypeLexer(
             mapOf("number" to TokenType.TYPE_NUMBER)
         )
@@ -57,4 +55,37 @@ class LexerTest() {
         assertEquals(1, result.size)
     }
 
+    @Test
+    fun test005_operator() {
+        val input = """ let n : number = (19 +5) ; """
+        val operatorLexer = OperatorLexer()
+        val result = operatorLexer.splitIntoTokens(input)
+        assert(result.contains(Token(":", TokenType.COLON, Position(1, 8), Position(1, 9))))
+        assert(result.contains(Token("=", TokenType.ASSIGNATION, Position(1, 17), Position(1, 18))))
+        assert(result.contains(Token("(", TokenType.LEFT_PARENTHESIS, Position(1, 19), Position(1, 20))))
+        assert(result.contains(Token("+", TokenType.PLUS, Position(1, 23), Position(1, 24))))
+        assert(result.contains(Token(")", TokenType.RIGHT_PARENTHESIS, Position(1, 25), Position(1, 26))))
+        assert(result.contains(Token(";", TokenType.SEMI_COLON, Position(1, 27), Position(1, 28))))
+        assertEquals(6, result.size)
+    }
+
+    @Test
+    fun test006_string(){
+        val input = """ let n : string = "hola"; """
+        val stringLexer = StringLexer()
+        val result = stringLexer.splitIntoTokens(input)
+        assert(result.contains(Token("\"hola\"", TokenType.VALUE_STRING, Position(1, 19), Position(1, 25)))
+        )
+        assertEquals(1, result.size)
+    }
+
+    @Test
+    fun test008_number(){
+        val input = """let n : number = 19;"""
+        val numberLexer = NumberLexer()
+        val result = numberLexer.splitIntoTokens(input)
+        assert(result.contains(Token("19", TokenType.VALUE_NUMBER, Position(1, 18), Position(1, 20)))
+        )
+        assertEquals(1, result.size)
+    }
 }

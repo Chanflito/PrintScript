@@ -19,7 +19,7 @@ fun createToken(matchResult: MatchResult, code: String, tokenType:TokenType): To
 }
 
 fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
-    //TODO Should contemplate the case of \n.
+    //TODO Should contemplate the case of \n, concatenation, and others edge cases
     val indexes=Pair( matchResult.range.first, matchResult.range.last+1)
     var index=indexes.first;
     while(indexes.first >=0){
@@ -37,6 +37,7 @@ fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
     }
     return false;
 }
+
 
 fun createComposeLexer():ComposeLexer{
     val lexerBuilderImp= LexerBuilderImp(ComposeLexer(listOf()))

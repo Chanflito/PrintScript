@@ -27,6 +27,6 @@ enum class TokenType {
     DIVIDE,
 
     EOF, //End Of File, should be useful for the parser?
-    LF, //Line feed
+    LF, //Line feed /n
     UNKNOWN
 }
