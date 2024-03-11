@@ -17,7 +17,7 @@ class OperatorLexer ():Lexer{
         ")" to TokenType.RIGHT_PARENTHESIS,
         ":" to TokenType.COLON,
         ";" to TokenType.SEMI_COLON
-    );
+    )
     private val regex = Regex("""[+\-*/=():;]""")
 
     override fun splitIntoTokens(code: String): List<Token> {

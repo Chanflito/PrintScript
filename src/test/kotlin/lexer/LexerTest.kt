@@ -11,27 +11,27 @@ import org.junit.jupiter.api.Assertions.*
 class LexerTest() {
     @Test
     fun test001_letKeyword() {
-        val input = """let a : string = 'hola'""";
-        val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD));
-        val result = letLexer.splitIntoTokens(input);
+        val input = """let a : string = 'hola'"""
+        val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD))
+        val result = letLexer.splitIntoTokens(input)
         assert(result.contains(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4))))
     }
 
     @Test
     fun test002_letKeyword() {
-        val inputWithDoubleQuote = """let a : string = "00000;;;;;;;;let 31313131312"""";
-        val inputWithSingleQuote = """let a : string = "00000;;;;;;;;let 31313131312"""";
-        val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD));
+        val inputWithDoubleQuote = """let a : string = "00000;;;;;;;;let 31313131312""""
+        val inputWithSingleQuote = """let a : string = "00000;;;;;;;;let 31313131312""""
+        val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD))
 
         val resultWithDoubleQuote = letLexer.splitIntoTokens(inputWithDoubleQuote)
 
-        val resultWithSingleQuote = letLexer.splitIntoTokens(inputWithSingleQuote);
+        val resultWithSingleQuote = letLexer.splitIntoTokens(inputWithSingleQuote)
 
         assert(resultWithDoubleQuote.contains(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4))))
-        assertEquals(1, resultWithDoubleQuote.size);
+        assertEquals(1, resultWithDoubleQuote.size)
 
         assert(resultWithSingleQuote.contains(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4))))
-        assertEquals(1, resultWithSingleQuote.size);
+        assertEquals(1, resultWithSingleQuote.size)
     }
 
     @Test
@@ -39,9 +39,9 @@ class LexerTest() {
         val input = """let n : number = 5; """
         val identifierLexer = IdentifierLexer(listOf("let", "println", "number", "string"))
 
-        val result = identifierLexer.splitIntoTokens(input);
+        val result = identifierLexer.splitIntoTokens(input)
         assert(result.contains(Token("n", TokenType.IDENTIFIER, Position(1, 5), Position(1, 6))))
-        assertEquals(1, result.size);
+        assertEquals(1, result.size)
     }
 
     @Test
