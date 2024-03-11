@@ -3,6 +3,11 @@ package lexer.util
 import common.token.Token
 import common.token.TokenType
 import common.token.calculatePosition
+import lexer.builder.LexerBuilderImp
+import lexer.imp.ComposeLexer
+import lexer.imp.IdentifierLexer
+import lexer.imp.KeywordLexer
+import lexer.imp.TypeLexer
 
 fun createToken(matchResult: MatchResult, code: String, tokenType:TokenType): Token {
     val value = matchResult.value
@@ -31,4 +36,13 @@ fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
         index--;
     }
     return false;
+}
+
+fun createComposeLexer():ComposeLexer{
+    val lexerBuilderImp= LexerBuilderImp(ComposeLexer(listOf()))
+    lexerBuilderImp
+        .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD,"println" to TokenType.PRINTLN_KEYWORD)))
+        .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING,"number" to TokenType.TYPE_NUMBER)))
+        .withLexer(IdentifierLexer(listOf("let","println","number","string")));
+    return lexerBuilderImp.build();
 }
