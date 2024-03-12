@@ -22,7 +22,6 @@ class OperatorLexer ():Lexer{
 
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull{ matchResult ->
-            val a= matchResult.value;
             if (tokens.containsKey(matchResult.value) && !isInQuotes(matchResult, code)){
                 createToken(matchResult,code,tokens.getValue(matchResult.value))
             }else null
