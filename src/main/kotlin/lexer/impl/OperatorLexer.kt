@@ -1,12 +1,15 @@
-package lexer.imp
+package lexer.impl
 
 import common.token.Token
 import common.token.TokenType
 import lexer.Lexer
+import lexer.util.RegexPatterns
 import lexer.util.createToken
 import lexer.util.isInQuotes
 
-class OperatorLexer ():Lexer{
+class OperatorLexer : Lexer {
+    private val regex = RegexPatterns.OPERATOR_REGEX
+
     private val tokens: Map<String, TokenType> = mapOf(
         "+" to TokenType.PLUS,
         "-" to TokenType.MINUS,
@@ -18,13 +21,12 @@ class OperatorLexer ():Lexer{
         ":" to TokenType.COLON,
         ";" to TokenType.SEMI_COLON
     )
-    private val regex = Regex("""[+\-*/=():;]""")
 
     override fun splitIntoTokens(code: String): List<Token> {
-        return regex.findAll(code).mapNotNull{ matchResult ->
-            if (tokens.containsKey(matchResult.value) && !isInQuotes(matchResult, code)){
-                createToken(matchResult,code,tokens.getValue(matchResult.value))
-            }else null
+        return regex.findAll(code).mapNotNull { matchResult ->
+            if (tokens.containsKey(matchResult.value) && !isInQuotes(matchResult, code)) {
+                createToken(matchResult, code, tokens.getValue(matchResult.value))
+            } else null
         }.toList()
     }
 }

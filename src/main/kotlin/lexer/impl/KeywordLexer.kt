@@ -1,4 +1,4 @@
-package lexer.imp
+package lexer.impl
 
 import common.token.Token
 import common.token.TokenType

@@ -1,4 +1,4 @@
-package lexer.imp
+package lexer.impl
 
 import common.token.Token
 import lexer.Lexer
@@ -7,9 +7,10 @@ class ComposeLexer(private val lexers: MutableList<Lexer>) : Lexer {
     override fun splitIntoTokens(code: String): List<Token> {
         return lexers.map { lexer ->
             lexer.splitIntoTokens(code)
-        }.flatten();
+        }.flatten()
     }
-    fun addLexer(lexer:Lexer) {
+
+    fun addLexer(lexer: Lexer) {
         lexers.add(lexer);
     }
 }

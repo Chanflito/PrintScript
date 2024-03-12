@@ -4,9 +4,9 @@ import common.token.Token
 import common.token.TokenType
 import common.token.calculatePosition
 import lexer.builder.LexerBuilderImp
-import lexer.imp.*
+import lexer.impl.*
 
-fun createToken(matchResult: MatchResult, code: String, tokenType:TokenType): Token {
+fun createToken(matchResult: MatchResult, code: String, tokenType: TokenType): Token {
     val value = matchResult.value
     val startIndex = matchResult.range.first
     val endIndex = matchResult.range.last + 1
@@ -35,13 +35,12 @@ fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
     return false
 }
 
-
-fun createComposeLexer():ComposeLexer{
-    val lexerBuilderImp= LexerBuilderImp(ComposeLexer(mutableListOf()))
+fun createComposeLexer(): ComposeLexer {
+    val lexerBuilderImp = LexerBuilderImp(ComposeLexer(mutableListOf()))
     lexerBuilderImp
-        .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD,"println" to TokenType.PRINTLN_KEYWORD)))
-        .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING,"number" to TokenType.TYPE_NUMBER)))
-        .withLexer(IdentifierLexer(listOf("let","println","number","string")))
+        .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD, "println" to TokenType.PRINTLN_KEYWORD)))
+        .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING, "number" to TokenType.TYPE_NUMBER)))
+        .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
         .withLexer(OperatorLexer())
         .withLexer(StringLexer())
     return lexerBuilderImp.build()

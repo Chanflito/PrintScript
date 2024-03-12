@@ -3,8 +3,7 @@ package lexer
 import common.token.Position
 import common.token.Token
 import common.token.TokenType
-import lexer.imp.*
-import lexer.util.createComposeLexer
+import lexer.impl.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 

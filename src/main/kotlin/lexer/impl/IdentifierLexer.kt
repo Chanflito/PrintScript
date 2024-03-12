@@ -1,13 +1,15 @@
-package lexer.imp
+package lexer.impl
 
 import common.token.Token
 import common.token.TokenType
 import lexer.Lexer
+import lexer.util.RegexPatterns
 import lexer.util.createToken
 import lexer.util.isInQuotes
 
 class IdentifierLexer(private val constraints: List<String>) : Lexer {
-    private val regex = Regex("""[a-zA-Z_][a-zA-Z0-9_]*""")
+    private val regex = RegexPatterns.IDENTIFIER_REGEX
+
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { matchResult ->
             if (isValid(matchResult, code)) {
