@@ -8,7 +8,6 @@ import lexer.util.createToken
 import lexer.util.isInQuotes
 
 class NumberLexer : Lexer {
-    //Includes decimal and integer numbers
     private val regex = RegexPatterns.NUMBER_REGEX
 
     override fun splitIntoTokens(code: String): List<Token> {
