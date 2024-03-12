@@ -11,8 +11,8 @@ class NumberLexer : Lexer {
     private val regex = Regex("""\b-?\d+(\.\d+)?\b""")
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { result ->
-           if (isInQuotes(result,code)) null
-           else createToken(result, code, TokenType.VALUE_NUMBER)
+            if (isInQuotes(result, code)) null
+            else createToken(result, code, TokenType.VALUE_NUMBER)
         }.toList()
     }
 }

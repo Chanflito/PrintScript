@@ -4,6 +4,7 @@ import common.token.Position
 import common.token.Token
 import common.token.TokenType
 import lexer.imp.*
+import lexer.util.createComposeLexer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
@@ -20,7 +21,7 @@ class LexerTest() {
     @Test
     fun test002_letKeyword() {
         val inputWithDoubleQuote = """let a : string = "00000;;;;;;;;let 31313131312""""
-        val inputWithSingleQuote = """let a : string = "00000;;;;;;;;let 31313131312""""
+        val inputWithSingleQuote = """let a : string = '00000;;;;;;;;let 31313131312'"""
         val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD))
 
         val resultWithDoubleQuote = letLexer.splitIntoTokens(inputWithDoubleQuote)
@@ -51,7 +52,7 @@ class LexerTest() {
             mapOf("number" to TokenType.TYPE_NUMBER)
         )
         val result = typeLexer.splitIntoTokens(input)
-        assert(result.contains(Token("number", TokenType.TYPE_NUMBER, Position(1, 9), Position(1, 15))))
+        assert(result.contains(Token("number", TokenType.TYPE_NUMBER, Position(1, 10), Position(1, 16))))
         assertEquals(1, result.size)
     }
 
@@ -84,6 +85,7 @@ class LexerTest() {
         val input = """let n : number = 19;"""
         val numberLexer = NumberLexer()
         val result = numberLexer.splitIntoTokens(input)
+
         assert(result.contains(Token("19", TokenType.VALUE_NUMBER, Position(1, 18), Position(1, 20)))
         )
         assertEquals(1, result.size)

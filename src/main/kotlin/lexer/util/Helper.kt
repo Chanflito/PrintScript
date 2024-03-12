@@ -22,7 +22,7 @@ fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
     while(indexes.first >=0){
         if (code[index]== '"' || code[index]=='\''){
             var secondIndex=indexes.second
-            while (secondIndex <= code.length){
+            while (secondIndex < code.length){
                 if (code[index]== '"' || code[index]=='\''){
                     return true
                 }
@@ -37,7 +37,7 @@ fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
 
 
 fun createComposeLexer():ComposeLexer{
-    val lexerBuilderImp= LexerBuilderImp(ComposeLexer(listOf()))
+    val lexerBuilderImp= LexerBuilderImp(ComposeLexer(mutableListOf()))
     lexerBuilderImp
         .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD,"println" to TokenType.PRINTLN_KEYWORD)))
         .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING,"number" to TokenType.TYPE_NUMBER)))
