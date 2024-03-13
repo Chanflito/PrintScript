@@ -2,7 +2,7 @@ package lexer.util
 
 import common.token.Token
 import common.token.TokenType
-import common.token.calculatePosition
+import common.util.calculatePosition
 import lexer.builder.LexerBuilderImp
 import lexer.impl.*
 
