@@ -15,24 +15,12 @@ fun createToken(matchResult: MatchResult, code: String, tokenType: TokenType): T
     return Token(value, tokenType, startPosition, endPosition)
 }
 
-fun isInQuotes(matchResult: MatchResult, code:String):Boolean{
-    //TODO Should contemplate the case of \n, concatenation, and others edge cases
-    val indexes=Pair( matchResult.range.first, matchResult.range.last+1)
-    var index=indexes.first
-    while(indexes.first >=0){
-        if (code[index]== '"' || code[index]=='\''){
-            var secondIndex=indexes.second
-            while (secondIndex < code.length){
-                if (code[index]== '"' || code[index]=='\''){
-                    return true
-                }
-                secondIndex++
-            }
-        }
-        if (index==0) return false
-        index--
-    }
-    return false
+fun isInQuotes(matchResult: MatchResult, code: String): Boolean { //How this should be more efficient?
+    val quotesMatch =
+        RegexPatterns.QUOTES_REGEX.findAll(code).map { result -> Pair(result.range.first, result.range.last + 1) }
+            .toList();
+    val resultRange = Pair(matchResult.range.first, matchResult.range.last + 1)
+    return quotesMatch.any { (start, end) -> start <= resultRange.first && end >= resultRange.second }
 }
 
 fun createComposeLexer(): ComposeLexer {
@@ -41,6 +29,7 @@ fun createComposeLexer(): ComposeLexer {
         .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD, "println" to TokenType.PRINTLN_KEYWORD)))
         .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING, "number" to TokenType.TYPE_NUMBER)))
         .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
+        .withLexer(NumberLexer())
         .withLexer(OperatorLexer())
         .withLexer(StringLexer())
     return lexerBuilderImp.build()

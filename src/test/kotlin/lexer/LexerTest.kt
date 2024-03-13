@@ -4,6 +4,7 @@ import common.token.Position
 import common.token.Token
 import common.token.TokenType
 import lexer.impl.*
+import lexer.util.createComposeLexer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
@@ -89,4 +90,50 @@ class LexerTest() {
         )
         assertEquals(1, result.size)
     }
+
+    @Test
+    fun test009_composeLexerWithNormalCase(){
+        val input = "let a : number = 5; \n println(a)"
+        val composeLexer = createComposeLexer();
+        val result = composeLexer.splitIntoTokens(input);
+        val expected = listOf(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4)),
+            Token("a", TokenType.IDENTIFIER, Position(1, 5), Position(1, 6)),
+            Token(":", TokenType.COLON, Position(1, 7), Position(1, 8)),
+            Token("number", TokenType.TYPE_NUMBER, Position(1, 9), Position(1, 15)),
+            Token("=", TokenType.ASSIGNATION, Position(1, 16), Position(1, 17)),
+            Token("5", TokenType.VALUE_NUMBER, Position(1, 18), Position(1, 19)),
+            Token(";", TokenType.SEMI_COLON, Position(1, 19), Position(1, 20)),
+            Token("println", TokenType.PRINTLN_KEYWORD, Position(2, 2), Position(2, 9)),
+            Token("(", TokenType.LEFT_PARENTHESIS, Position(2, 9), Position(2, 10)),
+            Token("a", TokenType.IDENTIFIER, Position(2, 10), Position(2, 11)),
+            Token(")", TokenType.RIGHT_PARENTHESIS, Position(2, 11), Position(2, 12))
+        );
+        assertEquals(compareTokens(expected, result), true);
+    }
+    @Test
+    fun test010_composeLexerWithEdgeCase() {
+        val input = """let variable : string = + 5 "let" + 1 + "println" + "aaalet1"; """
+        val composeLexer = createComposeLexer();
+
+        val result = composeLexer.splitIntoTokens(input);
+
+        val expected= listOf(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4)),
+                Token("variable", TokenType.IDENTIFIER, Position(1, 5), Position(1, 13)),
+                Token(":", TokenType.COLON, Position(1, 14), Position(1, 15)),
+                Token("string", TokenType.TYPE_STRING, Position(1, 16), Position(1, 22)),
+                Token("=", TokenType.ASSIGNATION, Position(1, 23), Position(1, 24)),
+                Token("+", TokenType.PLUS, Position(1, 25), Position(1, 26)),
+                Token("5", TokenType.VALUE_NUMBER, Position(1, 27), Position(1, 28)),
+                Token("\"let\"", TokenType.VALUE_STRING, Position(1, 29), Position(1, 34)),
+                Token("+", TokenType.PLUS, Position(1, 35), Position(1, 36)),
+                Token("1", TokenType.VALUE_NUMBER, Position(1, 37), Position(1, 38)),
+                Token("+", TokenType.PLUS, Position(1, 39), Position(1, 40)),
+                Token("\"println\"", TokenType.VALUE_STRING, Position(1, 41), Position(1, 50)),
+                Token("+", TokenType.PLUS, Position(1, 51), Position(1, 52)),
+                Token("\"aaalet1\"", TokenType.VALUE_STRING, Position(1, 53), Position(1, 62)),
+                Token(";", TokenType.SEMI_COLON, Position(1, 62), Position(1, 63)));
+        assertEquals(compareTokens(expected, result), true);}
+
+
 }
+
