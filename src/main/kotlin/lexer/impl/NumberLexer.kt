@@ -1,7 +1,6 @@
 package lexer.impl
 
 import common.token.Token
-import common.token.TokenType
 import common.token.ValueNumber
 import lexer.Lexer
 import lexer.util.RegexPatterns
