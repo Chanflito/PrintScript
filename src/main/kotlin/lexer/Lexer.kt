@@ -3,5 +3,5 @@ package lexer
 import common.token.Token
 
 interface Lexer {
-    fun splitIntoTokens(code:String): List<Token>
+    fun splitIntoTokens(code:String): List<Token>;
 }

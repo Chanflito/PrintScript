@@ -18,7 +18,7 @@ fun createToken(matchResult: MatchResult, code: String, tokenType: TokenType): T
 fun isInQuotes(matchResult: MatchResult, code: String): Boolean { //How this should be more efficient?
     val quotesMatch =
         RegexPatterns.QUOTES_REGEX.findAll(code).map { result -> Pair(result.range.first, result.range.last + 1) }
-            .toList()
+            .toList();
     val resultRange = Pair(matchResult.range.first, matchResult.range.last + 1)
     return quotesMatch.any { (start, end) -> start <= resultRange.first && end >= resultRange.second }
 }

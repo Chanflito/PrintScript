@@ -8,10 +8,11 @@ import lexer.util.createComposeLexer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
-class LexerTest {
+
+class LexerTest() {
     @Test
     fun test001_letKeyword() {
-        val input = "let a : string = 'hola'"
+        val input = """let a : string = 'hola'"""
         val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD))
         val result = letLexer.splitIntoTokens(input)
         assert(result.contains(Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4))))
@@ -19,8 +20,8 @@ class LexerTest {
 
     @Test
     fun test002_letKeyword() {
-        val inputWithDoubleQuote = "let a : string = \"00000;;;;;;;;let 31313131312\""
-        val inputWithSingleQuote = "let a : string = '00000;;;;;;;;let 31313131312'"
+        val inputWithDoubleQuote = """let a : string = "00000;;;;;;;;let 31313131312""""
+        val inputWithSingleQuote = """let a : string = '00000;;;;;;;;let 31313131312'"""
         val letLexer = KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD))
 
         val resultWithDoubleQuote = letLexer.splitIntoTokens(inputWithDoubleQuote)
@@ -36,7 +37,7 @@ class LexerTest {
 
     @Test
     fun test003_identifier() {
-        val input = "let n : number = 5; "
+        val input = """let n : number = 5; """
         val identifierLexer = IdentifierLexer(listOf("let", "println", "number", "string"))
 
         val result = identifierLexer.splitIntoTokens(input)
@@ -46,7 +47,7 @@ class LexerTest {
 
     @Test
     fun test004_typeNumber() {
-        val input = " let n : number = 19; "
+        val input = """ let n : number = 19; """
         val typeLexer = TypeLexer(
             mapOf("number" to TokenType.TYPE_NUMBER)
         )
@@ -57,7 +58,7 @@ class LexerTest {
 
     @Test
     fun test005_operator() {
-        val input = " let n : number = (19 +5) ; "
+        val input = """ let n : number = (19 +5) ; """
         val operatorLexer = OperatorLexer()
         val result = operatorLexer.splitIntoTokens(input)
         assert(result.contains(Token(":", TokenType.COLON, Position(1, 8), Position(1, 9))))
@@ -71,7 +72,7 @@ class LexerTest {
 
     @Test
     fun test006_string() {
-        val input = " let n : string = \"hola\"; "
+        val input = """ let n : string = "hola"; """
         val stringLexer = StringLexer()
         val result = stringLexer.splitIntoTokens(input)
         assert(
@@ -81,8 +82,8 @@ class LexerTest {
     }
 
     @Test
-    fun test007_number() {
-        val input = "let n : number = 19;"
+    fun test008_number() {
+        val input = """let n : number = 19;"""
         val numberLexer = NumberLexer()
         val result = numberLexer.splitIntoTokens(input)
 
@@ -93,10 +94,10 @@ class LexerTest {
     }
 
     @Test
-    fun test008_composeLexerWithNormalCase() {
+    fun test009_composeLexerWithNormalCase() {
         val input = "let a : number = 5; \n println(a)"
-        val composeLexer = createComposeLexer()
-        val result = composeLexer.splitIntoTokens(input)
+        val composeLexer = createComposeLexer();
+        val result = composeLexer.splitIntoTokens(input);
         val expected = listOf(
             Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4)),
             Token("a", TokenType.IDENTIFIER, Position(1, 5), Position(1, 6)),
@@ -109,16 +110,17 @@ class LexerTest {
             Token("(", TokenType.LEFT_PARENTHESIS, Position(2, 9), Position(2, 10)),
             Token("a", TokenType.IDENTIFIER, Position(2, 10), Position(2, 11)),
             Token(")", TokenType.RIGHT_PARENTHESIS, Position(2, 11), Position(2, 12))
-        )
+        );
         assertEquals(expected, result)
+        //assertEquals(compareTokens(expected, result), true);
     }
 
     @Test
-    fun test009_composeLexerWithEdgeCase() {
-        val input = "let variable : string = + 5 \"let\" + 1 + \"println\" + \"aaalet1\"; "
-        val composeLexer = createComposeLexer()
+    fun test010_composeLexerWithEdgeCase() {
+        val input = """let variable : string = + 5 "let" + 1 + "println" + "aaalet1"; """
+        val composeLexer = createComposeLexer();
 
-        val result = composeLexer.splitIntoTokens(input)
+        val result = composeLexer.splitIntoTokens(input);
 
         val expected = listOf(
             Token("let", TokenType.LET_KEYWORD, Position(1, 1), Position(1, 4)),
@@ -137,6 +139,6 @@ class LexerTest {
             Token("\"aaalet1\"", TokenType.VALUE_STRING, Position(1, 53), Position(1, 62)),
             Token(";", TokenType.SEMI_COLON, Position(1, 62), Position(1, 63))
         )
-        assertEquals(expected, result)
+        assertEquals(expected, result);
     }
 }
