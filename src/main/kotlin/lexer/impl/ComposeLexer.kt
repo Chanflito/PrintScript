@@ -13,6 +13,6 @@ class ComposeLexer(private val lexers: MutableList<Lexer>) : Lexer {
     }
 
     fun addLexer(lexer: Lexer) {
-        lexers.add(lexer);
+        lexers.add(lexer)
     }
 }

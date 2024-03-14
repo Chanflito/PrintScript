@@ -16,11 +16,11 @@ class RegexPatterns {
         // Regex pattern to match just numbers. Includes decimal and integer numbers
         val NUMBER_REGEX = Regex("""\b-?\d+(\.\d+)?\b""")
 
-        // Regex pattern to match keywords. Example: "let", "if", "else", "println"
+        // Regex pattern to match keywords. Example: "let", "println"
         val KEYWORD_REGEX: (Map<String, TokenType>) -> Regex = { tokens ->
             Regex("""\b(${tokens.keys.joinToString("|")})\b""")
         }
-        // Regex
+        // Regex pattern to match types. Example: "string", "number"
         val TYPE_REGEX: (Map<String, TokenType>) -> Regex = { tokens ->
             Regex("""\b(${tokens.keys.joinToString("|")})\b""")
         }

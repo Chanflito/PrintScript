@@ -12,6 +12,6 @@ class LexerBuilderImp (private val composeLexer: ComposeLexer) : LexerBuilder{
     }
 
     override fun build(): ComposeLexer {
-        return composeLexer;
+        return composeLexer
     }
 }
