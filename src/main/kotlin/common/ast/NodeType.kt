@@ -2,7 +2,11 @@ package common.ast
 
 enum class NodeType {
     VALUE_NODE,
+    STRING_NODE,
     OPERATOR_NODE,
     ASSIGNMENT_NODE,
-    DECLARATION_NODE
+    DECLARATION_NODE,
+    IDENTIFIER_NODE,
+    NUMBER_NODE,
+    SEMI_COLON_NODE
 }
