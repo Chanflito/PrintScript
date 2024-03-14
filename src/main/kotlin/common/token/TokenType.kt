@@ -1,16 +1,19 @@
 package common.token
 
 enum class TokenType {
-    //Keyword
+    //Keywords
     LET_KEYWORD,
     PRINTLN_KEYWORD,
 
     IDENTIFIER,
 
-    //TYPES
+    //Types
     TYPE_NUMBER,
     TYPE_STRING,
 
+    //Values
+    VALUE_NUMBER,
+    VALUE_STRING,
 
     //Operators
     ASSIGNATION,
@@ -23,4 +26,7 @@ enum class TokenType {
     MULTIPLY,
     DIVIDE,
 
+    EOF, //End Of File, should be useful for the parser?
+    LF, //Line feed /n
+    UNKNOWN
 }
