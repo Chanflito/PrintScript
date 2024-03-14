@@ -1,7 +1,6 @@
 package lexer.util
 
-import common.token.Token
-import common.token.TokenType
+import common.token.*
 import common.util.calculatePosition
 import lexer.builder.LexerBuilderImp
 import lexer.impl.*
@@ -26,8 +25,8 @@ fun isInQuotes(matchResult: MatchResult, code: String): Boolean { //How this sho
 fun createComposeLexer(): ComposeLexer {
     val lexerBuilderImp = LexerBuilderImp(ComposeLexer(mutableListOf()))
     lexerBuilderImp
-        .withLexer(KeywordLexer(mapOf("let" to TokenType.LET_KEYWORD, "println" to TokenType.PRINTLN_KEYWORD)))
-        .withLexer(TypeLexer(mapOf("string" to TokenType.TYPE_STRING, "number" to TokenType.TYPE_NUMBER)))
+        .withLexer(KeywordLexer(mapOf("let" to LetKeyword, "println" to PrintlnKeyword)))
+        .withLexer(TypeLexer(mapOf("string" to TypeString, "number" to TypeNumber)))
         .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
         .withLexer(NumberLexer())
         .withLexer(OperatorLexer())
