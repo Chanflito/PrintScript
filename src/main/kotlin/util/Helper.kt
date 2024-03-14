@@ -1,4 +1,4 @@
-package common.util
+package util
 
 import common.token.Position
 

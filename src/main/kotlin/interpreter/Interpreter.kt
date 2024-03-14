@@ -1,4 +1,4 @@
-package common.interpreter
+package interpreter
 import common.ast.ASTNode
 import common.ast.NodeType
 import common.token.TokenType
