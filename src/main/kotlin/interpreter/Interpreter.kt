@@ -1,7 +1,10 @@
 package interpreter
 import common.ast.ASTNode
 import common.ast.NodeType
+import common.token.Identifier
 import common.token.TokenType
+import common.token.ValueNumber
+import common.token.ValueString
 
 class Interpreter(val astList: List<ASTNode>) {
     fun interpret() {
@@ -21,8 +24,8 @@ class Interpreter(val astList: List<ASTNode>) {
 
     private fun findValue(node: ASTNode): String? {
         return when (node.token?.tokenType) {
-            TokenType.VALUE_STRING -> node.token!!.value
-            TokenType.VALUE_NUMBER -> node.token!!.value
+            ValueString -> node.token!!.value
+            ValueNumber -> node.token!!.value
             else -> {
                 node.children?.fold("") { acc, child -> acc + findValue(child)}
             }
@@ -31,7 +34,7 @@ class Interpreter(val astList: List<ASTNode>) {
 
     private fun findName(node: ASTNode): String? {
         return when (node.token?.tokenType) {
-            TokenType.IDENTIFIER -> node.token!!.value
+            Identifier -> node.token!!.value
             else -> {
                 node.children?.fold("") { acc, child -> acc + findName(child)}
             }

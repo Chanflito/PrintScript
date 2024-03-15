@@ -1,7 +1,7 @@
 package lexer.impl
 
 import common.token.Token
-import common.token.TokenType
+import common.token.ValueNumber
 import lexer.Lexer
 import lexer.util.RegexPatterns
 import lexer.util.createToken
@@ -12,7 +12,7 @@ class NumberLexer : Lexer {
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { result ->
             if (isInQuotes(result, code)) null
-            else createToken(result, code, TokenType.VALUE_NUMBER)
+            else createToken(result, code, ValueNumber)
         }.toList()
     }
 }
