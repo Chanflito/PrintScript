@@ -1,46 +1,94 @@
-package interpreter
 import common.ast.ASTNode
 import common.ast.NodeType
-import common.token.TokenType
 
-class Interpreter(val astList: List<ASTNode>) {
-    fun interpret() {
-        val printNodes = astList.filter { it.nodeType == NodeType.PRINT_NODE }
-        val assignmentNodes = astList.filter { it.nodeType == NodeType.ASSIGNMENT_NODE }
-        val variables = buildMap(emptyMap(), assignmentNodes.toMutableList())
-        printNodes.forEach {printLine(it, variables)}
+class Interpreter(val nodeList: List<ASTNode>) {
+
+    val valuesLMap = hashMapOf<String, String>()
+
+    fun interpret(): String {
+        val printNodes = nodeList.filter { it.nodeType == NodeType.PRINT_NODE }
+        val assignationNodes = nodeList.filter { it.nodeType == NodeType.ASSIGNMENT_NODE }
+        for (node in assignationNodes) {
+            searchAssignation(node)
+        }
+
+        val result = StringBuilder()
+        for (node in printNodes) {
+            val identifier = findIdentifier(node)
+            val value = valuesLMap[identifier] ?: ""
+            result.append(value)
+        }
+        return result.toString()
     }
 
-    private fun buildMap(variables: Map<String?, String?>, nodes: MutableList<ASTNode>): Map<String?, String?> {
-        if(nodes.isEmpty()) return variables
-        val node = nodes.removeAt(0);
-        val name = findName(node)
+    fun searchAssignation(node: ASTNode) {
+        val identifier = findIdentifier(node)
         val value = findValue(node)
-        return buildMap(variables.plus(Pair(name, value)), nodes)
+        valuesLMap[identifier] = value
     }
 
-    private fun findValue(node: ASTNode): String? {
-        return when (node.token?.tokenType) {
-            TokenType.VALUE_STRING -> node.token!!.value
-            TokenType.VALUE_NUMBER -> node.token!!.value
+    fun findIdentifier(node: ASTNode): String {
+        return when (node.nodeType) {
+            NodeType.IDENTIFIER_NODE -> node.token?.value ?: ""
             else -> {
-                node.children?.fold("") { acc, child -> acc + findValue(child)}
+                var foundIdentifier = ""
+                for (child in node.children!!) {
+                    foundIdentifier = findIdentifier(child)
+                    if (foundIdentifier.isNotEmpty()) {
+                        break
+                    }
+                }
+                foundIdentifier
             }
         }
     }
 
-    private fun findName(node: ASTNode): String? {
-        return when (node.token?.tokenType) {
-            TokenType.IDENTIFIER -> node.token!!.value
+    fun findValue(node: ASTNode): String {
+        return when (node.nodeType) {
+            NodeType.STRING_NODE -> {
+                node.token?.value ?: ""
+            }
+            NodeType.NUMBER_NODE -> {
+                node.token?.value ?: "0"
+            }
+            NodeType.OPERATOR_NODE -> {
+                var result = "0"
+                for (child in node.children!!) {
+                    val operand = findValue(child)
+                    if (child.nodeType != NodeType.OPERATOR_NODE) {
+                        result = performNumberOperation(result, operand, node.token?.value ?: "")
+                    }
+                }
+                result
+            }
             else -> {
-                node.children?.fold("") { acc, child -> acc + findName(child)}
+                var foundValue = ""
+                node.children?.forEach {
+                    val value = findValue(it)
+                    if (value.isNotEmpty()) {
+                        foundValue = value
+                        return@forEach
+                    }
+                }
+                foundValue
             }
         }
     }
-    //TODO: Refactor this to use a visitor pattern
-    private fun printLine(node: ASTNode, variables: Map<String?, String?>) {
-        val value = findValue(node)
-        val valueToPrint = if(value?.startsWith("\"") == true) value.substring(1, value.length - 1) else variables[value]
-        println(valueToPrint)
+
+    fun performStringOperation(leftOperand: String, rightOperand: String): String {
+        return leftOperand + rightOperand
+    }
+
+    fun performNumberOperation(leftOperand: String, rightOperand: String, operator: String): String {
+        val left = leftOperand.toIntOrNull() ?: 0
+        val right = rightOperand.toIntOrNull() ?: 0
+        val result = when (operator) {
+            "+" -> left + right
+            "-" -> left - right
+            "*" -> left * right
+            "/" -> left / right
+            else -> 0
+        }
+        return result.toString()
     }
 }
