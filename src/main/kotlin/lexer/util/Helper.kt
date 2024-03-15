@@ -1,7 +1,7 @@
 package lexer.util
 
 import common.token.*
-import common.util.calculatePosition
+import util.calculatePosition
 import lexer.builder.LexerBuilderImp
 import lexer.impl.*
 
