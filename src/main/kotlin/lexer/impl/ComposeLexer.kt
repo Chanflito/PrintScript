@@ -3,7 +3,7 @@ package lexer.impl
 import common.token.Token
 import lexer.Lexer
 
-class ComposeLexer(private val lexers: MutableList<Lexer>) : Lexer {
+class ComposeLexer(private val lexers: List<Lexer>) : Lexer {
     override fun splitIntoTokens(code: String): List<Token> {
         return lexers.flatMap { lexer ->
             lexer.splitIntoTokens(code)
@@ -12,7 +12,4 @@ class ComposeLexer(private val lexers: MutableList<Lexer>) : Lexer {
         }
     }
 
-    fun addLexer(lexer: Lexer) {
-        lexers.add(lexer);
-    }
 }
