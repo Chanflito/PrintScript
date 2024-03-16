@@ -4,14 +4,13 @@ import lexer.Lexer
 import lexer.LexerBuilder
 import lexer.impl.ComposeLexer
 
-class LexerBuilderImp (private val composeLexer: ComposeLexer) : LexerBuilder{
+class LexerBuilderImp (private val lexers:List<Lexer>) : LexerBuilder{
     override fun withLexer(lexer: Lexer): LexerBuilder {
-        return this.apply {
-            composeLexer.addLexer(lexer)
-        }
+        val updatedLexers = lexers + lexer //concatenate the new lexer with list of lexers.
+        return LexerBuilderImp(updatedLexers)
     }
 
     override fun build(): ComposeLexer {
-        return composeLexer;
+        return ComposeLexer(lexers);
     }
 }

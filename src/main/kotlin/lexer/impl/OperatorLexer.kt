@@ -1,7 +1,6 @@
 package lexer.impl
 
-import common.token.Token
-import common.token.TokenType
+import common.token.*
 import lexer.Lexer
 import lexer.util.RegexPatterns
 import lexer.util.createToken
@@ -11,15 +10,15 @@ class OperatorLexer : Lexer {
     private val regex = RegexPatterns.OPERATOR_REGEX
 
     private val tokens: Map<String, TokenType> = mapOf(
-        "+" to TokenType.PLUS,
-        "-" to TokenType.MINUS,
-        "*" to TokenType.MULTIPLY,
-        "/" to TokenType.DIVIDE,
-        "=" to TokenType.ASSIGNATION,
-        "(" to TokenType.LEFT_PARENTHESIS,
-        ")" to TokenType.RIGHT_PARENTHESIS,
-        ":" to TokenType.COLON,
-        ";" to TokenType.SEMI_COLON
+        "+" to Plus,
+        "-" to Minus,
+        "*" to Multiply,
+        "/" to Divide,
+        "=" to Assignation,
+        "(" to LeftParenthesis,
+        ")" to RightParenthesis,
+        ":" to Colon,
+        ";" to SemiColon
     )
 
     override fun splitIntoTokens(code: String): List<Token> {

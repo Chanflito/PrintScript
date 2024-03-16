@@ -10,5 +10,6 @@ enum class NodeType {
     DECLARATION_NODE,
     IDENTIFIER_NODE,
     NUMBER_NODE,
-    SEMI_COLON_NODE
+    SEMI_COLON_NODE,
+    PRINT_NODE
 }
