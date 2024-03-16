@@ -28,3 +28,31 @@ subprojects {
 kotlin {
     jvmToolchain(17)
 }
+
+task customBuild {
+    doLast {
+        println "██████╗ ██████╗ ██╗███╗   ██╗████████╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗\n" +
+                "██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝\n" +
+                "██████╔╝██████╔╝██║██╔██╗ ██║   ██║   ███████╗██║     ██████╔╝██║██████╔╝   ██║   \n" +
+                "██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   \n" +
+                "██║     ██║  ██║██║██║ ╚████║   ██║   ███████║╚██████╗██║  ██║██║██║        ██║   \n" +
+                "╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   \n" +
+                "v1.0.0                                                                              \n" +
+                "                                                                                  "
+        println "Performing custom build..."
+
+        // Execute the build tasks for all subprojects
+        subprojects { subproject ->
+            println "\nBuilding ${subproject.name}..."
+            subproject.tasks.withType(JavaCompile).each { compileTask ->
+                println "  Compiling source files for ${subproject.name}..."
+            }
+            subproject.tasks.withType(Test).each { testTask ->
+                println "  Running tests for ${subproject.name}..."
+            }
+            subproject.tasks.withType(Jar).each { jarTask ->
+                println "  Packaging JAR file for ${subproject.name}..."
+            }
+        }
+    }
+}
