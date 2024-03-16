@@ -36,8 +36,8 @@ class InterpreterTest {
             )
         )
         val interpreter = Interpreter(listOf(exampleTree1, examplePrintNode))
-        val result = interpreter.interpret()
-        assert(result == "5")
+        val results = interpreter.interpret()
+        assert(results[0] == "5")
     }
 
     @Test
@@ -96,7 +96,7 @@ class InterpreterTest {
             )
             )
         val interpreter = Interpreter(listOf(exampleTree1, exampleTree2, examplePrintNode))
-        val result = interpreter.interpret()
-        assert(result == "helloworld")
+        val results = interpreter.interpret()
+        assert(results[0] == "helloworld")
     }
 }
