@@ -10,4 +10,4 @@ plugins {
 }
 
 rootProject.name = 'PrintScript'
-include ('app', 'common', 'lexer', 'parser', 'interpreter', 'util')
+include('app', 'common', 'util', 'lexer', 'parser', 'interpreter', 'cli', 'formatter', 'static-code-analyzer')
