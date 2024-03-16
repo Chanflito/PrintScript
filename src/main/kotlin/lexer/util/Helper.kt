@@ -1,6 +1,7 @@
 package lexer.util
 
 import common.token.*
+import lexer.Lexer
 import util.calculatePosition
 import lexer.builder.LexerBuilderImp
 import lexer.impl.*
@@ -22,14 +23,14 @@ fun isInQuotes(matchResult: MatchResult, code: String): Boolean { //How this sho
     return quotesMatch.any { (start, end) -> start <= resultRange.first && end >= resultRange.second }
 }
 
-fun createComposeLexer(): ComposeLexer {
-    val lexerBuilderImp = LexerBuilderImp(ComposeLexer(mutableListOf()))
-    lexerBuilderImp
+fun createComposeLexer(): Lexer {
+    val lexerBuilderImp = LexerBuilderImp(listOf())
+    return lexerBuilderImp
         .withLexer(KeywordLexer(mapOf("let" to LetKeyword, "println" to PrintlnKeyword)))
         .withLexer(TypeLexer(mapOf("string" to TypeString, "number" to TypeNumber)))
         .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
         .withLexer(NumberLexer())
         .withLexer(OperatorLexer())
         .withLexer(StringLexer())
-    return lexerBuilderImp.build()
+        .build()
 }
