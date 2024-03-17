@@ -99,7 +99,7 @@ class ParserImpl(): Parser {
             ValueNumber -> {
                 val token = consumeToken(tokens)
                 val parsedValue = token?.value?.toDoubleOrNull();
-                ASTNodeImpl(parsedValue, token, ValueNode, null)
+                ASTNodeImpl(parsedValue, token, NumberNode, null)
             }
             ValueString -> {
                 val token = consumeToken(tokens)
@@ -116,6 +116,10 @@ class ParserImpl(): Parser {
             TypeString -> {
                 val token = consumeToken(tokens)
                 ASTNodeImpl(token?.value, token, TypeNode, null)
+            }
+            Identifier -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, IdentifierNode, null)
             }
             LeftParenthesis -> {
                 consumeToken(tokens)

@@ -2,7 +2,7 @@ package common.ast
 
 interface NodeType;
 
-object ValueNode: NodeType
+object NumberNode: NodeType
 
 object OperatorNode: NodeType
 

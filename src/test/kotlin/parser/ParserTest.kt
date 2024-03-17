@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import parser.impl.ParserImpl
 
 class ParserTest {
-    val parser = ParserImpl()
+    private val parser = ParserImpl()
     @Test
 //    test 5
     fun test001_parseSingleNumber() {
@@ -90,6 +90,39 @@ class ParserTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    //    test
+    //    let a: number = 5
+    //    let b: number = 5
+//    println (a+b)
+    fun test011_parseExpressionWithPrintLnAndVariable(){
+        val actual= parser.parse(input_011);
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_011)
+        assertEquals(expected, actual)
+    }
+
+
+    @Test
+    //    test
+    //    let a: string = "hola"
+    //    let b: string = "loco"
+    //    println (a+b)
+    fun test012_parseExpressionWithPrintLnAndString(){
+        val actual= parser.parse(input_012);
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_012)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+//    test
+//    let a: string = "hola"
+//    a = "loco"
+//    println (a)
+    fun test013_parseExpressionWithPrintLnAndString(){
+        val actual= parser.parse(input_013);
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_013)
+        assertEquals(expected, actual)
+    }
 }
 
 
