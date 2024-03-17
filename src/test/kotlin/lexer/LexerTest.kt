@@ -78,7 +78,7 @@ class LexerTest{
     fun test007_number() {
         val numberLexer = NumberLexer()
         val result = numberLexer.splitIntoTokens(input_007)
-        assert(result.contains(output_007));
+        assert(result.contains(output_007))
         assertEquals(1, result.size)
     }
 
@@ -86,8 +86,8 @@ class LexerTest{
     //let a : number = 5;
     //println(a)
     fun test008_composeLexerWithNormalCase() {
-        val composeLexer = createComposeLexer();
-        val result = composeLexer.splitIntoTokens(input_008);
+        val composeLexer = createComposeLexer()
+        val result = composeLexer.splitIntoTokens(input_008)
         assertEquals(output_008, result)
         //assertEquals(compareTokens(expected, result), true);
     }
@@ -95,9 +95,9 @@ class LexerTest{
     @Test
     //let variable : string = + 5 "let" + 1 + "println" + "aaalet1";
     fun test009_composeLexerWithEdgeCase() {
-        val composeLexer = createComposeLexer();
-        val result = composeLexer.splitIntoTokens(input_009);
-        assertEquals(output_009, result);
+        val composeLexer = createComposeLexer()
+        val result = composeLexer.splitIntoTokens(input_009)
+        assertEquals(output_009, result)
     }
 
     @Test
@@ -105,9 +105,9 @@ class LexerTest{
     // let lastName : string = "Doe" ;
     // println(name + " " + lastName);
     fun test010_composeLexer() {
-        val composeLexer = createComposeLexer();
-        val result = composeLexer.splitIntoTokens(input_010);
-        assertEquals(output_010, result);
+        val composeLexer = createComposeLexer()
+        val result = composeLexer.splitIntoTokens(input_010)
+        assertEquals(output_010, result)
     }
 
     @Test
@@ -115,8 +115,8 @@ class LexerTest{
     //let b: number = 4;
     //a = a / b;
     fun test011_composeLexer() {
-        val composeLexer = createComposeLexer();
-        val result = composeLexer.splitIntoTokens(input_011);
-        assertEquals(output_011, result);
+        val composeLexer = createComposeLexer()
+        val result = composeLexer.splitIntoTokens(input_011)
+        assertEquals(output_011, result)
     }
 }
