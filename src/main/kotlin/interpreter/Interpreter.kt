@@ -1,6 +1,7 @@
+package interpreter
 import common.ast.*
 
-class Interpreter(val nodeList: List<ASTNode>) {
+class Interpreter(private val nodeList: List<ASTNode>) {
 
     private val valuesMap = hashMapOf<String, Any>()
 
@@ -12,70 +13,76 @@ class Interpreter(val nodeList: List<ASTNode>) {
         }
         val results = mutableListOf<Any>()
         for (node in printNodes) {
-            val result = searchPrint(node)
+            val result = searchNodeValue(node)
             println(result)
             results.add(result)
         }
         return results
     }
 
+    private fun searchNodeValue(node: ASTNode): Any {
+        return when (node.nodeType) {
+            IdentifierNode -> {
+                val identifier = node.value.toString()
+                valuesMap[identifier] ?: ""
+            }
+            StringNode -> {
+                node.value ?: ""
+            }
+            NumberNode -> {
+                node.value ?: 0
+            }
+            OperatorNode -> {
+                interpretOperatorNode(node)
+            }
+            else -> {
+                interpretOtherNodeValue(node)
+            }
+        }
+    }
+
+    private fun interpretOtherNodeValue(node: ASTNode): Any {
+        var foundValue: Any = ""
+        node.children?.forEach {
+            val value = searchNodeValue(it)
+            if (value != "") {
+                foundValue = value
+                return@forEach
+            }
+        }
+        return foundValue
+    }
+
+    private fun interpretOperatorNode(node: ASTNode): Any {
+        val initialValue = interpretStringOperation(node)
+        var result: Any = initialValue
+        for (child in node.children!!) {
+            val operand = searchNodeValue(child)
+            if (child.nodeType !is OperatorNode) {
+                result = performOperation(result, operand, node.value.toString())
+            }
+        }
+        return result
+    }
+
     private fun searchAssignation(node: ASTNode) {
         val identifier = findIdentifier(node)
-        val value = findValue(node)
+        val value = searchNodeValue(node)
         valuesMap[identifier] = value
     }
 
     private fun findIdentifier(node: ASTNode): String {
         return when (node.nodeType) {
-            is IdentifierNode -> node.value.toString()?: ""
+            is IdentifierNode -> node.value.toString()
             else -> {
                 var foundIdentifier = ""
                 for (child in node.children!!) {
-                    foundIdentifier = findIdentifier(child).toString()
+                    foundIdentifier = findIdentifier(child)
                     if (foundIdentifier.isNotEmpty()) {
                         break
                     }
                 }
                 foundIdentifier
-            }
-        }
-    }
-
-    private fun findValue(node: ASTNode): Any {
-        return when (node.nodeType) {
-            is StringNode -> {
-                node.value ?: ""
-            }
-            is NumberNode -> {
-                node.value ?: 0
-            }
-            is OperatorNode -> {
-                val initialValue = when (node.value) {
-                    "+" -> if (node.children?.any { it.nodeType is StringNode } == true) "" else 0
-                    "-" -> 0  // Subtracting strings doesn't make sense, so initialize with 0
-                    "*" -> 1  // Multiplication identity value
-                    "/" -> 1  // Division identity value
-                    else -> throw Exception("Invalid operator")
-                }
-                var result: Any = initialValue
-                for (child in node.children!!) {
-                    val operand = findValue(child)
-                    if (child.nodeType !is OperatorNode) {
-                        result = performOperation(result, operand, node.value.toString())
-                    }
-                }
-                result
-            }
-            else -> {
-                var foundValue: Any = ""
-                node.children?.forEach {
-                    val value = findValue(it)
-                    if (value != "") {
-                        foundValue = value
-                        return@forEach
-                    }
-                }
-                foundValue
             }
         }
     }
@@ -108,47 +115,12 @@ class Interpreter(val nodeList: List<ASTNode>) {
         }
     }
 
-    private fun searchPrint(node: ASTNode): Any {
-        return when (node.nodeType) {
-            is IdentifierNode -> {
-                val identifier = node.value.toString()
-                valuesMap[identifier] ?: ""
-            }
-            is StringNode -> {
-                node.value ?: ""
-            }
-            is NumberNode -> {
-                node.value ?: 0
-            }
-            is OperatorNode -> {
-                val initialValue = when (node.value) {
-                    "+" -> if (node.children?.any { it.nodeType is StringNode } == true) "" else 0
-                    "-" -> 0  // Subtracting strings doesn't make sense, so initialize with 0
-                    "*" -> 1  // Multiplication identity value
-                    "/" -> 1  // Division identity value
-                    else -> throw Exception("Invalid operator")
-                }
-                var result: Any = initialValue
-                for (child in node.children!!) {
-                    val operand = searchPrint(child)
-                    if (child.nodeType !is OperatorNode) {
-                        result = performOperation(result, operand, node.value.toString())
-                    }
-                }
-                result
-            }
-            else -> {
-                var foundValue: Any = ""
-                node.children?.forEach {
-                    val value = searchPrint(it)
-                    if (value != "") {
-                        foundValue = value
-                        return@forEach
-                    }
-                }
-                foundValue
-            }
-        }
+    private fun interpretStringOperation(node: ASTNode) = when (node.value) {
+        "+" -> if (node.children?.any {it.nodeType is StringNode} == true) "" else 0
+        "-" -> 0  // Subtracting strings doesn't make sense, so initialize with 0
+        "*" -> 1  // Multiplication identity value
+        "/" -> 1  // Division identity value
+        else -> throw Exception("Invalid operator")
     }
 
 }

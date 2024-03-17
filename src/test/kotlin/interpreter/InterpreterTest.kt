@@ -1,11 +1,4 @@
 package interpreter
-import Interpreter
-import common.ast.ASTNodeImpl
-import common.ast.NodeType
-import common.token.Assignation
-import common.token.Position
-import common.token.Token
-import common.token.TokenType
 import kotlin.test.Test
 
 
