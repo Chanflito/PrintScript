@@ -91,6 +91,26 @@ class ParserTest {
         assertEquals(output_011, ast)
     }
 
+
+    @Test
+    //    test
+    //    let a: string = "hola"
+    //    let b: string = "loco"
+    //    println (a+b)
+    fun test012_parseExpressionWithPrintLnAndString(){
+        val ast= parser.parse(input_012);
+        assertEquals(output_012, ast)
+    }
+
+    @Test
+//    test
+//    let a: string = "hola"
+//    a = "loco"
+//    println (a)
+    fun test013_parseExpressionWithPrintLnAndString(){
+        val ast= parser.parse(input_013);
+        assertEquals(output_013, ast)
+    }
 }
 
 
