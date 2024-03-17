@@ -1,11 +1,11 @@
 package interpreter
 import common.ast.*
 
-class Interpreter(private val nodeList: List<ASTNode>) {
+class Interpreter() {
 
     private val valuesMap = hashMapOf<String, Any>()
 
-    fun interpret(): List<Any> {
+    fun interpret(nodeList: List<ASTNode>): List<Any> {
         val printNodes = nodeList.filter { it.nodeType is PrintLnNode }
         val assignationNodes = nodeList.filter { it.nodeType is AssignationNode }
         for (node in assignationNodes) {
