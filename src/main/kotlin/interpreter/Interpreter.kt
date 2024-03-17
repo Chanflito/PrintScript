@@ -3,7 +3,7 @@ import common.ast.NodeType
 
 class Interpreter(val nodeList: List<ASTNode>) {
 
-    val valuesMap = hashMapOf<String, Any>()
+    private val valuesMap = hashMapOf<String, Any>()
 
     fun interpret(): List<Any> {
         val printNodes = nodeList.filter { it.nodeType == NodeType.PRINT_NODE }
@@ -20,13 +20,13 @@ class Interpreter(val nodeList: List<ASTNode>) {
         return results
     }
 
-    fun searchAssignation(node: ASTNode) {
+    private fun searchAssignation(node: ASTNode) {
         val identifier = findIdentifier(node)
         val value = findValue(node)
         valuesMap[identifier] = value
     }
 
-    fun findIdentifier(node: ASTNode): String {
+    private fun findIdentifier(node: ASTNode): String {
         return when (node.nodeType) {
             NodeType.IDENTIFIER_NODE -> node.token?.value ?: ""
             else -> {
@@ -42,16 +42,16 @@ class Interpreter(val nodeList: List<ASTNode>) {
         }
     }
 
-    fun findValue(node: ASTNode): Any {
+    private fun findValue(node: ASTNode): Any {
         return when (node.nodeType) {
             NodeType.STRING_NODE -> {
                 node.token?.value ?: ""
             }
             NodeType.NUMBER_NODE -> {
-                node.token?.value?.toIntOrNull() ?: 0
+                node.token?.value ?: 0
             }
             NodeType.OPERATOR_NODE -> {
-                var result = 0
+                var result = ""
                 for (child in node.children!!) {
                     val operand = findValue(child)
                     if (child.nodeType != NodeType.OPERATOR_NODE) {
@@ -74,29 +74,32 @@ class Interpreter(val nodeList: List<ASTNode>) {
         }
     }
 
-    fun performOperation(leftOperand: Any, rightOperand: Any, operator: String): Any {
+    private fun performOperation(leftOperand: Any, rightOperand: Any, operator: String):String{
         return if (leftOperand is String || rightOperand is String) {
-            performStringOperation(leftOperand.toString(), rightOperand.toString())
+            performStringOperation(leftOperand.toString(), rightOperand.toString(), operator)
         } else {
             performNumberOperation(leftOperand as Int, rightOperand as Int, operator)
         }
     }
 
-    fun performStringOperation(leftOperand: String, rightOperand: String): String {
-        return leftOperand + rightOperand
-    }
-
-    fun performNumberOperation(leftOperand: Int, rightOperand: Int, operator: String): Int {
+    private fun performStringOperation(leftOperand: String, rightOperand: String, operator: String): String {
         return when (operator) {
             "+" -> leftOperand + rightOperand
-            "-" -> leftOperand - rightOperand
-            "*" -> leftOperand * rightOperand
-            "/" -> leftOperand / rightOperand
-            else -> 0 // Handle invalid operator case
+            else -> throw Exception("Invalid Operation")
         }
     }
 
-    fun searchPrint(node: ASTNode): Any {
+    private fun performNumberOperation(leftOperand: Int, rightOperand: Int, operator: String):String {
+        return when (operator) {
+            "+" -> (leftOperand + rightOperand).toString()
+            "-" -> (leftOperand - rightOperand).toString()
+            "*" -> (leftOperand * rightOperand).toString()
+            "/" -> (leftOperand / rightOperand).toString()
+            else -> throw Exception("Invalid operator")
+        }
+    }
+
+    private fun searchPrint(node: ASTNode): Any {
         return when (node.nodeType) {
             NodeType.IDENTIFIER_NODE -> {
                 val identifier = node.token?.value ?: ""
@@ -106,10 +109,10 @@ class Interpreter(val nodeList: List<ASTNode>) {
                 node.token?.value ?: ""
             }
             NodeType.NUMBER_NODE -> {
-                node.token?.value?.toIntOrNull() ?: 0
+                node.token?.value ?: 0
             }
             NodeType.OPERATOR_NODE -> {
-                var result = 0
+                var result = ""
                 for (child in node.children!!) {
                     val operand = searchPrint(child)
                     if (child.nodeType != NodeType.OPERATOR_NODE) {

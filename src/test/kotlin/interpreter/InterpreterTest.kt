@@ -79,24 +79,54 @@ class InterpreterTest {
             NodeType.PRINT_NODE,
             listOf(
                 ASTNodeImpl(
-                    Token("x", TokenType.IDENTIFIER, Position(3, 1), Position(3, 1)),
-                    NodeType.IDENTIFIER_NODE,
-                    null
-                ), ASTNodeImpl(
-                    Token("+", TokenType.PLUS, Position(3, 3), Position(3, 3)),
+                    Token("+", TokenType.IDENTIFIER, Position(3, 1), Position(3, 1)),
                     NodeType.OPERATOR_NODE,
                     listOf(
                         ASTNodeImpl(
-                            Token("y", TokenType.IDENTIFIER, Position(3, 5), Position(3, 5)),
+                            Token("x", TokenType.IDENTIFIER, Position(3, 1), Position(3, 1)),
                             NodeType.IDENTIFIER_NODE,
+                            null
+                        ),
+                        ASTNodeImpl(
+                            Token("y", TokenType.IDENTIFIER, Position(3, 1), Position(3, 1)),
+                            NodeType.IDENTIFIER_NODE,
+                            null
+                        )
+                    )
+            )
+            )
+        )
+        val interpreter = Interpreter(listOf(exampleTree1, exampleTree2, examplePrintNode))
+        val results = interpreter.interpret()
+        assert(results[0] == "helloworld")
+    }
+
+    @Test
+    fun simpleAddition() {
+        val nodeList= listOf(ASTNodeImpl(
+            Token("println",TokenType.PRINTLN_KEYWORD,Position(1,1),Position(1,8)),
+            NodeType.PRINT_NODE,
+            listOf(
+                ASTNodeImpl(
+                    Token("+", TokenType.PLUS,Position(1,11),Position(1,12)),
+                    NodeType.OPERATOR_NODE,
+                    listOf(
+                        ASTNodeImpl(
+                            Token("5",TokenType.TYPE_NUMBER,Position(1,10),Position(1,11)),
+                            NodeType.NUMBER_NODE,
+                            null
+                        ),
+                        ASTNodeImpl(
+                            Token("7",TokenType.TYPE_NUMBER,Position(1,12),Position(1,13)),
+                            NodeType.NUMBER_NODE,
                             null
                         )
                     )
                 )
             )
-            )
-        val interpreter = Interpreter(listOf(exampleTree1, exampleTree2, examplePrintNode))
+        ))
+        val interpreter = Interpreter(nodeList)
         val results = interpreter.interpret()
-        assert(results[0] == "helloworld")
+        assert(results[0] == "12")
     }
 }
