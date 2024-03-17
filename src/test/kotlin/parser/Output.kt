@@ -6,7 +6,7 @@ import common.token.*
 val output_001= ASTNodeImpl(
     5,
     Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-    ValueNode,
+    NumberNode,
     null
 )
 
@@ -18,13 +18,13 @@ val output_002 = ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         ),
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -58,13 +58,13 @@ val output_004 = ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         ),
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -78,13 +78,13 @@ val output_005 = ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         ),
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -137,7 +137,7 @@ val output_007 = ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -170,7 +170,7 @@ val output_008 = listOf(ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -182,13 +182,13 @@ val output_008 = listOf(ASTNodeImpl(
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(2, 1), Position(2, 2)),
-            ValueNode,
+            NumberNode,
             null
         ),
         ASTNodeImpl(
             5,
             Token("5", ValueNumber, Position(2, 5), Position(2, 6)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -207,13 +207,13 @@ val output_009 = listOf(ASTNodeImpl(
                 ASTNodeImpl(
                     5,
                     Token("5",ValueNumber,Position(1,10),Position(1,11)),
-                    ValueNode,
+                    NumberNode,
                     null
                 ),
                 ASTNodeImpl(
                     7,
                     Token("7",ValueNumber,Position(1,12),Position(1,13)),
-                    ValueNode,
+                    NumberNode,
                     null
                 )
             )
@@ -234,13 +234,13 @@ val output_010 = listOf(ASTNodeImpl(
                 ASTNodeImpl(
                     5,
                     Token("5",ValueNumber,Position(1,2),Position(1,3)),
-                    ValueNode,
+                    NumberNode,
                     null
                 ),
                 ASTNodeImpl(
                     7,
                     Token("7",ValueNumber,Position(1,4),Position(1,5)),
-                    ValueNode,
+                    NumberNode,
                     null
                 )
             )
@@ -248,7 +248,7 @@ val output_010 = listOf(ASTNodeImpl(
         ASTNodeImpl(
             4,
             Token("4",ValueNumber,Position(1,7),Position(1,8)),
-            ValueNode,
+            NumberNode,
             null
         )
     )
@@ -282,7 +282,7 @@ val output_011 = listOf(
             ASTNodeImpl(
                 5,
                 Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
-                ValueNode,
+                NumberNode,
                 null
             )
         )
@@ -314,7 +314,7 @@ val output_011 = listOf(
             ASTNodeImpl(
                 5,
                 Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
-                ValueNode,
+                NumberNode,
                 null
             )
         )
