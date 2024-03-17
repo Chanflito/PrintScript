@@ -1,45 +1,42 @@
 package parser.impl
 
-import common.ast.ASTNode
-import common.ast.ASTNodeImpl
-import common.ast.NodeType
-import common.token.Token
-import common.token.TokenType
+import common.ast.*
+import common.token.*
 import parser.Parser
+import parser.util.*
 
-class ParserImpl(private val tokens: List<Token>): Parser {
+//posibles errores sintacticos
+
+
+class ParserImpl(): Parser {
     private var index = 0;
-
-    override fun parse(): List<ASTNode> {
-        var ast = ArrayList<ASTNode>()
-        while (notEndOfLine()){
-            if(currentToken()?.tokenType == TokenType.SEMI_COLON){
-                consumeToken();
+    override fun parse(tokens: List<Token>): List<ASTNode> {
+        val ast = ArrayList<ASTNode>()
+        while (!endOfFile(tokens, index)){
+            val currentToken = currentToken(tokens)
+            if(isSemiColon(currentToken)){
+                consumeToken(tokens);
                 continue;
             }
-            ast.add(parseEqualsExpression());
+            ast.add(parsePrintLn(tokens));
         }
         return ast;
 
     }
 
-    private fun parseExpression(): ASTNode{
-        if(currentToken()?.tokenType != TokenType.LET_KEYWORD){
-            return parseAdditiveExpression();
+    private fun parsePrintLn(tokens: List<Token>): ASTNode{
+        if (isPrintLn(currentToken(tokens))){
+            val printLnToken = consumeToken(tokens);
+//            check if after a println call there is a left parenthesis
+//            if(!isLeftParenthesis(currentToken(tokens))){
+//                throw Exception("Missing ( after method call")
+//            }
+            val childrenExpression = parsePrimaryExpression(tokens)
+            return ASTNodeImpl("println", printLnToken, PrintLnNode, listOf(childrenExpression))
         }
-        return parseAssignmentExpression();
+        return parseEqualsExpression(tokens);
     }
 
-    private fun parsePrimaryExpression(): ASTNode {
-        return when (val currentType = currentToken()?.tokenType) {
-            TokenType.VALUE_NUMBER -> ASTNodeImpl(consumeToken(), NodeType.NUMBER_NODE, null)
-            TokenType.VALUE_STRING -> ASTNodeImpl(consumeToken(), NodeType.STRING_NODE, null)
-            TokenType.LET_KEYWORD -> ASTNodeImpl(consumeToken(), NodeType.KEYWORD_NODE, null)
-            TokenType.TYPE_NUMBER -> ASTNodeImpl(consumeToken(), NodeType.TYPE_NODE, null)
-            TokenType.TYPE_STRING -> ASTNodeImpl(consumeToken(), NodeType.TYPE_NODE, null)
-            else -> throw Exception("Unexpected token: $currentType")
-        }
-    }
 
     private fun parseEqualsExpression(): ASTNode{
         var left = parseExpression();
@@ -48,6 +45,25 @@ class ParserImpl(private val tokens: List<Token>): Parser {
             val right = parseExpression();
             left = ASTNodeImpl(token, NodeType.ASSIGNMENT_NODE, listOf(left, right))
         }
+        return left;
+    }
+
+    private fun parseExpression(tokens: List<Token>): ASTNode{
+        if(isLetKeyword(currentToken(tokens))){
+            return parseAssignmentExpression(tokens);
+        }
+        return parseAdditiveExpression(tokens);
+    }
+
+
+    private fun parseAdditiveExpression(tokens: List<Token>): ASTNode{
+        var left = parseMultiplicativeExpression(tokens);
+        while (isAdditiveOperator(currentToken(tokens))){
+            val token = consumeToken(tokens)
+            val right = parseMultiplicativeExpression(tokens);
+            left =  ASTNodeImpl(token?.value,token, OperatorNode, listOf(left, right))
+        }
+
         return left;
     }
 
@@ -69,51 +85,57 @@ class ParserImpl(private val tokens: List<Token>): Parser {
         throw Exception("Expected identifier after keyword");
     }
 
-    private fun isAType(type: Token?) = type?.tokenType !in setOf(TokenType.TYPE_NUMBER, TokenType.TYPE_STRING)
-
-    private fun isColon(colon: Token?) = colon?.tokenType != TokenType.COLON
-
-    private fun isIdentifier(variable: Token?) = variable?.tokenType == TokenType.IDENTIFIER
-
-    private fun parseAdditiveExpression(): ASTNode{
-        var left = parseMultiplicativeExpression();
-
-        while (currentToken()?.tokenType == TokenType.PLUS || currentToken()?.tokenType == TokenType.MINUS){
-            val token = consumeToken()
-            val right = parseMultiplicativeExpression();
-            left =  ASTNodeImpl(token, NodeType.OPERATOR_NODE, listOf(left, right))
+    private fun parseMultiplicativeExpression(tokens: List<Token>): ASTNode{
+        var left = parsePrimaryExpression(tokens);
+        while (isMultiplicativeOperator(currentToken(tokens))){
+            val token = consumeToken(tokens);
+            val right = parsePrimaryExpression(tokens);
+            left =  ASTNodeImpl(token?.value,token,OperatorNode, listOf(left, right))
         }
 
         return left;
     }
 
-    private fun parseMultiplicativeExpression(): ASTNode{
-        var left = parsePrimaryExpression();
-        while (currentToken()?.tokenType == TokenType.MULTIPLY || currentToken()?.tokenType == TokenType.DIVIDE){
-            val token = consumeToken();
-            val right = parsePrimaryExpression();
-            left =  ASTNodeImpl(token,NodeType.OPERATOR_NODE, listOf(left, right))
+    private fun parsePrimaryExpression(tokens: List<Token>): ASTNode {
+        return when (val currentType = currentToken(tokens)?.tokenType) {
+            ValueNumber -> {
+                val token = consumeToken(tokens)
+                val parsedValue = token?.value?.toIntOrNull()
+                ASTNodeImpl(parsedValue, token, ValueNode, null)
+            }
+            ValueString -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, StringNode, null)
+            }
+            LetKeyword -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, KeywordNode, null)
+            }
+            TypeNumber -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, TypeNode, null)
+            }
+            TypeString -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, TypeNode, null)
+            }
+            LeftParenthesis -> {
+                consumeToken(tokens)
+                val innerExpression = parseExpression(tokens)
+                consumeToken(tokens)
+                return innerExpression
+            }
+            else -> throw Exception("Unexpected token: $currentType")
         }
-
-        return left;
     }
 
-    private fun notEndOfLine(): Boolean{
-        return currentToken() != null && index < tokens.size;
+    private fun currentToken(list: List<Token>):Token?{
+        return if (index < list.size) list[index] else null
     }
 
-    private fun currentToken(): Token? {
-        return if (index < tokens.size) tokens[index] else null
-    }
-
-    private fun incrementIndex(){
+    private fun consumeToken(list: List<Token>): Token?{
+        val current = currentToken(list)
         index++
+        return current;
     }
-
-    private fun consumeToken(): Token?{
-        val token = currentToken();
-        incrementIndex();
-        return token;
-    }
-
 }
