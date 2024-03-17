@@ -5,37 +5,37 @@ import common.token.*
 import parser.Parser
 import parser.util.*
 
-//posibles errores sintacticos
-
-
 class ParserImpl(): Parser {
     private var index = 0;
-    override fun parse(tokens: List<Token>): List<ASTNode> {
-        val ast = ArrayList<ASTNode>()
+    override fun parse(tokens: List<Token>): ASTNode {
+        var astNode= ASTNodeImpl("Program",null,ProgramNode, listOf())
         while (!endOfFile(tokens, index)){
             val currentToken = currentToken(tokens)
             if(isSemiColon(currentToken)){
                 consumeToken(tokens);
                 continue;
             }
-            ast.add(parsePrintLn(tokens));
+            astNode = astNode.addChild(parseStatement(tokens));
         }
-        return ast;
+        return astNode
 
+    }
+    private fun parseStatement(tokens: List<Token>): ASTNode{
+        return when(currentToken(tokens)?.tokenType){
+            PrintlnKeyword -> parsePrintLn(tokens)
+            else -> parseEqualsExpression(tokens)
+        };
     }
 
     private fun parsePrintLn(tokens: List<Token>): ASTNode{
-        if (isPrintLn(currentToken(tokens))){
             val printLnToken = consumeToken(tokens);
-//            check if after a println call there is a left parenthesis
-//            if(!isLeftParenthesis(currentToken(tokens))){
-//                throw Exception("Missing ( after method call")
-//            }
+//          check if after a println call there is a left parenthesis
+            require(isLeftParenthesis(currentToken(tokens))){"Missing ( after method call"}
+
             val childrenExpression = parsePrimaryExpression(tokens)
             return ASTNodeImpl("println", printLnToken, PrintLnNode, listOf(childrenExpression))
-        }
-        return parseEqualsExpression(tokens);
     }
+
 
 
     private fun parseEqualsExpression(tokens: List<Token>): ASTNode{
@@ -49,10 +49,10 @@ class ParserImpl(): Parser {
     }
 
     private fun parseExpression(tokens: List<Token>): ASTNode{
-        if(isLetKeyword(currentToken(tokens))){
-            return parseAssignmentExpression(tokens);
-        }
-        return parseAdditiveExpression(tokens);
+        return when(currentToken(tokens)?.tokenType){
+            LetKeyword -> parseDeclarativeExpression(tokens)
+            else -> parseAdditiveExpression(tokens)
+        };
     }
 
 
@@ -67,22 +67,20 @@ class ParserImpl(): Parser {
         return left;
     }
 
-    private fun parseAssignmentExpression(tokens: List<Token>): ASTNode{
+    private fun parseDeclarativeExpression(tokens: List<Token>): ASTNode{
         val keyword = parsePrimaryExpression(tokens);
         val variable = consumeToken(tokens);
-        if (isIdentifier(variable)){
-            val colon = consumeToken(tokens);
-            if (!isColon(colon)){
-                throw Exception("Expected : after identifier")
+        when(variable?.tokenType){
+            Identifier -> {
+                val colon = consumeToken(tokens);
+                require(isColon(colon)){ "Expected : after identifier" }
+                val type = currentToken(tokens);
+                require(isType(type)){"Expected type after identifier" }
+                return ASTNodeImpl(variable.value,variable, IdentifierNode, listOf(keyword, parsePrimaryExpression(tokens)))
             }
-            val type = currentToken(tokens);
-            if(!isType(type)){
-                throw Exception("Expected type after identifier")
-            }
-            return ASTNodeImpl(variable?.value,variable, IdentifierNode, listOf(keyword, parsePrimaryExpression(tokens)))
-
+            else -> throw Exception("Expected identifier after keyword");
         }
-        throw Exception("Expected identifier after keyword");
+
     }
 
     private fun parseMultiplicativeExpression(tokens: List<Token>): ASTNode{
@@ -100,7 +98,7 @@ class ParserImpl(): Parser {
         return when (val currentType = currentToken(tokens)?.tokenType) {
             ValueNumber -> {
                 val token = consumeToken(tokens)
-                val parsedValue = token?.value?.toIntOrNull()
+                val parsedValue = token?.value?.toDoubleOrNull();
                 ASTNodeImpl(parsedValue, token, NumberNode, null)
             }
             ValueString -> {
@@ -126,7 +124,9 @@ class ParserImpl(): Parser {
             LeftParenthesis -> {
                 consumeToken(tokens)
                 val innerExpression = parseExpression(tokens)
-                consumeToken(tokens)
+                require(isRightParenthesis(consumeToken(tokens))){
+                    "Unexpected token: expected ) after expression"
+                }
                 return innerExpression
             }
             else -> throw Exception("Unexpected token: $currentType")

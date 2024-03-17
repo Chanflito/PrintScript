@@ -3,34 +3,34 @@ package parser
 import common.ast.*
 import common.token.*
 
-val output_001= ASTNodeImpl(
-    5,
+val output_001= listOf(ASTNodeImpl(
+    5.0,
     Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
     NumberNode,
     null
-)
+))
 
-val output_002 = ASTNodeImpl(
+val output_002 = listOf(ASTNodeImpl(
     "+",
     Token("+", Plus, Position(1, 1), Position(1, 1)),
     OperatorNode,
     listOf(
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         )
     )
-)
+))
 
-val output_003=ASTNodeImpl(
+val output_003=listOf(ASTNodeImpl(
     "+",
     Token("+", Plus, Position(1, 1), Position(1, 1)),
     OperatorNode,
@@ -48,49 +48,49 @@ val output_003=ASTNodeImpl(
             null
         )
     )
-)
+))
 
-val output_004 = ASTNodeImpl(
+val output_004 = listOf( ASTNodeImpl(
     "*",
     Token("*", Multiply, Position(1, 1), Position(1, 1)),
     OperatorNode,
     listOf(
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         )
     )
-);
+));
 
-val output_005 = ASTNodeImpl(
+val output_005 = listOf( ASTNodeImpl(
     "/",
     Token("/", Divide, Position(1, 1), Position(1, 1)),
     OperatorNode,
     listOf(
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
             NumberNode,
             null
         )
     )
-);
+));
 
-val output_006 = ASTNodeImpl(
+val output_006 = listOf( ASTNodeImpl(
     "a",
     Token("a", Identifier, Position(1, 5), Position(1, 6)),
     IdentifierNode,
@@ -108,9 +108,9 @@ val output_006 = ASTNodeImpl(
             null
         )
     )
-);
+));
 
-val output_007 = ASTNodeImpl(
+val output_007 = listOf( ASTNodeImpl(
     "=",
     Token("=", Assignation, Position(1, 16), Position(1, 17)),
     AssignationNode,
@@ -135,13 +135,13 @@ val output_007 = ASTNodeImpl(
             )
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
             NumberNode,
             null
         )
     )
-);
+));
 
 val output_008 = listOf(ASTNodeImpl(
     "=",
@@ -168,7 +168,7 @@ val output_008 = listOf(ASTNodeImpl(
             )
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
             NumberNode,
             null
@@ -180,13 +180,13 @@ val output_008 = listOf(ASTNodeImpl(
     OperatorNode,
     listOf(
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(2, 1), Position(2, 2)),
             NumberNode,
             null
         ),
         ASTNodeImpl(
-            5,
+            5.0,
             Token("5", ValueNumber, Position(2, 5), Position(2, 6)),
             NumberNode,
             null
@@ -205,13 +205,13 @@ val output_009 = listOf(ASTNodeImpl(
             OperatorNode,
             listOf(
                 ASTNodeImpl(
-                    5,
+                    5.0,
                     Token("5",ValueNumber,Position(1,10),Position(1,11)),
                     NumberNode,
                     null
                 ),
                 ASTNodeImpl(
-                    7,
+                    7.0,
                     Token("7",ValueNumber,Position(1,12),Position(1,13)),
                     NumberNode,
                     null
@@ -232,13 +232,13 @@ val output_010 = listOf(ASTNodeImpl(
             OperatorNode,
             listOf(
                 ASTNodeImpl(
-                    5,
+                    5.0,
                     Token("5",ValueNumber,Position(1,2),Position(1,3)),
                     NumberNode,
                     null
                 ),
                 ASTNodeImpl(
-                    7,
+                    7.0,
                     Token("7",ValueNumber,Position(1,4),Position(1,5)),
                     NumberNode,
                     null
@@ -246,7 +246,7 @@ val output_010 = listOf(ASTNodeImpl(
             )
         ),
         ASTNodeImpl(
-            4,
+            4.0,
             Token("4",ValueNumber,Position(1,7),Position(1,8)),
             NumberNode,
             null
@@ -280,7 +280,7 @@ val output_011 = listOf(
                 )
             ),
             ASTNodeImpl(
-                5,
+                5.0,
                 Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
                 NumberNode,
                 null
@@ -312,7 +312,7 @@ val output_011 = listOf(
                 )
             ),
             ASTNodeImpl(
-                5,
+                5.0,
                 Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
                 NumberNode,
                 null
