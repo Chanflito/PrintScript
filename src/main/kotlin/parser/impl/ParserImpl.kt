@@ -38,12 +38,12 @@ class ParserImpl(): Parser {
     }
 
 
-    private fun parseEqualsExpression(): ASTNode{
-        var left = parseExpression();
-        while (currentToken()?.tokenType == TokenType.ASSIGNATION){
-            val token = consumeToken();
-            val right = parseExpression();
-            left = ASTNodeImpl(token, NodeType.ASSIGNMENT_NODE, listOf(left, right))
+    private fun parseEqualsExpression(tokens: List<Token>): ASTNode{
+        var left = parseExpression(tokens);
+        while (isAssignation(currentToken(tokens))){
+            val token = consumeToken(tokens);
+            val right = parseExpression(tokens);
+            left = ASTNodeImpl("=",token,AssignationNode, listOf(left, right))
         }
         return left;
     }
@@ -67,19 +67,19 @@ class ParserImpl(): Parser {
         return left;
     }
 
-    private fun parseAssignmentExpression(): ASTNode{
-        val keyword = parsePrimaryExpression();
-        val variable = consumeToken();
+    private fun parseAssignmentExpression(tokens: List<Token>): ASTNode{
+        val keyword = parsePrimaryExpression(tokens);
+        val variable = consumeToken(tokens);
         if (isIdentifier(variable)){
-            val colon = consumeToken();
-            if (isColon(colon)){
+            val colon = consumeToken(tokens);
+            if (!isColon(colon)){
                 throw Exception("Expected : after identifier")
             }
-            val type = currentToken();
-            if(isAType(type)){
+            val type = currentToken(tokens);
+            if(!isType(type)){
                 throw Exception("Expected type after identifier")
             }
-            return ASTNodeImpl(variable, NodeType.IDENTIFIER_NODE, listOf(keyword, parsePrimaryExpression()))
+            return ASTNodeImpl(variable?.value,variable, IdentifierNode, listOf(keyword, parsePrimaryExpression(tokens)))
 
         }
         throw Exception("Expected identifier after keyword");
