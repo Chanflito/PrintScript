@@ -5,7 +5,12 @@ class Interpreter() {
 
     private val valuesMap = hashMapOf<String, Any>()
 
-    fun interpret(nodeList: List<ASTNode>): List<Any> {
+    fun interpret(programNode: ASTNode): List<Any> {
+        return interpretNodes(programNode.children)
+    }
+
+    private fun interpretNodes(nodeList: List<ASTNode>?): MutableList<Any> {
+        if (nodeList == null) return mutableListOf();
         val printNodes = nodeList.filter { it.nodeType is PrintLnNode }
         val assignationNodes = nodeList.filter { it.nodeType is AssignationNode }
         for (node in assignationNodes) {
