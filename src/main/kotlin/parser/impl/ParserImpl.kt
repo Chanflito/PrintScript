@@ -119,6 +119,10 @@ class ParserImpl(): Parser {
                 val token = consumeToken(tokens)
                 ASTNodeImpl(token?.value, token, TypeNode, null)
             }
+            Identifier -> {
+                val token = consumeToken(tokens)
+                ASTNodeImpl(token?.value, token, IdentifierNode, null)
+            }
             LeftParenthesis -> {
                 consumeToken(tokens)
                 val innerExpression = parseExpression(tokens)

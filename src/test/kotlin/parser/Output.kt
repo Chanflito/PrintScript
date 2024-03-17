@@ -253,3 +253,96 @@ val output_010 = listOf(ASTNodeImpl(
         )
     )
 ));
+
+val output_011 = listOf(
+    ASTNodeImpl(
+        "=",
+        Token("=", Assignation, Position(1, 15), Position(1, 16)),
+        AssignationNode,
+        listOf(
+            ASTNodeImpl(
+                "a",
+                Token("a", Identifier, Position(1, 5), Position(1, 6)),
+                IdentifierNode,
+                listOf(
+                    ASTNodeImpl(
+                        "let",
+                        Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                        KeywordNode,
+                        null
+                    ),
+                    ASTNodeImpl(
+                        "number",
+                        Token("number", TypeNumber, Position(1, 8), Position(1, 14)),
+                        TypeNode,
+                        null
+                    )
+                )
+            ),
+            ASTNodeImpl(
+                5,
+                Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
+                ValueNode,
+                null
+            )
+        )
+    ),
+    ASTNodeImpl(
+        "=",
+        Token("=", Assignation, Position(2, 15), Position(2, 16)),
+        AssignationNode,
+        listOf(
+            ASTNodeImpl(
+                "b",
+                Token("b", Identifier, Position(2, 5), Position(2, 6)),
+                IdentifierNode,
+                listOf(
+                    ASTNodeImpl(
+                        "let",
+                        Token("let", LetKeyword, Position(2, 1), Position(2, 4)),
+                        KeywordNode,
+                        null
+                    ),
+                    ASTNodeImpl(
+                        "number",
+                        Token("number", TypeNumber, Position(2, 8), Position(2, 14)),
+                        TypeNode,
+                        null
+                    )
+                )
+            ),
+            ASTNodeImpl(
+                5,
+                Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
+                ValueNode,
+                null
+            )
+        )
+    ),
+    ASTNodeImpl(
+        "println",
+        Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
+        PrintLnNode,
+        listOf(
+            ASTNodeImpl(
+                "+",
+                Token("+", Plus, Position(3, 11), Position(3, 12)),
+                OperatorNode,
+                listOf(
+                    ASTNodeImpl(
+                        "a",
+                        Token("a", Identifier, Position(3, 10), Position(3, 11)),
+                        IdentifierNode,
+                        null
+                    ),
+                    ASTNodeImpl(
+                        "b",
+                        Token("b", Identifier, Position(3, 12), Position(3, 13)),
+                        IdentifierNode,
+                        null
+                    )
+                )
+            )
+        )
+    )
+)

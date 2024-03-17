@@ -81,6 +81,16 @@ class ParserTest {
         assertEquals(output_010, ast)
     }
 
+    @Test
+    //    test
+    //    let a: number = 5
+    //    let b: number = 5
+//    println (a+b)
+    fun test011_parseExpressionWithPrintLnAndVariable(){
+        val ast= parser.parse(input_011);
+        assertEquals(output_011, ast)
+    }
+
 }
 
 
