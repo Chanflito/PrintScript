@@ -1,10 +1,7 @@
 package parser
 
-import common.ast.ASTNodeImpl
-import common.ast.NodeType
-import common.token.Position
-import common.token.Token
-import common.token.TokenType
+import common.ast.*
+import common.token.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import parser.impl.ParserImpl
@@ -14,16 +11,8 @@ class ParserTest {
     @Test
 //    test 5
     fun test001_parseSingleNumber() {
-        val tokens = listOf(Token("5", TokenType.VALUE_NUMBER, Position(1, 1), Position(1, 1)))
-        val parser = buildParser(tokens)
-        val ast = parser.parse()
-
-        val expected = ASTNodeImpl(
-            Token("5", TokenType.VALUE_NUMBER, Position(1, 1), Position(1, 1)),
-            NodeType.NUMBER_NODE,
-            null
-        )
-        assert(ast.contains(expected))
+        val ast = parser.parse(input_001)
+        assert(ast.contains(output_001))
     }
 
     @Test
