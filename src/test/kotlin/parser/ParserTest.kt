@@ -11,51 +11,57 @@ class ParserTest {
     @Test
 //    test 5
     fun test001_parseSingleNumber() {
-        val ast = parser.parse(input_001)
-        assert(ast.contains(output_001))
+        val actual = parser.parse(input_001)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_001)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test 5 + 5
     fun test002_parseSingleOperation() {
-        val ast = parser.parse(input_002)
-        assert(ast.contains(output_002))
+        val actual = parser.parse(input_002)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_002)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test "hola" + "loco"
     fun test003_parseSingleStringOperator() {
-        val ast = parser.parse(input_003)
-        assert(ast.contains(output_003))
+        val actual = parser.parse(input_003)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_003)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test 5 * 5
     fun test004_parseSingleMultiplicativeOperation() {
-        val ast = parser.parse(input_004)
-        assert(ast.contains(output_004))
+        val actual = parser.parse(input_004)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_004)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test 5 / 5
     fun test005_parseSingleDivisionOperation() {
-
-        val ast = parser.parse(input_005)
-        assert(ast.contains(output_005))
+        val actual = parser.parse(input_005)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_005)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test let a : number ;
     fun test006_parseVariableDeclaration() {
-        val ast = parser.parse(input_006)
-        assert(ast.contains(output_006))
+        val actual = parser.parse(input_006)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_006)
+        assertEquals(expected,actual)
     }
 
     @Test
 //    test let a : number = 5 ;
     fun test007_parseExpression() {
-        val ast = parser.parse(input_007)
-        assert(ast.contains(output_007))
+        val actual = parser.parse(input_007)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_007)
+        assertEquals(expected,actual)
     }
 
     @Test
@@ -63,22 +69,25 @@ class ParserTest {
 //    let a : number = 5 ;
 //    5 + 5;
     fun test008_parseExpressionWithOperationOnOtherLine() {
-        val ast = parser.parse(input_008)
-        assertEquals(output_008, ast)
+        val actual = parser.parse(input_008)
+        val expected = ASTNodeImpl("Program", null, ProgramNode, output_008)
+        assertEquals(expected, actual)
     }
 
     @Test
 //    test println( 5 + 7 )
     fun test009_parseExpressionWithPrintLnAndOperatorInside(){
-        val ast= parser.parse(input_009);
-        assertEquals(output_009, ast)
+        val actual= parser.parse(input_009);
+        val expected= ASTNodeImpl("Program", null, ProgramNode, output_009)
+        assertEquals(expected, actual)
     }
 
     @Test
     //    test  (5 + 7)  *4
     fun test010_parseExpressionWithSimpleOperator(){
-        val ast= parser.parse(input_010);
-        assertEquals(output_010, ast)
+        val actual= parser.parse(input_010);
+        val expected= ASTNodeImpl("Program", null, ProgramNode, output_010)
+        assertEquals(expected, actual)
     }
 
 }
