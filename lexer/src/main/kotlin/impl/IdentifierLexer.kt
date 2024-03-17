@@ -12,12 +12,12 @@ class IdentifierLexer(private val constraints: List<String>) : Lexer {
 
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { matchResult ->
-            if (isValid(matchResult, code)) {
+            if (isMatch(matchResult, code)) {
                 createToken(matchResult, code, Identifier)
             } else null
         }.toList()
     }
 
-    private fun isValid(matchResult: MatchResult, code: String) =
+    private fun isMatch(matchResult: MatchResult, code: String) =
         !constraints.contains(matchResult.value) && !isInQuotes(matchResult, code)
 }
