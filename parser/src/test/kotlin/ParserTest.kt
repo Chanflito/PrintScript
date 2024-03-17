@@ -1,10 +1,7 @@
-package parser
-
 import common.ast.*
-import common.token.*
+import impl.ParserImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import parser.impl.ParserImpl
 
 class ParserTest {
     private val parser = ParserImpl()

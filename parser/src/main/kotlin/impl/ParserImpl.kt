@@ -1,9 +1,9 @@
-package parser.impl
+package impl
 
 import common.ast.*
 import common.token.*
-import parser.Parser
-import parser.util.*
+import Parser
+import util.*
 
 class ParserImpl(): Parser {
     private var index = 0;

@@ -1,4 +1,4 @@
-package parser.util
+package util
 
 import common.token.*
 

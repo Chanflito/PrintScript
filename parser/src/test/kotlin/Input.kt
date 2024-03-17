@@ -1,5 +1,3 @@
-package parser
-
 import common.token.*
 
 val input_001=listOf(Token("5", ValueNumber, Position(1, 1), Position(1, 1)))

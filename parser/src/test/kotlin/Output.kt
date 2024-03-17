@@ -1,5 +1,3 @@
-package parser
-
 import common.ast.*
 import common.token.*
 
