@@ -3,6 +3,7 @@ package impl
 import common.ast.*
 import common.token.*
 import Parser
+import ast.ASTNodeImpl
 import util.*
 
 class ParserImpl(): Parser {

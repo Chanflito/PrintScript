@@ -1,14 +1,18 @@
+import ast.ASTNodeImpl
 import common.ast.*
 import common.token.*
 
-val output_001= listOf(ASTNodeImpl(
+val output_001= listOf(
+    ASTNodeImpl(
     5.0,
     Token("5", ValueNumber, Position(1, 1), Position(1, 1)),
     NumberNode,
     null
-))
+)
+)
 
-val output_002 = listOf(ASTNodeImpl(
+val output_002 = listOf(
+    ASTNodeImpl(
     "+",
     Token("+", Plus, Position(1, 1), Position(1, 1)),
     OperatorNode,
@@ -26,9 +30,11 @@ val output_002 = listOf(ASTNodeImpl(
             null
         )
     )
-))
+)
+)
 
-val output_003=listOf(ASTNodeImpl(
+val output_003=listOf(
+    ASTNodeImpl(
     "+",
     Token("+", Plus, Position(1, 1), Position(1, 1)),
     OperatorNode,
@@ -46,7 +52,8 @@ val output_003=listOf(ASTNodeImpl(
             null
         )
     )
-))
+)
+)
 
 val output_004 = listOf( ASTNodeImpl(
     "*",
@@ -66,7 +73,8 @@ val output_004 = listOf( ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
 val output_005 = listOf( ASTNodeImpl(
     "/",
@@ -86,7 +94,8 @@ val output_005 = listOf( ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
 val output_006 = listOf( ASTNodeImpl(
     "a",
@@ -106,7 +115,8 @@ val output_006 = listOf( ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
 val output_007 = listOf( ASTNodeImpl(
     "=",
@@ -139,9 +149,11 @@ val output_007 = listOf( ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
-val output_008 = listOf(ASTNodeImpl(
+val output_008 = listOf(
+    ASTNodeImpl(
     "=",
     Token("=", Assignation, Position(1, 16), Position(1, 17)),
     AssignationNode,
@@ -190,9 +202,11 @@ val output_008 = listOf(ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
-val output_009 = listOf(ASTNodeImpl(
+val output_009 = listOf(
+    ASTNodeImpl(
     "println",
     Token("println",PrintlnKeyword,Position(1,1),Position(1,8)),
     PrintLnNode,
@@ -217,9 +231,11 @@ val output_009 = listOf(ASTNodeImpl(
             )
         )
     )
-));
+)
+);
 
-val output_010 = listOf(ASTNodeImpl(
+val output_010 = listOf(
+    ASTNodeImpl(
     "*",
     Token("*",Multiply,Position(1,6),Position(1,7)),
     OperatorNode,
@@ -250,7 +266,8 @@ val output_010 = listOf(ASTNodeImpl(
             null
         )
     )
-));
+)
+);
 
 val output_011 = listOf(
     ASTNodeImpl(

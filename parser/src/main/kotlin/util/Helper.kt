@@ -62,4 +62,12 @@ fun isPrintLn(token: Token?):Boolean{
     return token != null && token.tokenType == PrintlnKeyword
 }
 
-
+fun currentToken(list: List<Token>,index: Int): Token? {
+    return if (index < list.size) list[index] else null
+}
+//Returns new index and the last token consumed.
+fun consumeToken(list: List<Token>, index: Int): Pair<Token?, Int>{
+    val current = currentToken(list,index)
+    val nextIndex = index + 1;
+    return Pair(current, nextIndex)
+}

@@ -1,5 +1,7 @@
-package common.ast
+package ast
 
+import common.ast.ASTNode
+import common.ast.NodeType
 import common.token.Token
 
 data class ASTNodeImpl(
