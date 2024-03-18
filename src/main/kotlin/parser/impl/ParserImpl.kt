@@ -99,27 +99,27 @@ class ParserImpl(): Parser {
             ValueNumber -> {
                 val token = consumeToken(tokens)
                 val parsedValue = token?.value?.toDoubleOrNull();
-                ASTNodeImpl(parsedValue, token, NumberNode, null)
+                ASTNodeImpl(parsedValue, token, NumberNode, emptyList())
             }
             ValueString -> {
                 val token = consumeToken(tokens)
-                ASTNodeImpl(token?.value, token, StringNode, null)
+                ASTNodeImpl(token?.value, token, StringNode, emptyList())
             }
             LetKeyword -> {
                 val token = consumeToken(tokens)
-                ASTNodeImpl(token?.value, token, KeywordNode, null)
+                ASTNodeImpl(token?.value, token, KeywordNode, emptyList())
             }
             TypeNumber -> {
                 val token = consumeToken(tokens)
-                ASTNodeImpl(token?.value, token, TypeNode, null)
+                ASTNodeImpl(token?.value, token, TypeNode, emptyList())
             }
             TypeString -> {
                 val token = consumeToken(tokens)
-                ASTNodeImpl(token?.value, token, TypeNode, null)
+                ASTNodeImpl(token?.value, token, TypeNode, emptyList())
             }
             Identifier -> {
                 val token = consumeToken(tokens)
-                ASTNodeImpl(token?.value, token, IdentifierNode, null)
+                ASTNodeImpl(token?.value, token, IdentifierNode, emptyList())
             }
             LeftParenthesis -> {
                 consumeToken(tokens)

@@ -2,21 +2,80 @@ package interpreter
 import common.ast.ASTNodeImpl
 import common.ast.ProgramNode
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 
 class InterpreterTest {
     @Test
-    fun directSumAndPrint() {
+//    TEST
+//    println(5 + 7)
+    fun test001_directSumAndPrint() {
         val input = ASTNodeImpl("Program",null,ProgramNode,input_001)
         val interpreter = Interpreter()
         val results= interpreter.interpret(input)
-        assert(results[0] == 12)
+        assertEquals(12.0, results[0])
     }
     @Test
-    fun assignationAndPrintWithSum(){
+//    TEST
+//    a = 5
+//    b = 5
+//    println(a + b)
+    fun test002_assignVariablesNotInitializedAndTryToPrint(){
         val input = ASTNodeImpl("Program",null,ProgramNode,input_002)
         val interpreter = Interpreter()
-        val results= interpreter.interpret(input)
-        assert(results[0] == 10)
+        assertFails("Variable a not found"){
+            interpreter.interpret(input)
+        }
     }
+
+    @Test
+//    TEST
+//    let a: number = 5
+//    let b: number = 5
+//    println(a + b)
+    fun test003_assignVariablesAndPrint(){
+        val input = ASTNodeImpl("Program",null,ProgramNode,input_003)
+        val interpreter = Interpreter()
+        val results= interpreter.interpret(input)
+        assertEquals(10.0, results[0])
+    }
+
+    @Test
+//    TEST
+//    let a: number = 5
+//    let a: number = 5
+    fun test004_redeclareVariable(){
+        val input = ASTNodeImpl("Program",null,ProgramNode,input_004)
+        val interpreter = Interpreter()
+        assertFails("Variable a already declared"){
+            interpreter.interpret(input)
+        }
+
+    }
+
+    @Test
+//    TEST
+//    let a:string = "hola"
+//    a = "loco"
+//    println(a)
+    fun test005_reassignVariableAndPrintLn(){
+        val input = ASTNodeImpl("Program",null,ProgramNode,input_005)
+        val interpreter = Interpreter()
+        val results= interpreter.interpret(input)
+        assertEquals("loco", results[0] )
+    }
+
+    @Test
+//    TEST
+//    let a: string = "hola"
+//    let b: string = "loco"
+//    println(a + b)
+    fun test006_sumStringsAndPrint(){
+        val input = ASTNodeImpl("Program",null,ProgramNode,input_006)
+        val interpreter = Interpreter()
+        val results= interpreter.interpret(input)
+        assertEquals("holaloco", results[0] )
+    }
+
 }
