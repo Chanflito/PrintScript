@@ -17,7 +17,7 @@ import util.isLeftParenthesis
  */
 class PrintlnParser (private val startIndex:Int) : Parser {
     override fun parse(tokens: List<Token>): ASTNode {
-        val indexCopy=startIndex;
+        val indexCopy=startIndex
         return when(currentToken(tokens,indexCopy)?.tokenType){
             PrintlnKeyword->parsePrintLn(tokens,indexCopy)
             else->throw Exception("Invalid token")//Todo change this.
@@ -25,11 +25,11 @@ class PrintlnParser (private val startIndex:Int) : Parser {
     }
 
     private fun parsePrintLn(tokens:List<Token>,index:Int): ASTNode{
-        val consumeResult= consumeToken(tokens,index);
-        val token=consumeResult.first;
-        val newIndex=consumeResult.second;
+        val consumeResult= consumeToken(tokens,index)
+        val token=consumeResult.first
+        val newIndex=consumeResult.second
         require(isLeftParenthesis(currentToken(tokens,newIndex))){"Missing ( after method call"}
-        val childNode=ExpressionParser(index+1).parse(tokens);
+        val childNode=ExpressionParser(index+1).parse(tokens)
         return ASTNodeImpl("println",token,PrintLnNode,listOf(childNode))
     }
 }

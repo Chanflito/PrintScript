@@ -39,7 +39,7 @@ class ExpressionParser(private val startIndex: Int) : Parser {
             left = Pair(ASTNodeImpl(token.first?.value,token.first, OperatorNode, listOf(left.first, right.first)),right.second)
         }
 
-        return left;
+        return left
     }
     private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode,Int> {
         return when (val currentType = currentToken(tokens, index)?.tokenType) {
@@ -62,7 +62,7 @@ class ExpressionParser(private val startIndex: Int) : Parser {
             LeftParenthesis ->{
                 val consumeResult= consumeToken(tokens,index)
                 val innerExpression= parsePrimaryOperator(tokens, consumeResult.second)
-                val nextToken= consumeToken(tokens,innerExpression.second);
+                val nextToken= consumeToken(tokens,innerExpression.second)
                 require(isRightParenthesis(nextToken.first)){
                     "Unexpected token: expected ) after expression"
                 }

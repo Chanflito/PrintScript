@@ -74,7 +74,7 @@ val output_004 = listOf( ASTNodeImpl(
         )
     )
 )
-);
+)
 
 val output_005 = listOf( ASTNodeImpl(
     "/",
@@ -95,7 +95,7 @@ val output_005 = listOf( ASTNodeImpl(
         )
     )
 )
-);
+)
 
 val output_006 = listOf( ASTNodeImpl(
     "a",
@@ -116,7 +116,7 @@ val output_006 = listOf( ASTNodeImpl(
         )
     )
 )
-);
+)
 
 val output_007 = listOf( ASTNodeImpl(
     "=",
@@ -150,7 +150,7 @@ val output_007 = listOf( ASTNodeImpl(
         )
     )
 )
-);
+)
 
 val output_008 = listOf(
     ASTNodeImpl(
@@ -203,7 +203,7 @@ val output_008 = listOf(
         )
     )
 )
-);
+)
 
 val output_009 = listOf(
     ASTNodeImpl(
@@ -232,7 +232,7 @@ val output_009 = listOf(
         )
     )
 )
-);
+)
 
 val output_010 = listOf(
     ASTNodeImpl(
@@ -267,7 +267,7 @@ val output_010 = listOf(
         )
     )
 )
-);
+)
 
 val output_011 = listOf(
     ASTNodeImpl(
