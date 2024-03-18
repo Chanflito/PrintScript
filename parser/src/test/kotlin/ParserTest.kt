@@ -1,9 +1,11 @@
 import ast.ASTNodeImpl
 import common.ast.*
+import impl.DeclarationParser
 import impl.ExpressionParser
 import impl.ParserImpl
 import impl.PrintlnParser
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class ParserTest {
@@ -52,6 +54,7 @@ class ParserTest {
 //    test let a : number ;
     fun test006_parseVariableDeclaration() {
         val actual = parser.parse(input_006)
+        //val actual= DeclarationParser(0).parse(input_006)
         val expected = ASTNodeImpl("Program", null, ProgramNode, output_006)
         assertEquals(expected,actual)
     }
@@ -60,6 +63,7 @@ class ParserTest {
 //    test let a : number = 5 ;
     fun test007_parseExpression() {
         val actual = parser.parse(input_007)
+        ///val actual= DeclarationParser(0).parse(input_007)
         val expected = ASTNodeImpl("Program", null, ProgramNode, output_007)
         assertEquals(expected,actual)
     }
