@@ -27,48 +27,58 @@ class DeclarationParser (private val index: Int) : Parser {
                 val typeNode = currentToken(tokens, colonPair.second)
                 require(isType(typeNode)) { "Expected type after identifier" }
                 val continuesWithExpression= consumeToken(tokens,colonPair.second+1)
-                return when (continuesWithExpression.first?.tokenType) {
-                    Assignation -> ASTNodeImpl(
-                        continuesWithExpression.first?.value,
-                        continuesWithExpression.first,
-                        AssignationNode,
-                        listOf(
-                            ASTNodeImpl(
-                                identifierToken.first?.value,
-                                identifierToken.first,
-                                IdentifierNode,
-                                listOf(
-                                    letKeyword.first, ASTNodeImpl(
-                                        typeNode?.value,
-                                        typeNode,
-                                        TypeNode,
-                                        null
-                                    )
-                                )
-                            ),
-                            ExpressionParser(continuesWithExpression.second).parse(tokens)
-                        )
-                    )
-
-                    SemiColon -> ASTNodeImpl(
-                        identifierToken.first?.value,
-                        identifierToken.first,
-                        IdentifierNode,
-                        listOf(
-                            letKeyword.first,
-                            ASTNodeImpl(
-                                typeNode?.value, typeNode, TypeNode, null
-                            )
-                        )
-                    )
-                    //TODO handle here the possible chain of declarations
-                    else -> throw Exception("Expected = or ; after type")
-                }
+                return handlePossibleIdentifier(continuesWithExpression, identifierToken, letKeyword, typeNode, tokens)
             }
 
             else -> throw Exception("Expected identifier after keyword")
         }
     }
+
+    private fun handlePossibleIdentifier(
+        continuesWithExpression: Pair<Token?, Int>,
+        identifierToken: Pair<Token?, Int>,
+        letKeyword: Pair<ASTNode, Int>,
+        typeNode: Token?,
+        tokens: List<Token>
+    ) = when (continuesWithExpression.first?.tokenType) {
+        Assignation -> createAssignationNode(continuesWithExpression, identifierToken, letKeyword, typeNode, tokens)
+
+        SemiColon -> createIdentifierNode(identifierToken, letKeyword, typeNode)
+        //TODO handle here the possible chain of declarations
+        else -> throw Exception("Expected = or ; after type")
+    }
+
+    private fun createAssignationNode(
+        continuesWithExpression: Pair<Token?, Int>,
+        identifierToken: Pair<Token?, Int>,
+        letKeyword: Pair<ASTNode, Int>,
+        typeNode: Token?,
+        tokens: List<Token>
+    ) = ASTNodeImpl(
+        continuesWithExpression.first?.value,
+        continuesWithExpression.first,
+        AssignationNode,
+        listOf(
+            createIdentifierNode(identifierToken, letKeyword, typeNode),
+            ExpressionParser(continuesWithExpression.second).parse(tokens)
+        )
+    )
+
+    private fun createIdentifierNode(
+        identifierToken: Pair<Token?, Int>,
+        letKeyword: Pair<ASTNode, Int>,
+        typeNode: Token?
+    ) = ASTNodeImpl(
+        identifierToken.first?.value,
+        identifierToken.first,
+        IdentifierNode,
+        listOf(
+            letKeyword.first,
+            ASTNodeImpl(
+                typeNode?.value, typeNode, TypeNode, null
+            )
+        )
+    )
 
     private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode, Int> {
         return when (currentToken(tokens, index)?.tokenType) {
