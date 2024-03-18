@@ -61,7 +61,7 @@ class ParserImpl(): Parser {
         var left = parseMultiplicativeExpression(tokens)
         while (isAdditiveOperator(currentToken(tokens))){
             val token = consumeToken(tokens)
-            val right = parseMultiplicativeExpression(tokens);
+            val right = parseMultiplicativeExpression(tokens)
             left =  ASTNodeImpl(token?.value,token, OperatorNode, listOf(left, right))
         }
 
@@ -73,9 +73,9 @@ class ParserImpl(): Parser {
         val variable = consumeToken(tokens)
         when(variable?.tokenType){
             Identifier -> {
-                val colon = consumeToken(tokens);
+                val colon = consumeToken(tokens)
                 require(isColon(colon)){ "Expected : after identifier" }
-                val type = currentToken(tokens);
+                val type = currentToken(tokens)
                 require(isType(type)){"Expected type after identifier" }
                 return ASTNodeImpl(variable.value,variable, IdentifierNode, listOf(keyword, parsePrimaryExpression(tokens)))
             }
@@ -99,7 +99,7 @@ class ParserImpl(): Parser {
         return when (val currentType = currentToken(tokens)?.tokenType) {
             ValueNumber -> {
                 val token = consumeToken(tokens)
-                val parsedValue = token?.value?.toDoubleOrNull();
+                val parsedValue = token?.value?.toDoubleOrNull()
                 ASTNodeImpl(parsedValue, token, NumberNode, null)
             }
             ValueString -> {
