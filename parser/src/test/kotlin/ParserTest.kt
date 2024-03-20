@@ -1,5 +1,5 @@
 import ast.ASTNodeImpl
-import common.ast.*
+import ast.ProgramNode
 
 import impl.ParserImpl
 
@@ -50,7 +50,7 @@ class ParserTest {
     }
 
     @Test
-//    test let a : number ;
+    //    test let a : number ;
     fun test006_parseVariableDeclaration() {
         val actual = parser.parse(input_006)
         //val actual= DeclarationParser(0).parse(input_006)

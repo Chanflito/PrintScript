@@ -1,5 +1,4 @@
-import ast.ASTNodeImpl
-import common.ast.*
+import ast.*
 import common.token.*
 
 val output_001= listOf(

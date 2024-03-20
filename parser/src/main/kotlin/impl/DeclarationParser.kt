@@ -1,7 +1,7 @@
 package impl
 
 import Parser
-import ast.ASTNodeImpl
+import ast.*
 import common.ast.*
 import common.token.*
 import util.*
@@ -9,10 +9,10 @@ import util.*
 //Here should go assignations like let a : number= 7; only with let keyword
 class DeclarationParser (private val index: Int) : Parser {
     override fun parse(tokens: List<Token>): ASTNode {
-        val astNode= ASTNodeImpl("Program",null, ProgramNode, listOf())
+        //val astNode= ASTNodeImpl("Program",null, ProgramNode, listOf())
         val copyIndex = index
         return when (currentToken(tokens, copyIndex)?.tokenType) {
-            LetKeyword -> astNode.addChild(parseDeclarativeExpression(tokens, copyIndex))
+            LetKeyword -> parseDeclarativeExpression(tokens, copyIndex)
             else -> throw Exception("Invalid token")//Todo change this.
         }
     }

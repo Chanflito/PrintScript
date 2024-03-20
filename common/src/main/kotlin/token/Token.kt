@@ -40,4 +40,3 @@ object Minus : TokenType
 object Multiply : TokenType
 
 object Divide : TokenType
-

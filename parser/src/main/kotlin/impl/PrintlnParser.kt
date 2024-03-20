@@ -4,7 +4,7 @@ import common.ast.ASTNode
 import common.token.Token
 import Parser
 import ast.ASTNodeImpl
-import common.ast.PrintLnNode
+import ast.PrintLnNode
 import common.token.PrintlnKeyword
 import util.consumeToken
 import util.currentToken
@@ -30,6 +30,6 @@ class PrintlnParser (private val startIndex:Int) : Parser {
         val newIndex=consumeResult.second
         require(isLeftParenthesis(currentToken(tokens,newIndex))){"Missing ( after method call"}
         val childNode=ExpressionParser(index+1).parse(tokens)
-        return ASTNodeImpl("println",token,PrintLnNode,listOf(childNode))
+        return ASTNodeImpl("println",token, PrintLnNode,listOf(childNode))
     }
 }

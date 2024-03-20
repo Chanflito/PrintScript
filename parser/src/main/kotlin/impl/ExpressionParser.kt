@@ -1,7 +1,7 @@
 package impl
 
 import Parser
-import ast.ASTNodeImpl
+import ast.*
 import common.ast.*
 import common.token.*
 import util.*
@@ -38,7 +38,6 @@ class ExpressionParser(private val startIndex: Int) : Parser {
             val right = parseMember(tokens,index)
             left = Pair(ASTNodeImpl(token.first?.value,token.first, OperatorNode, listOf(left.first, right.first)),right.second)
         }
-
         return left
     }
     private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode,Int> {
@@ -47,7 +46,7 @@ class ExpressionParser(private val startIndex: Int) : Parser {
                 val consumeResult = consumeToken(tokens, index)
                 val token = consumeResult.first
                 val parsedValue = token?.value?.toDoubleOrNull()
-                Pair(ASTNodeImpl(parsedValue,token,NumberNode,null),consumeResult.second)
+                Pair(ASTNodeImpl(parsedValue,token, NumberNode,null),consumeResult.second)
             }
             ValueString -> {
                 val consumeResult = consumeToken(tokens,index)
