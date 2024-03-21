@@ -1,7 +1,5 @@
-package interpreter
+import ast.*
 import common.ast.ASTNodeImpl
-import common.ast.NumberNode
-import common.ast.OperatorNode
 import common.ast.*
 import common.token.*
 

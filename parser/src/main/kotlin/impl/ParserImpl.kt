@@ -3,12 +3,13 @@ package impl
 import common.ast.*
 import common.token.*
 import Parser
+import ast.*
 import util.*
 
 class ParserImpl(): Parser {
     private var index = 0;
     override fun parse(tokens: List<Token>): ASTNode {
-        var astNode= ASTNodeImpl("Program",null,ProgramNode, listOf())
+        var astNode= ASTNodeImpl("Program",null, ProgramNode, listOf())
         while (!endOfFile(tokens, index)){
             val currentToken = currentToken(tokens)
             if(isSemiColon(currentToken)){
@@ -43,7 +44,7 @@ class ParserImpl(): Parser {
         while (isAssignation(currentToken(tokens))){
             val token = consumeToken(tokens);
             val right = parseExpression(tokens);
-            left = ASTNodeImpl("=",token,AssignationNode, listOf(left, right))
+            left = ASTNodeImpl("=",token, AssignationNode, listOf(left, right))
         }
         return left;
     }
@@ -88,7 +89,7 @@ class ParserImpl(): Parser {
         while (isMultiplicativeOperator(currentToken(tokens))){
             val token = consumeToken(tokens);
             val right = parsePrimaryExpression(tokens);
-            left =  ASTNodeImpl(token?.value,token,OperatorNode, listOf(left, right))
+            left =  ASTNodeImpl(token?.value,token, OperatorNode, listOf(left, right))
         }
 
         return left;

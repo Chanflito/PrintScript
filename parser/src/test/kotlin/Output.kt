@@ -1,3 +1,4 @@
+import ast.*
 import common.ast.*
 import common.token.*
 

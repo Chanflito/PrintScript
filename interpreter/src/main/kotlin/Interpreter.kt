@@ -1,8 +1,7 @@
-package interpreter
+import ast.*
 import common.ast.*
-import interpreter.util.isIdentifier
-import interpreter.util.isKeyword
-import interpreter.util.isValueString
+import util.isIdentifier
+import util.isKeyword
 
 class Interpreter() {
 

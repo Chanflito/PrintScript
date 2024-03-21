@@ -1,7 +1,7 @@
-package interpreter.util
+package util
 
+import ast.*
 import common.ast.ASTNode
-import common.ast.*
 
 fun isType(node: ASTNode): Boolean{
     return node.nodeType is TypeNode

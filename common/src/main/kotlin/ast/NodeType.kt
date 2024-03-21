@@ -1,4 +1,4 @@
-package common.ast
+package ast
 
 interface NodeType;
 
