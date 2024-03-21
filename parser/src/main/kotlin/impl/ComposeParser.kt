@@ -25,7 +25,7 @@ class ComposeParser(private val index: Int=0, private val astNode: ASTNodeImpl =
     }
 
     private fun handleResult(tokens: List<Token>): Pair<ASTNode, Int> {
-        return when (currentToken(tokens, index)?.tokenType) {//TODO CHANGE THIS HARDCODED VALUES
+        return when (currentToken(tokens, index)?.tokenType) {
             is PrintlnKeyword -> {
                 parseWith(tokens,PrintlnParser(index))
             }
