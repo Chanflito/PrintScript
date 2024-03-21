@@ -7,7 +7,7 @@ import lexer.builder.LexerBuilderImp
 import lexer.impl.*
 
 fun createToken(matchResult: MatchResult, code: String, tokenType: TokenType): Token {
-    val value = matchResult.value
+    val value = matchResult.value.replace("\"", "")
     val startIndex = matchResult.range.first
     val endIndex = matchResult.range.last + 1
     val startPosition = calculatePosition(code, startIndex)
