@@ -8,8 +8,7 @@ import util.*
 
 //Here should go assignations like let a : number= 7; only with let keyword
 class DeclarationParser (private val index: Int) : Parser {
-    override fun parse(tokens: List<Token>): ASTNode {
-        //val astNode= ASTNodeImpl("Program",null, ProgramNode, listOf())
+    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
         val copyIndex = index
         return when (currentToken(tokens, copyIndex)?.tokenType) {
             LetKeyword -> parseDeclarativeExpression(tokens, copyIndex)
@@ -17,7 +16,7 @@ class DeclarationParser (private val index: Int) : Parser {
         }
     }
 
-    private fun parseDeclarativeExpression(tokens: List<Token>, copyIndex: Int): ASTNode {
+    private fun parseDeclarativeExpression(tokens: List<Token>, copyIndex: Int): Pair<ASTNode,Int> {
         val letKeyword = parseMember(tokens, copyIndex)
         val identifierToken = consumeToken(tokens, letKeyword.second)
         when (identifierToken.first?.tokenType) {
@@ -40,7 +39,7 @@ class DeclarationParser (private val index: Int) : Parser {
         letKeyword: Pair<ASTNode, Int>,
         typeNode: Token?,
         tokens: List<Token>
-    ) = when (continuesWithExpression.first?.tokenType) {
+    ) : Pair<ASTNode,Int> = when (continuesWithExpression.first?.tokenType) {
         Assignation -> createAssignationNode(continuesWithExpression, identifierToken, letKeyword, typeNode, tokens)
 
         SemiColon -> createIdentifierNode(identifierToken, letKeyword, typeNode)
@@ -54,21 +53,22 @@ class DeclarationParser (private val index: Int) : Parser {
         letKeyword: Pair<ASTNode, Int>,
         typeNode: Token?,
         tokens: List<Token>
-    ) = ASTNodeImpl(
+    ) : Pair<ASTNode,Int> =Pair(ASTNodeImpl(
         continuesWithExpression.first?.value,
         continuesWithExpression.first,
         AssignationNode,
         listOf(
-            createIdentifierNode(identifierToken, letKeyword, typeNode),
-            ExpressionParser(continuesWithExpression.second).parse(tokens)
-        )
-    )
+            createIdentifierNode(identifierToken, letKeyword, typeNode).first,
+            ExpressionParser(continuesWithExpression.second).parse(tokens).first
+        )),
+        continuesWithExpression.second)
+
 
     private fun createIdentifierNode(
         identifierToken: Pair<Token?, Int>,
         letKeyword: Pair<ASTNode, Int>,
         typeNode: Token?
-    ) = ASTNodeImpl(
+    ) : Pair<ASTNode,Int> = Pair(ASTNodeImpl(
         identifierToken.first?.value,
         identifierToken.first,
         IdentifierNode,
@@ -77,7 +77,7 @@ class DeclarationParser (private val index: Int) : Parser {
             ASTNodeImpl(
                 typeNode?.value, typeNode, TypeNode, null
             )
-        )
+        )), identifierToken.second+1
     )
 
     private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode, Int> {

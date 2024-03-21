@@ -9,9 +9,9 @@ import util.*
 //Here should go expressions like 5+5, 7+2
 class ExpressionParser(private val startIndex: Int) : Parser {
 
-    override fun parse(tokens: List<Token>): ASTNode {
+    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
         val indexCopy = startIndex
-        return parsePrimaryOperator(tokens, indexCopy).first
+        return parsePrimaryOperator(tokens, indexCopy)
     }
 
 
@@ -34,8 +34,8 @@ class ExpressionParser(private val startIndex: Int) : Parser {
     private fun parseSecondaryOperator(tokens: List<Token>, index: Int): Pair<ASTNode,Int>{
         var left = parseMember(tokens,index)
         while (isMultiplicativeOperator(currentToken(tokens,left.second))){
-            val token = consumeToken(tokens,index)
-            val right = parseMember(tokens,index)
+            val token = consumeToken(tokens,left.second)
+            val right = parseMember(tokens,token.second)
             left = Pair(ASTNodeImpl(token.first?.value,token.first, OperatorNode, listOf(left.first, right.first)),right.second)
         }
         return left

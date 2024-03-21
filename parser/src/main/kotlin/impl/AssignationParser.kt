@@ -12,20 +12,22 @@ import util.consumeToken
 
 //Here should go assignations like a=7
 class AssignationParser (private val startIndex: Int) : Parser {
-    override fun parse(tokens: List<Token>): ASTNode {
+    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
         val index = startIndex
         val identifierToken = consumeToken(tokens, index)
         require(getToken(identifierToken)?.tokenType == Identifier) { "Expected identifier" }
         val assignationToken = consumeToken(tokens, getIndex(identifierToken))
         require(getToken(assignationToken)?.tokenType == Assignation) { "Expected assignation" }
-        return ASTNodeImpl(
-            "=",
-            getToken(assignationToken),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(getToken(identifierToken)?.value, getToken(identifierToken), IdentifierNode, null),
-                ExpressionParser(getIndex(assignationToken)).parse(tokens)
-            )
+        return Pair(
+            ASTNodeImpl(
+                "=",
+                getToken(assignationToken),
+                AssignationNode,
+                listOf(
+                    ASTNodeImpl(getToken(identifierToken)?.value, getToken(identifierToken), IdentifierNode, null),
+                    ExpressionParser(getIndex(assignationToken)).parse(tokens).first
+                ),
+            ), getIndex(assignationToken)
         )
     }
 
