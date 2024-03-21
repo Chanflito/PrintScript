@@ -27,42 +27,32 @@ class ComposeParser(private val index: Int=0, private val astNode: ASTNodeImpl =
     private fun handleResult(tokens: List<Token>): Pair<ASTNode, Int> {
         return when (currentToken(tokens, index)?.tokenType) {//TODO CHANGE THIS HARDCODED VALUES
             is PrintlnKeyword -> {
-                val printLnParser = PrintlnParser(index)
-                val result = printLnParser.parse(tokens)
-                val newIndex = result.second
-                val newAstNode = astNode.addChild(result.first)
-                ComposeParser(newIndex, newAstNode).parse(tokens)
+                parseWith(tokens,PrintlnParser(index))
             }
 
             is ValueString, ValueNumber, LeftParenthesis -> {
-                val expressionParser = ExpressionParser(index)
-                val result = expressionParser.parse(tokens)
-                val newIndex = result.second
-                val newAstNode = astNode.addChild(result.first)
-                ComposeParser(newIndex, newAstNode).parse(tokens)
-
+                parseWith(tokens,ExpressionParser(index))
             }
 
             is LetKeyword -> {
-                val declarativeParser = DeclarationParser(index)
-                val result = declarativeParser.parse(tokens)
-                val newIndex = result.second
-                val newAstNode = astNode.addChild(result.first)
-                ComposeParser(newIndex, newAstNode).parse(tokens)
+               parseWith(tokens,DeclarationParser(index))
             }
 
             is Identifier -> {
-                val assignationParser = AssignationParser(index)
-                val result = assignationParser.parse(tokens)
-                val newIndex = result.second
-                val newAstNode = astNode.addChild(result.first)
-                ComposeParser(newIndex, newAstNode).parse(tokens)
+                parseWith(tokens,AssignationParser(index))
             }
 
             else -> {
                 throw Exception("Invalid token")
             }
         }
+    }
+
+    private fun parseWith(tokens: List<Token>, parser: Parser): Pair<ASTNode, Int> {
+        val result = parser.parse(tokens)
+        val newIndex = result.second
+        val newAstNode = astNode.addChild(result.first)
+        return ComposeParser(newIndex, newAstNode).parse(tokens)
     }
 
 
