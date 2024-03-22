@@ -42,8 +42,8 @@ class ExpressionParser (private val parsers: Map<TokenType, Parser<InputContext>
         return left
     }
     private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode, Int> {
-        val currentType = currentToken(tokens, index)?.tokenType
-        val parserFound = parsers[currentType] ?: throw Exception("Invalid token")
+        val currentToken = currentToken(tokens, index) ?: throw Exception(NoTokenFoundErrorMessage(index).toString())
+        val parserFound = parsers[currentToken.tokenType] ?: throw Exception(InvalidTokenErrorMessage(currentToken).toString())
         return parserFound.parse(InputContext(tokens, index))
     }
 

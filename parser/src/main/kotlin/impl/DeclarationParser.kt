@@ -8,7 +8,7 @@ import common.token.*
 import util.*
 
 //Here should go assignations like let a : number= 7; only with let keyword
-class DeclarationParser : Parser<InputContext> {// This parser is so long
+class DeclarationParser : Parser<InputContext> {//TODO:  This parser is so long, check possible refactor.
     override fun parse(input: InputContext): Pair<ASTNode,Int> {
         val copyIndex = input.index
         val token=currentToken(input.tokens, copyIndex) ?: throw Exception(NoTokenFoundErrorMessage(copyIndex).toString())
