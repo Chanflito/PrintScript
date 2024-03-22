@@ -6,14 +6,13 @@ import ast.ASTNodeImpl
 import ast.IdentifierNode
 import common.ast.ASTNode
 import common.token.Identifier
-import util.consumeToken
-import util.currentToken
+import util.*
 
 class IdentifierParser  : Parser<InputContext>{
     override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val currentType= currentToken(input.tokens, input.index)?.tokenType
-        if (currentType!= Identifier){
-            throw Exception("Unexpected token: $currentType")
+        val currentToken= currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+        if (currentToken.tokenType!= Identifier){
+            throw Exception(ExpectedTokenErrorMessage("Identifier",currentToken).toString())
         }
         val consumeResult= consumeToken(input.tokens,input.index)
         val token = consumeResult.first

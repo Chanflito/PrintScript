@@ -4,23 +4,30 @@ import InputContext
 import Parser
 import common.ast.ASTNode
 import common.token.LeftParenthesis
-import util.EXPRESSION_PARSER_MAP
-import util.consumeToken
-import util.currentToken
-import util.isRightParenthesis
+import common.token.Token
+import util.*
 
 class LeftParenthesisParser : Parser<InputContext>{
     override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val currentType= currentToken(input.tokens, input.index)?.tokenType
-        if (currentType!=LeftParenthesis){
-            throw Exception("Unexpected token: $currentType")
+        val currentToken= currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+        if (currentToken.tokenType!=LeftParenthesis){
+            throw Exception(ExpectedTokenErrorMessage("(",currentToken).toString())
         }
         val consumeResult= consumeToken(input.tokens,input.index)
         val innerExpression= ExpressionParser(EXPRESSION_PARSER_MAP).parse(InputContext(input.tokens, consumeResult.second))
-        val nextToken= consumeToken(input.tokens,innerExpression.second)
-        require(isRightParenthesis(nextToken.first)){
-            "Unexpected token: expected ) after expression"
+        val consumeTokenResult= consumeToken(input.tokens,innerExpression.second)
+        val token= consumeTokenResult.first
+        val index= consumeTokenResult.second
+        verifyIfRightParenthesisExists(token, innerExpression)
+        return Pair(innerExpression.first,index)
+    }
+
+    private fun verifyIfRightParenthesisExists(token: Token?, innerExpression: Pair<ASTNode, Int>) {
+        require(isRightParenthesis(token)) {
+            when {
+                token == null -> throw Exception(NoTokenFoundErrorMessage(innerExpression.second).toString())
+                else -> throw Exception(ExpectedTokenErrorMessage(")", token).toString())
+            }
         }
-        return Pair(innerExpression.first,nextToken.second)
     }
 }
