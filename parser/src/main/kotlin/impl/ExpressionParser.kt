@@ -8,7 +8,7 @@ import common.token.*
 import util.*
 
 //Here should go expressions like 5+5, 7+2
-class ExpressionParser : Parser<InputContext> {
+class ExpressionParser (private val parsers: Map<TokenType, Parser<InputContext>> = EXPRESSION_PARSER_MAP): Parser<InputContext> {
 
     override fun parse(input: InputContext): Pair<ASTNode,Int> {
         val indexCopy = input.index
@@ -41,34 +41,10 @@ class ExpressionParser : Parser<InputContext> {
         }
         return left
     }
-    private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode,Int> {
-        return when (val currentType = currentToken(tokens, index)?.tokenType) {
-            ValueNumber -> {
-                val consumeResult = consumeToken(tokens, index)
-                val token = consumeResult.first
-                val parsedValue = token?.value?.toDoubleOrNull()
-                Pair(ASTNodeImpl(parsedValue,token, NumberNode,null),consumeResult.second)
-            }
-            ValueString -> {
-                val consumeResult = consumeToken(tokens,index)
-                val token = consumeResult.first
-                Pair(ASTNodeImpl(token?.value, token, StringNode, null),consumeResult.second)
-            }
-            Identifier ->{
-                val consumeResult=consumeToken(tokens,index)
-                val token = consumeResult.first
-                Pair(ASTNodeImpl(token?.value, token, IdentifierNode, null),consumeResult.second)
-            }
-            LeftParenthesis ->{
-                val consumeResult= consumeToken(tokens,index)
-                val innerExpression= parsePrimaryOperator(tokens, consumeResult.second)
-                val nextToken= consumeToken(tokens,innerExpression.second)
-                require(isRightParenthesis(nextToken.first)){
-                    "Unexpected token: expected ) after expression"
-                }
-                return Pair(innerExpression.first,nextToken.second)
-            }
-            else -> throw Exception("Unexpected token: $currentType")
-        }
+    private fun parseMember(tokens: List<Token>, index: Int): Pair<ASTNode, Int> {
+        val currentType = currentToken(tokens, index)?.tokenType
+        val parserFound = parsers[currentType] ?: throw Exception("Invalid token")
+        return parserFound.parse(InputContext(tokens, index))
     }
+
 }

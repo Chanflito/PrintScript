@@ -1,6 +1,5 @@
 package util
 
-import Parser
 import common.token.*
 import impl.*
 
@@ -78,10 +77,16 @@ fun createComposeParser() : ComposeParser {
     return ComposeParser(
         mapOf(
             PrintlnKeyword to PrintlnParser(),
-            ValueString to ExpressionParser(),
-            ValueNumber to ExpressionParser(),
-            LeftParenthesis to ExpressionParser(),
+            ValueString to ExpressionParser(EXPRESSION_PARSER_MAP),
+            ValueNumber to ExpressionParser(EXPRESSION_PARSER_MAP),
+            LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
             LetKeyword to DeclarationParser(),
             Identifier to AssignationParser(),
         ))
 }
+val EXPRESSION_PARSER_MAP= mapOf(
+    ValueNumber to ValueNumberParser(),
+    ValueString to ValueStringParser(),
+    LeftParenthesis to LeftParenthesisParser(),
+    Identifier to IdentifierParser()
+)

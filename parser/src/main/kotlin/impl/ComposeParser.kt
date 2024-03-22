@@ -29,16 +29,12 @@ class ComposeParser(
     }
 
 
-
     private fun handleResult (input: InputContext) :Pair<ASTNode, Int>{
         val result=currentToken(input.tokens,input.index)?.tokenType
-        val parserFound= parsers[result];
-        if (parserFound!=null){
-            return parseWith(input, parserFound)
-        }
-        throw Exception("Invalid token")
-
+        val parserFound= parsers[result] ?: throw Exception("Invalid token");
+        return parseWith(input, parserFound)
     }
+
     private fun parseWith(input: InputContext, parser: Parser<InputContext>): Pair<ASTNode, Int> {
         val result = parser.parse(InputContext(input.tokens, input.index))
         val newIndex = result.second
