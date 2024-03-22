@@ -1,5 +1,6 @@
 package impl
 
+import InputContext
 import Parser
 import ast.ASTNodeImpl
 import ast.ProgramNode
@@ -8,52 +9,41 @@ import common.token.*
 import util.currentToken
 import util.endOfFile
 
-class ComposeParser(private val index: Int=0, private val astNode: ASTNodeImpl = ASTNodeImpl("Program", null, ProgramNode, listOf())) :
-    Parser {
+class ComposeParser(
+    private val parsers: Map<TokenType, Parser<InputContext>>,
+    private val astNode: ASTNodeImpl = ASTNodeImpl("Program", null, ProgramNode, listOf())
+) :
+    Parser<InputContext> {
 
-    override fun parse(tokens: List<Token>): Pair<ASTNode, Int> {
-        val indexCopy=index+1
-        if (tokens.size==1 && !endOfFile(tokens,index)) return handleResult(tokens)
-        if (endOfFile(tokens, indexCopy) || currentToken(tokens,indexCopy)==null){
+    override fun parse(input: InputContext): Pair<ASTNode, Int> {
+        val indexCopy=input.index+1
+        if (input.tokens.size==1 && !endOfFile(input.tokens,input.index)) return handleResult(input)
+        if (endOfFile(input.tokens, indexCopy) || currentToken(input.tokens,indexCopy)==null){
             return Pair(astNode, indexCopy)
         }
-        return if (tokens[indexCopy].tokenType is SemiColon){
-            ComposeParser(indexCopy +1 ,astNode).parse(tokens)
+        return if (input.tokens[indexCopy].tokenType is SemiColon){
+            ComposeParser(parsers,astNode).parse(InputContext(input.tokens,indexCopy +1))
         } else{
-            handleResult(tokens)
+            handleResult(input)
         }
     }
 
-    private fun handleResult(tokens: List<Token>): Pair<ASTNode, Int> {
-        return when (currentToken(tokens, index)?.tokenType) {
-            is PrintlnKeyword -> {
-                parseWith(tokens,PrintlnParser(index))
-            }
 
-            is ValueString, ValueNumber, LeftParenthesis -> {
-                parseWith(tokens,ExpressionParser(index))
-            }
 
-            is LetKeyword -> {
-               parseWith(tokens,DeclarationParser(index))
-            }
-
-            is Identifier -> {
-                parseWith(tokens,AssignationParser(index))
-            }
-
-            else -> {
-                throw Exception("Invalid token")
-            }
+    private fun handleResult (input: InputContext) :Pair<ASTNode, Int>{
+        val result=currentToken(input.tokens,input.index)?.tokenType
+        val parserFound= parsers[result];
+        if (parserFound!=null){
+            return parseWith(input, parserFound)
         }
-    }
+        throw Exception("Invalid token")
 
-    private fun parseWith(tokens: List<Token>, parser: Parser): Pair<ASTNode, Int> {
-        val result = parser.parse(tokens)
+    }
+    private fun parseWith(input: InputContext, parser: Parser<InputContext>): Pair<ASTNode, Int> {
+        val result = parser.parse(InputContext(input.tokens, input.index))
         val newIndex = result.second
         val newAstNode = astNode.addChild(result.first)
-        return ComposeParser(newIndex, newAstNode).parse(tokens)
+        return ComposeParser(parsers, newAstNode).parse(InputContext(input.tokens, newIndex))
     }
-
 
 }

@@ -1,5 +1,6 @@
 package impl
 
+import InputContext
 import common.ast.ASTNode
 import common.token.Token
 import Parser
@@ -15,11 +16,11 @@ import util.isLeftParenthesis
 * println(1+1) is valid
 * println(a + b) where a and b are variables is valid
  */
-class PrintlnParser (private val startIndex:Int) : Parser {
-    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
-        val indexCopy=startIndex
-        return when(currentToken(tokens,indexCopy)?.tokenType){
-            PrintlnKeyword->parsePrintLn(tokens,indexCopy)
+class PrintlnParser () : Parser<InputContext> {
+    override fun parse(input: InputContext): Pair<ASTNode,Int> {
+        val indexCopy=input.index
+        return when(currentToken(input.tokens,indexCopy)?.tokenType){
+            PrintlnKeyword->parsePrintLn(input.tokens,indexCopy)
             else->throw Exception("Invalid token")//Todo change this.
         }
     }
@@ -29,7 +30,7 @@ class PrintlnParser (private val startIndex:Int) : Parser {
         val token=consumeResult.first
         val newIndex=consumeResult.second
         require(isLeftParenthesis(currentToken(tokens,newIndex))){"Missing ( after method call"}
-        val childNode=ExpressionParser(index+1).parse(tokens)
+        val childNode=ExpressionParser().parse(InputContext(tokens,index+1));
         return Pair(ASTNodeImpl(token?.value,token, PrintLnNode, listOf(childNode.first)),childNode.second)
     }
 }

@@ -1,6 +1,8 @@
 package util
 
+import Parser
 import common.token.*
+import impl.*
 
 fun endOfFile(tokens: List<Token>, currentIndex: Int): Boolean {
     return currentIndex > (tokens.size - 1);
@@ -70,4 +72,16 @@ fun consumeToken(list: List<Token>, index: Int): Pair<Token?, Int>{
     val current = currentToken(list,index)
     val nextIndex = index + 1;
     return Pair(current, nextIndex)
+}
+
+fun createComposeParser() : ComposeParser {
+    return ComposeParser(
+        mapOf(
+            PrintlnKeyword to PrintlnParser(),
+            ValueString to ExpressionParser(),
+            ValueNumber to ExpressionParser(),
+            LeftParenthesis to ExpressionParser(),
+            LetKeyword to DeclarationParser(),
+            Identifier to AssignationParser(),
+        ))
 }

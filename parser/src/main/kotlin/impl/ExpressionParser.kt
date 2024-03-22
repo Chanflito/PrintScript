@@ -1,5 +1,6 @@
 package impl
 
+import InputContext
 import Parser
 import ast.*
 import common.ast.*
@@ -7,11 +8,11 @@ import common.token.*
 import util.*
 
 //Here should go expressions like 5+5, 7+2
-class ExpressionParser(private val startIndex: Int) : Parser {
+class ExpressionParser : Parser<InputContext> {
 
-    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
-        val indexCopy = startIndex
-        return parsePrimaryOperator(tokens, indexCopy)
+    override fun parse(input: InputContext): Pair<ASTNode,Int> {
+        val indexCopy = input.index
+        return parsePrimaryOperator(input.tokens, indexCopy)
     }
 
 

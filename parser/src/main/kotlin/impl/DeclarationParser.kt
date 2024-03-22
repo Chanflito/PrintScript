@@ -1,17 +1,18 @@
 package impl
 
 import Parser
+import InputContext
 import ast.*
 import common.ast.*
 import common.token.*
 import util.*
 
 //Here should go assignations like let a : number= 7; only with let keyword
-class DeclarationParser (private val index: Int) : Parser {
-    override fun parse(tokens: List<Token>): Pair<ASTNode,Int> {
-        val copyIndex = index
-        return when (currentToken(tokens, copyIndex)?.tokenType) {
-            LetKeyword -> parseDeclarativeExpression(tokens, copyIndex)
+class DeclarationParser : Parser<InputContext> {
+    override fun parse(input: InputContext): Pair<ASTNode,Int> {
+        val copyIndex = input.index
+        return when (currentToken(input.tokens, copyIndex)?.tokenType) {
+            LetKeyword -> parseDeclarativeExpression(input.tokens, copyIndex)
             else -> throw Exception("Invalid token")//Todo change this.
         }
     }
@@ -52,17 +53,15 @@ class DeclarationParser (private val index: Int) : Parser {
         identifierToken: Pair<Token?, Int>,
         letKeyword: Pair<ASTNode, Int>,
         typeNode: Token?,
-        tokens: List<Token>
-    ) : Pair<ASTNode,Int> =Pair(ASTNodeImpl(
+        tokens: List<Token>) : Pair<ASTNode,Int> =Pair(ASTNodeImpl(
         continuesWithExpression.first?.value,
         continuesWithExpression.first,
         AssignationNode,
         listOf(
             createIdentifierNode(identifierToken, letKeyword, typeNode).first,
-            ExpressionParser(continuesWithExpression.second).parse(tokens).first
+            ExpressionParser().parse(InputContext(tokens,continuesWithExpression.second)).first
         )),
         continuesWithExpression.second)
-
 
     private fun createIdentifierNode(
         identifierToken: Pair<Token?, Int>,
