@@ -38,7 +38,7 @@ val output_008 = listOf(
     Token("a", Identifier, Position(2, 10), Position(2, 11)),
     Token(")", RightParenthesis, Position(2, 11), Position(2, 12))
 
-);
+)
 
 val output_009 = listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
@@ -56,7 +56,7 @@ val output_009 = listOf(
     Token("+", Plus, Position(1, 51), Position(1, 52)),
     Token("\"aaalet1\"", ValueString, Position(1, 53), Position(1, 62)),
     Token(";", SemiColon, Position(1, 62), Position(1, 63))
-);
+)
 
 val output_010 = listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
@@ -84,7 +84,8 @@ val output_010 = listOf(
     Token(
         ";", SemiColon, Position(3, 32), Position(3, 33)
     )
-);
+)
+
 val output_011 = listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
     Token("a", Identifier, Position(1, 5), Position(1, 6)),
@@ -108,4 +109,4 @@ val output_011 = listOf(
     Token(
         ";", SemiColon, Position(3, 10), Position(3, 11)
     )
-);
+)

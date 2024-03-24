@@ -44,7 +44,7 @@ val input_007=listOf(
     Token("=", Assignation, Position(1, 16), Position(1, 17)),
     Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
     Token(";", SemiColon, Position(1, 19), Position(1, 20))
-);
+)
 
 val input_008=listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
@@ -58,7 +58,7 @@ val input_008=listOf(
     Token("+", Plus, Position(2, 3), Position(2, 4)),
     Token("5", ValueNumber, Position(2, 5), Position(2, 6)),
     Token(";", SemiColon, Position(2, 7), Position(2, 8))
-);
+)
 
 val input_009=listOf(
     Token("println", PrintlnKeyword, Position(1,1), Position(1,8)),

@@ -1,9 +1,11 @@
 package edu.austral.ingsis.gradle.parser.util
 
 import edu.austral.ingsis.gradle.common.token.*
+import edu.austral.ingsis.gradle.parser.impl.*
+
 
 fun endOfFile(tokens: List<Token>, currentIndex: Int): Boolean {
-    return currentIndex > (tokens.size - 1);
+    return currentIndex > (tokens.size - 1)
 }
 
 fun isColon(token: Token?): Boolean {
@@ -62,4 +64,32 @@ fun isPrintLn(token: Token?):Boolean{
     return token != null && token.tokenType == PrintlnKeyword
 }
 
+fun currentToken(list: List<Token>,index: Int): Token? {
+    return if (index < list.size) list[index] else null
+}
 
+
+//Returns new index and the last token consumed.
+fun consumeToken(list: List<Token>, index: Int): Pair<Token?, Int>{
+    val current = currentToken(list,index)
+    val nextIndex = index + 1
+    return Pair(current, nextIndex)
+}
+
+fun createComposeParser() : ComposeParser {
+    return ComposeParser(
+        mapOf(
+            PrintlnKeyword to PrintlnParser(),
+            ValueString to ExpressionParser(EXPRESSION_PARSER_MAP),
+            ValueNumber to ExpressionParser(EXPRESSION_PARSER_MAP),
+            LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
+            LetKeyword to DeclarationParser(),
+            Identifier to AssignationParser(),
+        ))
+}
+val EXPRESSION_PARSER_MAP= mapOf(
+    ValueNumber to ValueNumberParser(),
+    ValueString to ValueStringParser(),
+    LeftParenthesis to LeftParenthesisParser(),
+    Identifier to IdentifierParser()
+)

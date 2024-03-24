@@ -1,6 +1,7 @@
+
 package edu.austral.ingsis.gradle.common.ast
 
-interface NodeType;
+interface NodeType
 
 object NumberNode: NodeType
 
@@ -8,7 +9,7 @@ object OperatorNode: NodeType
 
 object AssignationNode: NodeType
 
-object TypeNode: NodeType;
+object TypeNode: NodeType
 
 object PrintLnNode: NodeType
 

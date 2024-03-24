@@ -31,7 +31,7 @@ val input_001 = listOf(
             )
         )
     )
-);
+)
 
 
 val input_002 = listOf(
