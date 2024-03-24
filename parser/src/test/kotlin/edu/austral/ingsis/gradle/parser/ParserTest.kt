@@ -79,7 +79,7 @@ class ParserTest {
     @Test
 //    test println( 5 + 7 )
     fun test009_parseExpressionWithPrintLnAndOperatorInside(){
-        val actual= parser.parse(InputContext(input_009,0)).first;
+        val actual= parser.parse(InputContext(input_009,0)).first
         val expected= ASTNodeImpl("Program", null, ProgramNode, output_009)
         assertEquals(expected, actual)
     }
@@ -87,7 +87,7 @@ class ParserTest {
     @Test
     //    test  (5 + 7)  *4
     fun test010_parseExpressionWithSimpleOperator(){
-        val actual= parser.parse(InputContext(input_010,0)).first;
+        val actual= parser.parse(InputContext(input_010,0)).first
         val expected= ASTNodeImpl("Program", null, ProgramNode, output_010)
         assertEquals(expected, actual)
     }
@@ -98,7 +98,7 @@ class ParserTest {
     //    let b: number = 5
 //    println (a+b)
     fun test011_parseExpressionWithPrintLnAndVariable(){
-        val actual= parser.parse(InputContext(input_011,0)).first;
+        val actual= parser.parse(InputContext(input_011,0)).first
         val expected = ASTNodeImpl("Program", null, ProgramNode, output_011)
         assertEquals(expected, actual)
     }
@@ -110,7 +110,7 @@ class ParserTest {
     //    let b: string = "loco"
     //    println (a+b)
     fun test012_parseExpressionWithPrintLnAndString(){
-        val actual= parser.parse(InputContext(input_012,0)).first;
+        val actual= parser.parse(InputContext(input_012,0)).first
         val expected = ASTNodeImpl("Program", null, ProgramNode, output_012)
         assertEquals(expected, actual)
     }
@@ -121,7 +121,7 @@ class ParserTest {
 //    a = "loco"
 //    println (a)
     fun test013_parseExpressionWithPrintLnAndString(){
-        val actual= parser.parse(InputContext(input_013,0)).first;
+        val actual= parser.parse(InputContext(input_013,0)).first
         val expected = ASTNodeImpl("Program", null, ProgramNode, output_013)
         assertEquals(expected, actual)
     }

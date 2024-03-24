@@ -72,7 +72,7 @@ fun currentToken(list: List<Token>,index: Int): Token? {
 //Returns new index and the last token consumed.
 fun consumeToken(list: List<Token>, index: Int): Pair<Token?, Int>{
     val current = currentToken(list,index)
-    val nextIndex = index + 1;
+    val nextIndex = index + 1
     return Pair(current, nextIndex)
 }
 
