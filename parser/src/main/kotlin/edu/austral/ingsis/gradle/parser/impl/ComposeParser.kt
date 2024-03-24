@@ -13,10 +13,9 @@ import edu.austral.ingsis.gradle.parser.util.endOfFile
 
 class ComposeParser(
     private val parsers: Map<TokenType, Parser<InputContext>>,
-    private val astNode: ASTNodeImpl = ASTNodeImpl("Program", null, ProgramNode, listOf())
+    private val astNode: ASTNodeImpl = ASTNodeImpl("Program", null, ProgramNode, listOf()),
 ) :
     Parser<InputContext> {
-
     override fun parse(input: InputContext): Pair<ASTNode, Int> {
         val indexCopy = input.index + 1
         if (input.tokens.size == 1 && !endOfFile(input.tokens, input.index)) return handleResult(input)
@@ -30,7 +29,6 @@ class ComposeParser(
         }
     }
 
-
     private fun handleResult(input: InputContext): Pair<ASTNode, Int> {
         val result = currentToken(input.tokens, input.index)
         val parserFound =
@@ -38,11 +36,13 @@ class ComposeParser(
         return parseWith(input, parserFound)
     }
 
-    private fun parseWith(input: InputContext, parser: Parser<InputContext>): Pair<ASTNode, Int> {
+    private fun parseWith(
+        input: InputContext,
+        parser: Parser<InputContext>,
+    ): Pair<ASTNode, Int> {
         val result = parser.parse(InputContext(input.tokens, input.index))
         val newIndex = result.second
         val newAstNode = astNode.addChild(result.first)
         return ComposeParser(parsers, newAstNode).parse(InputContext(input.tokens, newIndex))
     }
-
 }

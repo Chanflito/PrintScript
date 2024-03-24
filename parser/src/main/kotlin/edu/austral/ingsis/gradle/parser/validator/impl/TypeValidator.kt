@@ -5,7 +5,10 @@ import edu.austral.ingsis.gradle.parser.util.isType
 import edu.austral.ingsis.gradle.parser.validator.SyntaxValidator
 
 class TypeValidator : SyntaxValidator {
-    override fun validate(tokens: List<Token>, index: Int): Boolean {
-        return isType(currentToken(tokens,index))
+    override fun validate(
+        tokens: List<Token>,
+        index: Int,
+    ): Boolean {
+        return isType(currentToken(tokens, index))
     }
 }

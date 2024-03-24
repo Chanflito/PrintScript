@@ -20,6 +20,7 @@ class RegexPatterns {
         val KEYWORD_REGEX: (Map<String, TokenType>) -> Regex = { tokens ->
             Regex("""\b(${tokens.keys.joinToString("|")})\b""")
         }
+
         // Regex
         val TYPE_REGEX: (Map<String, TokenType>) -> Regex = { tokens ->
             Regex("""\b(${tokens.keys.joinToString("|")})\b""")

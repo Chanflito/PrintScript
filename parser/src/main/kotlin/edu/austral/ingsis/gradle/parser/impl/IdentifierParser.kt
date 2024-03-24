@@ -11,14 +11,14 @@ import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 import edu.austral.ingsis.gradle.parser.util.currentToken
 
-class IdentifierParser  : Parser<InputContext> {
+class IdentifierParser : Parser<InputContext> {
     override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val currentToken= currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
-        if (currentToken.tokenType!= Identifier){
-            throw Exception(ExpectedTokenErrorMessage("Identifier",currentToken).toString())
+        val currentToken = currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+        if (currentToken.tokenType != Identifier) {
+            throw Exception(ExpectedTokenErrorMessage("Identifier", currentToken).toString())
         }
-        val consumeResult= consumeToken(input.tokens,input.index)
+        val consumeResult = consumeToken(input.tokens, input.index)
         val token = consumeResult.first
-        return Pair(ASTNodeImpl(token?.value, token, IdentifierNode, listOf()),consumeResult.second)
+        return Pair(ASTNodeImpl(token?.value, token, IdentifierNode, listOf()), consumeResult.second)
     }
 }

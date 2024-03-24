@@ -5,7 +5,10 @@ import edu.austral.ingsis.gradle.parser.util.isSemiColon
 import edu.austral.ingsis.gradle.parser.validator.SyntaxValidator
 
 class SemiColonValidator : SyntaxValidator {
-    override fun validate(tokens: List<Token>, index: Int): Boolean {
-        return isSemiColon(currentToken(tokens,index))
+    override fun validate(
+        tokens: List<Token>,
+        index: Int,
+    ): Boolean {
+        return isSemiColon(currentToken(tokens, index))
     }
 }
