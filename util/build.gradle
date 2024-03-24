@@ -1,3 +1,7 @@
+plugins {
+    id 'edu.austral.ingsis.printscript.grupox.gradle.common-conventions'
+}
+
 dependencies {
     implementation project(':common')
 }
