@@ -13,7 +13,7 @@ class PrintScriptTest {
         val tokens = createComposeLexer().splitIntoTokens(code)
         val ast = ParserImpl().parse(tokens)
         val result = Interpreter().interpret(ast)
-        assertEquals("Hello, World!", result[0])
+        assertEquals("\"Hello, World!\"", result[0])
     }
 
     @Test
@@ -58,6 +58,6 @@ class PrintScriptTest {
         val tokens = createComposeLexer().splitIntoTokens(code)
         val ast = ParserImpl().parse(tokens)
         val result = Interpreter().interpret(ast)
-        assertEquals("Hello, World!", result[0])
+        assertEquals("\"Hello, \"\"World!\"", result[0])
     }
 }
