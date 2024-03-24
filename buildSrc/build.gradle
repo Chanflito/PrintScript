@@ -1,17 +1,13 @@
 plugins {
-    id 'groovy'
+    // Support convention plugins written in Groovy. Convention plugins are build scripts in 'src/main' that automatically become available as plugins in the main build.
+    id 'groovy-gradle-plugin'
 }
 
 repositories {
-    mavenCentral()
+    // Use the plugin portal to apply community plugins in convention plugins.
+    gradlePluginPortal()
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy:4.0.14'
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
 }
