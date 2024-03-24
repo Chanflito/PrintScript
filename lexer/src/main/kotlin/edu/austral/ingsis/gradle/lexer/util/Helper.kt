@@ -1,10 +1,11 @@
 package edu.austral.ingsis.gradle.lexer.util
 
-import common.token.*
-import lexer.edu.austral.ingsis.gradle.lexer.Lexer
-import util.edu.austral.ingsis.gradle.util.calculatePosition
+import edu.austral.ingsis.gradle.common.token.*
+import edu.austral.ingsis.gradle.lexer.Lexer
+import edu.austral.ingsis.gradle.util.calculatePosition
 import edu.austral.ingsis.gradle.lexer.builder.LexerBuilderImp
 import edu.austral.ingsis.gradle.lexer.impl.*
+import edu.austral.ingsis.gradle.lexer.impl.NumberLexer
 
 fun createToken(matchResult: MatchResult, code: String, tokenType: TokenType): Token {
     val startIndex = matchResult.range.first

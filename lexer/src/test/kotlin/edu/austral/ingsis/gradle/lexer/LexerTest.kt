@@ -1,6 +1,7 @@
 package edu.austral.ingsis.gradle.lexer
 
-import common.token.*
+import edu.austral.ingsis.gradle.common.token.LetKeyword
+import edu.austral.ingsis.gradle.common.token.TypeNumber
 import edu.austral.ingsis.gradle.lexer.impl.*
 import edu.austral.ingsis.gradle.lexer.util.createComposeLexer
 import edu.austral.ingsis.gradle.lexer.utils.*

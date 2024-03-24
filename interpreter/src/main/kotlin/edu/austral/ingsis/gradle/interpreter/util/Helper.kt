@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.interpreter.util
 
-import common.ast.ASTNode
+import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.common.ast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.KeywordNode
 import edu.austral.ingsis.gradle.common.ast.StringNode

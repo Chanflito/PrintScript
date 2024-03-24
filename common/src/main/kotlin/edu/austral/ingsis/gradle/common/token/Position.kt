@@ -1,4 +1,4 @@
-package common.token
+package edu.austral.ingsis.gradle.common.token
 
 data class Position(val row: Int, val column: Int) : Comparable<Position> {
     override fun compareTo(other: Position): Int {

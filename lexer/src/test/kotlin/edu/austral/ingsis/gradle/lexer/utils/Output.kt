@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.lexer.utils
 
-import common.token.*
+import edu.austral.ingsis.gradle.common.token.*
 
 val output_001 = Token("let", LetKeyword, Position(1, 1), Position(1, 4))
 

@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.parser
 
 import edu.austral.ingsis.gradle.common.ast.ProgramNode
-import common.ast.*
+import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
 import edu.austral.ingsis.gradle.parser.impl.ParserImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

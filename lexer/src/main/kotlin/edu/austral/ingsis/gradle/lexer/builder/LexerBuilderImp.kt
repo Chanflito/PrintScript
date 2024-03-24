@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.lexer.builder
 
-import lexer.edu.austral.ingsis.gradle.lexer.Lexer
-import lexer.edu.austral.ingsis.gradle.lexer.LexerBuilder
+import edu.austral.ingsis.gradle.lexer.Lexer
+import edu.austral.ingsis.gradle.lexer.LexerBuilder
 import edu.austral.ingsis.gradle.lexer.impl.ComposeLexer
 
 class LexerBuilderImp (private val lexers:List<Lexer>) : LexerBuilder {

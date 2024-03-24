@@ -1,6 +1,5 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import common.ast.*
 import edu.austral.ingsis.gradle.common.ast.*
 import edu.austral.ingsis.gradle.interpreter.util.isIdentifier
 import edu.austral.ingsis.gradle.interpreter.util.isKeyword

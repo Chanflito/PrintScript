@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.parser
 
-import common.token.*
+import edu.austral.ingsis.gradle.common.token.*
 
 val input_001=listOf(Token("5", ValueNumber, Position(1, 1), Position(1, 1)))
 
@@ -60,21 +60,24 @@ val input_008=listOf(
     Token(";", SemiColon, Position(2, 7), Position(2, 8))
 );
 
-val input_009=listOf(Token("println",PrintlnKeyword,Position(1,1),Position(1,8)),
-    Token("(",LeftParenthesis,Position(1,9),Position(1,10)),
-    Token("5",ValueNumber,Position(1,10),Position(1,11)),
-    Token("+", Plus,Position(1,11),Position(1,12)),
-    Token("7",ValueNumber,Position(1,12),Position(1,13)),
-    Token(")",RightParenthesis,Position(1,13),Position(1,14)))
+val input_009=listOf(
+    Token("println", PrintlnKeyword, Position(1,1), Position(1,8)),
+    Token("(", LeftParenthesis, Position(1,9), Position(1,10)),
+    Token("5", ValueNumber, Position(1,10), Position(1,11)),
+    Token("+", Plus, Position(1,11), Position(1,12)),
+    Token("7", ValueNumber, Position(1,12), Position(1,13)),
+    Token(")", RightParenthesis, Position(1,13), Position(1,14))
+)
 
 val input_010=listOf(
-    Token("(",LeftParenthesis,Position(1,1),Position(1,2)),
-    Token("5",ValueNumber,Position(1,2),Position(1,3)),
-    Token("+", Plus,Position(1,3),Position(1,4)),
-    Token("7",ValueNumber,Position(1,4),Position(1,5)),
-    Token(")",RightParenthesis,Position(1,5),Position(1,6)),
-    Token("*",Multiply,Position(1,6),Position(1,7)),
-    Token("4",ValueNumber,Position(1,7),Position(1,8)))
+    Token("(", LeftParenthesis, Position(1,1), Position(1,2)),
+    Token("5", ValueNumber, Position(1,2), Position(1,3)),
+    Token("+", Plus, Position(1,3), Position(1,4)),
+    Token("7", ValueNumber, Position(1,4), Position(1,5)),
+    Token(")", RightParenthesis, Position(1,5), Position(1,6)),
+    Token("*", Multiply, Position(1,6), Position(1,7)),
+    Token("4", ValueNumber, Position(1,7), Position(1,8))
+)
 
 
 val input_011= listOf(
@@ -99,7 +102,8 @@ val input_011= listOf(
     Token("b", Identifier, Position(3, 12), Position(3, 13)),
     Token(")", RightParenthesis, Position(3, 13), Position(3, 14)),
     Token(";", SemiColon, Position(3, 14), Position(3, 15)
-    ))
+    )
+)
 
 val input_012 = listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
@@ -123,7 +127,8 @@ val input_012 = listOf(
     Token("b", Identifier, Position(3, 12), Position(3, 13)),
     Token(")", RightParenthesis, Position(3, 13), Position(3, 14)),
     Token(";", SemiColon, Position(3, 14), Position(3, 15)
-    ))
+    )
+)
 
 val input_013 = listOf(
     Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
@@ -142,4 +147,5 @@ val input_013 = listOf(
     Token("a", Identifier, Position(3, 10), Position(3, 11)),
     Token(")", RightParenthesis, Position(3, 13), Position(3, 14)),
     Token(";", SemiColon, Position(3, 14), Position(3, 15)
-    ))
+    )
+)

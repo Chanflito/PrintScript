@@ -1,6 +1,6 @@
-package util.edu.austral.ingsis.gradle.util
+package edu.austral.ingsis.gradle.util
 
-import common.token.Position
+import edu.austral.ingsis.gradle.common.token.Position
 
 fun calculatePosition(code: String, index: Int): Position {
     var row = 1

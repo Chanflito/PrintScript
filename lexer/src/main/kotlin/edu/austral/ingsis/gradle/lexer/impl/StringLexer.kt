@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.lexer.impl
 
-import common.token.Token
-import common.token.ValueString
-import lexer.edu.austral.ingsis.gradle.lexer.Lexer
+import edu.austral.ingsis.gradle.common.token.Token
+import edu.austral.ingsis.gradle.common.token.ValueString
+import edu.austral.ingsis.gradle.lexer.Lexer
 import edu.austral.ingsis.gradle.lexer.util.RegexPatterns
 import edu.austral.ingsis.gradle.lexer.util.createToken
 

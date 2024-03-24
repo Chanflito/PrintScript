@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.parser.util
 
-import common.token.*
+import edu.austral.ingsis.gradle.common.token.*
 
 fun endOfFile(tokens: List<Token>, currentIndex: Int): Boolean {
     return currentIndex > (tokens.size - 1);

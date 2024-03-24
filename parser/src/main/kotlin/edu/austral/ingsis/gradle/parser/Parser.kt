@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.parser
 
-import common.ast.ASTNode
-import common.token.Token
+import edu.austral.ingsis.gradle.common.ast.ASTNode
+import edu.austral.ingsis.gradle.common.token.Token
 
 interface Parser {
     fun parse(tokens: List<Token>): ASTNode

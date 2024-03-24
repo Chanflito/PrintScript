@@ -1,9 +1,8 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import common.ast.*
-import common.token.*
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.common.ast.*
+import edu.austral.ingsis.gradle.common.token.*
 import edu.austral.ingsis.gradle.parser.util.*
 
 class ParserImpl(): Parser {
@@ -21,14 +20,14 @@ class ParserImpl(): Parser {
         return astNode
 
     }
-    private fun parseStatement(tokens: List<Token>): ASTNode{
+    private fun parseStatement(tokens: List<Token>): ASTNode {
         return when(currentToken(tokens)?.tokenType){
             PrintlnKeyword -> parsePrintLn(tokens)
             else -> parseEqualsExpression(tokens)
         };
     }
 
-    private fun parsePrintLn(tokens: List<Token>): ASTNode{
+    private fun parsePrintLn(tokens: List<Token>): ASTNode {
             val printLnToken = consumeToken(tokens);
 //          check if after a println call there is a left parenthesis
             require(isLeftParenthesis(currentToken(tokens))){"Missing ( after method call"}
@@ -39,7 +38,7 @@ class ParserImpl(): Parser {
 
 
 
-    private fun parseEqualsExpression(tokens: List<Token>): ASTNode{
+    private fun parseEqualsExpression(tokens: List<Token>): ASTNode {
         var left = parseExpression(tokens);
         while (isAssignation(currentToken(tokens))){
             val token = consumeToken(tokens);
@@ -49,7 +48,7 @@ class ParserImpl(): Parser {
         return left;
     }
 
-    private fun parseExpression(tokens: List<Token>): ASTNode{
+    private fun parseExpression(tokens: List<Token>): ASTNode {
         return when(currentToken(tokens)?.tokenType){
             LetKeyword -> parseDeclarativeExpression(tokens)
             else -> parseAdditiveExpression(tokens)
@@ -57,7 +56,7 @@ class ParserImpl(): Parser {
     }
 
 
-    private fun parseAdditiveExpression(tokens: List<Token>): ASTNode{
+    private fun parseAdditiveExpression(tokens: List<Token>): ASTNode {
         var left = parseMultiplicativeExpression(tokens);
         while (isAdditiveOperator(currentToken(tokens))){
             val token = consumeToken(tokens)
@@ -68,7 +67,7 @@ class ParserImpl(): Parser {
         return left;
     }
 
-    private fun parseDeclarativeExpression(tokens: List<Token>): ASTNode{
+    private fun parseDeclarativeExpression(tokens: List<Token>): ASTNode {
         val keyword = parsePrimaryExpression(tokens);
         val variable = consumeToken(tokens);
         when(variable?.tokenType){
@@ -84,7 +83,7 @@ class ParserImpl(): Parser {
 
     }
 
-    private fun parseMultiplicativeExpression(tokens: List<Token>): ASTNode{
+    private fun parseMultiplicativeExpression(tokens: List<Token>): ASTNode {
         var left = parsePrimaryExpression(tokens);
         while (isMultiplicativeOperator(currentToken(tokens))){
             val token = consumeToken(tokens);
@@ -134,7 +133,7 @@ class ParserImpl(): Parser {
         }
     }
 
-    private fun currentToken(list: List<Token>):Token?{
+    private fun currentToken(list: List<Token>): Token?{
         return if (index < list.size) list[index] else null
     }
 

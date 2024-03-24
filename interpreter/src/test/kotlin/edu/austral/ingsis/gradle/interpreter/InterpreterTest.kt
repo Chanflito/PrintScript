@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.interpreter
 
 import edu.austral.ingsis.gradle.common.ast.ProgramNode
-import common.ast.ASTNodeImpl
+import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

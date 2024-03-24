@@ -1,9 +1,8 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import common.ast.ASTNodeImpl
-import common.ast.*
-import common.token.*
+import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
 import edu.austral.ingsis.gradle.common.ast.*
+import edu.austral.ingsis.gradle.common.token.*
 
 val input_001 = listOf(
     ASTNodeImpl(

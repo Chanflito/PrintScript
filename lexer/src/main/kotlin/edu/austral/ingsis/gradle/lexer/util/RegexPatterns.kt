@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.lexer.util
 
-import common.token.TokenType
+import edu.austral.ingsis.gradle.common.token.TokenType
 
 class RegexPatterns {
     companion object {
