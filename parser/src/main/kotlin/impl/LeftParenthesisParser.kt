@@ -2,7 +2,7 @@ package impl
 
 import InputContext
 import Parser
-import common.ast.ASTNode
+import ast.ASTNode
 import common.token.LeftParenthesis
 import common.token.Token
 import util.*

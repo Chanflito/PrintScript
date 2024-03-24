@@ -66,6 +66,8 @@ fun isPrintLn(token: Token?):Boolean{
 fun currentToken(list: List<Token>,index: Int): Token? {
     return if (index < list.size) list[index] else null
 }
+
+
 //Returns new index and the last token consumed.
 fun consumeToken(list: List<Token>, index: Int): Pair<Token?, Int>{
     val current = currentToken(list,index)

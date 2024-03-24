@@ -4,7 +4,7 @@ import InputContext
 import Parser
 import ast.ASTNodeImpl
 import ast.IdentifierNode
-import common.ast.ASTNode
+import ast.ASTNode
 import common.token.Identifier
 import util.*
 

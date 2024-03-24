@@ -1,7 +1,7 @@
 package impl
 
 import InputContext
-import common.ast.ASTNode
+import ast.ASTNode
 import common.token.Token
 import Parser
 import ast.ASTNodeImpl

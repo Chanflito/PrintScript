@@ -4,7 +4,7 @@ import InputContext
 import Parser
 import ast.ASTNodeImpl
 import ast.ProgramNode
-import common.ast.ASTNode
+import ast.ASTNode
 import common.token.*
 import util.InvalidTokenErrorMessage
 import util.currentToken

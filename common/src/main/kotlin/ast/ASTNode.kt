@@ -1,5 +1,4 @@
-package common.ast
-import ast.NodeType
+package ast
 import common.token.Token
 
 interface ASTNode {
