@@ -10,7 +10,7 @@ import util.consumeToken
 
 class IdentifierNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
     override fun build(tokens: List<Token>, index: Int): Pair<ASTNodeImpl, Int> {
-        val letNode = createLetNode(tokens, index);
+        val letNode = createLetNode(tokens, index)
         val identifierToken = getIdentifierToken(tokens, letNode.second)
         val typeToken = getTypeToken(tokens, identifierToken.second + 1)
         return Pair(
@@ -30,7 +30,7 @@ class IdentifierNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
 
     private fun createLetNode(tokens: List<Token>, index: Int): Pair<ASTNodeImpl, Int> {
         val consumeResult = consumeToken(tokens, index)
-        val letNode = ASTNodeImpl("let", consumeResult.first, KeywordNode, null);
+        val letNode = ASTNodeImpl("let", consumeResult.first, KeywordNode, null)
         return Pair(letNode, consumeResult.second)
     }
 

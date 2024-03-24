@@ -1,7 +1,6 @@
 package builder
 
 import ast.ASTNode
-import ast.NodeType
 import common.token.Token
 
 interface AstBuilder <T: ASTNode > {

@@ -11,10 +11,10 @@ import util.consumeToken
 
 class AssignationNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
     override fun build(tokens: List<Token>, index: Int): Pair<ASTNodeImpl, Int> {
-        val letNode = createLetNode(tokens, index);
+        val letNode = createLetNode(tokens, index)
         val identifierToken = getIdentifierToken(tokens, letNode.second)
         val typeTokenPair = getTypeToken(tokens, identifierToken.second + 1)
-        val equalsToken=getEqualsToken(tokens,typeTokenPair.second);
+        val equalsToken=getEqualsToken(tokens,typeTokenPair.second)
         return Pair(
             ASTNodeImpl(
                 equalsToken.first?.value,
@@ -29,7 +29,7 @@ class AssignationNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
     }
     private fun createLetNode(tokens: List<Token>, index: Int): Pair<ASTNodeImpl, Int> {
         val consumeResult = consumeToken(tokens, index)
-        val letNode = ASTNodeImpl("let", consumeResult.first, KeywordNode, null);
+        val letNode = ASTNodeImpl("let", consumeResult.first, KeywordNode, null)
         return Pair(letNode, consumeResult.second)
     }
 

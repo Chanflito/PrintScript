@@ -33,7 +33,7 @@ class PrintlnParser  : Parser<InputContext> {
         if (currentToken.tokenType!= LeftParenthesis) {
             throw Exception(ExpectedTokenErrorMessage("(", currentToken).toString())
         }
-        val childNode=ExpressionParser().parse(InputContext(tokens,index+1));
+        val childNode=ExpressionParser().parse(InputContext(tokens,index+1))
         return Pair(ASTNodeImpl(token?.value,token, PrintLnNode, listOf(childNode.first)),childNode.second)
     }
 }

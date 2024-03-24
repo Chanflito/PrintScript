@@ -28,7 +28,7 @@ class ExpressionParser (private val parsers: Map<TokenType, Parser<InputContext>
             left =  Pair(ASTNodeImpl(token.first?.value,token.first, OperatorNode, listOf(left.first, right.first)),right.second)
         }
 
-        return left;
+        return left
     }
 
     private fun parseSecondaryOperator(tokens: List<Token>, index: Int): Pair<ASTNode,Int>{

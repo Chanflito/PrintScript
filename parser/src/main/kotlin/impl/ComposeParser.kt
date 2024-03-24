@@ -33,7 +33,7 @@ class ComposeParser(
     private fun handleResult(input: InputContext): Pair<ASTNode, Int> {
         val result = currentToken(input.tokens, input.index)
         val parserFound =
-            parsers[result?.tokenType] ?: throw Exception(result?.let { InvalidTokenErrorMessage(it).toString() });
+            parsers[result?.tokenType] ?: throw Exception(result?.let { InvalidTokenErrorMessage(it).toString() })
         return parseWith(input, parserFound)
     }
 

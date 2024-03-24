@@ -4,7 +4,7 @@ import common.token.*
 import impl.*
 
 fun endOfFile(tokens: List<Token>, currentIndex: Int): Boolean {
-    return currentIndex > (tokens.size - 1);
+    return currentIndex > (tokens.size - 1)
 }
 
 fun isColon(token: Token?): Boolean {
