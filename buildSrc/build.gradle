@@ -9,5 +9,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
+    //https://github.com/JetBrains/kotlin/
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23'
+    //https://github.com/JLLeitschuh/ktlint-gradle
+    implementation 'org.jlleitschuh.gradle:ktlint-gradle:12.1.0'
 }
