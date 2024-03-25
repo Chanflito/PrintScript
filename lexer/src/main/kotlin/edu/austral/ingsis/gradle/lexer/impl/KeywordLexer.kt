@@ -18,10 +18,10 @@ class KeywordLexer(
 
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { result ->
+            // If result.value is not in tokens, return null, else create a token with the result and the token type
             if (isInQuotes(result, code)) {
                 null
-            } // If result.value is not in tokens, return null, else create a token with the result and the token type
-            else {
+            } else {
                 tokens[result.value]?.let { createToken(result, code, it) }
             }
         }.toList()
