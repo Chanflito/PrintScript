@@ -23,3 +23,12 @@ test {
 tasks.check {
     dependsOn ktlintCheck
 }
+
+tasks.register('setupHooks') {
+    doLast {
+        def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")
+        exec {
+            commandLine setupHooksFile
+        }
+    }
+}
