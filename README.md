@@ -1,1 +1,1 @@
-### Run ./gradlew setupHooks to configure git hooks
+### Run ./gradlew setupHooks to configure git hooks locally
