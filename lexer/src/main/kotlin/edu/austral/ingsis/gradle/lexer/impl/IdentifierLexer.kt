@@ -14,10 +14,14 @@ class IdentifierLexer(private val constraints: List<String>) : Lexer {
         return regex.findAll(code).mapNotNull { matchResult ->
             if (isMatch(matchResult, code)) {
                 createToken(matchResult, code, Identifier)
-            } else null
+            } else {
+                null
+            }
         }.toList()
     }
 
-    private fun isMatch(matchResult: MatchResult, code: String) =
-        !constraints.contains(matchResult.value) && !isInQuotes(matchResult, code)
+    private fun isMatch(
+        matchResult: MatchResult,
+        code: String,
+    ) = !constraints.contains(matchResult.value) && !isInQuotes(matchResult, code)
 }

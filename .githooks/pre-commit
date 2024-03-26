@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Running 'gradle check' before committing..."
+
+if ./gradlew check; then
+    echo "Gradle check passed. Proceeding with the commit."
+    exit 0
+else
+    echo "Gradle check failed. Please fix the issues before committing."
+    exit 1
+fi

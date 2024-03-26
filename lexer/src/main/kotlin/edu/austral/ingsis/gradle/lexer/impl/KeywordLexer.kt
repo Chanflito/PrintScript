@@ -14,14 +14,16 @@ import edu.austral.ingsis.gradle.lexer.util.isInQuotes
 class KeywordLexer(
     private val tokens: Map<String, TokenType>,
 ) : Lexer {
-
     private val regex = RegexPatterns.KEYWORD_REGEX(tokens)
 
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { result ->
-            if (isInQuotes(result, code)) null
-            //If result.value is not in tokens, return null, else create a token with the result and the token type
-            else tokens[result.value]?.let { createToken(result, code, it) }
+            // If result.value is not in tokens, return null, else create a token with the result and the token type
+            if (isInQuotes(result, code)) {
+                null
+            } else {
+                tokens[result.value]?.let { createToken(result, code, it) }
+            }
         }.toList()
     }
 }

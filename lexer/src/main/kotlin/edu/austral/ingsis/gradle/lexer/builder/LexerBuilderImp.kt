@@ -4,9 +4,9 @@ import edu.austral.ingsis.gradle.lexer.Lexer
 import edu.austral.ingsis.gradle.lexer.LexerBuilder
 import edu.austral.ingsis.gradle.lexer.impl.ComposeLexer
 
-class LexerBuilderImp (private val lexers:List<Lexer>) : LexerBuilder {
+class LexerBuilderImp(private val lexers: List<Lexer>) : LexerBuilder {
     override fun withLexer(lexer: Lexer): LexerBuilder {
-        val updatedLexers = lexers + lexer //concatenate the new lexer with list of lexers.
+        val updatedLexers = lexers + lexer // concatenate the new lexer with list of lexers.
         return LexerBuilderImp(updatedLexers)
     }
 

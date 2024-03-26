@@ -5,7 +5,10 @@ import edu.austral.ingsis.gradle.parser.util.isAssignation
 import edu.austral.ingsis.gradle.parser.validator.SyntaxValidator
 
 class EqualsValidator : SyntaxValidator {
-    override fun validate(tokens: List<Token>, index: Int): Boolean {
-        return isAssignation(currentToken(tokens,index))
+    override fun validate(
+        tokens: List<Token>,
+        index: Int,
+    ): Boolean {
+        return isAssignation(currentToken(tokens, index))
     }
 }

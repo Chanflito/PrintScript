@@ -13,12 +13,12 @@ import edu.austral.ingsis.gradle.parser.util.currentToken
 
 class ValueStringParser : Parser<InputContext> {
     override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val currentToken= currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
-        if (currentToken.tokenType!= ValueString){
-            throw Exception(ExpectedTokenErrorMessage("string",currentToken).toString())
+        val currentToken = currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+        if (currentToken.tokenType != ValueString) {
+            throw Exception(ExpectedTokenErrorMessage("string", currentToken).toString())
         }
-        val consumeResult = consumeToken(input.tokens,input.index)
+        val consumeResult = consumeToken(input.tokens, input.index)
         val token = consumeResult.first
-        return Pair(ASTNodeImpl(token?.value, token, StringNode, listOf()),consumeResult.second)
+        return Pair(ASTNodeImpl(token?.value, token, StringNode, listOf()), consumeResult.second)
     }
 }

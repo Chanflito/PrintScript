@@ -9,10 +9,14 @@ import edu.austral.ingsis.gradle.lexer.util.isInQuotes
 
 class NumberLexer : Lexer {
     private val regex = RegexPatterns.NUMBER_REGEX
+
     override fun splitIntoTokens(code: String): List<Token> {
         return regex.findAll(code).mapNotNull { result ->
-            if (isInQuotes(result, code)) null
-            else createToken(result, code, ValueNumber)
+            if (isInQuotes(result, code)) {
+                null
+            } else {
+                createToken(result, code, ValueNumber)
+            }
         }.toList()
     }
 }
