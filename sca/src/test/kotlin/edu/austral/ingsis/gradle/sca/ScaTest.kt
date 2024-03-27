@@ -11,7 +11,6 @@ class ScaTest {
     @Test //let aBlue : String = "blue";
     fun test001_camelCaseRuleWithValidInputShouldReturnSuccess(){
         val rule= IdentifierRule(RegexPatterns.CAMEL_CASE)
-
         val node= ASTNodeImpl("Program", null, ProgramNode, input_001)
         val result= rule.verify(node)
         assertEquals(ReportSuccess,result)
@@ -22,6 +21,21 @@ class ScaTest {
         val rule= IdentifierRule(RegexPatterns.CAMEL_CASE)
         val node= ASTNodeImpl("Program", null, ProgramNode, input_002)
         val result= rule.verify(node)
-        assert(result is ReportError)
+        assert(result is ReportFailure)
+    }
+
+    @Test
+    fun test003_snakeCaseRuleWithValidInputShouldReturnSuccess(){
+        val rule= IdentifierRule(RegexPatterns.SNAKE_CASE)
+        val node= ASTNodeImpl("Program", null, ProgramNode, input_002)
+        val result= rule.verify(node)
+        assert(result is ReportSuccess)
+    }
+    @Test
+    fun test004_snakeCaseRuleWithNoValidInputShouldReturnFailure(){
+        val rule= IdentifierRule(RegexPatterns.SNAKE_CASE)
+        val node= ASTNodeImpl("Program", null, ProgramNode, input_001)
+        val result= rule.verify(node)
+        assert(result is ReportFailure)
     }
 }

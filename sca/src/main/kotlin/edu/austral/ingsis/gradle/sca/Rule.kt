@@ -8,7 +8,7 @@ sealed interface ReportResult
 
 data object ReportSuccess : ReportResult
 
-data class ReportError(val error: String) : ReportResult
+data class ReportFailure(val failureMessage: String) : ReportResult
 
 interface ReportErrorMessage{ // Implement this before
     override fun toString(): String

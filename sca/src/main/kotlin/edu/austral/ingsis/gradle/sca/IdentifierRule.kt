@@ -25,6 +25,6 @@ class IdentifierRule (private val regex: Regex): Rule<ASTNode>{
     }
 
     private fun applyRegex(value: String) : ReportResult{
-        return if (value.matches(regex)) ReportSuccess else ReportError("Invalid identifier")
+        return if (value.matches(regex)) ReportSuccess else ReportFailure("Invalid identifier")
     }
 }
