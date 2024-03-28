@@ -20,7 +20,7 @@ class PrintlnRule : Rule<ASTNode> {
             nodes.map { node ->
                 when (node.nodeType) {
                     is PrintLnNode -> verifyChildren(node.children)
-                    is OperatorNode -> ReportFailure("Expressions is not supported")
+                    is OperatorNode -> ReportFailure(PrintlnReportErrorMessage().build(node.token))
                     else -> ReportSuccess
                 }
             }
