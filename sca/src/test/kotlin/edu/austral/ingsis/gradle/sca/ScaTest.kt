@@ -56,4 +56,14 @@ class ScaTest {
         val result = rule.verify(node)
         assert(result is ReportFailure)
     }
+
+    @Test // let a_snake : String ="snake"; println(a_snake);
+    fun test007_composeRuleWithValidInputShouldReturnSuccess() {
+        val rule1 = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
+        val rule2 = PrintlnRule()
+        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val node = ASTNodeImpl("Program", null, ProgramNode, input_005)
+        val result = composeRule.verify(node)
+        assert(result is ReportSuccess)
+    }
 }

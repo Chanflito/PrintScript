@@ -136,3 +136,52 @@ val input_004 =
             ),
         ),
     )
+
+val input_005 =
+    listOf(
+        ASTNodeImpl(
+            "=",
+            Token("=", Assignation, Position(1, 16), Position(1, 17)),
+            AssignationNode,
+            listOf(
+                ASTNodeImpl(
+                    "a_snake",
+                    Token("a", Identifier, Position(1, 5), Position(1, 10)),
+                    IdentifierNode,
+                    listOf(
+                        ASTNodeImpl(
+                            "let",
+                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                            KeywordNode,
+                            emptyList(),
+                        ),
+                        ASTNodeImpl(
+                            "string",
+                            Token("string", TypeString, Position(1, 12), Position(1, 18)),
+                            TypeNode,
+                            emptyList(),
+                        ),
+                    ),
+                ),
+                ASTNodeImpl(
+                    "snake",
+                    Token("snake", ValueString, Position(1, 18), Position(1, 19)),
+                    StringNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+        ASTNodeImpl(
+            "println",
+            Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
+            PrintLnNode,
+            listOf(
+                ASTNodeImpl(
+                    "a_snake",
+                    Token("a_snake", Identifier, Position(3, 12), Position(3, 19)),
+                    IdentifierNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+    )
