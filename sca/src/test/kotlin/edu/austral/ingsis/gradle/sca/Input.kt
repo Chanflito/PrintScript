@@ -27,7 +27,7 @@ val input_001 =
             listOf(
                 ASTNodeImpl(
                     "aBlue",
-                    Token("a", Identifier, Position(1, 5), Position(1, 10)),
+                    Token("aBlue", Identifier, Position(1, 5), Position(1, 10)),
                     IdentifierNode,
                     listOf(
                         ASTNodeImpl(
@@ -63,7 +63,7 @@ val input_002 =
             listOf(
                 ASTNodeImpl(
                     "a_Blue",
-                    Token("a", Identifier, Position(1, 5), Position(1, 10)),
+                    Token("a_Blue", Identifier, Position(1, 5), Position(1, 10)),
                     IdentifierNode,
                     listOf(
                         ASTNodeImpl(
@@ -146,7 +146,7 @@ val input_005 =
             listOf(
                 ASTNodeImpl(
                     "a_snake",
-                    Token("a", Identifier, Position(1, 5), Position(1, 10)),
+                    Token("a_snake", Identifier, Position(1, 5), Position(1, 10)),
                     IdentifierNode,
                     listOf(
                         ASTNodeImpl(
@@ -180,6 +180,52 @@ val input_005 =
                     "a_snake",
                     Token("a_snake", Identifier, Position(3, 12), Position(3, 19)),
                     IdentifierNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+    )
+
+val input_006 =
+    listOf(
+        ASTNodeImpl(
+            "aCamel",
+            Token("aCamel", Identifier, Position(1, 5), Position(1, 10)),
+            IdentifierNode,
+            listOf(
+                ASTNodeImpl(
+                    "let",
+                    Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                    KeywordNode,
+                    emptyList(),
+                ),
+                ASTNodeImpl(
+                    "string",
+                    Token("string", TypeString, Position(1, 12), Position(1, 18)),
+                    TypeNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+    )
+
+val input_007 =
+    listOf(
+        ASTNodeImpl(
+            "a_snake",
+            Token("a_snake", Identifier, Position(1, 5), Position(1, 10)),
+            IdentifierNode,
+            listOf(
+                ASTNodeImpl(
+                    "let",
+                    Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                    KeywordNode,
+                    emptyList(),
+                ),
+                ASTNodeImpl(
+                    "string",
+                    Token("string", TypeString, Position(1, 12), Position(1, 18)),
+                    TypeNode,
                     emptyList(),
                 ),
             ),

@@ -66,4 +66,28 @@ class ScaTest {
         val result = composeRule.verify(node)
         assert(result is ReportSuccess)
     }
+
+    @Test // let aCamel : string;
+    fun test008_camelCaseRuleWithNoAssignationWithValidInputShouldReturnSuccess() {
+        val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        val node = ASTNodeImpl("Program", null, ProgramNode, input_006)
+        val result = rule.verify(node)
+        assert(result is ReportSuccess)
+    }
+
+    @Test // let a_snake: string;
+    fun test009_snakeCaseRuleWithNoAssignationWithValidInputShouldReturnSuccess() {
+        val rule = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
+        val node = ASTNodeImpl("Program", null, ProgramNode, input_007)
+        val result = rule.verify(node)
+        assert(result is ReportSuccess)
+    }
+
+    @Test // let a_snake : string;
+    fun test010_camelCaseRuleWithNoAssignationWithInvalidInputShouldReturnFailure() {
+        val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        val node = ASTNodeImpl("Program", null, ProgramNode, input_007)
+        val result = rule.verify(node)
+        assert(result is ReportFailure)
+    }
 }
