@@ -1,11 +1,17 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.*
+import edu.austral.ingsis.gradle.common.ast.ASTNode
+import edu.austral.ingsis.gradle.common.ast.AssignationNode
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.NumberNode
+import edu.austral.ingsis.gradle.common.ast.OperatorNode
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ProgramNode
+import edu.austral.ingsis.gradle.common.ast.StringNode
 import edu.austral.ingsis.gradle.interpreter.util.isIdentifier
 import edu.austral.ingsis.gradle.interpreter.util.isKeyword
 
-class Interpreter() {
-
+class Interpreter {
     private val valuesMap = hashMapOf<String, Any>()
 
     fun interpret(programNode: ASTNode): List<Any> {
@@ -43,13 +49,12 @@ class Interpreter() {
         return valuesMap[node.value.toString()] ?: throw Exception("Identifier not found")
     }
 
-
     private fun evaluateOperatorNode(node: ASTNode): Any {
         val evaluatedChildren = node.children.map { evaluate(it) }
 
-        require(evaluatedChildren.isNotEmpty()){"Operator node must have children to evaluate"}
+        require(evaluatedChildren.isNotEmpty()) { "Operator node must have children to evaluate" }
 
-        if (evaluatedChildren.all { it is String }){
+        if (evaluatedChildren.all { it is String }) {
             return when (node.value) {
                 "+" -> evaluatedChildren.reduce { acc, i -> (acc as String) + (i as String) }
                 else -> throw Exception("Invalid operator for string operators")
@@ -74,7 +79,7 @@ class Interpreter() {
         checkVariableAssignation(identifierNode)
 
 //       the rest of children list must be one only child and is the value to be assigned
-        val filteredChildren = node.children.filter { it != identifierNode}
+        val filteredChildren = node.children.filter { it != identifierNode }
         val value = evaluate(filteredChildren.first())
 
         valuesMap[identifier] = value
@@ -87,22 +92,25 @@ class Interpreter() {
         return value
     }
 
-    private fun checkVariableAssignation(node: ASTNode){
+    private fun checkVariableAssignation(node: ASTNode) {
         val identifier = node.value.toString()
         val keyword = node.children.firstOrNull { isKeyword(it) }
-        if(isNotDeclaredNorInMap(keyword, identifier)){
+        if (isNotDeclaredNorInMap(keyword, identifier)) {
             throw Exception("Variable $identifier not found")
         }
 
-        if(isRedeclared(identifier, keyword)){
+        if (isRedeclared(identifier, keyword)) {
             throw Exception("Variable $identifier already declared")
         }
     }
 
-    private fun isRedeclared(identifier: String, keyword: ASTNode?) =
-        valuesMap.contains(identifier) && keyword != null
+    private fun isRedeclared(
+        identifier: String,
+        keyword: ASTNode?,
+    ) = valuesMap.contains(identifier) && keyword != null
 
-    private fun isNotDeclaredNorInMap(keyword: ASTNode?, identifier: String) =
-        keyword == null && !valuesMap.contains(identifier)
-
+    private fun isNotDeclaredNorInMap(
+        keyword: ASTNode?,
+        identifier: String,
+    ) = keyword == null && !valuesMap.contains(identifier)
 }

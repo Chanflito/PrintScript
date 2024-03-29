@@ -15,8 +15,12 @@ class TypeLexer(private val tokens: Map<String, TokenType>) : Lexer {
             if (!isInQuotes(result, code)) {
                 if (tokens.containsKey(result.value)) {
                     createToken(result, code, tokens.getValue(result.value))
-                } else null
-            } else null
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
         }.toList()
     }
 }

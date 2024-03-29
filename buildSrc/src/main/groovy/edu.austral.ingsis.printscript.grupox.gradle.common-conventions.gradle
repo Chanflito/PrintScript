@@ -1,5 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id 'org.jlleitschuh.gradle.ktlint'
+    id 'org.jetbrains.kotlinx.kover'
 }
 
 group = 'edu.austral'
@@ -16,4 +18,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.check {
+    dependsOn ktlintCheck
+}
+
+tasks.register('setupHooks') {
+    doLast {
+        def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")
+        exec {
+            commandLine setupHooksFile
+        }
+    }
 }
