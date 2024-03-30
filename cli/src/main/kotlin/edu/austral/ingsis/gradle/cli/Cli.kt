@@ -79,7 +79,9 @@ class Cli {
                 "╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   \n",
         )
 
-        println(" Welcome to PrintScript 1.0! ")
+        println(
+            "\uD83C\uDF89\uD83C\uDF89 Welcome to PrintScript 1.0! \uD83C\uDF89\uD83C\uDF89",
+        )
 
         delay(2000)
     }
