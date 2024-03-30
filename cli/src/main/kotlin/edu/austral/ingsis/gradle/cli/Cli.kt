@@ -1,33 +1,86 @@
 package edu.austral.ingsis.gradle.cli
 
-fun main() {
-    welcome()
-    do {
-        print("> ")
-        when (val command = readln()) {
-            "exit" -> break
-            "help" -> help()
-            else -> println(command)
+import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
+import edu.austral.ingsis.gradle.cli.utils.delay
+import java.io.File
+
+class Cli() {
+    init {
+        startCli()
+    }
+
+    private fun startCli() {
+        welcome()
+        do {
+            showOptions()
+            val option = readln()
+            try {
+                when (option) {
+                    "1" -> executeCase()
+                    "2" -> formatCase()
+                    "3" -> analyzeCase()
+                    "4" -> break
+                    else -> throw IllegalArgumentException("Invalid option")
+                }
+            } catch (e: Exception) {
+                println(e.message)
+            }
+            delay(2000)
+        } while (true)
+    }
+
+    private fun showOptions() {
+        println("You have the following options to start")
+        println("1.Execute")
+        println("2.Formatting")
+        println("3.Analyze")
+        println("4.Exit")
+    }
+
+    private fun executeCase() {
+        println("Indicate source file")
+        val source = readln()
+        val file = validateFile(source)
+        val content = FileAdapter().adapt(file)
+        val executeResult = ExecuteFunction().evaluate(content)
+    }
+
+    private fun analyzeCase() {
+        println("Indicate source file")
+        val source = readln()
+        println("Indicate the config file")
+        val config = readln()
+        val sourceFile = validateFile(source)
+        val configFile = validateFile(config)
+        val content = FileAdapter().adapt(sourceFile)
+        val reportResult = AnalyzeFunction().evaluate(Pair(content, configFile))
+        println(reportResult.toString())
+    }
+
+    private fun formatCase() {
+        throw NotImplementedError("Formatting is not implemented yet")
+    }
+
+    private fun validateFile(fileName: String): File {
+        val file = File(fileName)
+        if (!file.exists()) {
+            throw IllegalArgumentException("File $fileName does not exist")
         }
-    } while (true)
-}
+        return file
+    }
 
-private fun welcome() {
-    println(
-        "██████╗ ██████╗ ██╗███╗   ██╗████████╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗\n" +
-            "██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝\n" +
-            "██████╔╝██████╔╝██║██╔██╗ ██║   ██║   ███████╗██║     ██████╔╝██║██████╔╝   ██║   \n" +
-            "██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   \n" +
-            "██║     ██║  ██║██║██║ ╚████║   ██║   ███████║╚██████╗██║  ██║██║██║        ██║   \n" +
-            "╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   \n",
-    )
+    private fun welcome() {
+        println(
+            "██████╗ ██████╗ ██╗███╗   ██╗████████╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗\n" +
+                "██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝\n" +
+                "██████╔╝██████╔╝██║██╔██╗ ██║   ██║   ███████╗██║     ██████╔╝██║██████╔╝   ██║   \n" +
+                "██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   \n" +
+                "██║     ██║  ██║██║██║ ╚████║   ██║   ███████║╚██████╗██║  ██║██║██║        ██║   \n" +
+                "╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   \n",
+        )
 
-    println("Welcome to printScript! Type 'help' to see more info")
-}
+        println(" Welcome to PrintScript 1.0! ")
 
-private fun help() {
-    println("\nPrintScript Help:")
-    println("PrintScript is a TypeScript-based programming language.")
-    println("It has only one function:")
-    println(" - println(): Prints anything you pass as a parameter.")
+        delay(2000)
+    }
 }
