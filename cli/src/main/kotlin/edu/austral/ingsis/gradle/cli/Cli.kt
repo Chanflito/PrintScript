@@ -42,7 +42,7 @@ class Cli() {
         val source = readln()
         val file = validateFile(source)
         val content = FileAdapter().adapt(file)
-        val executeResult = ExecuteFunction().evaluate(content)
+        ExecuteFunction().evaluate(content)
     }
 
     private fun analyzeCase() {
