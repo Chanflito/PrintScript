@@ -41,6 +41,9 @@ class PrintlnParser : Parser<InputContext> {
             throw Exception(ExpectedTokenErrorMessage("(", currentToken).toString())
         }
         val childNode = ExpressionParser().parse(InputContext(tokens, index + 1))
-        return Pair(ASTNodeImpl(token?.value, token, PrintLnNode, listOf(childNode.first)), childNode.second)
+        if (childNode.second == tokens.size - 1) {
+            return Pair(ASTNodeImpl(token?.value, token, PrintLnNode, listOf(childNode.first)), childNode.second)
+        }
+        return Pair(ASTNodeImpl(token?.value, token, PrintLnNode, listOf(childNode.first)), childNode.second - 1)
     }
 }
