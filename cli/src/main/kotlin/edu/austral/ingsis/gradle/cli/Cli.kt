@@ -4,7 +4,7 @@ import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
 import edu.austral.ingsis.gradle.cli.utils.delay
 import java.io.File
 
-class Cli() {
+class Cli {
     init {
         startCli()
     }
