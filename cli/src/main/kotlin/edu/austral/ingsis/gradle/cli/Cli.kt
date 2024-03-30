@@ -80,7 +80,7 @@ class Cli {
         )
 
         println(
-            "\uD83C\uDF89\uD83C\uDF89 Welcome to PrintScript 1.0! \uD83C\uDF89\uD83C\uDF89",
+            " Welcome to PrintScript 1.0! \n",
         )
 
         delay(2000)
