@@ -61,7 +61,7 @@ class Interpreter {
             }
         }
 
-        return when (node.value) {
+        return when (node.value) { // TODO ADD HERE OPERATION BETWEEN STRINGS AND NUMBERS, CONCATENATION!!! Source_003 is not supported.
             "+" -> evaluatedChildren.reduce { acc, i -> (acc as Double) + (i as Double) }
             "-" -> evaluatedChildren.reduce { acc, i -> (acc as Double) - (i as Double) }
             "*" -> evaluatedChildren.reduce { acc, i -> (acc as Double) * (i as Double) }

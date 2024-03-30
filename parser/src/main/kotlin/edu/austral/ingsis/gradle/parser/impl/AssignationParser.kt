@@ -27,7 +27,7 @@ class AssignationParser : Parser<InputContext> {
         if (assignmentTokenType != Assignation) {
             throw Exception(getToken(assignationToken)?.let { ExpectedTokenErrorMessage("assignation", it).toString() })
         }
-
+        val expressionResult = ExpressionParser().parse(InputContext(input.tokens, getIndex(assignationToken)))
         return Pair(
             ASTNodeImpl(
                 "=",
@@ -35,10 +35,10 @@ class AssignationParser : Parser<InputContext> {
                 AssignationNode,
                 listOf(
                     ASTNodeImpl(getToken(identifierToken)?.value, getToken(identifierToken), IdentifierNode, listOf()),
-                    ExpressionParser().parse(InputContext(input.tokens, getIndex(assignationToken))).first,
+                    expressionResult.first,
                 ),
             ),
-            getIndex(assignationToken),
+            expressionResult.second + 1,
         )
     }
 
