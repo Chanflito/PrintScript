@@ -58,13 +58,28 @@ class Cli {
     }
 
     private fun formatCase() {
-        throw NotImplementedError("Formatting is not implemented yet")
+        println("Indicate the source file")
+        val sourceFile = validateFile(readln())
+        println("Indicate the destination file, if it doesn't exist it will be created")
+        val destinationFile = createFile(readln())
+        val content = FileAdapter().adapt(sourceFile)
+        val formattedContent = FormatFunction().evaluate(content)
+        destinationFile.writeText(formattedContent)
+        println("Formatting completed. Result written to: ${destinationFile.absolutePath}")
     }
 
     private fun validateFile(fileName: String): File {
         val file = File(fileName)
         if (!file.exists()) {
             throw IllegalArgumentException("File $fileName does not exist")
+        }
+        return file
+    }
+
+    private fun createFile(fileName: String): File {
+        val file = File(fileName)
+        if (!file.exists()) {
+            file.createNewFile()
         }
         return file
     }

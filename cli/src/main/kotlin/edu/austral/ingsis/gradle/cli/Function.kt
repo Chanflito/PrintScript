@@ -1,5 +1,6 @@
 package edu.austral.ingsis.gradle.cli
 
+import edu.austral.ingsis.gradle.formatter.Formatter
 import edu.austral.ingsis.gradle.interpreter.Interpreter
 import edu.austral.ingsis.gradle.lexer.util.createComposeLexer
 import edu.austral.ingsis.gradle.parser.InputContext
@@ -38,5 +39,19 @@ class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
         val sca = FileToJsonAdapter().adapt(input.second)
         println("Analyzing...")
         return sca.verify(astNode.first)
+    }
+}
+
+class FormatFunction : Function<String, String> {
+    override fun evaluate(input: String): String {
+        println("Format function selected")
+        val lexer = createComposeLexer()
+        println("Lexing...")
+        val tokenList = lexer.splitIntoTokens(input)
+        val parser = createComposeParser()
+        println("Parsing...")
+        val astNode = parser.parse(InputContext(tokenList, 0))
+        val formatter = Formatter() // TODO: Add config to formatter, to import rules manually.
+        return formatter.format(astNode.first)
     }
 }
