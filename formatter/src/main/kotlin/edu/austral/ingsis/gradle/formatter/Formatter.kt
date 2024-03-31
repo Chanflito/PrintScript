@@ -10,8 +10,11 @@ import edu.austral.ingsis.gradle.common.ast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.StringNode
 import edu.austral.ingsis.gradle.common.ast.TypeNode
+import edu.austral.ingsis.gradle.formatter.util.Rule
+import edu.austral.ingsis.gradle.formatter.util.RuleApplier
 
-class Formatter {
+class Formatter(private val rules: List<Rule>) {
+
     fun format(node: ASTNode): String {
         var result = ""
         node.children.forEachIndexed { index, childNode ->
@@ -21,7 +24,8 @@ class Formatter {
                 result += "\n" // Add newline only if it's not the last element
             }
         }
-        return result
+        val ruleApplier = RuleApplier()
+        return ruleApplier.applyRules(result, rules)
     }
 
     private fun formatNode(node: ASTNode): String {
@@ -30,7 +34,7 @@ class Formatter {
                 formatAssignationNode(node).plus(";")
             }
             is PrintLnNode -> {
-                "\n".plus(formatPrintLnNode(node).plus(";"))
+                formatPrintLnNode(node).plus(";")
             }
             is OperatorNode -> {
                 findIdentifierOrNumberOrStringOrOperatorNode(listOf(node)).plus(";")
@@ -55,7 +59,7 @@ class Formatter {
     private fun formatReassignment(node: ASTNode): String {
         val result = ""
         result.plus(findNode(node, IdentifierNode)?.value)
-            .plus(" = ")
+            .plus("=")
             .plus(findIdentifierOrNumberOrStringOrOperatorNode(node.children))
         return result
     }
