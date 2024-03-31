@@ -21,7 +21,6 @@ import edu.austral.ingsis.gradle.common.token.TypeNumber
 import edu.austral.ingsis.gradle.common.token.TypeString
 import edu.austral.ingsis.gradle.common.token.ValueNumber
 import edu.austral.ingsis.gradle.common.token.ValueString
-import edu.austral.ingsis.gradle.formatter.util.RuleParser
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

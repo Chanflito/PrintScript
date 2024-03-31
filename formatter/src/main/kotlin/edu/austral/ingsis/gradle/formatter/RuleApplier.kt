@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.formatter.util
+package edu.austral.ingsis.gradle.formatter
 
 class RuleApplier {
     fun applyRules(

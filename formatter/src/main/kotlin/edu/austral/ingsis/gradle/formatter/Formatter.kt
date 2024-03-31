@@ -7,8 +7,6 @@ import edu.austral.ingsis.gradle.common.ast.KeywordNode
 import edu.austral.ingsis.gradle.common.ast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.TypeNode
-import edu.austral.ingsis.gradle.formatter.util.Rule
-import edu.austral.ingsis.gradle.formatter.util.RuleApplier
 import edu.austral.ingsis.gradle.formatter.util.findIdentifierOrNumberOrStringOrOperatorNode
 import edu.austral.ingsis.gradle.formatter.util.findNode
 
