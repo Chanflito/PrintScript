@@ -7,14 +7,23 @@ import edu.austral.ingsis.gradle.common.ast.KeywordNode
 import edu.austral.ingsis.gradle.common.ast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.TypeNode
+import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
+import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleAdapter
+import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleData
 import edu.austral.ingsis.gradle.formatter.util.findIdentifierOrNumberOrStringOrOperatorNode
 import edu.austral.ingsis.gradle.formatter.util.findNode
 
-class Formatter(private val rules: List<Rule>) {
-    fun format(node: ASTNode): String {
+class Formatter {
+    fun format(
+        node: ASTNode,
+        ruleData: List<RuleData>,
+    ): String {
         val formatted = formatNode(node).joinToString("\n")
-        val ruleApplier = RuleApplier()
-        return ruleApplier.applyRules(formatted, rules)
+        val adapter = RuleAdapter()
+        val allRulesAdapted = ruleData.map { adapter.adapt(it) }
+        val allRules = ComposeRule(allRulesAdapted)
+        val result = allRules.applyRule(formatted)
+        return result
     }
 
     private fun formatNode(node: ASTNode): List<String> {

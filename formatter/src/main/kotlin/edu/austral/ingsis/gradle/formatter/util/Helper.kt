@@ -14,7 +14,6 @@ import edu.austral.ingsis.gradle.common.ast.StringNode
  * - 5
  * - 5/5
  * - a
- * @param AssignationNode The assignment node to analyze.
  * @return The right side of the assignment node.
  */
 fun findIdentifierOrNumberOrStringOrOperatorNode(nodes: List<ASTNode>): String {

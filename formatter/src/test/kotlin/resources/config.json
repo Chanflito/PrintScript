@@ -1,8 +1,0 @@
-{
-  "rules": [
-    { "type": "spaceBeforeColon", "allowed": true },
-    { "type": "spaceAfterColon", "allowed": true },
-    { "type": "spaceAroundEqual", "allowed": true },
-    { "type": "newlineBeforePrintln", "allowed": true, "maxInt": 1 }
-  ]
-}
