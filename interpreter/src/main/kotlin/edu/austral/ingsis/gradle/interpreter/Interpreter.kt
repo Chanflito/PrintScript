@@ -40,7 +40,7 @@ class Interpreter {
             OperatorNode -> evaluateOperatorNode(node)
             IdentifierNode -> evaluateIdentifierNode(node)
             NumberNode -> node.value ?: 0
-            StringNode -> node.value ?: ""
+            StringNode -> node.value.toString().replace("\"", "")
             else -> throw Exception("Invalid node type")
         }
     }
@@ -60,12 +60,18 @@ class Interpreter {
                 else -> throw Exception("Invalid operator for string operators")
             }
         }
+        if (evaluatedChildren.all { it is Double }) {
+            return when (node.value) {
+                "+" -> evaluatedChildren.reduce { acc, i -> (acc as Double) + (i as Double) }
+                "-" -> evaluatedChildren.reduce { acc, i -> (acc as Double) - (i as Double) }
+                "*" -> evaluatedChildren.reduce { acc, i -> (acc as Double) * (i as Double) }
+                "/" -> evaluatedChildren.reduce { acc, i -> (acc as Double) / (i as Double) }
+                else -> throw Exception("Invalid operator")
+            }
+        }
 
-        return when (node.value) { // TODO ADD HERE OPERATION BETWEEN STRINGS AND NUMBERS, CONCATENATION!!! Source_003 is not supported.
-            "+" -> evaluatedChildren.reduce { acc, i -> (acc as Double) + (i as Double) }
-            "-" -> evaluatedChildren.reduce { acc, i -> (acc as Double) - (i as Double) }
-            "*" -> evaluatedChildren.reduce { acc, i -> (acc as Double) * (i as Double) }
-            "/" -> evaluatedChildren.reduce { acc, i -> (acc as Double) / (i as Double) }
+        return when (node.value) {
+            "+" -> evaluatedChildren.reduce { acc, i -> (acc as String) + (i as Double) }
             else -> throw Exception("Invalid operator")
         }
     }
