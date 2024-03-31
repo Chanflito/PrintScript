@@ -25,7 +25,7 @@ class Formatter(private val rules: List<Rule>) {
 
     private fun formatChild(node: ASTNode): String {
         return when (node.nodeType) {
-            is AssignationNode -> formatAssignationNode(node)
+            is AssignationNode -> formatAssignmentNode(node)
             is PrintLnNode -> formatPrintLnNode(node)
             is OperatorNode -> findIdentifierOrNumberOrStringOrOperatorNode(listOf(node))
             is IdentifierNode -> formatInitialization(node)
@@ -33,8 +33,7 @@ class Formatter(private val rules: List<Rule>) {
         } + ";"
     }
 
-    // let
-    private fun formatAssignationNode(node: ASTNode): String {
+    private fun formatAssignmentNode(node: ASTNode): String {
         if (findNode(node, KeywordNode) == null) {
             return formatReassignment(node)
         }
@@ -42,27 +41,25 @@ class Formatter(private val rules: List<Rule>) {
     }
 
     private fun formatReassignment(node: ASTNode): String {
-        val result = ""
-        result.plus(findNode(node, IdentifierNode)?.value)
-            .plus("=")
-            .plus(findIdentifierOrNumberOrStringOrOperatorNode(node.children))
-        return result
+        val identifier = findNode(node, IdentifierNode)?.value
+        val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
+        return "$identifier = $value"
     }
 
     private fun formatDeclaration(node: ASTNode): String {
-        val identifier = findNode(node, IdentifierNode)?.value
-        val type = findNode(node, TypeNode)?.value
+        val identifier = findNode(node, IdentifierNode)?.value ?: ""
+        val type = findNode(node, TypeNode)?.value ?: ""
         val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
-        return "let".plus(" ").plus(identifier).plus(" : ").plus(type).plus(" = ").plus(value)
+        return "let $identifier : $type = $value"
     }
 
     private fun formatPrintLnNode(node: ASTNode): String {
-        return "println".plus(findIdentifierOrNumberOrStringOrOperatorNode(node.children))
+        return "println ${findIdentifierOrNumberOrStringOrOperatorNode(node.children)}"
     }
 
     private fun formatInitialization(node: ASTNode): String {
-        return "let".plus(findNode(node, IdentifierNode)?.value)
-            .plus(" : ")
-            .plus(findNode(node, TypeNode)?.value)
+        val identifier = findNode(node, IdentifierNode)?.value ?: ""
+        val type = findNode(node, TypeNode)?.value ?: ""
+        return "let $identifier : $type"
     }
 }
