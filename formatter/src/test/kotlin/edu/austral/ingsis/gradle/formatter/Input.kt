@@ -21,7 +21,7 @@ import edu.austral.ingsis.gradle.common.token.TypeString
 import edu.austral.ingsis.gradle.common.token.ValueNumber
 import edu.austral.ingsis.gradle.common.token.ValueString
 
-val input_012 =
+val input_002 =
     listOf(
         ASTNodeImpl(
             "=",
@@ -115,7 +115,7 @@ val input_012 =
         ),
     )
 
-val input_008 =
+val input_001 =
     listOf(
         ASTNodeImpl(
             "=",
@@ -164,6 +164,78 @@ val input_008 =
                     5.0,
                     Token("5", ValueNumber, Position(2, 5), Position(2, 6)),
                     NumberNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+    )
+
+val input_003 =
+    listOf(
+        ASTNodeImpl(
+            "=",
+            Token("=", Assignation, Position(1, 16), Position(1, 17)),
+            AssignationNode,
+            listOf(
+                ASTNodeImpl(
+                    "a",
+                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
+                    IdentifierNode,
+                    listOf(
+                        ASTNodeImpl(
+                            "let",
+                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                            KeywordNode,
+                            emptyList(),
+                        ),
+                        ASTNodeImpl(
+                            "number",
+                            Token("number", TypeNumber, Position(1, 9), Position(1, 15)),
+                            TypeNode,
+                            emptyList(),
+                        ),
+                    ),
+                ),
+                ASTNodeImpl(
+                    5.0,
+                    Token("5", ValueNumber, Position(1, 18), Position(1, 19)),
+                    NumberNode,
+                    emptyList(),
+                ),
+            ),
+        ),
+    )
+
+val input_004 =
+    listOf(
+        ASTNodeImpl(
+            "=",
+            Token("=", Assignation, Position(1, 15), Position(1, 16)),
+            AssignationNode,
+            listOf(
+                ASTNodeImpl(
+                    "a",
+                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
+                    IdentifierNode,
+                    listOf(
+                        ASTNodeImpl(
+                            "let",
+                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
+                            KeywordNode,
+                            emptyList(),
+                        ),
+                        ASTNodeImpl(
+                            "string",
+                            Token("string", TypeString, Position(1, 8), Position(1, 14)),
+                            TypeNode,
+                            emptyList(),
+                        ),
+                    ),
+                ),
+                ASTNodeImpl(
+                    "hello",
+                    Token("hello", ValueString, Position(1, 17), Position(1, 18)),
+                    StringNode,
                     emptyList(),
                 ),
             ),

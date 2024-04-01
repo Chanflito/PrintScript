@@ -48,14 +48,14 @@ class Formatter {
     private fun formatReassignment(node: ASTNode): String {
         val identifier = findNode(node, IdentifierNode)?.value
         val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
-        return "$identifier = $value"
+        return "$identifier=$value"
     }
 
     private fun formatDeclaration(node: ASTNode): String {
         val identifier = findNode(node, IdentifierNode)?.value ?: ""
         val type = findNode(node, TypeNode)?.value ?: ""
         val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
-        return "let $identifier : $type = $value"
+        return "let $identifier:$type=$value"
     }
 
     private fun formatPrintLnNode(node: ASTNode): String {
@@ -65,6 +65,6 @@ class Formatter {
     private fun formatInitialization(node: ASTNode): String {
         val identifier = findNode(node, IdentifierNode)?.value ?: ""
         val type = findNode(node, TypeNode)?.value ?: ""
-        return "let $identifier : $type"
+        return "let $identifier:$type"
     }
 }
