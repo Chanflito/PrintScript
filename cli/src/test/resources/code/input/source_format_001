@@ -1,0 +1,4 @@
+let aCa: string =           "Hello";
+println (aCa)   ;
+let bCa :     number      = 10;
+println(bCa)    ;
