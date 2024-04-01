@@ -19,10 +19,9 @@ class Formatter {
         ruleData: List<RuleData>,
     ): String {
         val formatted = formatNode(node).joinToString("\n")
-        val adapter = RuleAdapter()
-        val allRulesAdapted = ruleData.map { adapter.adapt(it) }
-        val allRules = ComposeRule(allRulesAdapted)
-        val result = allRules.applyRule(formatted)
+        val adaptedRules = ruleData.map { RuleAdapter().adapt(it) }
+        val composedRule = ComposeRule(adaptedRules)
+        val result = composedRule.applyRule(formatted)
         return result
     }
 
