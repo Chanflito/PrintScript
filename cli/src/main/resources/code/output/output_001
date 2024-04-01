@@ -1,6 +1,0 @@
-let aCa : string = ""Hello"";
-
-printlnaCa;
-let bCa : number = 10.0;
-
-printlnbCa;

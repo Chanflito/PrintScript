@@ -31,7 +31,7 @@ class FormatterTest {
         val node = ASTNodeImpl("Program", null, ProgramNode, input_012)
         val formatter = Formatter()
         val formattedCode = formatter.format(node, rules)
-        val expected = "let a : string = \"hola\";" + "\n" + "let b : string = \"loco\";" + "\n\n" + "println a + b;"
+        val expected = "let a : string = \"hola\";" + "\n" + "let b : string = \"loco\";" + "\n\n" + "println(a + b);"
         assertEquals(expected, formattedCode)
     }
 }

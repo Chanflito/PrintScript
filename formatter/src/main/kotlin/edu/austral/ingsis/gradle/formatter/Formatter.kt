@@ -21,8 +21,7 @@ class Formatter {
         val formatted = formatNode(node).joinToString("\n")
         val adaptedRules = ruleData.map { RuleAdapter().adapt(it) }
         val composedRule = ComposeRule(adaptedRules)
-        val result = composedRule.applyRule(formatted)
-        return result
+        return composedRule.applyRule(formatted)
     }
 
     private fun formatNode(node: ASTNode): List<String> {
@@ -60,7 +59,7 @@ class Formatter {
     }
 
     private fun formatPrintLnNode(node: ASTNode): String {
-        return "println ${findIdentifierOrNumberOrStringOrOperatorNode(node.children)}"
+        return "println(${findIdentifierOrNumberOrStringOrOperatorNode(node.children)})"
     }
 
     private fun formatInitialization(node: ASTNode): String {

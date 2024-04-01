@@ -60,10 +60,12 @@ class Cli {
     private fun formatCase() {
         println("Indicate the source file")
         val sourceFile = validateFile(readln())
+        println("Indicate the format rules file")
+        val rulesFile = validateFile(readln())
         println("Indicate the destination file, if it doesn't exist it will be created")
         val destinationFile = createFile(readln())
         val content = FileAdapter().adapt(sourceFile)
-        val formattedContent = FormatFunction().evaluate(content)
+        val formattedContent = FormatFunction().evaluate(Pair(content, rulesFile))
         destinationFile.writeText(formattedContent)
         println("Formatting completed. Result written to: ${destinationFile.absolutePath}")
     }

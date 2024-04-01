@@ -1,0 +1,4 @@
+let a : number = 12.0;
+let b : number = 3.0;
+a = a / b ;
+println( a+ " Result: " + b);
