@@ -1,16 +1,13 @@
-package edu.austral.ingsis.gradle.formatter.util
+package edu.austral.ingsis.gradle.formatter.rule.adapter
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Rule(
+data class RuleData(
     val type: String,
     val allowed: Boolean,
-    val maxInt: Int? = null,
+    val maxInt: Int?,
 )
 
 @Serializable
 data class RuleJson(val type: String, val allowed: Boolean, val maxInt: Int? = null)
-
-@Serializable
-data class RulesJson(val rules: List<RuleJson>)
