@@ -18,6 +18,7 @@ class AssignationNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
         val identifierToken = getIdentifierToken(tokens, letNode.second)
         val typeTokenPair = getTypeToken(tokens, identifierToken.second + 1)
         val equalsToken = getEqualsToken(tokens, typeTokenPair.second)
+        val expressionResult = ExpressionParser().parse(InputContext(tokens, equalsToken.second))
         return Pair(
             ASTNodeImpl(
                 equalsToken.first?.value,
@@ -25,10 +26,10 @@ class AssignationNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
                 AssignationNode,
                 listOf(
                     IdentifierNodeWithLetBuilder().build(tokens, index).first,
-                    ExpressionParser().parse(InputContext(tokens, equalsToken.second)).first,
+                    expressionResult.first,
                 ),
             ),
-            equalsToken.second,
+            expressionResult.second + 1,
         )
     }
 
