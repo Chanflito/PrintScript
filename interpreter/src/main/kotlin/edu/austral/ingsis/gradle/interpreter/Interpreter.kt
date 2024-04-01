@@ -40,7 +40,7 @@ class Interpreter {
             OperatorNode -> evaluateOperatorNode(node)
             IdentifierNode -> evaluateIdentifierNode(node)
             NumberNode -> node.value ?: 0
-            StringNode -> node.value ?: ""
+            StringNode -> node.value.toString().replace("\"", "")
             else -> throw Exception("Invalid node type")
         }
     }
@@ -60,12 +60,36 @@ class Interpreter {
                 else -> throw Exception("Invalid operator for string operators")
             }
         }
+        if (evaluatedChildren.all { it is Double }) {
+            return when (node.value) {
+                "+" -> evaluatedChildren.reduce { acc, i -> (acc as Double) + (i as Double) }
+                "-" -> evaluatedChildren.reduce { acc, i -> (acc as Double) - (i as Double) }
+                "*" -> evaluatedChildren.reduce { acc, i -> (acc as Double) * (i as Double) }
+                "/" -> evaluatedChildren.reduce { acc, i -> (acc as Double) / (i as Double) }
+                else -> throw Exception("Invalid operator")
+            }
+        }
 
+        return evaluateExpressionWithMixedTypes(node, evaluatedChildren)
+    }
+
+    private fun evaluateExpressionWithMixedTypes(
+        node: ASTNode,
+        evaluatedChildren: List<Any>,
+    ): Any {
         return when (node.value) {
-            "+" -> evaluatedChildren.reduce { acc, i -> (acc as Double) + (i as Double) }
-            "-" -> evaluatedChildren.reduce { acc, i -> (acc as Double) - (i as Double) }
-            "*" -> evaluatedChildren.reduce { acc, i -> (acc as Double) * (i as Double) }
-            "/" -> evaluatedChildren.reduce { acc, i -> (acc as Double) / (i as Double) }
+            "+" -> {
+                val result = evaluatedChildren.firstOrNull() ?: throw Exception("No operands found")
+                evaluatedChildren.drop(1).fold(result) { acc, elem ->
+                    when {
+                        acc is String && elem is Double -> acc + elem.toString()
+                        acc is Double && elem is String -> acc.toString() + elem
+                        acc is String && elem is String -> acc + elem
+                        acc is Double && elem is Double -> acc + elem
+                        else -> throw Exception("Invalid combination of types")
+                    }
+                }
+            }
             else -> throw Exception("Invalid operator")
         }
     }

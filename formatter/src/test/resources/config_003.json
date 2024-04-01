@@ -1,0 +1,19 @@
+[
+  {
+    "type": "spaceBeforeColon",
+    "allowed": true
+  },
+  {
+    "type": "spaceAfterColon",
+    "allowed": false
+  },
+  {
+    "type": "spaceAroundEqual",
+    "allowed": true
+  },
+  {
+    "type": "newlineBeforePrintln",
+    "allowed": true,
+    "maxInt": 1
+  }
+]

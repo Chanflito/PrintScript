@@ -41,6 +41,7 @@ class AdapterTest {
         val rule = adapter.adapt(source)
         val node = ASTNodeImpl("Program", null, ProgramNode, input_002)
         val result = rule.verify(node)
+        assert(rule is ComposeRule)
         assert(result is ReportSuccess)
     }
 }
