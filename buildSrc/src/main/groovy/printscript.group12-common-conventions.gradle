@@ -4,8 +4,6 @@ plugins {
     id 'org.jetbrains.kotlinx.kover'
 }
 
-group = 'edu.austral'
-version = '1.0.0'
 
 repositories {
     mavenCentral()

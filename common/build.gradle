@@ -1,3 +1,4 @@
 plugins {
-    id 'edu.austral.ingsis.printscript.grupox.gradle.common-conventions'
+    id 'printscript.group12-common-conventions'
+    id 'printscript.group12-publish'
 }
