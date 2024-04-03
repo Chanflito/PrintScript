@@ -1,0 +1,4 @@
+plugins {
+    id 'printscript.group12-common-conventions'
+    id 'printscript.group12-publish'
+}

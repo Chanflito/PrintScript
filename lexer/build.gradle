@@ -1,0 +1,9 @@
+plugins {
+    id 'printscript.group12-common-conventions'
+    id 'printscript.group12-publish'
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':util')
+}

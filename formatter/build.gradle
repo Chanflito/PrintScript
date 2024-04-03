@@ -1,0 +1,10 @@
+plugins {
+    id 'printscript.group12-common-conventions'
+    id 'printscript.group12-publish'
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.9.23"
+}
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0'
+}

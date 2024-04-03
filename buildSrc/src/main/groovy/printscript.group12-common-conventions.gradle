@@ -1,0 +1,47 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jlleitschuh.gradle.ktlint'
+    id 'org.jetbrains.kotlinx.kover'
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.check {
+    dependsOn ktlintCheck
+}
+
+koverReport {
+    verify {
+        rule {
+            minBound(60)
+            filters {
+                excludes {
+                    classes("edu.austral.ingsis.gradle.cli.*",
+                            "edu.austral.ingsis.gradle.common.*",
+                            "edu.austral.ingsis.gradle.util.*")
+                }
+            }
+        }
+    }
+}
+
+tasks.register('setupHooks') {
+    doLast {
+        def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")
+        exec {
+            commandLine setupHooksFile
+        }
+    }
+}
