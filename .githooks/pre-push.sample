@@ -6,7 +6,6 @@ echo "Running 'gradle build' before pushing..."
 if ./gradlew build; then
     echo "Gradle build successful"
 
-    ./gradlew clean test cover
     coverage=$(./gradlew koverPrintCoverage | grep -oP '\d+(\.\d+)?(?=%)')
 
     while IFS= read -r line; do
