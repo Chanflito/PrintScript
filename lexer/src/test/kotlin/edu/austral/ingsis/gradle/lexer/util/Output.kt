@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.lexer.utils
+package edu.austral.ingsis.gradle.lexer.util
 
 import edu.austral.ingsis.gradle.common.token.Assignation
 import edu.austral.ingsis.gradle.common.token.Colon

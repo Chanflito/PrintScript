@@ -2,7 +2,7 @@
 
 echo "Running 'gradle check' before committing..."
 
-if ./gradlew check; then
+if ./gradlew build; then
     echo "Gradle check passed. Proceeding with the commit."
     exit 0
 else

@@ -7,7 +7,7 @@ dependencies {
     implementation project(':common')
     implementation project(':lexer')
     implementation project(':parser')
-    implementation project(':sca')
     implementation project(':interpreter')
+    implementation project(':sca')
     implementation project(':formatter')
 }

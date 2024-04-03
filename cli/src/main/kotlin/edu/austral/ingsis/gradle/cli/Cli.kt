@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.cli
 
 import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
-import edu.austral.ingsis.gradle.cli.utils.delay
+import edu.austral.ingsis.gradle.cli.util.delay
 import java.io.File
 
 class Cli {
