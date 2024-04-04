@@ -23,20 +23,18 @@ tasks.check {
 }
 
 koverReport {
+    filters {
+        excludes {
+            packages("edu.austral.ingsis.gradle.common","edu.austral.ingsis.gradle.util", "edu.austral.ingsis.gradle.cli")
+        }
+    }
+
     verify {
         rule {
             minBound(60)
-            filters {
-                excludes {
-                    classes("edu.austral.ingsis.gradle.cli.*",
-                            "edu.austral.ingsis.gradle.common.*",
-                            "edu.austral.ingsis.gradle.util.*")
-                }
-            }
         }
     }
 }
-
 tasks.register('setupHooks') {
     doLast {
         def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")

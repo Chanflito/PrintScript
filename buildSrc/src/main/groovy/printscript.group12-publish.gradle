@@ -6,7 +6,7 @@ publishing {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/chanflito/PrintScript")
-            version="1.0.1" // This is the version of the package asd
+            version="1.0.0" // This is the version of the package asd
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
