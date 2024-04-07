@@ -1,9 +1,11 @@
 package edu.austral.ingsis.gradle.common.ast.newast
 
-interface Keyword {
+import edu.austral.ingsis.gradle.common.token.TokenPosition
+
+interface Keyword : AST {
     val value: String
 }
 
-data class LetKeyword(override val value: String = "let") : Keyword
+data class LetKeywordNode(override val tokenPosition: TokenPosition, override val value: String = "let") : Keyword
 
-data class ConstKeyword(override val value: String = "const") : Keyword
+data class ConstKeywordNode(override val tokenPosition: TokenPosition, override val value: String = "const") : Keyword

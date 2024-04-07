@@ -10,9 +10,9 @@ interface Operator : Expression {
     val value: String
 }
 
-interface Literal : Operand {
+interface Literal<T> : Operand {
     val type: Type
-    val value: String
+    val value: T
 }
 
 data class MultiplyNode(override val value: String = "*", override val tokenPosition: TokenPosition) : Operator
@@ -23,16 +23,25 @@ data class SumNode(override val value: String = "+", override val tokenPosition:
 
 data class SubtractNode(override val value: String = "-", override val tokenPosition: TokenPosition) : Operator
 
-data class Identifier(val name: String, override val tokenPosition: TokenPosition) : Operand
+data class IdentifierNode(val name: String, override val tokenPosition: TokenPosition) : Operand
 
-data class StringLiteral(override val value: String, override val tokenPosition: TokenPosition) : Literal {
-    override val type: Type = StringType
-}
+data class StringLiteralNode(
+    override val value: String,
+    override val type: Type,
+    override val tokenPosition: TokenPosition,
+) : Literal<String>
 
-data class NumberLiteral(override val value: String, override val tokenPosition: TokenPosition) : Literal {
-    override val type: Type = NumberType
-}
+data class IntLiteralNode(override val value: Int, override val type: Type, override val tokenPosition: TokenPosition) :
+    Literal<Int> // Should be a declared as number type.
 
-data class BooleanLiteral(override val value: String, override val tokenPosition: TokenPosition) : Literal {
-    override val type: Type = BooleanType
-}
+data class DoubleLiteralNode(
+    override val value: Double,
+    override val type: Type,
+    override val tokenPosition: TokenPosition,
+) : Literal<Double> // // Should be a declared as number type.
+
+data class BooleanLiteralNode(
+    override val value: Boolean,
+    override val type: Type,
+    override val tokenPosition: TokenPosition,
+) : Literal<Boolean>

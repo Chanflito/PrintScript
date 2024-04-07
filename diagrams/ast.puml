@@ -86,15 +86,19 @@ interface ControlStatement implements Statement{}
 
 class IfStatement implements ControlStatement{
     -condition: Expression
-    -ifBlock: List<Statement>
+    -ifBlock: Block
 
 }
 
 class IfElseStatement implements ControlStatement{
     -condition: Expression
-    -ifBlock: List<Statement>
-    -elseBlock: List<Statement>
+    -ifBlock: Block
+    -elseBlock:Block
 }
+
+class Block implements Statement{
+    -statements: List<Statement>
+    }
 
 Assignation --> Expression
 @enduml

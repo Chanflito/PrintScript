@@ -7,12 +7,12 @@ interface ControlStatement : Statement
 data class IfStatement(
     override val tokenPosition: TokenPosition,
     val condition: Expression,
-    val ifBlock: Block,
+    val ifBlock: BlockNode,
 ) : ControlStatement
 
 data class IfElseStatement(
     override val tokenPosition: TokenPosition,
     val condition: Expression,
-    val ifBlock: Block,
-    val elseBlock: Block,
+    val ifBlock: BlockNode,
+    val elseBlock: BlockNode,
 ) : ControlStatement
