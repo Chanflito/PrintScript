@@ -3,6 +3,7 @@ package edu.austral.ingsis.gradle.lexer.util
 import edu.austral.ingsis.gradle.common.token.LetKeyword
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
 import edu.austral.ingsis.gradle.common.token.Token
+import edu.austral.ingsis.gradle.common.token.TokenPosition
 import edu.austral.ingsis.gradle.common.token.TokenType
 import edu.austral.ingsis.gradle.common.token.TypeNumber
 import edu.austral.ingsis.gradle.common.token.TypeString
@@ -25,7 +26,7 @@ fun createToken(
     val endIndex = matchResult.range.last + 1
     val startPosition = calculatePosition(code, startIndex)
     val endPosition = calculatePosition(code, endIndex)
-    return Token(matchResult.value, tokenType, startPosition, endPosition)
+    return Token(matchResult.value, tokenType, TokenPosition(startPosition, endPosition))
 }
 
 fun isInQuotes(

@@ -1,0 +1,104 @@
+@startuml
+interface AST{
+    -tokenPosition
+}
+interface Expression implements Statement{
+}
+
+class Identifier implements Operand{
+    -name
+}
+
+interface Statement implements AST{
+
+}
+
+interface Type <T> implements AST{
+}
+
+interface Literal<T> implements Operand{
+    -type
+    -value
+}
+
+class StringLiteral implements Literal
+class NumberLiteral implements Literal
+class BooleanLiteral implements Literal
+
+interface KeywordNode implements AST {
+    -value : string
+}
+
+class LetKeyword implements KeywordNode{
+    -value: string
+}
+
+class ConstKeyword implements KeywordNode{
+    -value: string
+}
+
+
+interface Declaration implements Statement{
+    -keywordNode
+    -identifier
+    -type
+}
+
+interface Assignation implements Statement {
+    -expression
+}
+
+class ReAssignation implements Assignation{
+    -identifier
+}
+class DeclarationAssignation implements Assignation, Declaration{
+
+}
+
+
+interface Operator implements Expression{
+    -value
+}
+interface Operand implements Expression{
+}
+
+
+interface Function implements Statement
+
+
+class PlusNode implements Operator
+class SubtractNode implements Operator
+class MultiplyNode implements Operator
+class DivideNode implements Operator
+
+
+class BooleanType implements Type
+class StringType implements Type
+class NumberType implements Type
+
+class Println implements Function{
+    -expression
+}
+
+class ReadInput implements Function
+
+interface ControlStatement implements Statement{}
+
+class IfStatement implements ControlStatement{
+    -condition: Expression
+    -ifBlock: Block
+
+}
+
+class IfElseStatement implements ControlStatement{
+    -condition: Expression
+    -ifBlock: Block
+    -elseBlock:Block
+}
+
+class Block implements Statement{
+    -statements: List<Statement>
+    }
+
+Assignation --> Expression
+@enduml

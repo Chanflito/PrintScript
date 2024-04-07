@@ -3,8 +3,7 @@ package edu.austral.ingsis.gradle.common.token
 data class Token(
     val value: String,
     val tokenType: TokenType,
-    val startPosition: Position,
-    val endPosition: Position,
+    val tokenPosition: TokenPosition,
 )
 
 interface TokenType
