@@ -14,10 +14,10 @@ import edu.austral.ingsis.gradle.common.token.LetKeyword
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.StringType
+import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.common.token.ValueString
 
 val input_001 =
     listOf(
@@ -39,7 +39,7 @@ val input_001 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(1, 12), Position(1, 18))),
+                            Token("string", StringType, TokenPosition(Position(1, 12), Position(1, 18))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -47,7 +47,7 @@ val input_001 =
                 ),
                 ASTNodeImpl(
                     "blue",
-                    Token("blue", ValueString, TokenPosition(Position(1, 18), Position(1, 19))),
+                    Token("blue", StringValue, TokenPosition(Position(1, 18), Position(1, 19))),
                     StringNode,
                     emptyList(),
                 ),
@@ -75,7 +75,7 @@ val input_002 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(1, 12), Position(1, 18))),
+                            Token("string", StringType, TokenPosition(Position(1, 12), Position(1, 18))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -83,7 +83,7 @@ val input_002 =
                 ),
                 ASTNodeImpl(
                     "blue",
-                    Token("blue", ValueString, TokenPosition(Position(1, 18), Position(1, 19))),
+                    Token("blue", StringValue, TokenPosition(Position(1, 18), Position(1, 19))),
                     StringNode,
                     emptyList(),
                 ),
@@ -158,7 +158,7 @@ val input_005 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(1, 12), Position(1, 18))),
+                            Token("string", StringType, TokenPosition(Position(1, 12), Position(1, 18))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -166,7 +166,7 @@ val input_005 =
                 ),
                 ASTNodeImpl(
                     "snake",
-                    Token("snake", ValueString, TokenPosition(Position(1, 18), Position(1, 19))),
+                    Token("snake", StringValue, TokenPosition(Position(1, 18), Position(1, 19))),
                     StringNode,
                     emptyList(),
                 ),
@@ -202,7 +202,7 @@ val input_006 =
                 ),
                 ASTNodeImpl(
                     "string",
-                    Token("string", TypeString, TokenPosition(Position(1, 12), Position(1, 18))),
+                    Token("string", StringType, TokenPosition(Position(1, 12), Position(1, 18))),
                     TypeNode,
                     emptyList(),
                 ),
@@ -225,7 +225,7 @@ val input_007 =
                 ),
                 ASTNodeImpl(
                     "string",
-                    Token("string", TypeString, TokenPosition(Position(1, 12), Position(1, 18))),
+                    Token("string", StringType, TokenPosition(Position(1, 12), Position(1, 18))),
                     TypeNode,
                     emptyList(),
                 ),

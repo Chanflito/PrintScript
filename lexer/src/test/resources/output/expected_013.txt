@@ -1,0 +1,17 @@
+const,ConstKeyword
+a,Identifier
+:,Colon
+string,StringType
+=,Assignation
+"Hello World!",StringValue
+;,SemiColon
+let,LetKeyword
+input,Identifier
+:,Colon
+number,NumberType
+=,Assignation
+readInput,ReadInputKeyword
+(,LeftParenthesis
+"Enter a number",StringValue
+),RightParenthesis
+;,SemiColon

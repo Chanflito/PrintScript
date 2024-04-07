@@ -1,20 +1,19 @@
 package edu.austral.ingsis.gradle.lexer.util
 
-import edu.austral.ingsis.gradle.common.token.LetKeyword
-import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.Assignation
+import edu.austral.ingsis.gradle.common.token.Colon
+import edu.austral.ingsis.gradle.common.token.Divide
+import edu.austral.ingsis.gradle.common.token.LeftBrace
+import edu.austral.ingsis.gradle.common.token.LeftParenthesis
+import edu.austral.ingsis.gradle.common.token.Minus
+import edu.austral.ingsis.gradle.common.token.Multiply
+import edu.austral.ingsis.gradle.common.token.Plus
+import edu.austral.ingsis.gradle.common.token.RightBrace
+import edu.austral.ingsis.gradle.common.token.RightParenthesis
+import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 import edu.austral.ingsis.gradle.common.token.TokenType
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.lexer.Lexer
-import edu.austral.ingsis.gradle.lexer.builder.LexerBuilderImp
-import edu.austral.ingsis.gradle.lexer.impl.IdentifierLexer
-import edu.austral.ingsis.gradle.lexer.impl.KeywordLexer
-import edu.austral.ingsis.gradle.lexer.impl.NumberLexer
-import edu.austral.ingsis.gradle.lexer.impl.OperatorLexer
-import edu.austral.ingsis.gradle.lexer.impl.StringLexer
-import edu.austral.ingsis.gradle.lexer.impl.TypeLexer
 import edu.austral.ingsis.gradle.util.calculatePosition
 
 fun createToken(
@@ -40,14 +39,21 @@ fun isInQuotes(
     return quotesMatch.any { (start, end) -> start <= resultRange.first && end >= resultRange.second }
 }
 
-fun createComposeLexer(): Lexer {
-    val lexerBuilderImp = LexerBuilderImp(listOf())
-    return lexerBuilderImp
-        .withLexer(KeywordLexer(mapOf("let" to LetKeyword, "println" to PrintlnKeyword)))
-        .withLexer(TypeLexer(mapOf("string" to TypeString, "number" to TypeNumber)))
-        .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
-        .withLexer(NumberLexer())
-        .withLexer(OperatorLexer())
-        .withLexer(StringLexer())
-        .build()
-}
+val operators =
+    mapOf(
+        "+" to Plus,
+        "-" to Minus,
+        "*" to Multiply,
+        "/" to Divide,
+        "=" to Assignation,
+        "(" to LeftParenthesis,
+        ")" to RightParenthesis,
+        ":" to Colon,
+        ";" to SemiColon,
+    )
+
+val bracketsOperators =
+    mapOf(
+        "{" to LeftBrace,
+        "}" to RightBrace,
+    )
