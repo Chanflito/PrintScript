@@ -11,7 +11,7 @@ class CliTest {
     fun test001_executeFunctionWithValidInputShouldReturnList() {
         val source = "src/test/resources/code/input/source_001"
         val content = FileAdapter().adapt(File(source))
-        val result = ExecuteFunction().evaluate(content)
+        val result = ExecuteCliFunction().evaluate(content)
         assert(result.isNotEmpty())
         assertEquals(expected = 3.0, actual = result[0])
     }
@@ -21,7 +21,7 @@ class CliTest {
         val source = "src/test/resources/code/input/source_002"
         val config = "src/test/resources/rule/sca/config_001.json"
         val sourceFile = FileAdapter().adapt(File(source))
-        val result = AnalyzeFunction().evaluate(Pair(sourceFile, File(config)))
+        val result = AnalyzeCliFunction().evaluate(Pair(sourceFile, File(config)))
         assertEquals(expected = ReportSuccess.toString(), actual = result.toString())
     }
 
@@ -37,7 +37,7 @@ class CliTest {
                 "let bCa : number = 10.0;\n" +
                 "\n" +
                 "println(bCa);"
-        val result = FormatFunction().evaluate(Pair(sourceFile, File(config)))
+        val result = FormatCliFunction().evaluate(Pair(sourceFile, File(config)))
         assertEquals(expected = expected, actual = result)
     }
 }

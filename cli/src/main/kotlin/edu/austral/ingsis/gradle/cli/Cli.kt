@@ -42,7 +42,7 @@ class Cli {
         val source = readln()
         val file = validateFile(source)
         val content = FileAdapter().adapt(file)
-        ExecuteFunction().evaluate(content)
+        ExecuteCliFunction().evaluate(content)
     }
 
     private fun analyzeCase() {
@@ -53,7 +53,7 @@ class Cli {
         val sourceFile = validateFile(source)
         val configFile = validateFile(config)
         val content = FileAdapter().adapt(sourceFile)
-        val reportResult = AnalyzeFunction().evaluate(Pair(content, configFile))
+        val reportResult = AnalyzeCliFunction().evaluate(Pair(content, configFile))
         println(reportResult.toString())
     }
 
@@ -65,7 +65,7 @@ class Cli {
         println("Indicate the destination file, if it doesn't exist it will be created")
         val destinationFile = createFile(readln())
         val content = FileAdapter().adapt(sourceFile)
-        val formattedContent = FormatFunction().evaluate(Pair(content, rulesFile))
+        val formattedContent = FormatCliFunction().evaluate(Pair(content, rulesFile))
         destinationFile.writeText(formattedContent)
         println("Formatting completed. Result written to: ${destinationFile.absolutePath}")
     }

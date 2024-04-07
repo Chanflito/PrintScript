@@ -10,7 +10,15 @@ interface TokenType
 
 object LetKeyword : TokenType
 
+object ConstKeyword : TokenType
+
 object PrintlnKeyword : TokenType
+
+object ReadInputKeyword : TokenType
+
+object IfKeyword : TokenType
+
+object ElseKeyword : TokenType
 
 object Identifier : TokenType
 
@@ -18,9 +26,13 @@ object TypeNumber : TokenType
 
 object TypeString : TokenType
 
+object TypeBoolean : TokenType
+
 object ValueNumber : TokenType
 
 object ValueString : TokenType
+
+object ValueBoolean : TokenType
 
 object Assignation : TokenType
 
@@ -31,6 +43,10 @@ object SemiColon : TokenType
 object LeftParenthesis : TokenType
 
 object RightParenthesis : TokenType
+
+object OpenBracket : TokenType
+
+object CloseBracket : TokenType
 
 object Plus : TokenType
 

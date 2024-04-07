@@ -4,21 +4,21 @@ import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.formatter.Formatter
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser
 import edu.austral.ingsis.gradle.interpreter.Interpreter
-import edu.austral.ingsis.gradle.lexer.util.createComposeLexer
+import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import java.io.File
 
-interface Function<in T, out O> {
+interface CliFunction<in T, out O> {
     fun evaluate(input: T): O
 }
 
-class ExecuteFunction : Function<String, List<Any>> {
+class ExecuteCliFunction : CliFunction<String, List<Any>> {
     override fun evaluate(input: String): List<Any> {
         println("Execute function selected")
-        val lexer = createComposeLexer()
+        val lexer = LexerDirector().createComposeLexer("1.0") // Change this to select version of printscript to use.
         println("Lexing...")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
@@ -29,7 +29,7 @@ class ExecuteFunction : Function<String, List<Any>> {
     }
 }
 
-class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
+class AnalyzeCliFunction : CliFunction<Pair<String, File>, ReportResult> {
     override fun evaluate(input: Pair<String, File>): ReportResult {
         val astNode = createAstNode(input)
         val sca = FileToJsonAdapter().adapt(input.second)
@@ -38,7 +38,7 @@ class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
     }
 }
 
-class FormatFunction : Function<Pair<String, File>, String> {
+class FormatCliFunction : CliFunction<Pair<String, File>, String> {
     override fun evaluate(input: Pair<String, File>): String {
         println("Format function selected")
         val astNode = createAstNode(input)
@@ -49,7 +49,7 @@ class FormatFunction : Function<Pair<String, File>, String> {
 }
 
 fun createAstNode(input: Pair<String, File>): Pair<ASTNode, Int> {
-    val lexer = createComposeLexer()
+    val lexer = LexerDirector().createComposeLexer("1.0")
     println("Lexing...")
     val tokenList = lexer.splitIntoTokens(input.first)
     val parser = createComposeParser()
