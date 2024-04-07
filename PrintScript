@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sourceFile="cli/src/main/resources/code/input/source_001"
+version="1.0.0"
+
+./gradlew --quiet :cli:run --args="sourceFile=$sourceFile version=$version"
