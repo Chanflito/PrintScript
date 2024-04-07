@@ -8,15 +8,15 @@ import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.LetKeyword
 import edu.austral.ingsis.gradle.common.token.Minus
 import edu.austral.ingsis.gradle.common.token.Multiply
+import edu.austral.ingsis.gradle.common.token.NumberType
+import edu.austral.ingsis.gradle.common.token.NumberValue
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
+import edu.austral.ingsis.gradle.common.token.StringType
+import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.common.token.ValueNumber
-import edu.austral.ingsis.gradle.common.token.ValueString
 import edu.austral.ingsis.gradle.parser.impl.AssignationParser
 import edu.austral.ingsis.gradle.parser.impl.ComposeParser
 import edu.austral.ingsis.gradle.parser.impl.DeclarationParser
@@ -55,11 +55,11 @@ fun isIdentifier(token: Token?): Boolean {
 }
 
 fun isType(token: Token?): Boolean {
-    return (token != null && token.tokenType in setOf(TypeNumber, TypeString))
+    return (token != null && token.tokenType in setOf(NumberType, StringType))
 }
 
 fun isValue(token: Token?): Boolean {
-    return (token != null && token.tokenType in setOf(ValueNumber, ValueString))
+    return (token != null && token.tokenType in setOf(NumberValue, StringValue))
 }
 
 fun isOperator(token: Token?): Boolean {
@@ -111,8 +111,8 @@ fun createComposeParser(): ComposeParser {
     return ComposeParser(
         mapOf(
             PrintlnKeyword to PrintlnParser(),
-            ValueString to ExpressionParser(EXPRESSION_PARSER_MAP),
-            ValueNumber to ExpressionParser(EXPRESSION_PARSER_MAP),
+            StringValue to ExpressionParser(EXPRESSION_PARSER_MAP),
+            NumberValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
             LetKeyword to DeclarationParser(),
             Identifier to AssignationParser(),
@@ -122,8 +122,8 @@ fun createComposeParser(): ComposeParser {
 
 val EXPRESSION_PARSER_MAP =
     mapOf(
-        ValueNumber to ValueNumberParser(),
-        ValueString to ValueStringParser(),
+        NumberValue to ValueNumberParser(),
+        StringValue to ValueStringParser(),
         LeftParenthesis to LeftParenthesisParser(),
         Identifier to IdentifierParser(),
     )

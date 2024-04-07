@@ -22,17 +22,17 @@ object ElseKeyword : TokenType
 
 object Identifier : TokenType
 
-object TypeNumber : TokenType
+object NumberType : TokenType
 
-object TypeString : TokenType
+object StringType : TokenType
 
-object TypeBoolean : TokenType
+object BooleanType : TokenType
 
-object ValueNumber : TokenType
+object NumberValue : TokenType
 
-object ValueString : TokenType
+object StringValue : TokenType
 
-object ValueBoolean : TokenType
+object BooleanValue : TokenType
 
 object Assignation : TokenType
 
@@ -44,9 +44,9 @@ object LeftParenthesis : TokenType
 
 object RightParenthesis : TokenType
 
-object OpenBracket : TokenType
+object LeftBrace : TokenType
 
-object CloseBracket : TokenType
+object RightBrace : TokenType
 
 object Plus : TokenType
 

@@ -1,14 +1,14 @@
 package edu.austral.ingsis.gradle.lexer.director
 
+import edu.austral.ingsis.gradle.common.token.BooleanType
 import edu.austral.ingsis.gradle.common.token.ConstKeyword
 import edu.austral.ingsis.gradle.common.token.ElseKeyword
 import edu.austral.ingsis.gradle.common.token.IfKeyword
 import edu.austral.ingsis.gradle.common.token.LetKeyword
+import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
 import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
-import edu.austral.ingsis.gradle.common.token.TypeBoolean
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
+import edu.austral.ingsis.gradle.common.token.StringType
 import edu.austral.ingsis.gradle.lexer.Lexer
 import edu.austral.ingsis.gradle.lexer.builder.LexerBuilderImp
 import edu.austral.ingsis.gradle.lexer.impl.BooleanLexer
@@ -28,7 +28,7 @@ class LexerDirector {
             "1.0" -> {
                 builder
                     .withLexer(KeywordLexer(mapOf("let" to LetKeyword, "println" to PrintlnKeyword)))
-                    .withLexer(TypeLexer(mapOf("string" to TypeString, "number" to TypeNumber)))
+                    .withLexer(TypeLexer(mapOf("string" to StringType, "number" to NumberType)))
                     .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
                     .withLexer(NumberLexer())
                     .withLexer(
@@ -57,9 +57,9 @@ class LexerDirector {
                     .withLexer(
                         TypeLexer(
                             mapOf(
-                                "string" to TypeString,
-                                "number" to TypeNumber,
-                                "boolean" to TypeBoolean,
+                                "string" to StringType,
+                                "number" to NumberType,
+                                "boolean" to BooleanType,
                             ),
                         ),
                     )

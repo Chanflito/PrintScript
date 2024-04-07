@@ -1,14 +1,14 @@
 package edu.austral.ingsis.gradle.lexer.util
 
 import edu.austral.ingsis.gradle.common.token.Assignation
-import edu.austral.ingsis.gradle.common.token.CloseBracket
 import edu.austral.ingsis.gradle.common.token.Colon
 import edu.austral.ingsis.gradle.common.token.Divide
+import edu.austral.ingsis.gradle.common.token.LeftBrace
 import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.Minus
 import edu.austral.ingsis.gradle.common.token.Multiply
-import edu.austral.ingsis.gradle.common.token.OpenBracket
 import edu.austral.ingsis.gradle.common.token.Plus
+import edu.austral.ingsis.gradle.common.token.RightBrace
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.Token
@@ -54,6 +54,6 @@ val operators =
 
 val bracketsOperators =
     mapOf(
-        "{" to OpenBracket,
-        "}" to CloseBracket,
+        "{" to LeftBrace,
+        "}" to RightBrace,
     )

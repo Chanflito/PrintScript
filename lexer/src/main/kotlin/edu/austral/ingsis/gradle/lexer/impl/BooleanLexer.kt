@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.lexer.impl
 
+import edu.austral.ingsis.gradle.common.token.BooleanValue
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.common.token.ValueNumber
 import edu.austral.ingsis.gradle.lexer.Lexer
 import edu.austral.ingsis.gradle.lexer.util.RegexPatterns
 import edu.austral.ingsis.gradle.lexer.util.createToken
@@ -15,7 +15,7 @@ class BooleanLexer : Lexer {
             if (isInQuotes(result, code)) {
                 null
             } else {
-                createToken(result, code, ValueNumber)
+                createToken(result, code, BooleanValue)
             }
         }.toList()
     }

@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.lexer
 
 import edu.austral.ingsis.gradle.common.token.LetKeyword
-import edu.austral.ingsis.gradle.common.token.TypeNumber
+import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.lexer.impl.IdentifierLexer
 import edu.austral.ingsis.gradle.lexer.impl.KeywordLexer
@@ -81,7 +81,7 @@ class LexerTest {
     fun test004_typeNumber() {
         val typeLexer =
             TypeLexer(
-                mapOf("number" to TypeNumber),
+                mapOf("number" to NumberType),
             )
         val result = typeLexer.splitIntoTokens(input_004)
         assert(result.contains(output_004))
@@ -155,11 +155,20 @@ class LexerTest {
 
     // TODO: Add more tests with this new version.
     @Test
-    fun test012_composeLexer() {
+    fun test012_composeLexerWithIfElse() {
         val composeLexer = LexerDirector().createComposeLexer("1.1")
         val input = convertFileToString("src/test/resources/input/input_012.txt")
         val result = composeLexer.splitIntoTokens(input)
         val output = writeTokensToFile(result, "src/test/resources/output/output_012.txt")
         assertTrue(compareFiles(output, "src/test/resources/output/expected_012.txt"))
+    }
+
+    @Test
+    fun test013_composeLexerWithConstKeywordAndReadInput() {
+        val composeLexer = LexerDirector().createComposeLexer("1.1")
+        val input = convertFileToString("src/test/resources/input/input_013.txt")
+        val result = composeLexer.splitIntoTokens(input)
+        val output = writeTokensToFile(result, "src/test/resources/output/output_013.txt")
+        assertTrue(compareFiles(output, "src/test/resources/output/expected_013.txt"))
     }
 }

@@ -1,26 +1,26 @@
 let,LetKeyword
 a,Identifier
 :,Colon
-boolean,TypeBoolean
+boolean,BooleanType
 =,Assignation
-true,ValueNumber
+true,BooleanValue
 ;,SemiColon
 if,IfKeyword
 (,LeftParenthesis
 a,Identifier
 ),RightParenthesis
-{,OpenBracket
+{,LeftBrace
 println,PrintlnKeyword
 (,LeftParenthesis
-"a is true",ValueString
+"a is true",StringValue
 ),RightParenthesis
 ;,SemiColon
-},CloseBracket
+},RightBrace
 else,ElseKeyword
-{,OpenBracket
+{,LeftBrace
 println,PrintlnKeyword
 (,LeftParenthesis
-"a is false",ValueString
+"a is false",StringValue
 ),RightParenthesis
 ;,SemiColon
-},CloseBracket
+},RightBrace

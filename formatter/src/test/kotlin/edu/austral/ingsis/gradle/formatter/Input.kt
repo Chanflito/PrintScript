@@ -12,15 +12,15 @@ import edu.austral.ingsis.gradle.common.ast.TypeNode
 import edu.austral.ingsis.gradle.common.token.Assignation
 import edu.austral.ingsis.gradle.common.token.Identifier
 import edu.austral.ingsis.gradle.common.token.LetKeyword
+import edu.austral.ingsis.gradle.common.token.NumberType
+import edu.austral.ingsis.gradle.common.token.NumberValue
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.StringType
+import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.common.token.ValueNumber
-import edu.austral.ingsis.gradle.common.token.ValueString
 
 val input_002 =
     listOf(
@@ -42,7 +42,7 @@ val input_002 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(1, 8), Position(1, 14))),
+                            Token("string", StringType, TokenPosition(Position(1, 8), Position(1, 14))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -50,7 +50,7 @@ val input_002 =
                 ),
                 ASTNodeImpl(
                     "hola",
-                    Token("hola", ValueString, TokenPosition(Position(1, 17), Position(1, 18))),
+                    Token("hola", StringValue, TokenPosition(Position(1, 17), Position(1, 18))),
                     StringNode,
                     emptyList(),
                 ),
@@ -74,7 +74,7 @@ val input_002 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(2, 8), Position(2, 14))),
+                            Token("string", StringType, TokenPosition(Position(2, 8), Position(2, 14))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -82,7 +82,7 @@ val input_002 =
                 ),
                 ASTNodeImpl(
                     "loco",
-                    Token("loco", ValueString, TokenPosition(Position(2, 17), Position(2, 18))),
+                    Token("loco", StringValue, TokenPosition(Position(2, 17), Position(2, 18))),
                     StringNode,
                     emptyList(),
                 ),
@@ -136,7 +136,7 @@ val input_001 =
                         ),
                         ASTNodeImpl(
                             "number",
-                            Token("number", TypeNumber, TokenPosition(Position(1, 9), Position(1, 15))),
+                            Token("number", NumberType, TokenPosition(Position(1, 9), Position(1, 15))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -144,7 +144,7 @@ val input_001 =
                 ),
                 ASTNodeImpl(
                     5.0,
-                    Token("5", ValueNumber, TokenPosition(Position(1, 18), Position(1, 19))),
+                    Token("5", NumberValue, TokenPosition(Position(1, 18), Position(1, 19))),
                     NumberNode,
                     emptyList(),
                 ),
@@ -157,13 +157,13 @@ val input_001 =
             listOf(
                 ASTNodeImpl(
                     5.0,
-                    Token("5", ValueNumber, TokenPosition(Position(2, 1), Position(2, 2))),
+                    Token("5", NumberValue, TokenPosition(Position(2, 1), Position(2, 2))),
                     NumberNode,
                     emptyList(),
                 ),
                 ASTNodeImpl(
                     5.0,
-                    Token("5", ValueNumber, TokenPosition(Position(2, 5), Position(2, 6))),
+                    Token("5", NumberValue, TokenPosition(Position(2, 5), Position(2, 6))),
                     NumberNode,
                     emptyList(),
                 ),
@@ -191,7 +191,7 @@ val input_003 =
                         ),
                         ASTNodeImpl(
                             "number",
-                            Token("number", TypeNumber, TokenPosition(Position(1, 9), Position(1, 15))),
+                            Token("number", NumberType, TokenPosition(Position(1, 9), Position(1, 15))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -199,7 +199,7 @@ val input_003 =
                 ),
                 ASTNodeImpl(
                     5.0,
-                    Token("5", ValueNumber, TokenPosition(Position(1, 18), Position(1, 19))),
+                    Token("5", NumberValue, TokenPosition(Position(1, 18), Position(1, 19))),
                     NumberNode,
                     emptyList(),
                 ),
@@ -227,7 +227,7 @@ val input_004 =
                         ),
                         ASTNodeImpl(
                             "string",
-                            Token("string", TypeString, TokenPosition(Position(1, 8), Position(1, 14))),
+                            Token("string", StringType, TokenPosition(Position(1, 8), Position(1, 14))),
                             TypeNode,
                             emptyList(),
                         ),
@@ -235,7 +235,7 @@ val input_004 =
                 ),
                 ASTNodeImpl(
                     "hello",
-                    Token("hello", ValueString, TokenPosition(Position(1, 17), Position(1, 18))),
+                    Token("hello", StringValue, TokenPosition(Position(1, 17), Position(1, 18))),
                     StringNode,
                     emptyList(),
                 ),
