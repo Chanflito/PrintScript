@@ -1,31 +1,12 @@
 package edu.austral.ingsis.gradle.parser.util
 
-import edu.austral.ingsis.gradle.common.token.Assignation
-import edu.austral.ingsis.gradle.common.token.Colon
-import edu.austral.ingsis.gradle.common.token.Divide
-import edu.austral.ingsis.gradle.common.token.Identifier
-import edu.austral.ingsis.gradle.common.token.LeftParenthesis
-import edu.austral.ingsis.gradle.common.token.LetKeyword
-import edu.austral.ingsis.gradle.common.token.Minus
-import edu.austral.ingsis.gradle.common.token.Multiply
-import edu.austral.ingsis.gradle.common.token.Plus
-import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
-import edu.austral.ingsis.gradle.common.token.RightParenthesis
-import edu.austral.ingsis.gradle.common.token.SemiColon
-import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.common.token.ValueNumber
-import edu.austral.ingsis.gradle.common.token.ValueString
-import edu.austral.ingsis.gradle.parser.impl.AssignationParser
-import edu.austral.ingsis.gradle.parser.impl.ComposeParser
-import edu.austral.ingsis.gradle.parser.impl.DeclarationParser
-import edu.austral.ingsis.gradle.parser.impl.ExpressionParser
-import edu.austral.ingsis.gradle.parser.impl.IdentifierParser
-import edu.austral.ingsis.gradle.parser.impl.LeftParenthesisParser
-import edu.austral.ingsis.gradle.parser.impl.PrintlnParser
+import edu.austral.ingsis.gradle.common.token.*
+import edu.austral.ingsis.gradle.parser.Parser
+import edu.austral.ingsis.gradle.parser.impl.OperationParser
 import edu.austral.ingsis.gradle.parser.impl.ValueNumberParser
-import edu.austral.ingsis.gradle.parser.impl.ValueStringParser
+import edu.austral.ingsis.gradle.parser.validator.impl.NumberValidator
+import edu.austral.ingsis.gradle.parser.validator.impl.OperationValidator
+import edu.austral.ingsis.gradle.parser.validator.impl.StringValidator
 
 fun endOfFile(
     tokens: List<Token>,
@@ -46,8 +27,8 @@ fun isAssignation(token: Token?): Boolean {
     return token != null && token.tokenType == Assignation
 }
 
-fun isLetKeyword(token: Token?): Boolean {
-    return token != null && token.tokenType == LetKeyword
+fun isKeyword(token: Token?): Boolean {
+    return token != null && token.tokenType in setOf(LetKeyword)
 }
 
 fun isIdentifier(token: Token?): Boolean {
@@ -64,6 +45,14 @@ fun isValue(token: Token?): Boolean {
 
 fun isOperator(token: Token?): Boolean {
     return (token != null && token.tokenType in setOf(Plus, Minus, Multiply, Divide))
+}
+
+fun isNumberToken(token: Token?): Boolean {
+    return token != null && token.tokenType == ValueNumber
+}
+
+fun isStringToken(token: Token?): Boolean {
+    return token != null && token.tokenType == ValueString
 }
 
 fun isAdditiveOperator(token: Token?): Boolean {
@@ -107,23 +96,32 @@ fun consumeToken(
     return Pair(current, nextIndex)
 }
 
-fun createComposeParser(): ComposeParser {
-    return ComposeParser(
-        mapOf(
-            PrintlnKeyword to PrintlnParser(),
-            ValueString to ExpressionParser(EXPRESSION_PARSER_MAP),
-            ValueNumber to ExpressionParser(EXPRESSION_PARSER_MAP),
-            LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
-            LetKeyword to DeclarationParser(),
-            Identifier to AssignationParser(),
-        ),
-    )
+fun getSublists(list: List<Token>, index: Int): Pair<List<Token>, List<Token>> {
+    val leftSide = list.subList(0, index)
+    val rightSide = list.subList(index + 1, list.size)
+    return Pair(leftSide, rightSide)
 }
 
-val EXPRESSION_PARSER_MAP =
-    mapOf(
-        ValueNumber to ValueNumberParser(),
-        ValueString to ValueStringParser(),
-        LeftParenthesis to LeftParenthesisParser(),
-        Identifier to IdentifierParser(),
-    )
+fun createValueNumberParser(): Parser {
+    return ValueNumberParser(NumberValidator())
+}
+
+fun createValueStringParser(): Parser {
+    return ValueNumberParser(StringValidator())
+}
+
+fun createPlusOperationParser(): Parser {
+    return OperationParser(Plus, OperationValidator(), listOf(createValueNumberParser(), createValueStringParser()))
+}
+
+fun createMinusOperationParser(): Parser {
+    return OperationParser(Minus, OperationValidator(), listOf(createValueNumberParser(), createValueStringParser()))
+}
+
+fun createMultiplyOperationParser(): Parser {
+    return OperationParser(Multiply, OperationValidator(), listOf(createValueNumberParser(), createValueStringParser()))
+}
+
+fun createDivideOperationParser(): Parser {
+    return OperationParser(Divide, OperationValidator(), listOf(createValueNumberParser(), createValueStringParser()))
+}
