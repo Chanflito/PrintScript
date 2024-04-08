@@ -2,11 +2,14 @@ package edu.austral.ingsis.gradle.parser
 
 import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.common.token.Token
+import edu.austral.ingsis.gradle.parser.validator.Validator
 
-interface Parser<in T : ParserInput> { // TODO implement Output context with out.
-    fun parse(input: T): Pair<ASTNode, Int>
+interface Parser {
+    val validator: Validator;
+    fun parse(tokens: List<Token>): ASTNode
+    fun canParse(tokens: List<Token>): Boolean
 }
 
-interface ParserInput
-
-data class InputContext(val tokens: List<Token>, val index: Int) : ParserInput
+interface ComposeParser : Parser {
+    val parsers: List<Parser>
+}

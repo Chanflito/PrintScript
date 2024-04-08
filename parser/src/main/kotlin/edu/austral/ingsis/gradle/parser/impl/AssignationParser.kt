@@ -3,46 +3,31 @@ package edu.austral.ingsis.gradle.parser.impl
 import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
 import edu.austral.ingsis.gradle.common.ast.AssignationNode
-import edu.austral.ingsis.gradle.common.ast.IdentifierNode
 import edu.austral.ingsis.gradle.common.token.Assignation
-import edu.austral.ingsis.gradle.common.token.Identifier
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.parser.ComposeParser
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.util.ExpectedTokenErrorMessage
-import edu.austral.ingsis.gradle.parser.util.consumeToken
+import edu.austral.ingsis.gradle.parser.util.getSublists
+import edu.austral.ingsis.gradle.parser.validator.Validator
 
-// Here should go assignations like a=7
-class AssignationParser : Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val index = input.index
-        val identifierToken = consumeToken(input.tokens, index)
-        val identifierTokenType = getToken(identifierToken)?.tokenType
-        if (identifierTokenType != Identifier) {
-            throw Exception(getToken(identifierToken)?.let { ExpectedTokenErrorMessage("identifier", it).toString() })
+class AssignationParser(override val validator: Validator, override val parsers: List<Parser>) : ComposeParser {
+    override fun parse(tokens: List<Token>): ASTNode {
+        val assignationToken = tokens.find { it.tokenType == Assignation }
+        val tokenIndex = tokens.indexOf(assignationToken)
+        val (leftSide, rightSide) = getSublists(tokens, tokenIndex);
+        var ast = ASTNodeImpl(assignationToken?.value, assignationToken, AssignationNode, emptyList());
+        parsers.forEach {
+            if (it.canParse(leftSide)) {
+                ast = ast.addChild(it.parse(leftSide))
+            }
+            if (it.canParse(rightSide)) {
+                ast = ast.addChild(it.parse(rightSide))
+            }
         }
-
-        val assignationToken = consumeToken(input.tokens, getIndex(identifierToken))
-        val assignmentTokenType = getToken(assignationToken)?.tokenType
-        if (assignmentTokenType != Assignation) {
-            throw Exception(getToken(assignationToken)?.let { ExpectedTokenErrorMessage("assignation", it).toString() })
-        }
-        val expressionResult = ExpressionParser().parse(InputContext(input.tokens, getIndex(assignationToken)))
-        return Pair(
-            ASTNodeImpl(
-                "=",
-                getToken(assignationToken),
-                AssignationNode,
-                listOf(
-                    ASTNodeImpl(getToken(identifierToken)?.value, getToken(identifierToken), IdentifierNode, listOf()),
-                    expressionResult.first,
-                ),
-            ),
-            expressionResult.second + 1,
-        )
+        return ast;
     }
 
-    private fun getIndex(assignationToken: Pair<Token?, Int>) = assignationToken.second
-
-    private fun getToken(identifierToken: Pair<Token?, Int>) = identifierToken.first
+    override fun canParse(tokens: List<Token>): Boolean {
+        return validator.validate(tokens)
+    }
 }

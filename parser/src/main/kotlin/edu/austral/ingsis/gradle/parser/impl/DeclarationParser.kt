@@ -2,32 +2,31 @@ package edu.austral.ingsis.gradle.parser.impl
 
 import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.KeywordNode
+import edu.austral.ingsis.gradle.common.token.*
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.builder.AstBuilder
-import edu.austral.ingsis.gradle.parser.builder.impl.AssignationNodeWithLetBuilder
-import edu.austral.ingsis.gradle.parser.builder.impl.IdentifierNodeWithLetBuilder
-import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
-import edu.austral.ingsis.gradle.parser.validator.SyntaxValidator
-import edu.austral.ingsis.gradle.parser.validator.impl.TypeAssignmentValidator
-import edu.austral.ingsis.gradle.parser.validator.impl.VariableDeclarationValidator
+import edu.austral.ingsis.gradle.parser.validator.Validator
 
-// Here should go assignations like let a : number= 7; or let a : number;
-class DeclarationParser(
-    private val validators: List<Pair<SyntaxValidator, AstBuilder<ASTNodeImpl>>> =
-        listOf(
-            Pair(TypeAssignmentValidator(), IdentifierNodeWithLetBuilder()),
-            Pair(VariableDeclarationValidator(), AssignationNodeWithLetBuilder()),
-        ),
-) :
-    Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val copyIndex = input.index
-        validators.forEach { (validator, builder) ->
-            if (validator.validate(input.tokens, copyIndex)) {
-                return builder.build(input.tokens, copyIndex)
-            }
+class DeclarationParser(override val validator: Validator) : Parser {
+    override fun parse(tokens: List<Token>): ASTNode {
+        val identifier = tokens.find { it.tokenType == Identifier }
+        val keyword = tokens.find { it.tokenType in setOf(LetKeyword) }
+        val declarationType = tokens.find { it.tokenType in setOf(TypeNumber, TypeString) }
+        var ast = ASTNodeImpl(identifier?.value, identifier, IdentifierNode, emptyList())
+
+        if (keyword != null && declarationType != null) {
+            val keywordNode = ASTNodeImpl(keyword.value, keyword, KeywordNode, emptyList())
+            val declarationTypeNode = ASTNodeImpl(declarationType.value, declarationType, IdentifierNode, emptyList())
+            ast = ast.addChild(keywordNode)
+            ast = ast.addChild(declarationTypeNode)
         }
-        throw Exception(NoTokenFoundErrorMessage(copyIndex).toString())
+
+
+        return ast
+    }
+
+    override fun canParse(tokens: List<Token>): Boolean {
+        return validator.validate(tokens)
     }
 }
