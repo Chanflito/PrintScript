@@ -5,7 +5,7 @@ plugins {
 }
 
 application {
-    mainClass = 'edu.austral.ingsis.gradle.cli.PrintScriptKt'
+    mainClass = 'edu.austral.ingsis.gradle.cli.CliKt'
 }
 
 dependencies {

@@ -29,14 +29,13 @@ class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
     override fun evaluate(input: Pair<String, File>): ReportResult {
         val astNode = createAstNode(input)
         val sca = FileToJsonAdapter().adapt(input.second)
-        println("Analyzing...")
+        println("Analyzing...\n")
         return sca.verify(astNode.first)
     }
 }
 
 class FormatFunction : Function<Pair<String, File>, String> {
     override fun evaluate(input: Pair<String, File>): String {
-        println("Format function selected")
         val astNode = createAstNode(input)
         val formatter = Formatter()
         val rules = RuleParser().parseRulesFromFile(input.second.path)

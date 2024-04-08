@@ -12,7 +12,7 @@ while [ $# -gt 0 ]; do
             source_gradle="--source=$sourceFile"
             shift
         ;;
-        -v|--v )
+        -v|--version )
             shift
             version=$1
             version_gradle="--version=$version"
