@@ -36,11 +36,11 @@ fun isIdentifier(token: Token?): Boolean {
 }
 
 fun isType(token: Token?): Boolean {
-    return (token != null && token.tokenType in setOf(TypeNumber, TypeString))
+    return (token != null && token.tokenType in setOf(NumberType, StringType))
 }
 
 fun isValue(token: Token?): Boolean {
-    return (token != null && token.tokenType in setOf(ValueNumber, ValueString))
+    return (token != null && token.tokenType in setOf(NumberValue, StringValue))
 }
 
 fun isOperator(token: Token?): Boolean {
@@ -48,11 +48,11 @@ fun isOperator(token: Token?): Boolean {
 }
 
 fun isNumberToken(token: Token?): Boolean {
-    return token != null && token.tokenType == ValueNumber
+    return token != null && token.tokenType == NumberValue
 }
 
 fun isStringToken(token: Token?): Boolean {
-    return token != null && token.tokenType == ValueString
+    return token != null && token.tokenType == StringValue
 }
 
 fun isAdditiveOperator(token: Token?): Boolean {

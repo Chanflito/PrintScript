@@ -1,0 +1,2 @@
+const a : string = "Hello World!";
+let input: number = readInput("Enter a number");
