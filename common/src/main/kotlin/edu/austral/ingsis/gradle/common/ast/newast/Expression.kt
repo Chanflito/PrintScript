@@ -8,20 +8,42 @@ sealed interface Operand : Expression
 
 interface Operator : Expression {
     val value: String
+    val left: Expression
+    val right: Expression
 }
 
-interface Literal<T> : Operand {
+sealed interface Literal<T> : Operand {
     val type: Type
     val value: T
 }
 
-data class MultiplyNode(override val value: String = "*", override val tokenPosition: TokenPosition) : Operator
+data class MultiplyNode(
+    override val value: String = "*",
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator
 
-data class DivideNode(override val value: String = "/", override val tokenPosition: TokenPosition) : Operator
+data class DivideNode(
+    override val value: String = "/",
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator
 
-data class SumNode(override val value: String = "+", override val tokenPosition: TokenPosition) : Operator
+data class SumNode(
+    override val value: String = "+",
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator
 
-data class SubtractNode(override val value: String = "-", override val tokenPosition: TokenPosition) : Operator
+data class SubtractNode(
+    override val value: String = "-",
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator
 
 data class IdentifierNode(val name: String, override val tokenPosition: TokenPosition) : Operand
 
