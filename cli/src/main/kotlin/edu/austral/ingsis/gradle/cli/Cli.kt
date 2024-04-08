@@ -10,7 +10,7 @@ import com.github.ajalt.clikt.parameters.types.file
 import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
 import java.io.File
 
-class Cli : CliktCommand(help = "Run a Printscript file") {
+class Cli : CliktCommand(help = "Run a PrintScript file") {
     companion object {
         // TODO get version and release date from gradle
         const val VERSION = "1.0.1-SNAPSHOT"
@@ -21,14 +21,14 @@ class Cli : CliktCommand(help = "Run a Printscript file") {
         const val ANALYZE_RULES_FILE_PATH = "/sca_rules.json"
     }
 
-    private val argument by argument(help = "Printscript arguments available")
+    private val argument by argument(help = "PrintScript arguments available")
         .choice("execute", "format", "analyze").optional()
 
     private val source by option(help = "The source file to run")
         .file(mustExist = true)
 
     // TODO add only numeric arguments with x.x.x format
-    private val version by option(help = "Printscript version to run")
+    private val version by option(help = "PrintScript version to run")
         .default(VERSION)
 
     override fun run() {
@@ -59,6 +59,7 @@ class Cli : CliktCommand(help = "Run a Printscript file") {
         val stringFile = FileAdapter().adapt(source)
         val formattedContent = FormatFunction().evaluate(Pair(stringFile, rulesFile))
         source?.writeText(formattedContent)
+        println("\nFormatted file: $FORMAT_RULES_FILE_PATH")
     }
 }
 
