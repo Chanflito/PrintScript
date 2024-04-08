@@ -1,6 +1,32 @@
 #!/bin/bash
 
-sourceFile="cli/src/main/resources/code/input/source_001"
-version="1.0.0"
+source_gradle=""
+version_gradle=""
+argument=""
 
-./gradlew --quiet :cli:run --args="sourceFile=$sourceFile version=$version"
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -s|--source )
+            shift
+            sourceFile=$1
+            source_gradle="--source=$sourceFile"
+            shift
+        ;;
+        -v|--v )
+            shift
+            version=$1
+            version_gradle="--version=$version"
+            shift
+        ;;
+        *)
+            argument=$1
+            shift
+        ;;
+    esac
+done
+
+if [ -z "$source_gradle" ] || [ -z "$argument" ]; then
+  ./gradlew --quiet :cli:run --args="--help"
+  exit 1
+fi
+  ./gradlew --quiet :cli:run --args="$source_gradle $version_gradle $argument"

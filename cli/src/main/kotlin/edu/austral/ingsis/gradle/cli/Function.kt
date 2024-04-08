@@ -17,14 +17,10 @@ interface Function<in T, out O> {
 
 class ExecuteFunction : Function<String, List<Any>> {
     override fun evaluate(input: String): List<Any> {
-        println("Execute function selected")
         val lexer = createComposeLexer()
-        println("Lexing...")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
-        println("Parsing...")
         val astNode = parser.parse(InputContext(tokenList, 0))
-        println("Interpreting...")
         return Interpreter().interpret(astNode.first)
     }
 }

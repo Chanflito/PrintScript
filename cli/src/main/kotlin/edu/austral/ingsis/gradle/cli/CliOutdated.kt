@@ -1,10 +1,9 @@
 package edu.austral.ingsis.gradle.cli
 
 import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
-import edu.austral.ingsis.gradle.cli.utils.delay
 import java.io.File
 
-class Cli {
+class CliOutdated {
     init {
         startCli()
     }
@@ -25,7 +24,6 @@ class Cli {
             } catch (e: Exception) {
                 println(e.message)
             }
-            delay(2000)
         } while (true)
     }
 
@@ -99,7 +97,5 @@ class Cli {
         println(
             " Welcome to PrintScript 1.0! \n",
         )
-
-        delay(2000)
     }
 }
