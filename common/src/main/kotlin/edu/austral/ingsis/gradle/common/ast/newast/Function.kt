@@ -7,3 +7,5 @@ interface Function : Statement
 data class PrintLnNode(override val tokenPosition: TokenPosition, val expression: Expression) : Function
 
 data class ReadInputNode(override val tokenPosition: TokenPosition, val value: String) : Function, Expression
+
+data class ReadEnvInputNode(override val tokenPosition: TokenPosition, val value: String) : Function, Expression
