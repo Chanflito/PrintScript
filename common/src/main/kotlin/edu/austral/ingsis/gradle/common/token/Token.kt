@@ -16,6 +16,8 @@ object PrintlnKeyword : TokenType
 
 object ReadInputKeyword : TokenType
 
+object ReadEnvKeyword : TokenType
+
 object IfKeyword : TokenType
 
 object ElseKeyword : TokenType

@@ -7,6 +7,7 @@ import edu.austral.ingsis.gradle.common.token.IfKeyword
 import edu.austral.ingsis.gradle.common.token.LetKeyword
 import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.ReadEnvKeyword
 import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
 import edu.austral.ingsis.gradle.common.token.StringType
 import edu.austral.ingsis.gradle.lexer.Lexer
@@ -51,6 +52,7 @@ class LexerDirector {
                                 "if" to IfKeyword,
                                 "else" to ElseKeyword,
                                 "readInput" to ReadInputKeyword,
+                                "readEnv" to ReadEnvKeyword,
                             ),
                         ),
                     )
@@ -78,6 +80,7 @@ class LexerDirector {
                                 "readInput",
                                 "true",
                                 "false",
+                                "readEnv",
                             ),
                         ),
                     )
