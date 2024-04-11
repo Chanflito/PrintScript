@@ -4,36 +4,42 @@ import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.Literal
 import edu.austral.ingsis.gradle.common.ast.newast.Operator
+import edu.austral.ingsis.gradle.interpreter.util.Context
 
-class ExpressionInterpreter {
-    fun interpret(
-        expression: Expression,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
+class ExpressionInterpreter: Interpreter<Expression>{
+
+    override fun interpret(node: Expression, context: Context): Context {
+        val result = interpretAux(node, context)
+        if (result != null) {
+            context.addBinaryOperationResult(result)
+        }
+        return context
+    }
+    private fun interpretAux(
+        expression: Expression, context: Context
     ): Any? {
         return when (expression) {
             is Literal<*> -> expression.value
-            is IdentifierNode -> resolveIdentifier(expression.name, variables, constants)
-            is Operator -> evaluateOperation(expression, variables, constants)
+            is IdentifierNode -> resolveIdentifier(expression.name, context)
+            is Operator -> evaluateOperation(expression, context)
             else -> throw RuntimeException("Expression not found")
         }
     }
 
     private fun resolveIdentifier(
         name: String,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
-    ): Any? {
-        return variables[name] ?: constants[name] ?: throw RuntimeException("Variable $name not found")
+        context: Context,
+    ): Any {
+        return context.getVariable(name) ?: context.isInContext(name)
+        ?: throw RuntimeException("Variable $name with value assigned not found")
     }
 
     private fun evaluateOperation(
         expression: Operator,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
+        context: Context,
     ): Any {
-        val left = interpret(expression.left, variables, constants)
-        val right = interpret(expression.right, variables, constants)
+        val left = interpretAux(expression.left, context)
+        val right = interpretAux(expression.right, context)
 
         return when (expression.value) {
             "+" -> performAddition(left, right)

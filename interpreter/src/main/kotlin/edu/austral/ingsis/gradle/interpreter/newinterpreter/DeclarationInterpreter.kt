@@ -2,20 +2,17 @@ package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
 import edu.austral.ingsis.gradle.common.ast.newast.Type
+import edu.austral.ingsis.gradle.interpreter.util.Context
 
-class DeclarationInterpreter {
-    fun interpret(
-        declarationNode: DeclarationNode,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
-        declaredVariables: HashMap<String, Type>,
-    ): HashMap<String, Type> {
-        val type = declarationNode.type
-        val name = declarationNode.identifierNode.name
-        if (variables.containsKey(name) || constants.containsKey(name) || declaredVariables.containsKey(name)) {
+class DeclarationInterpreter: Interpreter<DeclarationNode>{
+    override fun interpret(
+        node: DeclarationNode, context: Context): Context {
+        val type = node.type
+        val name = node.identifierNode.name
+        if (context.isInContext(name)) {
             throw RuntimeException("Variable $name already declared")
         }
-        declaredVariables[name] = type
-        return declaredVariables
+        context.declareVariable(name, type)
+        return context
     }
 }

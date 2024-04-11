@@ -2,26 +2,26 @@ package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
 import edu.austral.ingsis.gradle.common.ast.newast.Type
+import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class ReassignationInterpreter {
-    fun interpret(
-        reassignationNode: ReAssignationNode,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
-        declaredVariables: HashMap<String, Type>,
-    ): HashMap<String, Any> {
-        val identifier = reassignationNode.identifierNode.name
-        val expression = reassignationNode.expression
-        if (!variables.containsKey(identifier) && !declaredVariables.containsKey(identifier)) {
+class ReassignationInterpreter : Interpreter<ReAssignationNode> {
+    override fun interpret(
+        node: ReAssignationNode,
+        context: Context
+    ): Context {
+        val identifier = node.identifierNode.name
+        val expression = node.expression
+        if (!context.isVariableDeclared(identifier)) {
             throw RuntimeException(
                 "Variable $identifier not declared",
             )
         }
-        if (constants.containsKey(identifier)) throw RuntimeException("Variable $identifier is constant")
-        val result = ExpressionInterpreter().interpret(expression, variables, HashMap())
-        if (!doesTypeMatch(result, declaredVariables[identifier])) throw RuntimeException("Type mismatch")
-        variables[identifier] = result as Any
-        return variables
+        if (context.isConstantAssigned(identifier)) throw RuntimeException("Variable $identifier is constant")
+        val newContext= ExpressionInterpreter().interpret(expression, context)
+        val result = newContext.getLastBinaryOperationResult()
+        if (!doesTypeMatch(result, context.getVariableType(identifier))) throw RuntimeException("Type mismatch")
+        newContext.assignVariable(identifier, result)
+        return newContext
     }
 }

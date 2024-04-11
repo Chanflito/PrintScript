@@ -1,16 +1,17 @@
 package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.interpreter.util.Context
 
-class PrintLnInterpreter {
-    fun interpret(
-        printLnNode: PrintLnNode,
-        variables: HashMap<String, Any>,
-        constants: HashMap<String, Any>,
-    ): String {
-        val expression = printLnNode.expression
-        val result = ExpressionInterpreter().interpret(expression, variables, constants)
+class PrintLnInterpreter: Interpreter<PrintLnNode>{
+    override fun interpret(
+        node: PrintLnNode,
+        context: Context
+    ): Context {
+        val expression = node.expression
+        val result = ExpressionInterpreter().interpret(expression, context)
         println(result)
-        return result.toString()
+        context.addPrintValue(result.toString())
+        return context
     }
 }
