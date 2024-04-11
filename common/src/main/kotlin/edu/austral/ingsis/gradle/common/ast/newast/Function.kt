@@ -8,4 +8,4 @@ data class PrintLnNode(override val tokenPosition: TokenPosition, val expression
 
 data class ReadInputNode(override val tokenPosition: TokenPosition, val value: String) : Function, Expression
 
-data class ReadEnvNode(override val tokenPosition: TokenPosition, val value: String) : Function, Expression
+data class ReadEnvNode(override val tokenPosition: TokenPosition, val expression: Expression) : Function, Expression
