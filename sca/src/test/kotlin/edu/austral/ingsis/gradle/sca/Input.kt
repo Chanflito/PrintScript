@@ -137,7 +137,7 @@ val input_009 =
                 TokenPosition(Position(0, 0), Position(0, 0)),
                 ReadInputNode(
                     TokenPosition(Position(0, 0), Position(0, 0)),
-                    "SOME_INPUT",
+                    StringLiteral("SOME_INPUT", TokenPosition(Position(0, 0), Position(0, 0))),
                 ),
             ),
         ),
