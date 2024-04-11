@@ -63,5 +63,9 @@ val readInput =
                 name = "x",
                 tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
             ),
-        expression = ReadInputNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)), "aaaa"),
+        expression =
+            ReadInputNode(
+                TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
+                StringLiteral("aaa", TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0))),
+            ),
     )
