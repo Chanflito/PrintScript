@@ -8,4 +8,4 @@ sealed interface ReportResult
 
 data object ReportSuccess : ReportResult
 
-data class ReportFailure(val failureMessage: String) : ReportResult
+data class ReportFailure(val failureMessages: List<String>) : ReportResult

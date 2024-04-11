@@ -1,7 +1,5 @@
 package edu.austral.ingsis.gradle.sca
 
-import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.common.ast.ProgramNode
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -39,7 +37,7 @@ class AdapterTest {
         val source = File("src/test/resources/config.json")
         val adapter = FileToJsonAdapter()
         val rule = adapter.adapt(source)
-        val node = ASTNodeImpl("Program", null, ProgramNode, input_002)
+        val node = input_002
         val result = rule.verify(node)
         assert(rule is ComposeRule)
         assert(result is ReportSuccess)

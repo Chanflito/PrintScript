@@ -34,7 +34,8 @@ class AnalyzeCliFunction : CliFunction<Pair<String, File>, ReportResult> {
         val astNode = createAstNode(input)
         val sca = FileToJsonAdapter().adapt(input.second)
         println("Analyzing...")
-        return sca.verify(astNode.first)
+        // sca.verify(astNode.first), because of the new impl of sca
+        return TODO()
     }
 }
 
