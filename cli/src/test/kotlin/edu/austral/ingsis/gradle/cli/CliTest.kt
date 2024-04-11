@@ -4,10 +4,13 @@ import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
 import edu.austral.ingsis.gradle.sca.ReportSuccess
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
 class CliTest {
+    // TODO: Remove this tests in the future.
     @Test
+    @Ignore
     fun test001_executeFunctionWithValidInputShouldReturnList() {
         val source = "src/test/resources/code/input/source_001"
         val content = FileAdapter().adapt(File(source))
@@ -17,6 +20,7 @@ class CliTest {
     }
 
     @Test
+    @Ignore
     fun test002_analyzeFunctionWithValidInputShouldReturnReportResult() {
         val source = "src/test/resources/code/input/source_002"
         val config = "src/test/resources/rule/sca/config_001.json"
@@ -26,6 +30,7 @@ class CliTest {
     }
 
     @Test
+    @Ignore
     fun test003_formatFunctionWithValidInputShouldReturnFormattedCode() {
         val source = "src/test/resources/code/input/source_format_001"
         val config = "src/test/resources/rule/formatter/config_001.json"

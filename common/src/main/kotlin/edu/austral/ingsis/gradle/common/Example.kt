@@ -65,3 +65,14 @@ val readInput =
             ),
         expression = ReadInputNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)), "aaaa"),
     )
+
+// let a : string= b;
+// a
+// let a : string;
+// println(a)
+// a + b
+// en un if
+// block...
+// else block...
+// en un readinput
+// reassingation
