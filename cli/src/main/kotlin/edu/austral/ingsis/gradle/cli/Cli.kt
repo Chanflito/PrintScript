@@ -13,8 +13,8 @@ import java.io.File
 class Cli : CliktCommand(help = "Run a PrintScript file") {
     companion object {
         // TODO get version and release date from gradle
-        const val VERSION = "1.0.1-SNAPSHOT"
-        const val RELEASE_DATE = "Apr 4, 2024, 11:16 AM GMT-3"
+        val RELEASE_VERSION = System.getenv("RELEASE_VERSION").toString()
+        val RELEASE_DATE = System.getenv("RELEASE_DATE").toString()
         val USER_OS = System.getProperty("os.name").toString()
 
         const val FORMAT_RULES_FILE_PATH = "/format_rules.json"
@@ -29,7 +29,7 @@ class Cli : CliktCommand(help = "Run a PrintScript file") {
 
     // TODO add only numeric arguments with x.x.x format
     private val version by option(help = "PrintScript version to run")
-        .default(VERSION)
+        .default(RELEASE_VERSION)
 
     override fun run() {
         println("\nPrintScript: $version ($RELEASE_DATE) on $USER_OS\n")
@@ -59,7 +59,7 @@ class Cli : CliktCommand(help = "Run a PrintScript file") {
         val stringFile = FileAdapter().adapt(source)
         val formattedContent = FormatFunction().evaluate(Pair(stringFile, rulesFile))
         source?.writeText(formattedContent)
-        println("\nFormatted file: $FORMAT_RULES_FILE_PATH")
+        println("\nFormatted file: $source")
     }
 }
 

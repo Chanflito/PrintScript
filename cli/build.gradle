@@ -17,3 +17,8 @@ dependencies {
     implementation project(':formatter')
     implementation('com.github.ajalt.clikt:clikt:4.3.0')
 }
+
+run.doFirst {
+    environment 'RELEASE_VERSION', project.findProperty('release.version')
+    environment 'RELEASE_DATE', project.findProperty('release.date')
+}
