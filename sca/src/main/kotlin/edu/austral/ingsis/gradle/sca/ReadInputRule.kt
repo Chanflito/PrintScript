@@ -27,7 +27,7 @@ class ReadInputRule : Rule<AST> {
         val reports =
             nodes.flatMap { node ->
                 when (node) {
-                    is ReadInputNode -> listOf(verifyExpression(node))
+                    is ReadInputNode -> listOf(verifyExpression(node.expression))
                     is ControlStatement -> verifyControlStatement(node)
                     else -> listOf(ReportSuccess)
                 }
@@ -61,7 +61,7 @@ class ReadInputRule : Rule<AST> {
     private fun searchReadInput(node: BlockNode): List<ReportResult> {
         return node.statements.map { statement ->
             when (statement) {
-                is ReadInputNode -> verifyExpression(statement)
+                is ReadInputNode -> verifyExpression(statement.expression)
                 else -> ReportSuccess
             }
         }

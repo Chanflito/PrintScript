@@ -161,6 +161,9 @@ class ScaTest {
     @Test // let a : number = readInput (5+5)
     fun test017_enforceLiteralOrIdentifierInReadInputWithExpressionShouldReportFailure() {
         val rule = ReadInputRule()
-        val composeRule = ComposeRule(listOf(rule))
+        val node = input_015
+        val result = rule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 1)
     }
 }

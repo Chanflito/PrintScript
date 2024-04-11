@@ -333,17 +333,17 @@ val input_014 =
         ),
     )
 
-// val input_015=
-//    ProgramNode(
-//        TokenPosition(Position(0, 0), Position(0, 0)),
-//        listOf(
-//            ReadInputNode(
-//                TokenPosition(Position(0, 0), Position(0, 0)),
-//                SumNode(
-//                    TokenPosition(Position(0, 0), Position(0, 0)),
-//                    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
-//                    IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
-//                ),
-//            ),
-//        ),
-//    )
+val input_015 =
+    ProgramNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        listOf(
+            ReadInputNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                SumNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+                    IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
+                ),
+            ),
+        ),
+    )
