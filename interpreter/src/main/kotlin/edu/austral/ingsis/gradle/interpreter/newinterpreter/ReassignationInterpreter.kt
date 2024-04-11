@@ -1,7 +1,6 @@
 package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
-import edu.austral.ingsis.gradle.common.ast.newast.Type
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 

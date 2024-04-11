@@ -10,7 +10,7 @@ class DeclarationAssignationInterpreter: Interpreter<DeclarationAssignation> {
         val identifier = node.identifierNode.name
         val expression = node.expression
         val keyword = node.keyword.value
-        val type = node.type
+        val type = node.nodeType
         if (context.isInContext(identifier)) {
             throw RuntimeException(
                 "Variable $identifier already declared",
@@ -21,10 +21,10 @@ class DeclarationAssignationInterpreter: Interpreter<DeclarationAssignation> {
         if (!doesTypeMatch(result, type)) throw RuntimeException("Type mismatch")
         when (keyword) {
             "let" -> {
-                newContext.assignVariable(identifier, result as Any)
+                newContext.assignVariable(identifier, result)
             }
             "const" -> {
-                newContext.assignConstant(identifier, result as Any)
+                newContext.assignConstant(identifier, result)
             }
         }
         newContext.declareVariable(identifier, type)

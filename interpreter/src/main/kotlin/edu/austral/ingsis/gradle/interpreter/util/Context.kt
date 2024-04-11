@@ -1,36 +1,37 @@
 package edu.austral.ingsis.gradle.interpreter.util
 
-import edu.austral.ingsis.gradle.common.ast.newast.Type
+import edu.austral.ingsis.gradle.common.ast.newast.Literal
+import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 
 class Context {
-    private val assignedVariables = mutableMapOf<String, Any>()
-    private val constants= mutableMapOf<String, Any>()
-    private val declaredVariables = mutableMapOf<String, Type>()
-    private val binaryOperationsResults= mutableListOf(Any())
+    private val assignedVariables = mutableMapOf<String, InterpreterResult>()
+    private val constants= mutableMapOf<String, InterpreterResult>()
+    private val declaredVariables = mutableMapOf<String, NodeType>()
+    private val binaryOperationsResults: MutableList<InterpreterResult> = mutableListOf()
     private val printValues = mutableListOf<String>()
 
 
-    fun assignVariable(name: String, value: Any) {
+    fun assignVariable(name: String, value: InterpreterResult) {
         assignedVariables[name] = value
     }
 
-    fun assignConstant(name: String, value: Any) {
+    fun assignConstant(name: String, value: InterpreterResult) {
         constants[name] = value
     }
 
-    fun declareVariable(name: String, type: Type) {
+    fun declareVariable(name: String, type: NodeType) {
         declaredVariables[name] = type
     }
 
-    fun getVariable(name: String): Any? {
+    fun getVariable(name: String): InterpreterResult? {
         return assignedVariables[name]
     }
 
-    fun getConstant(name: String): Any? {
+    fun getConstant(name: String): InterpreterResult? {
         return constants[name]
     }
 
-    fun getVariableType(name: String): Type? {
+    fun getVariableType(name: String): NodeType? {
         return declaredVariables[name]
     }
 
@@ -46,10 +47,6 @@ class Context {
         return constants.containsKey(name)
     }
 
-    fun getBinaryOperationsResults(): List<Any> {
-        return binaryOperationsResults
-    }
-
     fun getPrintValues(): List<String> {
         return printValues
     }
@@ -62,7 +59,7 @@ class Context {
         return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
     }
 
-    fun addBinaryOperationResult(result: Any) {
+    fun addBinaryOperationResult(result: InterpreterResult) {
         binaryOperationsResults.add(result)
     }
 
@@ -70,7 +67,11 @@ class Context {
         printValues.add(value)
     }
 
-    fun getLastBinaryOperationResult(): Any {
+    fun getLastBinaryOperationResult(): InterpreterResult {
         return binaryOperationsResults.last()
+    }
+
+    fun getVariableOrConstant(name: String): InterpreterResult? {
+        return assignedVariables[name] ?: constants[name]
     }
 }

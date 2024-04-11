@@ -3,8 +3,8 @@ package edu.austral.ingsis.gradle.interpreter.newinterpreter
 import edu.austral.ingsis.gradle.common.ast.newast.ControlStatement
 import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
 import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
-import edu.austral.ingsis.gradle.common.ast.newast.Type
 import edu.austral.ingsis.gradle.interpreter.util.Context
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterResult
 
 class ControlStatementInterpreter: Interpreter<ControlStatement>{
     override fun interpret(
@@ -28,8 +28,8 @@ class ControlStatementInterpreter: Interpreter<ControlStatement>{
         val condition = node.condition
         val newContext = ExpressionInterpreter().interpret(condition, context)
         val result = newContext.getLastBinaryOperationResult()
-        if (result is Boolean) {
-            if (result) {
+        if (result is InterpreterResult.BooleanResult) {
+            if (result.value) {
                 val blockNodeInterpreter = BlockNodeInterpreter()
                 return blockNodeInterpreter.interpret(node.ifBlock, newContext)
             } else {
@@ -48,8 +48,8 @@ class ControlStatementInterpreter: Interpreter<ControlStatement>{
         val condition = node.condition
         val newContext = ExpressionInterpreter().interpret(condition, context)
         val result = newContext.getLastBinaryOperationResult()
-        if (result is Boolean) {
-            if (result) {
+        if (result is InterpreterResult.BooleanResult) {
+            if (result.value) {
                 val blockNodeInterpreter = BlockNodeInterpreter()
                 return blockNodeInterpreter.interpret(node.ifBlock, newContext)
             }

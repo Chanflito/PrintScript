@@ -5,10 +5,10 @@ import edu.austral.ingsis.gradle.common.ast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.KeywordNode
 import edu.austral.ingsis.gradle.common.ast.StringNode
 import edu.austral.ingsis.gradle.common.ast.TypeNode
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanType
-import edu.austral.ingsis.gradle.common.ast.newast.NumberType
-import edu.austral.ingsis.gradle.common.ast.newast.StringType
-import edu.austral.ingsis.gradle.common.ast.newast.Type
+import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.NodeType
+import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 
 fun isType(node: ASTNode): Boolean {
     return node.nodeType is TypeNode
@@ -27,13 +27,13 @@ fun isKeyword(node: ASTNode): Boolean {
 }
 
 fun doesTypeMatch(
-    result: Any?,
-    type: Type?,
+    result: InterpreterResult?,
+    type: NodeType?,
 ): Boolean {
     return when (type) {
-        is StringType -> result is String
-        is NumberType -> result is Number
-        is BooleanType -> result is Boolean
+        is StringNodeType-> result is InterpreterResult.StringResult
+        is NumberNodeType -> result is InterpreterResult.NumberResult
+        is BooleanNodeType -> result is InterpreterResult.BooleanResult
         else -> false
     }
 }

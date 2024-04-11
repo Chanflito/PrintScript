@@ -12,12 +12,12 @@ import edu.austral.ingsis.gradle.interpreter.util.Context
 
 class BlockNodeInterpreter: Interpreter<BlockNode> {
 
-    val expressionInterpreter = ExpressionInterpreter()
-    val reAssignationInterpreter = ReassignationInterpreter()
-    val printLnInterpreter = PrintLnInterpreter()
-    val declarationAssignationInterpreter = DeclarationAssignationInterpreter()
-    val declarationInterpreter = DeclarationInterpreter()
-    val controlStatementInterpreter = ControlStatementInterpreter()
+    private val expressionInterpreter = ExpressionInterpreter()
+    private val reAssignationInterpreter = ReassignationInterpreter()
+    private val printLnInterpreter = PrintLnInterpreter()
+    private val declarationAssignationInterpreter = DeclarationAssignationInterpreter()
+    private val declarationInterpreter = DeclarationInterpreter()
+    private val controlStatementInterpreter = ControlStatementInterpreter()
 
     override fun interpret(node: BlockNode, context: Context): Context {
         var blockContext = context
