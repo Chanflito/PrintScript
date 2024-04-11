@@ -39,7 +39,7 @@ class PrintlnRule : Rule<AST> {
     private fun verifyExpression(expression: Expression): ReportResult {
         return when (expression) {
             is Operator, is ReadEnvNode, is ReadInputNode ->
-                ReportFailure(PrintlnReportErrorMessage().build(expression.tokenPosition))
+                ReportFailure(listOf(PrintlnReportErrorMessage().build(expression.tokenPosition)))
             is Operand -> ReportSuccess
         }
     }

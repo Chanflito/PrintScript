@@ -46,7 +46,7 @@ class IdentifierRule(
         value: String,
         tokenPosition: TokenPosition,
     ): ReportResult {
-        return if (value.matches(identifierRuleType.regex)) ReportSuccess else ReportFailure(getErrorMessage(tokenPosition))
+        return if (value.matches(identifierRuleType.regex)) ReportSuccess else ReportFailure(listOf(getErrorMessage(tokenPosition)))
     }
 
     private fun analyzeStatement(node: Statement): List<ReportResult> {

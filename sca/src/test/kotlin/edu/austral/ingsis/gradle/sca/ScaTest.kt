@@ -88,4 +88,73 @@ class ScaTest {
         val result = rule.verify(node)
         assert(result is ReportFailure)
     }
+
+    @Test // println(readInput("SOME_INPUT"))
+    fun test011_enforceLiteralOrIdentifierInPrintlnWithReadInputShouldReturnFailure() {
+        val rule = PrintlnRule()
+        val node = input_009
+        val result = rule.verify(node)
+        assert((result as ReportFailure).failureMessages.size == 1)
+    }
+
+    @Test // println(readEnv("SOME_ENV"))
+    fun test011_enforceLiteralOrIdentifierInPrintlnWithReadEnvShouldReturnFailure() {
+        val rule = PrintlnRule()
+        val node = input_010
+        val result = rule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 1)
+    }
+
+    @Test // if (a) {println(a+b); else {println(a-b}}
+    fun test012_enforceLiteralOrIdentifierInPrintlnWithIfElseAndExpressionShouldReturnFailure() {
+        val rule = PrintlnRule()
+        val node = input_011
+        val result = rule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 2)
+    }
+
+    @Test // if (aCamel) {println(aCamel); else {println(aCamel)}
+    fun test013_composeRuleWithCamelCaseRuleAndEnforceLiteralOrIdentifierInPrintln() {
+        val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        val rule2 = PrintlnRule()
+        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val node = input_012
+        val result = composeRule.verify(node)
+        assert(result is ReportSuccess)
+    }
+
+    @Test // if (a_snake) {println(a_snake); else {println(a_snake)}
+    fun test014_composeRuleWithCamelCaseRuleAndEnforceLiteralOrIdentifierInPrintln() {
+        val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        val rule2 = PrintlnRule()
+        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val node = input_013
+        val result = composeRule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 3)
+    }
+
+    @Test // if (aCamel) {println(aCamel); else {println(aCamel)}
+    fun test015_composeRuleWithSnakeCaseAndEnforceLiteralOrIdentifierInPrintln() {
+        val rule1 = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
+        val rule2 = PrintlnRule()
+        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val node = input_012
+        val result = composeRule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 3)
+    }
+
+    @Test // if (aCamel) {println(aCamel + aCamelCase); else {println(aCamel + aCamelCase)}
+    fun test016_composeRuleWithCamelCaseAndEnforceLiteralOrIdentifierInPrintln() {
+        val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        val rule2 = PrintlnRule()
+        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val node = input_014
+        val result = composeRule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 2)
+    }
 }
