@@ -171,4 +171,13 @@ class LexerTest {
         val output = writeTokensToFile(result, "src/test/resources/output/output_013.txt")
         assertTrue(compareFiles(output, "src/test/resources/output/expected_013.txt"))
     }
+
+    @Test
+    fun test013_composeLexerWithReadEnv() {
+        val composeLexer = LexerDirector().createComposeLexer("1.1")
+        val input = convertFileToString("src/test/resources/input/input_014.txt")
+        val result = composeLexer.splitIntoTokens(input)
+        val output = writeTokensToFile(result, "src/test/resources/output/output_014.txt")
+        assertTrue(compareFiles(output, "src/test/resources/output/expected_014.txt"))
+    }
 }

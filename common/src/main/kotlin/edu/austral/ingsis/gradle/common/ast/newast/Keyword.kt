@@ -6,6 +6,10 @@ interface Keyword : AST {
     val value: String
 }
 
-data class LetKeywordNode(override val tokenPosition: TokenPosition, override val value: String = "let") : Keyword
+data class LetKeywordNode(override val tokenPosition: TokenPosition) : Keyword {
+    override val value: String = "let"
+}
 
-data class ConstKeywordNode(override val tokenPosition: TokenPosition, override val value: String = "const") : Keyword
+data class ConstKeywordNode(override val tokenPosition: TokenPosition) : Keyword {
+    override val value: String = "const"
+}
