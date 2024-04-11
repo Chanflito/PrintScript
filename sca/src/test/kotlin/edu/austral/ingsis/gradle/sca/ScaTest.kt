@@ -157,4 +157,10 @@ class ScaTest {
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 2)
     }
+
+    @Test // let a : number = readInput (5+5)
+    fun test017_enforceLiteralOrIdentifierInReadInputWithExpressionShouldReportFailure() {
+        val rule = ReadInputRule()
+        val composeRule = ComposeRule(listOf(rule))
+    }
 }
