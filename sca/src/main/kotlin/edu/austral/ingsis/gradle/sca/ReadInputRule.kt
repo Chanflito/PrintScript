@@ -11,7 +11,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.Operator
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.Statement
 import edu.austral.ingsis.gradle.sca.util.generateReport
 
 class ReadInputRule : Rule<AST> {
@@ -22,7 +21,7 @@ class ReadInputRule : Rule<AST> {
         }
     }
 
-    private fun verifyChildren(nodes: List<Statement>): ReportResult {
+    private fun verifyChildren(nodes: List<AST>): ReportResult {
         if (nodes.isEmpty()) return ReportSuccess
         val reports =
             nodes.flatMap { node ->
@@ -59,7 +58,7 @@ class ReadInputRule : Rule<AST> {
     }
 
     private fun searchReadInput(node: BlockNode): List<ReportResult> {
-        return node.statements.map { statement ->
+        return node.children.map { statement ->
             when (statement) {
                 is ReadInputNode -> verifyExpression(statement.expression)
                 else -> ReportSuccess

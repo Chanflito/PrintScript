@@ -4,7 +4,6 @@ import edu.austral.ingsis.gradle.sca.util.CamelCaseRule
 import edu.austral.ingsis.gradle.sca.util.SnakeCaseRule
 import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
 import org.junit.jupiter.api.Test
-import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
 class ScaTest {
@@ -188,15 +187,14 @@ class ScaTest {
     // let aCamel: string = "some string"
     // if (a_snake) {readInput(a_snake); else {println(a_snake) readEnv("ENV") readInput (aCamel + a_snake)}
     @Test
-    @Ignore
     fun test020_composeRuleWithAllNewStatementsAndAllRulesActivatedWithCamelCase() {
         val readInputRule = ReadInputRule()
         val printlnRule = PrintlnRule()
         val camelCaseRule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
-        // val composeRule= ComposeRule(listOf(readInputRule, printlnRule, camelCaseRule))
+        val composeRule = ComposeRule(listOf(readInputRule, printlnRule, camelCaseRule))
         val node = input_018
-        val result = camelCaseRule.verify(node)
+        val result = composeRule.verify(node)
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 6)
-    } // Falta que se meta en println, readinput
+    }
 }

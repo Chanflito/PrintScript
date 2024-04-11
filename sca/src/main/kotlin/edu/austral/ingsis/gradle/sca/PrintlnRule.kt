@@ -12,7 +12,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.Statement
 import edu.austral.ingsis.gradle.sca.util.generateReport
 
 class PrintlnRule : Rule<AST> {
@@ -23,7 +22,7 @@ class PrintlnRule : Rule<AST> {
         }
     }
 
-    private fun verifyChildren(nodes: List<Statement>): ReportResult {
+    private fun verifyChildren(nodes: List<AST>): ReportResult {
         if (nodes.isEmpty()) return ReportSuccess
         val reports =
             nodes.flatMap { node ->
@@ -60,9 +59,9 @@ class PrintlnRule : Rule<AST> {
     }
 
     private fun searchPrintlnNode(node: BlockNode): List<ReportResult> {
-        return node.statements.map { statement ->
-            when (statement) {
-                is PrintLnNode -> verifyExpression(statement.expression)
+        return node.children.map { children ->
+            when (children) {
+                is PrintLnNode -> verifyExpression(children.expression)
                 else -> ReportSuccess
             }
         }

@@ -13,6 +13,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.Operand
 import edu.austral.ingsis.gradle.common.ast.newast.Operator
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.Statement
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 import edu.austral.ingsis.gradle.sca.util.IdentifierRuleType
@@ -35,7 +36,7 @@ class IdentifierRule(
         val reports =
             nodes.flatMap { node ->
                 when (node) {
-                    is Statement -> analyzeStatement(node)
+                    is Statement -> analyzeChildren(node)
                     else -> listOf(ReportSuccess)
                 }
             }
@@ -49,7 +50,7 @@ class IdentifierRule(
         return if (value.matches(identifierRuleType.regex)) ReportSuccess else ReportFailure(listOf(getErrorMessage(tokenPosition)))
     }
 
-    private fun analyzeStatement(node: Statement): List<ReportResult> {
+    private fun analyzeChildren(node: AST): List<ReportResult> {
         return when (node) {
             is Declaration -> listOf(applyRegex(node.identifierNode.name, node.tokenPosition))
             is Function -> analyzeFunctionCase(node)
@@ -62,6 +63,7 @@ class IdentifierRule(
     private fun analyzeFunctionCase(node: Function): List<ReportResult> {
         return when (node) {
             is PrintLnNode -> analyzeExpression(node.expression)
+            is ReadInputNode -> analyzeExpression(node.expression)
             else -> listOf(ReportSuccess)
         }
     }
@@ -110,7 +112,7 @@ class IdentifierRule(
     }
 
     private fun analyzeBlock(node: BlockNode): List<ReportResult> {
-        return node.statements.flatMap { statement -> analyzeStatement(statement) }
+        return node.children.flatMap { children -> analyzeChildren(children) }
     }
 
     private fun getErrorMessage(tokenPosition: TokenPosition): String {
