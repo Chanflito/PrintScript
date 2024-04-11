@@ -1,105 +1,68 @@
 package edu.austral.ingsis.gradle.cli
 
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.arguments.optional
+import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.types.choice
+import com.github.ajalt.clikt.parameters.types.file
 import edu.austral.ingsis.gradle.cli.adapter.FileAdapter
-import edu.austral.ingsis.gradle.cli.utils.delay
 import java.io.File
 
-class Cli {
-    init {
-        startCli()
+class Cli : CliktCommand(help = "Run a PrintScript file") {
+    companion object {
+        // TODO get version and release date from gradle
+        val RELEASE_VERSION = System.getenv("RELEASE_VERSION").toString()
+        val RELEASE_DATE = System.getenv("RELEASE_DATE").toString()
+        val USER_OS = System.getProperty("os.name").toString()
+
+        const val FORMAT_RULES_FILE_PATH = "/format_rules.json"
+        const val ANALYZE_RULES_FILE_PATH = "/sca_rules.json"
     }
 
-    private fun startCli() {
-        welcome()
-        do {
-            showOptions()
-            val option = readln()
-            try {
-                when (option) {
-                    "1" -> executeCase()
-                    "2" -> formatCase()
-                    "3" -> analyzeCase()
-                    "4" -> break
-                    else -> throw IllegalArgumentException("Invalid option")
-                }
-            } catch (e: Exception) {
-                println(e.message)
-            }
-            delay(2000)
-        } while (true)
-    }
+    private val argument by argument(help = "PrintScript arguments available")
+        .choice("execute", "format", "analyze").optional()
 
-    private fun showOptions() {
-        println("You have the following options to start")
-        println("1.Execute")
-        println("2.Formatting")
-        println("3.Analyze")
-        println("4.Exit")
+    private val source by option(help = "The source file to run")
+        .file(mustExist = true)
+
+    // TODO add only numeric arguments with x.x.x format
+    private val version by option(help = "PrintScript version to run")
+        .default(RELEASE_VERSION)
+
+    override fun run() {
+        println("\nPrintScript: $version ($RELEASE_DATE) on $USER_OS\n")
+
+        when (argument) {
+            "format" -> formatCase()
+            "analyze" -> analyzeCase()
+            "execute" -> executeCase()
+        }
     }
 
     private fun executeCase() {
-        println("Indicate source file")
-        val source = readln()
-        val file = validateFile(source)
-        val content = FileAdapter().adapt(file)
-        ExecuteFunction().evaluate(content)
+        println("Executing...\n")
+        val stringFile = FileAdapter().adapt(source)
+        ExecuteFunction().evaluate(stringFile)
     }
 
     private fun analyzeCase() {
-        println("Indicate source file")
-        val source = readln()
-        println("Indicate the config file")
-        val config = readln()
-        val sourceFile = validateFile(source)
-        val configFile = validateFile(config)
-        val content = FileAdapter().adapt(sourceFile)
-        val reportResult = AnalyzeFunction().evaluate(Pair(content, configFile))
+        val rulesFile = File(javaClass.getResource(ANALYZE_RULES_FILE_PATH).file)
+        val stringFile = FileAdapter().adapt(source)
+        val reportResult = AnalyzeFunction().evaluate(Pair(stringFile, rulesFile))
         println(reportResult.toString())
     }
 
     private fun formatCase() {
-        println("Indicate the source file")
-        val sourceFile = validateFile(readln())
-        println("Indicate the format rules file")
-        val rulesFile = validateFile(readln())
-        println("Indicate the destination file, if it doesn't exist it will be created")
-        val destinationFile = createFile(readln())
-        val content = FileAdapter().adapt(sourceFile)
-        val formattedContent = FormatFunction().evaluate(Pair(content, rulesFile))
-        destinationFile.writeText(formattedContent)
-        println("Formatting completed. Result written to: ${destinationFile.absolutePath}")
+        val rulesFile = File(javaClass.getResource(FORMAT_RULES_FILE_PATH).file)
+        val stringFile = FileAdapter().adapt(source)
+        val formattedContent = FormatFunction().evaluate(Pair(stringFile, rulesFile))
+        source?.writeText(formattedContent)
+        println("\nFormatted file: $source")
     }
+}
 
-    private fun validateFile(fileName: String): File {
-        val file = File(fileName)
-        if (!file.exists()) {
-            throw IllegalArgumentException("File $fileName does not exist")
-        }
-        return file
-    }
-
-    private fun createFile(fileName: String): File {
-        val file = File(fileName)
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        return file
-    }
-
-    private fun welcome() {
-        println(
-            "██████╗ ██████╗ ██╗███╗   ██╗████████╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗\n" +
-                "██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝\n" +
-                "██████╔╝██████╔╝██║██╔██╗ ██║   ██║   ███████╗██║     ██████╔╝██║██████╔╝   ██║   \n" +
-                "██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   \n" +
-                "██║     ██║  ██║██║██║ ╚████║   ██║   ███████║╚██████╗██║  ██║██║██║        ██║   \n" +
-                "╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   \n",
-        )
-
-        println(
-            " Welcome to PrintScript 1.0! \n",
-        )
-
-        delay(2000)
-    }
+fun main(args: Array<String>) {
+    Cli().main(args)
 }

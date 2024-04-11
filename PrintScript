@@ -1,0 +1,33 @@
+#!/bin/bash
+
+source_gradle=""
+version_gradle=""
+argument="forceFail" #to force clikt throw error when gradle task run without argument
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -s|--source )
+            shift
+            sourceFile=$1
+            source_gradle="--source=$sourceFile"
+            shift
+        ;;
+        -v|--version )
+            shift
+            version=$1
+            version_gradle="--version=$version"
+            shift
+        ;;
+        *)
+            argument=$1
+            shift
+        ;;
+    esac
+done
+
+if [ -z "$source_gradle" ] || [ -z "$argument" ]; then
+  ./gradlew --quiet :cli:run --args="--help"
+  exit 1
+fi
+
+  ./gradlew --quiet :cli:run --args="$source_gradle $version_gradle $argument"

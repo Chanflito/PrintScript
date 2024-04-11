@@ -1,6 +1,11 @@
 plugins {
     id 'printscript.group12-common-conventions'
     id 'printscript.group12-publish'
+    id 'application'
+}
+
+application {
+    mainClass = 'edu.austral.ingsis.gradle.cli.CliKt'
 }
 
 dependencies {
@@ -11,5 +16,9 @@ dependencies {
     implementation project(':interpreter')
     implementation project(':formatter')
     implementation('com.github.ajalt.clikt:clikt:4.3.0')
+}
 
+run.doFirst {
+    environment 'RELEASE_VERSION', project.findProperty('release.version')
+    environment 'RELEASE_DATE', project.findProperty('release.date')
 }
