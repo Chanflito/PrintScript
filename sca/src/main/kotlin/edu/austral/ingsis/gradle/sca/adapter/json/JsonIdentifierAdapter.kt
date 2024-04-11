@@ -9,7 +9,7 @@ import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-class JsonIdentifierAdapter(private val expectedInput: String = "identifierRule") : ScaAdapter<JsonObject> {
+class JsonIdentifierAdapter(private val expectedInput: String = "identifier_rule") : ScaAdapter<JsonObject> {
     // This one should be always implemented, so if is not defined throws exception
     // camelCase and snakeCase
     override fun adapt(input: JsonObject): Rule<AST> {

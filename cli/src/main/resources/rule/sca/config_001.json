@@ -1,4 +1,4 @@
 {
-  "printlnRule": true,
-  "identifierRule": "camelCase"
+  "enforce_literal_or_identifier_in_println_rule": true,
+  "identifier_rule": "camelCase"
 }

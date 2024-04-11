@@ -96,14 +96,14 @@ class IdentifierRule(
         when (node) {
             is IfStatement -> {
                 val conditionResult = analyzeExpression(node.condition)
-                val blockStatus = analyzeBlock(node.ifBlock)
-                return conditionResult + blockStatus
+                val blockResult = analyzeBlock(node.ifBlock)
+                return conditionResult + blockResult
             }
             is IfElseStatement -> {
                 val conditionResult = analyzeExpression(node.condition)
-                val blockStatus = analyzeBlock(node.ifBlock)
-                val elseBlock = analyzeBlock(node.elseBlock)
-                return conditionResult + blockStatus + elseBlock
+                val blockResult = analyzeBlock(node.ifBlock)
+                val elseBlockResult = analyzeBlock(node.elseBlock)
+                return conditionResult + blockResult + elseBlockResult
             }
             else -> return listOf(ReportSuccess)
         }
