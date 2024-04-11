@@ -55,7 +55,7 @@ class IdentifierRule(
             is Function -> analyzeFunctionCase(node)
             is Operand -> analyzeExpression(node)
             is ControlStatement -> analyzeControlStatement(node)
-            else -> listOf(ReportSuccess)
+            else -> listOf(ReportSuccess) // 3
         }
     }
 

@@ -4,6 +4,7 @@ import edu.austral.ingsis.gradle.sca.util.CamelCaseRule
 import edu.austral.ingsis.gradle.sca.util.SnakeCaseRule
 import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
 class ScaTest {
@@ -166,4 +167,36 @@ class ScaTest {
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 1)
     }
+
+    @Test
+    fun test018_enforceLiteralOrIdentifierInReadInputWithLiteralShouldReportSuccess() {
+        val rule = ReadInputRule()
+        val node = input_016
+        val result = rule.verify(node)
+        assert(result is ReportSuccess)
+    }
+
+    @Test
+    fun test019_enforceLiteralOrIdentifierInReadInputWithLiteralOnIfStatementShouldReportSuccess() {
+        val rule = ReadInputRule()
+        val node = input_017
+        val result = rule.verify(node)
+        assert(result is ReportSuccess)
+    }
+
+    // let a_snake: string = "some string"
+    // let aCamel: string = "some string"
+    // if (a_snake) {readInput(a_snake); else {println(a_snake) readEnv("ENV") readInput (aCamel + a_snake)}
+    @Test
+    @Ignore
+    fun test020_composeRuleWithAllNewStatementsAndAllRulesActivatedWithCamelCase() {
+        val readInputRule = ReadInputRule()
+        val printlnRule = PrintlnRule()
+        val camelCaseRule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
+        // val composeRule= ComposeRule(listOf(readInputRule, printlnRule, camelCaseRule))
+        val node = input_018
+        val result = camelCaseRule.verify(node)
+        assert(result is ReportFailure)
+        assert((result as ReportFailure).failureMessages.size == 6)
+    } // Falta que se meta en println, readinput
 }
