@@ -1,21 +1,20 @@
 package edu.austral.ingsis.gradle.interpreter.util
 
-import edu.austral.ingsis.gradle.common.ast.newast.Literal
 import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 
 class Context {
-    private val assignedVariables = mutableMapOf<String, InterpreterResult>()
-    private val constants= mutableMapOf<String, InterpreterResult>()
+    private val assignedVariables = mutableMapOf<String, OperationResult>()
+    private val constants= mutableMapOf<String, OperationResult>()
     private val declaredVariables = mutableMapOf<String, NodeType>()
-    private val binaryOperationsResults: MutableList<InterpreterResult> = mutableListOf()
     private val printValues = mutableListOf<String>()
 
 
-    fun assignVariable(name: String, value: InterpreterResult) {
+    fun assignVariable(name: String, value: OperationResult) {
         assignedVariables[name] = value
     }
 
-    fun assignConstant(name: String, value: InterpreterResult) {
+
+    fun assignConstant(name: String, value: OperationResult) {
         constants[name] = value
     }
 
@@ -23,11 +22,11 @@ class Context {
         declaredVariables[name] = type
     }
 
-    fun getVariable(name: String): InterpreterResult? {
+    fun getVariable(name: String): OperationResult? {
         return assignedVariables[name]
     }
 
-    fun getConstant(name: String): InterpreterResult? {
+    fun getConstant(name: String): OperationResult? {
         return constants[name]
     }
 
@@ -59,19 +58,27 @@ class Context {
         return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
     }
 
-    fun addBinaryOperationResult(result: InterpreterResult) {
-        binaryOperationsResults.add(result)
-    }
-
     fun addPrintValue(value: String) {
         printValues.add(value)
     }
 
-    fun getLastBinaryOperationResult(): InterpreterResult {
-        return binaryOperationsResults.last()
+
+    fun getVariableOrConstant(name: String): OperationResult? {
+        return assignedVariables[name] ?: constants[name]
     }
 
-    fun getVariableOrConstant(name: String): InterpreterResult? {
-        return assignedVariables[name] ?: constants[name]
+    fun update(other: Context): Context {
+        val updatedContext = Context()
+        updatedContext.assignedVariables.putAll(this.assignedVariables)
+        updatedContext.constants.putAll(this.constants)
+        updatedContext.declaredVariables.putAll(this.declaredVariables)
+        updatedContext.printValues.addAll(this.printValues)
+
+        updatedContext.assignedVariables.putAll(other.assignedVariables)
+        updatedContext.constants.putAll(other.constants)
+        updatedContext.declaredVariables.putAll(other.declaredVariables)
+        updatedContext.printValues.addAll(other.printValues)
+
+        return updatedContext
     }
 }

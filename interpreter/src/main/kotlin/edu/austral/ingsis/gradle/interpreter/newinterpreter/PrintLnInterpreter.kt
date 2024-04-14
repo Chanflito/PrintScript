@@ -1,33 +1,42 @@
 package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
-import edu.austral.ingsis.gradle.interpreter.util.InterpreterResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.OperationResult
 
-class PrintLnInterpreter: Interpreter<PrintLnNode>{
-    override fun interpret(
-        node: PrintLnNode,
-        context: Context
-    ): Context {
+class PrintLnInterpreter (val node: AST, val context: Context): Interpreter{
+    override fun interpret(): InterpretResult {
+        val printLnNode = node as PrintLnNode
+        val newContext = interpretNode(printLnNode)
+        return InterpretResult.ContextResult(context)
+    }
+
+    private fun interpretNode(node: PrintLnNode) {
         val expression = node.expression
-        val newContext = ExpressionInterpreter().interpret(expression, context)
-        when(val result = newContext.getLastBinaryOperationResult()){
-            is InterpreterResult.StringResult -> {
+        val interpreter = InterpreterFactory.internalGetInstance().createInterpreter<Interpreter>(expression, context)
+        val interpreterResult = interpreter.interpret() as InterpretResult.InterpretOperationResult
+        when(val result = interpreterResult.operationResult){
+            is OperationResult.StringResult -> {
                 println(result.value)
-                newContext.addPrintValue(result.value)
+                context.addPrintValue(result.value)
             }
-            is InterpreterResult.NumberResult -> {
+            is OperationResult.NumberResult -> {
                 println(result.value)
-                newContext.addPrintValue(result.value.toString())
+                context.addPrintValue(result.value.toString())
             }
-            is InterpreterResult.BooleanResult -> {
+            is OperationResult.BooleanResult -> {
                 println(result.value)
-                newContext.addPrintValue(result.value.toString())
+                context.addPrintValue(result.value.toString())
             }
             else -> {
                 throw RuntimeException("Type not recognized")
             }
         }
-        return newContext
+    }
+
+    override fun canInterpret(node: AST): Boolean {
+        return node is PrintLnNode
     }
 }

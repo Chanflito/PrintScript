@@ -53,15 +53,3 @@ val printExample =
     )
 
 // let a : string = readInput ("aaa")
-val readInput =
-    DeclarationAssignation(
-        keyword = LetKeywordNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
-        tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
-        nodeType = StringNodeType,
-        identifierNode =
-            IdentifierNode(
-                name = "x",
-                tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
-            ),
-        expression = ReadInputNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)), "aaaa"),
-    )

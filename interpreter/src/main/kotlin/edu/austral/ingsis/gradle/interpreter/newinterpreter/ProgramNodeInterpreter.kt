@@ -1,47 +1,33 @@
 package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.ControlStatement
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
+import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 
-class ProgramNodeInterpreter: Interpreter<ProgramNode> {
+class ProgramNodeInterpreter(val node: AST) : Interpreter {
 
-    val expressionInterpreter = ExpressionInterpreter()
-    val reAssignationInterpreter = ReassignationInterpreter()
-    val printLnInterpreter = PrintLnInterpreter()
-    val declarationAssignationInterpreter = DeclarationAssignationInterpreter()
-    val declarationInterpreter = DeclarationInterpreter()
-    val controlStatementInterpreter = ControlStatementInterpreter()
+    val context = Context()
 
-    override fun interpret(node: ProgramNode, context: Context): Context {
-        var programContext = context
-        node.children.forEach {
-            when {
-                it is Expression ->
-                    programContext = expressionInterpreter.interpret(it, context)
-                it is ReAssignationNode ->
-                    programContext = reAssignationInterpreter.interpret(it, context)
-                it is PrintLnNode -> {
-                    programContext = printLnInterpreter.interpret(it, context)
-                }
-                it is DeclarationAssignation -> {
-                    programContext = declarationAssignationInterpreter.interpret(it, context)
-                }
-                it is DeclarationNode -> {
-                    programContext = declarationInterpreter.interpret(it, context)
-                }
-                it is ControlStatement -> {
-                    programContext = controlStatementInterpreter.interpret(it, context)
-                }
-                else -> throw RuntimeException("Statement not found")
-            }
-        }
-        return programContext
+    override fun interpret(): InterpretResult { // Create a new context for this interpretation
+        interpretNode(node as ProgramNode)
+        val interpretResult = InterpretResult.ContextResult(context)
+        return interpretResult
     }
 
+    private fun interpretNode(node: ProgramNode) {
+        node.children.forEach { child ->
+            val interpreterFactory = InterpreterFactory.internalGetInstance()
+            val interpreter = interpreterFactory.createInterpreter<Interpreter>(child, context)
+            val result = interpreter.interpret()
+            // Update context based on the result if needed
+            if (result is InterpretResult.ContextResult) {
+                context.update(result.context)
+            }
+        }
+    }
+
+    override fun canInterpret(node: AST): Boolean {
+        return node is ProgramNode
+    }
 }

@@ -1,12 +1,20 @@
 package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.interpreter.util.Context
+import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class DeclarationAssignationInterpreter: Interpreter<DeclarationAssignation> {
-    override fun interpret(
-        node: DeclarationAssignation, context: Context): Context {
+class DeclarationAssignationInterpreter (val node: AST, val context: Context): Interpreter {
+
+
+    override fun interpret(): InterpretResult {
+        val declarationNode = node as DeclarationAssignation
+        interpretNode(declarationNode)
+        return InterpretResult.ContextResult(context)
+    }
+    private fun interpretNode(node:DeclarationAssignation){
         val identifier = node.identifierNode.name
         val expression = node.expression
         val keyword = node.keyword.value
@@ -16,18 +24,23 @@ class DeclarationAssignationInterpreter: Interpreter<DeclarationAssignation> {
                 "Variable $identifier already declared",
             )
         }
-        val newContext = ExpressionInterpreter().interpret(expression, context)
-        val result = newContext.getLastBinaryOperationResult()
+        val expressionInterpreter = InterpreterFactory.internalGetInstance().createInterpreter<Interpreter>(expression, context, type)
+        val interpretResult = expressionInterpreter.interpret() as InterpretResult.InterpretOperationResult
+        val result= interpretResult.operationResult
         if (!doesTypeMatch(result, type)) throw RuntimeException("Type mismatch")
         when (keyword) {
             "let" -> {
-                newContext.assignVariable(identifier, result)
+                context.assignVariable(identifier, result)
             }
             "const" -> {
-                newContext.assignConstant(identifier, result)
+                context.assignConstant(identifier, result)
             }
         }
-        newContext.declareVariable(identifier, type)
-        return newContext
+        context.declareVariable(identifier, type)
     }
+
+    override fun canInterpret(node: AST): Boolean {
+        return node is DeclarationAssignation
+    }
+
 }

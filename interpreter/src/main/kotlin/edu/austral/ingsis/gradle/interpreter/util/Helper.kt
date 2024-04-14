@@ -27,13 +27,13 @@ fun isKeyword(node: ASTNode): Boolean {
 }
 
 fun doesTypeMatch(
-    result: InterpreterResult?,
+    result: OperationResult?,
     type: NodeType?,
 ): Boolean {
     return when (type) {
-        is StringNodeType-> result is InterpreterResult.StringResult
-        is NumberNodeType -> result is InterpreterResult.NumberResult
-        is BooleanNodeType -> result is InterpreterResult.BooleanResult
+        is StringNodeType-> result is OperationResult.StringResult
+        is NumberNodeType -> result is OperationResult.NumberResult
+        is BooleanNodeType -> result is OperationResult.BooleanResult
         else -> false
     }
 }
