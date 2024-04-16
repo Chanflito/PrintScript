@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.formatter.outdated.rule
+package edu.austral.ingsis.gradle.formatter.rule
 
 import edu.austral.ingsis.gradle.formatter.util.RegexPatterns
 

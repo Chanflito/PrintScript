@@ -9,18 +9,23 @@ import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
+import edu.austral.ingsis.gradle.formatter.rule.Rule
 
 class ExpressionFormatter : Formatter<Expression> {
-    override fun format(node: Expression): String {
+    override fun format(
+        node: Expression,
+        rules: List<Rule>,
+    ): String {
         return when (node) {
             // Operator
-            is SumNode -> "${format(node.left)} + ${format(node.right)}"
-            is SubtractNode -> "${format(node.left)} - ${format(node.right)}"
-            is MultiplyNode -> "${format(node.left)} * ${format(node.right)}"
-            is DivideNode -> "${format(node.left)} / ${format(node.right)}"
+            is SumNode -> return "${format(node.left, rules)} + ${format(node.right, rules)}"
+            is SubtractNode -> return "${format(node.left, rules)} - ${format(node.right, rules)}"
+            is MultiplyNode -> return "${format(node.left, rules)} * ${format(node.right, rules)}"
+            is DivideNode -> return "${format(node.left, rules)} / ${format(node.right, rules)}"
 
             // Operand
-            is IdentifierNode -> IdentifierFormatter().format(node)
+            is IdentifierNode -> return IdentifierFormatter().format(node, rules)
 
             // Literal
             is StringLiteral -> return "\"${node.value}\""
@@ -29,6 +34,15 @@ class ExpressionFormatter : Formatter<Expression> {
 
             else -> ""
         }
+    }
+
+    override fun applyFormat(
+        result: String,
+        rules: List<Rule>,
+    ): String {
+        val composedRule = ComposeRule(rules)
+
+        return composedRule.applyRule(result)
     }
 
     // here can see that each should be a different formatter

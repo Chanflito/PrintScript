@@ -23,6 +23,7 @@ class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
         val formatter = createDefaultFormatter()
+        val rules = createDefaultRules()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -37,13 +38,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
     fun test002_formatIfStatement() {
         val formatter = createDefaultFormatter()
+        val rules = createDefaultRules()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -75,13 +77,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "if (a) {\nprintln(a + b);\n}", actual = formatted)
     }
 
     @Test
     fun test003_formatIfElseStatement() {
         val formatter = createDefaultFormatter()
+        val rules = createDefaultRules()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -133,13 +136,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "if (a) {\nprintln(a + b);\n}else {\nprintln(a - b);\n}", actual = formatted)
     }
 
     @Test
     fun test004_formatReAssignation() {
         val formatter = createDefaultFormatter()
+        val rules = createDefaultRules()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -155,13 +159,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "a = 1;", actual = formatted)
     }
 
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
         val formatter = createDefaultFormatter()
+        val rules = createDefaultRules()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -191,7 +196,7 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
     }
 }

@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.formatter.outdated.rule.adapter
+package edu.austral.ingsis.gradle.formatter.rule.adapter
 
 import kotlinx.serialization.Serializable
 
