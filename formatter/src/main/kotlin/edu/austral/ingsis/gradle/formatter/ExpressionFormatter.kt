@@ -19,18 +19,44 @@ class ExpressionFormatter : Formatter<Expression> {
     ): String {
         return when (node) {
             // Operator
-            is SumNode -> return "${format(node.left, rules)} + ${format(node.right, rules)}"
-            is SubtractNode -> return "${format(node.left, rules)} - ${format(node.right, rules)}"
-            is MultiplyNode -> return "${format(node.left, rules)} * ${format(node.right, rules)}"
-            is DivideNode -> return "${format(node.left, rules)} / ${format(node.right, rules)}"
+            is SumNode -> {
+                val result = "${format(node.left, rules)} + ${format(node.right, rules)}"
+                return applyFormat(result, rules)
+            }
+
+            is SubtractNode -> {
+                val result = "${format(node.left, rules)} - ${format(node.right, rules)}"
+                return applyFormat(result, rules)
+            }
+
+            is MultiplyNode -> {
+                val result = "${format(node.left, rules)} * ${format(node.right, rules)}"
+                return applyFormat(result, rules)
+            }
+
+            is DivideNode -> {
+                val result = "${format(node.left, rules)} / ${format(node.right, rules)}"
+                return applyFormat(result, rules)
+            }
 
             // Operand
             is IdentifierNode -> return IdentifierFormatter().format(node, rules)
 
             // Literal
-            is StringLiteral -> return "\"${node.value}\""
-            is NumberLiteralNode -> return node.value.toString()
-            is BooleanLiteralNode -> return node.value.toString()
+            is StringLiteral -> {
+                val result = "\"${node.value}\""
+                return applyFormat(result, rules)
+            }
+
+            is NumberLiteralNode -> {
+                val result = node.value.toString()
+                return applyFormat(result, rules)
+            }
+
+            is BooleanLiteralNode -> {
+                val result = node.value.toString()
+                return applyFormat(result, rules)
+            }
 
             else -> ""
         }
