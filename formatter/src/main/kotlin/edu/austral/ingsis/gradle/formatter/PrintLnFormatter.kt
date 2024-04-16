@@ -14,4 +14,8 @@ class PrintLnFormatter : Formatter<AST> {
             else -> throw Exception("Invalid node type")
         }
     }
+
+    override fun canFormat(node: AST): Boolean {
+        return node is PrintLnNode
+    }
 }

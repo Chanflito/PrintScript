@@ -13,4 +13,8 @@ class IdentifierFormatter : Formatter<AST> {
             else -> ""
         }
     }
+
+    override fun canFormat(node: AST): Boolean {
+        return node is IdentifierNode
+    }
 }

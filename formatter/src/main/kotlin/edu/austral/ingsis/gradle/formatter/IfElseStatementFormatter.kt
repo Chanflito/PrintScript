@@ -9,7 +9,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
@@ -18,29 +17,15 @@ import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 class IfElseStatementFormatter : Formatter<AST> {
     override fun format(node: AST): String {
         return when (node) {
-            is ProgramNode -> formatChildren(node.children)
-            is IfElseStatement -> formatIfStatement(node)
+            is IfElseStatement -> {
+                val condition = ExpressionFormatter().format(node.condition)
+                val ifBlock = formatIfBlock(node.ifBlock.children)
+                val elseBlock = formatIfBlock(node.elseBlock.children)
+                return "if ($condition) {\n${ifBlock}\n}else {\n${elseBlock}\n}"
+            }
+
             else -> ""
         }
-    }
-
-    private fun formatChildren(nodes: List<AST>): String {
-        val formattedDeclarations =
-            nodes.map { child ->
-                when (child) {
-                    is IfElseStatement -> formatIfStatement(child)
-                    else -> ""
-                }
-            }
-        return formattedDeclarations.joinToString("")
-    }
-
-    // SAME AS IF STATEMENT
-    private fun formatIfStatement(node: IfElseStatement): String {
-        val condition = ExpressionFormatter().format(node.condition)
-        val ifBlock = formatIfBlock(node.ifBlock.children)
-        val elseBlock = formatIfBlock(node.elseBlock.children)
-        return "if ($condition) {\n${ifBlock}\n}else {\n${elseBlock}\n}"
     }
 
     // este vendria a ser el caso inicial donde tengo una lista de nodos - visitor?
@@ -78,5 +63,9 @@ class IfElseStatementFormatter : Formatter<AST> {
                 }
             }
         return formattedDeclarations.joinToString("")
+    }
+
+    override fun canFormat(node: AST): Boolean {
+        return node is IfElseStatement
     }
 }

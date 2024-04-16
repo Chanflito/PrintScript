@@ -164,4 +164,39 @@ class FormatterTest {
         val formatted = formatter.format(ast)
         assertEquals(expected = "a = 1", actual = formatted)
     }
+
+    @Test
+    fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
+        val ast =
+            ProgramNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    DeclarationAssignation(
+                        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        StringNodeType,
+                        IdentifierNode("aBlue", TokenPosition(Position(0, 0), Position(0, 0))),
+                        StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
+                    ),
+                    ReAssignationNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        NumberLiteralNode(
+                            1,
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                        ),
+                        IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+                    ),
+                    DeclarationAssignation(
+                        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        StringNodeType,
+                        IdentifierNode("aBlue", TokenPosition(Position(0, 0), Position(0, 0))),
+                        StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
+                    ),
+                ),
+            )
+
+        val formatted = formatter.format(ast)
+        assertEquals(expected = "let aBlue : String = \"blue\"\na = 1\nlet aBlue : String = \"blue\"", actual = formatted)
+    }
 }

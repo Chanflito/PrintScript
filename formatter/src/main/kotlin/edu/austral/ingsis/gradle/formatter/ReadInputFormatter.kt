@@ -14,4 +14,8 @@ class ReadInputFormatter : Formatter<AST> {
             else -> ""
         }
     }
+
+    override fun canFormat(node: AST): Boolean {
+        return node is ReadInputNode
+    }
 }

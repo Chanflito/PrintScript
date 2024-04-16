@@ -30,4 +30,16 @@ class ExpressionFormatter : Formatter<Expression> {
             else -> ""
         }
     }
+
+    // here can see that each should be a different formatter
+    override fun canFormat(node: Expression): Boolean {
+        return node is SumNode ||
+            node is SubtractNode ||
+            node is MultiplyNode ||
+            node is DivideNode ||
+            node is IdentifierNode ||
+            node is StringLiteral ||
+            node is NumberLiteralNode ||
+            node is BooleanLiteralNode
+    }
 }
