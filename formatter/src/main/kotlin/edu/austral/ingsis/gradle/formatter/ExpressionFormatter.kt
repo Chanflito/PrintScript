@@ -9,53 +9,52 @@ import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
-import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.formatter.rule.Rule
 
 class ExpressionFormatter : Formatter<Expression> {
     override fun format(
         node: Expression,
-        rules: List<Rule>,
+        rule: Rule,
     ): String {
         return when (node) {
             // Operator
             is SumNode -> {
-                val result = "${format(node.left, rules)} + ${format(node.right, rules)}"
-                return applyFormat(result, rules)
+                val result = "${format(node.left, rule)} + ${format(node.right, rule)}"
+                return applyFormat(result, rule)
             }
 
             is SubtractNode -> {
-                val result = "${format(node.left, rules)} - ${format(node.right, rules)}"
-                return applyFormat(result, rules)
+                val result = "${format(node.left, rule)} - ${format(node.right, rule)}"
+                return applyFormat(result, rule)
             }
 
             is MultiplyNode -> {
-                val result = "${format(node.left, rules)} * ${format(node.right, rules)}"
-                return applyFormat(result, rules)
+                val result = "${format(node.left, rule)} * ${format(node.right, rule)}"
+                return applyFormat(result, rule)
             }
 
             is DivideNode -> {
-                val result = "${format(node.left, rules)} / ${format(node.right, rules)}"
-                return applyFormat(result, rules)
+                val result = "${format(node.left, rule)} / ${format(node.right, rule)}"
+                return applyFormat(result, rule)
             }
 
             // Operand
-            is IdentifierNode -> return IdentifierFormatter().format(node, rules)
+            is IdentifierNode -> return IdentifierFormatter().format(node, rule)
 
             // Literal
             is StringLiteral -> {
                 val result = "\"${node.value}\""
-                return applyFormat(result, rules)
+                return applyFormat(result, rule)
             }
 
             is NumberLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, rules)
+                return applyFormat(result, rule)
             }
 
             is BooleanLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, rules)
+                return applyFormat(result, rule)
             }
 
             else -> ""
@@ -64,11 +63,9 @@ class ExpressionFormatter : Formatter<Expression> {
 
     override fun applyFormat(
         result: String,
-        rules: List<Rule>,
+        rule: Rule,
     ): String {
-        val composedRule = ComposeRule(rules)
-
-        return composedRule.applyRule(result)
+        return rule.applyRule(result)
     }
 
     // here can see that each should be a different formatter

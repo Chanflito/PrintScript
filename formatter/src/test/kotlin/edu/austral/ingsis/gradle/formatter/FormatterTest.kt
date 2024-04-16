@@ -16,6 +16,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
+import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +24,7 @@ class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = createDefaultRules()
+        val rules = ComposeRule(createDefaultRules())
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -45,7 +46,7 @@ class FormatterTest {
     @Test
     fun test002_formatIfStatement() {
         val formatter = createDefaultFormatter()
-        val rules = createDefaultRules()
+        val rules = ComposeRule(createDefaultRules())
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -84,7 +85,7 @@ class FormatterTest {
     @Test
     fun test003_formatIfElseStatement() {
         val formatter = createDefaultFormatter()
-        val rules = createDefaultRules()
+        val rules = ComposeRule(createDefaultRules())
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -143,7 +144,7 @@ class FormatterTest {
     @Test
     fun test004_formatReAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = createDefaultRules()
+        val rules = ComposeRule(createDefaultRules())
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -166,7 +167,7 @@ class FormatterTest {
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = createDefaultRules()
+        val rules = ComposeRule(createDefaultRules())
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),

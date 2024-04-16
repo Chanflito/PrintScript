@@ -6,23 +6,23 @@ interface Formatter<AST> {
     /**
      * Convert an AST into a string.
      * @param node AST node to be converted.
-     * @param rules List of formatting rules to be applied.
+     * @param rule List of formatting rules to be applied.
      * @return String representation of the AST node.
      */
     fun format(
         node: AST,
-        rules: List<Rule>,
+        rule: Rule,
     ): String
 
     /**
      * Applies formatting rules to AST already converted into string.
      * @param result String representation of the AST node.
-     * @param rules List of formatting rules to be applied.
+     * @param rule List of formatting rules to be applied.
      * @return String representation of the AST node with formatting rules applied.
      */
     fun applyFormat(
         result: String,
-        rules: List<Rule>,
+        rule: Rule,
     ): String
 
     /**
