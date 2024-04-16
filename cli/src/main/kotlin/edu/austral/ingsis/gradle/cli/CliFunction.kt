@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.cli
 
 import edu.austral.ingsis.gradle.common.ast.ASTNode
-import edu.austral.ingsis.gradle.formatter.Formatter
-import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser
+import edu.austral.ingsis.gradle.formatter.outdated.Formatter
+import edu.austral.ingsis.gradle.formatter.outdated.rule.adapter.RuleParser
 import edu.austral.ingsis.gradle.interpreter.Interpreter
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.InputContext

@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.formatter
+package edu.austral.ingsis.gradle.formatter.outdated
 
 import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
 import edu.austral.ingsis.gradle.common.ast.AssignationNode
