@@ -8,7 +8,7 @@ class PrintLnFormatter : Formatter<AST> {
         return when (node) {
             is PrintLnNode -> {
                 val value = ExpressionFormatter().format(node.expression)
-                "println($value)"
+                "println($value);"
             }
 
             else -> throw Exception("Invalid node type")

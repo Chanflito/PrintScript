@@ -19,19 +19,10 @@ import edu.austral.ingsis.gradle.common.token.TokenPosition
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-val formatter =
-    ComposeFormatter(
-        listOf(
-            DeclarationAssignationFormatter(),
-            ReAssignationFormatter(),
-            IfStatementFormatter(),
-            IfElseStatementFormatter(),
-        ),
-    )
-
 class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
+        val formatter = createDefaultFormatter()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -47,11 +38,12 @@ class FormatterTest {
             )
 
         val formatted = formatter.format(ast)
-        assertEquals(expected = "let aBlue : String = \"blue\"", actual = formatted)
+        assertEquals(expected = "let aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
     fun test002_formatIfStatement() {
+        val formatter = createDefaultFormatter()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -84,11 +76,12 @@ class FormatterTest {
             )
 
         val formatted = formatter.format(ast)
-        assertEquals(expected = "if (a) {\nprintln(a + b)\n}", actual = formatted)
+        assertEquals(expected = "if (a) {\nprintln(a + b);\n}", actual = formatted)
     }
 
     @Test
     fun test003_formatIfElseStatement() {
+        val formatter = createDefaultFormatter()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -141,11 +134,12 @@ class FormatterTest {
             )
 
         val formatted = formatter.format(ast)
-        assertEquals(expected = "if (a) {\nprintln(a + b)\n}else {\nprintln(a - b)\n}", actual = formatted)
+        assertEquals(expected = "if (a) {\nprintln(a + b);\n}else {\nprintln(a - b);\n}", actual = formatted)
     }
 
     @Test
     fun test004_formatReAssignation() {
+        val formatter = createDefaultFormatter()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -162,11 +156,12 @@ class FormatterTest {
             )
 
         val formatted = formatter.format(ast)
-        assertEquals(expected = "a = 1", actual = formatted)
+        assertEquals(expected = "a = 1;", actual = formatted)
     }
 
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
+        val formatter = createDefaultFormatter()
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -197,6 +192,6 @@ class FormatterTest {
             )
 
         val formatted = formatter.format(ast)
-        assertEquals(expected = "let aBlue : String = \"blue\"\na = 1\nlet aBlue : String = \"blue\"", actual = formatted)
+        assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
     }
 }

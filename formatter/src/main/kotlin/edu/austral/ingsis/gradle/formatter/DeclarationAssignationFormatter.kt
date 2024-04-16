@@ -11,7 +11,7 @@ class DeclarationAssignationFormatter : Formatter<AST> {
                 val identifier = node.identifierNode.name
                 val nodeType = node.nodeType.toString()
                 val expression = ExpressionFormatter().format(node.expression)
-                return "$keyword $identifier : $nodeType = $expression"
+                return "$keyword $identifier : $nodeType = $expression;"
             }
 
             else -> ""

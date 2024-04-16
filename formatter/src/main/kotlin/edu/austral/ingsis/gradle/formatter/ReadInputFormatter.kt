@@ -8,7 +8,7 @@ class ReadInputFormatter : Formatter<AST> {
         return when (node) {
             is ReadInputNode -> {
                 val value = ExpressionFormatter().format(node.expression)
-                "readInput($value)"
+                "readInput($value);"
             }
 
             else -> ""

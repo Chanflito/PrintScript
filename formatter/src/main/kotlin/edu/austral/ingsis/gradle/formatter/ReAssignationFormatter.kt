@@ -9,7 +9,7 @@ class ReAssignationFormatter : Formatter<AST> {
             is ReAssignationNode -> {
                 val identifier = node.identifierNode.name
                 val expression = ExpressionFormatter().format(node.expression)
-                return "$identifier = $expression"
+                return "$identifier = $expression;"
             }
             else -> ""
         }
