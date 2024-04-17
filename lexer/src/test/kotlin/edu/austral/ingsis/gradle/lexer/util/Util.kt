@@ -55,3 +55,28 @@ fun compareFiles(
 
     return true
 }
+
+fun compareTokenListWithIterator(
+    tokens: List<Token>,
+    tokensUntilEndOfStatement: List<String>,
+): Boolean {
+    val tokensConvertedToList = tokens.map { "${it.value},${it.tokenType::class.simpleName}" }
+    if (tokensConvertedToList.size != tokensUntilEndOfStatement.size) {
+        return false
+    }
+
+    for ((index, tokenString) in tokensUntilEndOfStatement.withIndex()) {
+        val expectedTokenString = tokensConvertedToList[index]
+
+        val tokenElements = tokenString.split(",").take(2)
+        val expectedTokenElements = expectedTokenString.split(",").take(2)
+
+        if (tokenElements != expectedTokenElements) {
+            println("First two elements of line ${index + 1} do not match:")
+            println("Output: ${tokenElements.joinToString(",")}")
+            println("Expected: ${expectedTokenElements.joinToString(",")}")
+            return false
+        }
+    }
+    return true
+}
