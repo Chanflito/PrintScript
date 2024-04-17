@@ -19,6 +19,7 @@ fun createDefaultFormatter(): Formatter<AST> {
 }
 
 fun createDefaultRules(): List<Rule> {
+    // TODO handle to use main project format_rules
     val source = "src/test/resources/config_001.json"
     val ruleData = RuleParser().parseRulesFromFile(source)
     val adaptedRules = ruleData.map { RuleAdapter().adapt(it) }

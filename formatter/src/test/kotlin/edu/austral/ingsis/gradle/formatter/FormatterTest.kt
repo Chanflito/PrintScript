@@ -10,6 +10,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
@@ -199,5 +200,42 @@ class FormatterTest {
 
         val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
+    }
+
+    @Test
+    fun test006_testPrintLn_ReadInput() {
+        val formatter = createDefaultFormatter()
+        val rules = ComposeRule(createDefaultRules())
+
+        val ast =
+            ProgramNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    PrintLnNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        SumNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            IdentifierNode(
+                                "a",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                            IdentifierNode(
+                                "b",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                        ),
+                    ),
+                    ReadInputNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        IdentifierNode(
+                            "Introduzca un valor",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                        ),
+                    ),
+                ),
+            )
+
+        val formatted = formatter.format(ast, rules)
+        assertEquals(expected = "println(a + b);\nreadInput(Introduzca un valor);", actual = formatted)
     }
 }

@@ -68,7 +68,7 @@ class ExpressionFormatter : Formatter<Expression> {
         return rule.applyRule(result)
     }
 
-    // here can see that each should be a different formatter
+    // TODO - split into multiple formatters
     override fun canFormat(node: Expression): Boolean {
         return node is SumNode ||
             node is SubtractNode ||
