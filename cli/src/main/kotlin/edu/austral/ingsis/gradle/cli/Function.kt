@@ -4,7 +4,7 @@ import edu.austral.ingsis.gradle.common.ast.ASTNode
 import edu.austral.ingsis.gradle.formatter.Formatter
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser
 import edu.austral.ingsis.gradle.interpreter.Interpreter
-import edu.austral.ingsis.gradle.lexer.util.createComposeLexer
+import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
@@ -17,7 +17,7 @@ interface Function<in T, out O> {
 
 class ExecuteFunction : Function<String, List<Any>> {
     override fun evaluate(input: String): List<Any> {
-        val lexer = createComposeLexer()
+        val lexer = LexerDirector().createComposeLexer("1.1")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
         val astNode = parser.parse(InputContext(tokenList, 0))
@@ -30,7 +30,8 @@ class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
         val astNode = createAstNode(input)
         val sca = FileToJsonAdapter().adapt(input.second)
         println("Analyzing...\n")
-        return sca.verify(astNode.first)
+        return TODO()
+        // return sca.verify(astNode.first)
     }
 }
 
@@ -44,7 +45,7 @@ class FormatFunction : Function<Pair<String, File>, String> {
 }
 
 fun createAstNode(input: Pair<String, File>): Pair<ASTNode, Int> {
-    val lexer = createComposeLexer()
+    val lexer = LexerDirector().createComposeLexer("1.1")
     println("Lexing...")
     val tokenList = lexer.splitIntoTokens(input.first)
     val parser = createComposeParser()

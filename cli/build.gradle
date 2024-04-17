@@ -12,8 +12,8 @@ dependencies {
     implementation project(':common')
     implementation project(':lexer')
     implementation project(':parser')
-    implementation project(':sca')
     implementation project(':interpreter')
+    implementation project(':sca')
     implementation project(':formatter')
     implementation('com.github.ajalt.clikt:clikt:4.3.0')
 }

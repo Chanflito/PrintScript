@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
@@ -22,6 +22,19 @@ tasks.check {
     dependsOn ktlintCheck
 }
 
+koverReport {
+    filters {
+        excludes {
+            packages("edu.austral.ingsis.gradle.common","edu.austral.ingsis.gradle.util", "edu.austral.ingsis.gradle.cli")
+        }
+    }
+
+    verify {
+        rule {
+            minBound(60)
+        }
+    }
+}
 tasks.register('setupHooks') {
     doLast {
         def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")

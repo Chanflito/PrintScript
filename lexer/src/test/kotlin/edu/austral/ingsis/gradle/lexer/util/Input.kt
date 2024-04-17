@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.lexer.utils
+package edu.austral.ingsis.gradle.lexer.util
 
 val input_001 = """let a : string = 'hola'"""
 

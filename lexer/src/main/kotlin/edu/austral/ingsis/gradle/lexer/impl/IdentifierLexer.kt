@@ -7,6 +7,9 @@ import edu.austral.ingsis.gradle.lexer.util.RegexPatterns
 import edu.austral.ingsis.gradle.lexer.util.createToken
 import edu.austral.ingsis.gradle.lexer.util.isInQuotes
 
+/**
+ @param constraints: List of strings that should not be considered as identifiers. Should include all keywords and types.
+**/
 class IdentifierLexer(private val constraints: List<String>) : Lexer {
     private val regex = RegexPatterns.IDENTIFIER_REGEX
 
