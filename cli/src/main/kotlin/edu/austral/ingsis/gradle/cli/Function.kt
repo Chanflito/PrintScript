@@ -21,7 +21,7 @@ class ExecuteFunction : Function<String, List<Any>> {
         input: String,
         version: String,
     ): List<Any> {
-        TODO()
+        return emptyList()
         /*val lexer = LexerDirector().createComposeLexer("1.1")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
