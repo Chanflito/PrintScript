@@ -13,7 +13,7 @@
   },
   {
     "type": "newlineBeforePrintln",
-    "allowed": true,
+    "allowed": false,
     "maxInt": 1
   }
 ]
