@@ -25,7 +25,7 @@ class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -47,7 +47,7 @@ class FormatterTest {
     @Test
     fun test002_formatIfStatement() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -86,7 +86,7 @@ class FormatterTest {
     @Test
     fun test003_formatIfElseStatement() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -145,7 +145,7 @@ class FormatterTest {
     @Test
     fun test004_formatReAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -168,7 +168,7 @@ class FormatterTest {
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
@@ -205,7 +205,7 @@ class FormatterTest {
     @Test
     fun test006_testPrintLn_ReadInput() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules())
+        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
 
         val ast =
             ProgramNode(

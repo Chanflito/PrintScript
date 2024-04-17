@@ -3,6 +3,7 @@
 source_gradle=""
 version_gradle=""
 argument="forceFail" #to force clikt throw error when gradle task run without argument
+rules_file=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -18,6 +19,12 @@ while [ $# -gt 0 ]; do
             version_gradle="--version=$version"
             shift
         ;;
+        -r|--rules )
+            shift
+            rules=$1
+            rules_file="--rules=$rules"
+            shift
+        ;;
         *)
             argument=$1
             shift
@@ -30,4 +37,4 @@ if [ -z "$source_gradle" ] || [ -z "$argument" ]; then
   exit 1
 fi
 
-  ./gradlew --quiet :cli:run --args="$source_gradle $version_gradle $argument"
+  ./gradlew --quiet :cli:run --args="$source_gradle $version_gradle $rules_file $argument"
