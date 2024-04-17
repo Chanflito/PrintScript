@@ -5,6 +5,7 @@ import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.sca.ReportResult
+import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import java.io.File
 
 interface Function<in T, out O> {
@@ -20,27 +21,25 @@ class ExecuteFunction : Function<String, List<Any>> {
         input: String,
         version: String,
     ): List<Any> {
+        TODO()
         /*val lexer = LexerDirector().createComposeLexer("1.1")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
         val astNode = parser.parse(InputContext(tokenList, 0))
         return Interpreter().interpret(astNode.first)
     }*/
-        TODO()
     }
 }
 
-// TODO - lucho
 class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
     override fun evaluate(
         input: Pair<String, File>,
         version: String,
     ): ReportResult {
-        /*val ast = createAstNode(input)
+        val ast = createAstNode(input, version)
         val sca = FileToJsonAdapter().adapt(input.second)
         println("Analyzing...\n")
-         */
-        TODO()
+        return sca.verify(ast.first)
     }
 }
 
@@ -52,6 +51,7 @@ class FormatFunction : Function<Pair<String, File>, String> {
         val ast = createAstNode(input, version)
         val formatter = createDefaultFormatter()
         val rules = ComposeRule(createDefaultRules(input.second.absolutePath))
+        println("Formatting...\n")
         return formatter.format(ast.first, rules)
     }
 }
@@ -61,6 +61,7 @@ private fun createAstNode(
     input: Pair<String, File>,
     version: String,
 ): Pair<AST, Int> {
+    TODO()
     /*
     val lexer = LexerDirector().createComposeLexer("1.1")
     println("Lexing...")
@@ -70,5 +71,4 @@ private fun createAstNode(
     println("Parsing...")
     return parser.parse(InputContext(tokenList, 0))
      */
-    TODO()
 }
