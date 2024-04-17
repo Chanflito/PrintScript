@@ -11,37 +11,32 @@ import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import java.io.File
 
-interface CliFunction<in T, out O> {
+interface Function<in T, out O> {
     fun evaluate(input: T): O
 }
 
-class ExecuteCliFunction : CliFunction<String, List<Any>> {
+class ExecuteFunction : Function<String, List<Any>> {
     override fun evaluate(input: String): List<Any> {
-        println("Execute function selected")
-        val lexer = LexerDirector().createComposeLexer("1.0") // Change this to select version of printscript to use.
-        println("Lexing...")
+        val lexer = LexerDirector().createComposeLexer("1.1")
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
-        println("Parsing...")
         val astNode = parser.parse(InputContext(tokenList, 0))
-        println("Interpreting...")
         return Interpreter().interpret(astNode.first)
     }
 }
 
-class AnalyzeCliFunction : CliFunction<Pair<String, File>, ReportResult> {
+class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
     override fun evaluate(input: Pair<String, File>): ReportResult {
         val astNode = createAstNode(input)
         val sca = FileToJsonAdapter().adapt(input.second)
-        println("Analyzing...")
-        // sca.verify(astNode.first), because of the new impl of sca
+        println("Analyzing...\n")
         return TODO()
+        // return sca.verify(astNode.first)
     }
 }
 
-class FormatCliFunction : CliFunction<Pair<String, File>, String> {
+class FormatFunction : Function<Pair<String, File>, String> {
     override fun evaluate(input: Pair<String, File>): String {
-        println("Format function selected")
         val astNode = createAstNode(input)
         val formatter = Formatter()
         val rules = RuleParser().parseRulesFromFile(input.second.path)
@@ -50,7 +45,7 @@ class FormatCliFunction : CliFunction<Pair<String, File>, String> {
 }
 
 fun createAstNode(input: Pair<String, File>): Pair<ASTNode, Int> {
-    val lexer = LexerDirector().createComposeLexer("1.0")
+    val lexer = LexerDirector().createComposeLexer("1.1")
     println("Lexing...")
     val tokenList = lexer.splitIntoTokens(input.first)
     val parser = createComposeParser()
