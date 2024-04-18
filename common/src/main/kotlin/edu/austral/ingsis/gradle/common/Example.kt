@@ -5,6 +5,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
@@ -52,3 +53,30 @@ val printExample =
     )
 
 // let a : string = readInput ("aaa")
+val readInput =
+    DeclarationAssignation(
+        keyword = LetKeywordNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
+        tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
+        nodeType = StringNodeType,
+        identifierNode =
+            IdentifierNode(
+                name = "x",
+                tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
+            ),
+        expression =
+            ReadInputNode(
+                TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
+                StringLiteral("aaa", TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0))),
+            ),
+    )
+
+// let a : string= b;
+// a
+// let a : string;
+// println(a)
+// a + b
+// en un if
+// block...
+// else block...
+// en un readinput
+// reassingation

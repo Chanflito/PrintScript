@@ -63,7 +63,7 @@ interface Operand implements Expression{
 }
 
 
-interface Function implements Statement
+interface Function implements AST
 
 
 class PlusNode implements Operator
@@ -97,7 +97,7 @@ class IfElseStatement implements ControlStatement{
 }
 
 class Block implements Statement{
-    -statements: List<Statement>
+    -children: List<AST>
     }
 
 Assignation --> Expression

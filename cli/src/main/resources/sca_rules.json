@@ -1,4 +1,4 @@
 {
-  "printlnRule": false,
+  "printlnRule": true,
   "identifierRule": "snake_case"
 }

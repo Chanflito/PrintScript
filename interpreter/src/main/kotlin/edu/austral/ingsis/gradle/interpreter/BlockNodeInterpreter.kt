@@ -15,7 +15,7 @@ class BlockNodeInterpreter() : Interpreter {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val blockNode = node as BlockNode
         var newContext = context
-        blockNode.statements.forEach { child ->
+        blockNode.children.forEach { child ->
             val interpreter = interpreterManager.getInterpreter(child)
             val result = interpreter.interpret(child, context, interpreterManager)
             if (result is InterpretResult.ContextResult) {

@@ -1,70 +1,36 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.ASTNode
-import edu.austral.ingsis.gradle.common.ast.AssignationNode
-import edu.austral.ingsis.gradle.common.ast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.KeywordNode
-import edu.austral.ingsis.gradle.common.ast.OperatorNode
-import edu.austral.ingsis.gradle.common.ast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.TypeNode
-import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
-import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleAdapter
-import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleData
-import edu.austral.ingsis.gradle.formatter.util.findIdentifierOrNumberOrStringOrOperatorNode
-import edu.austral.ingsis.gradle.formatter.util.findNode
+import edu.austral.ingsis.gradle.formatter.rule.Rule
 
-class Formatter {
+interface Formatter<AST> {
+    /**
+     * Convert an AST into a string.
+     * @param node AST node to be converted.
+     * @param defaultRule List of formatting rules to be applied.
+     * @param ifBlockRule List of formatting rules to be applied to if blocks.
+     * @return String representation of the AST node.
+     */
     fun format(
-        node: ASTNode,
-        ruleData: List<RuleData>,
-    ): String {
-        val formatted = formatNode(node).joinToString("\n")
-        val adaptedRules = ruleData.map { RuleAdapter().adapt(it) }
-        val composedRule = ComposeRule(adaptedRules)
-        return composedRule.applyRule(formatted)
-    }
+        node: AST,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
+    ): String
 
-    private fun formatNode(node: ASTNode): List<String> {
-        return node.children.map { formatChild(it) }
-    }
+    /**
+     * Applies formatting rules to AST already converted into string.
+     * @param result String representation of the AST node.
+     * @param rule List of formatting rules to be applied.
+     * @return String representation of the AST node with formatting rules applied.
+     */
+    fun applyFormat(
+        result: String,
+        rule: Rule,
+    ): String
 
-    private fun formatChild(node: ASTNode): String {
-        return when (node.nodeType) {
-            is AssignationNode -> formatAssignmentNode(node)
-            is PrintLnNode -> formatPrintLnNode(node)
-            is OperatorNode -> findIdentifierOrNumberOrStringOrOperatorNode(listOf(node))
-            is IdentifierNode -> formatInitialization(node)
-            else -> throw Exception("Invalid node type")
-        } + ";"
-    }
-
-    private fun formatAssignmentNode(node: ASTNode): String {
-        if (findNode(node, KeywordNode) == null) {
-            return formatReassignment(node)
-        }
-        return formatDeclaration(node)
-    }
-
-    private fun formatReassignment(node: ASTNode): String {
-        val identifier = findNode(node, IdentifierNode)?.value
-        val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
-        return "$identifier=$value"
-    }
-
-    private fun formatDeclaration(node: ASTNode): String {
-        val identifier = findNode(node, IdentifierNode)?.value ?: ""
-        val type = findNode(node, TypeNode)?.value ?: ""
-        val value = findIdentifierOrNumberOrStringOrOperatorNode(node.children)
-        return "let $identifier:$type=$value"
-    }
-
-    private fun formatPrintLnNode(node: ASTNode): String {
-        return "println(${findIdentifierOrNumberOrStringOrOperatorNode(node.children)})"
-    }
-
-    private fun formatInitialization(node: ASTNode): String {
-        val identifier = findNode(node, IdentifierNode)?.value ?: ""
-        val type = findNode(node, TypeNode)?.value ?: ""
-        return "let $identifier:$type"
-    }
+    /**
+     * Checks if the formatter can format a specific AST node.
+     * @param node AST node to be checked.
+     * @return True if the formatter can format the node, false otherwise.
+     */
+    fun canFormat(node: AST): Boolean
 }
