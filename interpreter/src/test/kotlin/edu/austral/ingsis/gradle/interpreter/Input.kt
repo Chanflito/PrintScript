@@ -23,23 +23,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.BlockNodeInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.BooleanLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.DeclarationAssignationInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.DeclarationInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.DivideInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.IdentifierInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.IfElseStatementInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.IfStatementInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.MultiplyInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.NumberLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.PrintLnInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.ReadEnvInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.ReadInputInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.ReassignationInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.StringLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.SubtractInterpreter
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.SumInterpreter
 
 val interpreters =
     listOf(
@@ -219,6 +202,6 @@ val input_011 =
         IdentifierNode("input", TokenPosition(Position(0, 0), Position(0, 0))),
         ReadEnvNode(
             TokenPosition(Position(0, 0), Position(0, 0)),
-            "JAVA_HOME",
+            "PATH",
         ),
     )

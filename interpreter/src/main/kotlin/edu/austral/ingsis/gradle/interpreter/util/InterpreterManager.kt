@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.interpreter.util
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.NodeType
-import edu.austral.ingsis.gradle.interpreter.newinterpreter.Interpreter
+import edu.austral.ingsis.gradle.interpreter.Interpreter
 
 class InterpreterManager(
     val interpreters: List<Interpreter>,

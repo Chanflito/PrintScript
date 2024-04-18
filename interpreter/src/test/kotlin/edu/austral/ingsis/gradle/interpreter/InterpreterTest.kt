@@ -10,7 +10,7 @@ import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
 import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
 import org.junit.jupiter.api.Test
 
-class InterpreterNewTest {
+class InterpreterTest {
     private val interpreterManager = InterpreterManager(interpreters, KotlinPrinter(), KotlinEnvReader(), MockInputReader())
 
     @Test
@@ -211,6 +211,6 @@ class InterpreterNewTest {
                 interpreterManager,
             ) as InterpretResult.ContextResult
         val newContext = result.context
-        assert(newContext.getConstant("input") == System.getenv("JAVA_HOME"))
+        assert(newContext.getConstant("input") == System.getenv("PATH"))
     }
 }
