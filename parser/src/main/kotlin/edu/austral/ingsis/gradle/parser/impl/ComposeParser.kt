@@ -1,13 +1,13 @@
 package edu.austral.ingsis.gradle.parser.impl
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.TokenType
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.InvalidTokenErrorMessage
 import edu.austral.ingsis.gradle.parser.util.currentToken
 import edu.austral.ingsis.gradle.parser.util.endOfFile
+import edu.austral.ingsis.gradle.parser.util.isSemiColon
 
 class ComposeParser(
     private val parsers: Map<TokenType, Parser<InputContext>>,
@@ -19,7 +19,7 @@ class ComposeParser(
         if (endOfFile(input.tokens, indexCopy) || currentToken(input.tokens, indexCopy) == null) {
             throw Exception("NULL TOKEN")
         }
-        return if (input.tokens[indexCopy].tokenType is SemiColon) {
+        return if (isSemiColon(input.tokens[indexCopy])) {
             this.parse(InputContext(input.tokens, indexCopy + 1))
         } else {
             handleResult(input)

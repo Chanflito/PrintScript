@@ -2,6 +2,7 @@ package edu.austral.ingsis.gradle.parser
 
 import edu.austral.ingsis.gradle.common.token.Assignation
 import edu.austral.ingsis.gradle.common.token.Colon
+import edu.austral.ingsis.gradle.common.token.ConstKeyword
 import edu.austral.ingsis.gradle.common.token.Divide
 import edu.austral.ingsis.gradle.common.token.ElseKeyword
 import edu.austral.ingsis.gradle.common.token.Identifier
@@ -9,6 +10,7 @@ import edu.austral.ingsis.gradle.common.token.IfKeyword
 import edu.austral.ingsis.gradle.common.token.LeftBrace
 import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.LetKeyword
+import edu.austral.ingsis.gradle.common.token.Minus
 import edu.austral.ingsis.gradle.common.token.Multiply
 import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.common.token.NumberValue
@@ -20,6 +22,7 @@ import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
 import edu.austral.ingsis.gradle.common.token.RightBrace
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
+import edu.austral.ingsis.gradle.common.token.StringType
 import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
@@ -226,4 +229,48 @@ val input_017 =
         Token("b", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
         Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
         Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+// const b: string = "this should be valid in 1.1";
+val input_018 =
+    listOf(
+        Token("const", ConstKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("b", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("string", StringType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("\"this should be valid in 1.1\"", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+// let cuenta: number = 5*5-8/4+2;
+val input_019 =
+    listOf(
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("cuenta", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("number", NumberType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("5", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("*", Multiply, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("5", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("-", Minus, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("8", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("/", Divide, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("4", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("+", Plus, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("2", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val input_020 =
+    listOf(
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("cuenta", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("string", StringType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("hola", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("*", Multiply, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("loco", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
     )
