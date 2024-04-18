@@ -2,7 +2,8 @@
 
 # Change hooks folder from .git/hooks to versioned .githooks
 echo "Configuring hooks..."
-git config --global core.hooksPath .githooks
+git config core.hooksPath .githooks
 echo "Hooks configured"
+echo "New hooks folder: $(git config core.hooksPath)"
 
 exit 0
