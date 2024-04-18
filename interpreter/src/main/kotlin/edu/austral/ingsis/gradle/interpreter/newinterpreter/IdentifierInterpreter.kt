@@ -6,8 +6,12 @@ import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 
-class IdentifierInterpreter () : Interpreter {
-    override fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult {
+class IdentifierInterpreter() : Interpreter {
+    override fun interpret(
+        node: AST,
+        context: Context,
+        interpreterManager: InterpreterManager,
+    ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val identifierNode = node as IdentifierNode
         val identifier = identifierNode.name

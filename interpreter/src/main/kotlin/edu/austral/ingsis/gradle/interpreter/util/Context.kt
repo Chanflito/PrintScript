@@ -6,7 +6,7 @@ class Context(
     private val assignedVariables: Map<String, Any> = emptyMap(),
     private val constants: Map<String, Any> = emptyMap(),
     private val declaredVariables: Map<String, NodeType> = emptyMap(),
-    private val printValues: List<String> = emptyList()
+    private val printValues: List<String> = emptyList(),
 ) {
     fun getVariable(name: String): Any? {
         return assignedVariables[name]
@@ -36,42 +36,25 @@ class Context(
         return printValues
     }
 
-    fun isVariableAssignedOrConstantAssigned(name: String): Boolean {
-        return isVariableAssigned(name) || isConstantAssigned(name)
-    }
-
     fun isInContext(name: String): Boolean {
         return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
     }
 
-    fun getVariableOrConstant(name: String): Any? {
-        return assignedVariables[name] ?: constants[name]
-    }
-
-    fun update(other: Context): Context {
-        val updatedAssignedVariables = assignedVariables + other.assignedVariables
-        val updatedConstants = constants + other.constants
-        val updatedDeclaredVariables = declaredVariables + other.declaredVariables
-        val updatedPrintValues = printValues + other.printValues
-
-        return Context(updatedAssignedVariables, updatedConstants, updatedDeclaredVariables, updatedPrintValues)
-    }
-
     fun updateVariableValues(other: Context): Context {
-        val updatedAssignedVariables = assignedVariables.mapValues { (name, value) ->
-            if (declaredVariables.containsKey(name)) {
-                other.assignedVariables[name] ?: value
-            } else {
-                value
+        val updatedAssignedVariables =
+            assignedVariables.mapValues { (name, value) ->
+                if (declaredVariables.containsKey(name)) {
+                    other.assignedVariables[name] ?: value
+                } else {
+                    value
+                }
             }
-        }
 
         return Context(
             updatedAssignedVariables,
             constants,
             declaredVariables,
-            printValues
+            printValues,
         )
     }
 }
-

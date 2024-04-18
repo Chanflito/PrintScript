@@ -7,23 +7,32 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class ReassignationInterpreter () : Interpreter {
-    override fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult {
+class ReassignationInterpreter() : Interpreter {
+    override fun interpret(
+        node: AST,
+        context: Context,
+        interpreterManager: InterpreterManager,
+    ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val reassignationNode = node as ReAssignationNode
-        val identifierInterpreter = interpreterManager.getInterpreter(reassignationNode.identifierNode)
-        val identifierResult = identifierInterpreter.interpret(reassignationNode.identifierNode, context, interpreterManager) as InterpretResult.OperationResult
-        val identifier = identifierResult.value
-        if(identifier !is String) throw RuntimeException("Identifier must be a string")
+        val identifier = reassignationNode.identifierNode.name
         checkForErrors(context, identifier)
         val expressionInterpreter = interpreterManager.getInterpreter(reassignationNode.expression, context.getVariableType(identifier))
-        val expressionResult = expressionInterpreter.interpret(reassignationNode.expression, context, interpreterManager) as InterpretResult.OperationResult
+        val expressionResult =
+            expressionInterpreter.interpret(
+                reassignationNode.expression,
+                context,
+                interpreterManager,
+            ) as InterpretResult.OperationResult
         val expression = expressionResult.value
         if (!context.getVariableType(identifier)?.let { doesTypeMatch(expression, it) }!!) throw RuntimeException("Type mismatch")
         return InterpretResult.ContextResult((Context(assignedVariables = mapOf(identifier to expression)))) // Return the new context
     }
 
-    private fun checkForErrors(context: Context, identifier: String) {
+    private fun checkForErrors(
+        context: Context,
+        identifier: String,
+    ) {
         if (!context.isInContext(identifier)) {
             throw RuntimeException(
                 "Variable $identifier not declared",
@@ -39,6 +48,4 @@ class ReassignationInterpreter () : Interpreter {
     override fun canInterpret(node: AST): Boolean {
         return node is ReAssignationNode
     }
-
-
 }

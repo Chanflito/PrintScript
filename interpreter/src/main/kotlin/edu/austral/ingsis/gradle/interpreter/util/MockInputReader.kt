@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.interpreter.util
 
-class KotlinInputReader : InputReader {
+class MockInputReader : InputReader {
     override fun read(): Any {
-        return readln()
+        return "mocked input"
     }
 }

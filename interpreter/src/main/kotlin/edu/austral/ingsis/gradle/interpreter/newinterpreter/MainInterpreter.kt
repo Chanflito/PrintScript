@@ -1,7 +1,7 @@
-//package edu.austral.ingsis.gradle.interpreter.newinterpreter
-//import java.util.NoSuchElementException
+// package edu.austral.ingsis.gradle.interpreter.newinterpreter
+// import java.util.NoSuchElementException
 //
-//class MainInterpreter( val iterator: ASTIterator, val interpreterFactory: InterpreterFactory) {
+// class MainInterpreter( val iterator: ASTIterator, val interpreterFactory: InterpreterFactory) {
 //
 //    // Define a method to start interpreting
 //    fun interpret(): InterpretResult {
@@ -27,4 +27,4 @@
 //            return result ?: InterpretResult()
 //        }
 //    }
-//}
+// }

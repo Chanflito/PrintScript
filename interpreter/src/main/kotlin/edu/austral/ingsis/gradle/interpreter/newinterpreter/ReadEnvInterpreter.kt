@@ -10,12 +10,14 @@ import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.EnvReader
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
-
 import kotlin.RuntimeException
 
-class ReadEnvInterpreter(val type: NodeType): Interpreter {
-
-    override fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult {
+class ReadEnvInterpreter(val type: NodeType) : Interpreter {
+    override fun interpret(
+        node: AST,
+        context: Context,
+        interpreterManager: InterpreterManager,
+    ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val readEnvNode = node as ReadEnvNode
         val value = readEnvNode.value
@@ -36,19 +38,28 @@ class ReadEnvInterpreter(val type: NodeType): Interpreter {
         }
     }
 
-    private fun convertToNumber(value: String, envReader: EnvReader): Int {
+    private fun convertToNumber(
+        value: String,
+        envReader: EnvReader,
+    ): Int {
         return when (val valueFromEnv = envReader.readEnv(value)) {
             is String -> valueFromEnv.toIntOrNull()
-            is Number -> valueFromEnv.toInt()  // If it's already a number, just take the integer value
+            is Number -> valueFromEnv.toInt() // If it's already a number, just take the integer value
             else -> null
         } ?: throw RuntimeException("Cannot convert $value to number")
     }
 
-    private fun convertToString(value: String, envReader: EnvReader): String {
+    private fun convertToString(
+        value: String,
+        envReader: EnvReader,
+    ): String {
         return envReader.readEnv(value).toString()
     }
 
-    private fun convertToBoolean(value: String, envReader: EnvReader): Boolean {
+    private fun convertToBoolean(
+        value: String,
+        envReader: EnvReader,
+    ): Boolean {
         return when (val valueFromEnv = envReader.readEnv(value)) {
             is Boolean -> valueFromEnv
             is String -> valueFromEnv.toBooleanStrictOrNull() ?: throw RuntimeException("Cannot convert $value to boolean")
@@ -56,11 +67,11 @@ class ReadEnvInterpreter(val type: NodeType): Interpreter {
         }
     }
 
-
     override fun canInterpret(node: AST): Boolean {
         return node is ReadEnvNode
     }
 
-
-
+    override fun getNodeType(): NodeType {
+        return type
+    }
 }

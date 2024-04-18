@@ -7,12 +7,13 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 
 interface Interpreter {
-    fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult
+    fun interpret(
+        node: AST,
+        context: Context,
+        interpreterManager: InterpreterManager,
+    ): InterpretResult
 
     fun canInterpret(node: AST): Boolean
 
-    fun getType(): NodeType? = null
-
+    fun getNodeType(): NodeType? = null
 }
-
-
