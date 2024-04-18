@@ -1,6 +1,7 @@
 package edu.austral.ingsis.gradle.parser
 
 import edu.austral.ingsis.gradle.common.ast.ASTNode
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.token.Token
 
 interface Parser<in T : ParserInput> { // TODO implement Output context with out.
@@ -10,3 +11,7 @@ interface Parser<in T : ParserInput> { // TODO implement Output context with out
 interface ParserInput
 
 data class InputContext(val tokens: List<Token>, val index: Int) : ParserInput
+
+interface NewParser<in T : ParserInput> {
+    fun parse(input: T): Pair<AST, Int>
+}
