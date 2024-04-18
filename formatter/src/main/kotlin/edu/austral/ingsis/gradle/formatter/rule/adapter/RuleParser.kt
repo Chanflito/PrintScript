@@ -32,15 +32,13 @@ class RuleParser {
     }
 
     private fun parseRuleDataArray(jsonArray: JsonArray): List<RuleJson> {
-        return jsonArray.flatMap { nestedArray ->
-            nestedArray.jsonArray.map { element ->
-                val ruleJson = element.jsonObject
-                RuleJson(
-                    type = ruleJson["type"]!!.jsonPrimitive.content,
-                    allowed = ruleJson["allowed"]!!.jsonPrimitive.boolean,
-                    maxInt = ruleJson["maxInt"]?.jsonPrimitive?.int,
-                )
-            }
+        return jsonArray.map { element ->
+            val ruleJson = element.jsonObject
+            RuleJson(
+                type = ruleJson["type"]!!.jsonPrimitive.content,
+                allowed = ruleJson["allowed"]!!.jsonPrimitive.boolean,
+                maxInt = ruleJson["maxInt"]?.jsonPrimitive?.int,
+            )
         }
     }
 }
