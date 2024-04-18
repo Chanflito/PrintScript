@@ -89,7 +89,7 @@ val input_009 =
         Token("println", PrintlnKeyword, TokenPosition(Position(1, 1), Position(1, 8))),
         Token("(", LeftParenthesis, TokenPosition(Position(1, 9), Position(1, 10))),
         Token("5", NumberValue, TokenPosition(Position(1, 10), Position(1, 11))),
-        Token("+", Plus, TokenPosition(Position(1, 11), Position(1, 12))),
+        Token("+", Plus, TokenPosition(Position(1, 12), Position(1, 12))),
         Token("7", NumberValue, TokenPosition(Position(1, 12), Position(1, 13))),
         Token(")", RightParenthesis, TokenPosition(Position(1, 13), Position(1, 14))),
     )

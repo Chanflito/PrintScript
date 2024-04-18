@@ -78,9 +78,9 @@ val output_009 =
     PrintLnNode(
         TokenPosition(Position(1, 1), Position(1, 8)),
         SumNode(
-            TokenPosition(Position(1, 11), Position(1, 12)),
+            TokenPosition(Position(1, 12), Position(1, 12)),
             NumberLiteralNode(5.0, TokenPosition(Position(1, 10), Position(1, 11))),
-            NumberLiteralNode(7.0, TokenPosition(Position(1, 13), Position(1, 14))),
+            NumberLiteralNode(7.0, TokenPosition(Position(1, 12), Position(1, 13))),
         ),
     )
 

@@ -7,6 +7,7 @@ import edu.austral.ingsis.gradle.parser.input_005
 import edu.austral.ingsis.gradle.parser.input_006
 import edu.austral.ingsis.gradle.parser.input_007
 import edu.austral.ingsis.gradle.parser.input_008
+import edu.austral.ingsis.gradle.parser.input_009
 import edu.austral.ingsis.gradle.parser.input_010
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
@@ -16,6 +17,7 @@ import edu.austral.ingsis.gradle.parser.output_005
 import edu.austral.ingsis.gradle.parser.output_006
 import edu.austral.ingsis.gradle.parser.output_007
 import edu.austral.ingsis.gradle.parser.output_008
+import edu.austral.ingsis.gradle.parser.output_009
 import edu.austral.ingsis.gradle.parser.output_010
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -82,11 +84,12 @@ class ParserTest {
     }
 
     //    //    test println( 5 + 7 )
-//    @Test
-//    fun test009_parseExpressionWithPrintLnAndOperatorInside() {
-//        val actual = parser.parse(InputContext(input_009, 0)).first
-//        assertEquals(output_009, actual)
-//    }
+    @Test
+    fun test009_parseExpressionWithPrintLnAndOperatorInside() {
+        val actual = parser.parse(InputContext(input_009, 0)).first
+        val expected = output_009
+        assertEquals(expected, actual)
+    }
 
     //    //    test  (5 + 7)  *4
     @Test
