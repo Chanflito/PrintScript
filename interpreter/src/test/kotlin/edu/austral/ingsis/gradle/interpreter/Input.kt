@@ -214,3 +214,42 @@ val input999 =
                 tokenPosition = TokenPosition(startPosition = Position(row = 2, column = 9), endPosition = Position(row = 2, column = 10)),
             ),
     )
+
+val input_cli1= DeclarationAssignation(
+    LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+    TokenPosition(Position(0, 0), Position(0, 0)),
+    NumberNodeType,
+    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+    NumberLiteralNode(5.0, TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+)
+
+val input_cli2 = DeclarationAssignation(
+    ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+    TokenPosition(Position(0, 0), Position(0, 0)),
+    NumberNodeType,
+    IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+    NumberLiteralNode(9.0, TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+)
+
+val input_cli3 = ReAssignationNode(
+    TokenPosition(Position(0, 0), Position(0, 0)),
+    DivideNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+        IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+    ),
+    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+)
+
+val input_cli4 = PrintLnNode(
+    TokenPosition(Position(0, 0), Position(0, 0)),
+    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0)),
+    ),
+)

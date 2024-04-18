@@ -232,4 +232,35 @@ class InterpreterTest {
         val va = value.getVariable("b")
         assert(va == 5)
     }
+
+    @Test
+    fun cli_test2() {
+        val context = Context()
+        val node1 = input_cli1
+        val intepreter1 = interpreterManager.getInterpreter(node1)
+        val result1 = intepreter1.interpret(node1, context, interpreterManager)
+        assert(result1 is InterpretResult.ContextResult)
+        val value1 = (result1 as InterpretResult.ContextResult).context
+        val newContext1 = context.update(value1)
+        val node2 = input_cli2
+        val intepreter2 = interpreterManager.getInterpreter(node2)
+        val result2 = intepreter2.interpret(node2, newContext1, interpreterManager)
+        assert(result2 is InterpretResult.ContextResult)
+        val value2 = (result2 as InterpretResult.ContextResult).context
+        val newContext2 = newContext1.update(value2)
+        val node3 = input_cli3
+        val intepreter3 = interpreterManager.getInterpreter(node3)
+        val result3 = intepreter3.interpret(node3, newContext2, interpreterManager)
+        assert(result3 is InterpretResult.ContextResult)
+        val value3 = (result3 as InterpretResult.ContextResult).context
+        val newContext3 = newContext2.update(value3)
+        val node4 = input_cli4
+        val intepreter4 = interpreterManager.getInterpreter(node4)
+        val result4 = intepreter4.interpret(node4, newContext3, interpreterManager)
+        assert(result4 is InterpretResult.ContextResult)
+        val value4 = (result4 as InterpretResult.ContextResult).context
+        val newContext4 = newContext3.update(value4)
+        val expected = (5.0/9.0).toString()
+        assert(newContext4.getPrintValues().contains(expected))
+    }
 }

@@ -20,7 +20,7 @@ class IdentifierInterpreter() : Interpreter {
                 "Variable $identifier not declared",
             )
         }
-        return InterpretResult.OperationResult(context.getVariable(identifier)!!)
+        return InterpretResult.OperationResult(context.getVariableOrConstant(identifier)!!)
     }
 
     override fun canInterpret(node: AST): Boolean {

@@ -66,4 +66,8 @@ class Context(
             printValues,
         )
     }
+
+    fun getVariableOrConstant(name: String): Any? {
+        return assignedVariables[name] ?: constants[name]
+    }
 }
