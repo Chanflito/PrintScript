@@ -21,4 +21,5 @@ dependencies {
 run.doFirst {
     environment 'RELEASE_VERSION', project.findProperty('release.version')
     environment 'RELEASE_DATE', project.findProperty('release.date')
+    environment 'RELEASE_VERSIONS', project.findProperty('release.versions')
 }

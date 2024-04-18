@@ -3,11 +3,11 @@ package edu.austral.ingsis.gradle.parser.iterator
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.lexer.iterator.LexerIterator
 import edu.austral.ingsis.gradle.parser.InputContext
-import edu.austral.ingsis.gradle.parser.NewParser
+import edu.austral.ingsis.gradle.parser.Parser
 
 class ParserIterator(
     private val lexerIterator: LexerIterator,
-    private val parser: NewParser<InputContext>,
+    private val parser: Parser<InputContext>,
 ) : Iterator<AST?> {
     private var previousAST: AST? = null
     private var previousIndex: Int = 0
