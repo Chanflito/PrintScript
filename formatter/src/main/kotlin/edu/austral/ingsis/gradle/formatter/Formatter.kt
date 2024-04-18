@@ -7,6 +7,7 @@ interface Formatter<AST> {
      * Convert an AST into a string.
      * @param node AST node to be converted.
      * @param defaultRule List of formatting rules to be applied.
+     * @param ifBlockRule List of formatting rules to be applied to if blocks.
      * @return String representation of the AST node.
      */
     fun format(
