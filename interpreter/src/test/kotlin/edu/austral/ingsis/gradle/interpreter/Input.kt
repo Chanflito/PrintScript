@@ -1,446 +1,207 @@
 package edu.austral.ingsis.gradle.interpreter
-
-import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.common.ast.AssignationNode
-import edu.austral.ingsis.gradle.common.ast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.KeywordNode
-import edu.austral.ingsis.gradle.common.ast.NumberNode
-import edu.austral.ingsis.gradle.common.ast.OperatorNode
-import edu.austral.ingsis.gradle.common.ast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.StringNode
-import edu.austral.ingsis.gradle.common.ast.TypeNode
-import edu.austral.ingsis.gradle.common.token.Assignation
-import edu.austral.ingsis.gradle.common.token.Identifier
-import edu.austral.ingsis.gradle.common.token.LetKeyword
-import edu.austral.ingsis.gradle.common.token.Plus
+import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
+import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
+import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
+import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
+import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
+import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
+import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
-import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
-import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.common.token.TypeNumber
-import edu.austral.ingsis.gradle.common.token.TypeString
-import edu.austral.ingsis.gradle.common.token.ValueNumber
-import edu.austral.ingsis.gradle.common.token.ValueString
+import edu.austral.ingsis.gradle.common.token.TokenPosition
+
+val interpreters =
+    listOf(
+        BlockNodeInterpreter(),
+        DeclarationInterpreter(),
+        StringLiteralInterpreter(),
+        NumberLiteralInterpreter(),
+        BooleanLiteralInterpreter(),
+        SumInterpreter(NumberNodeType),
+        SumInterpreter(StringNodeType),
+        SubtractInterpreter(NumberNodeType),
+        SubtractInterpreter(StringNodeType),
+        MultiplyInterpreter(NumberNodeType),
+        MultiplyInterpreter(StringNodeType),
+        DivideInterpreter(NumberNodeType),
+        DivideInterpreter(StringNodeType),
+        DeclarationInterpreter(),
+        DeclarationAssignationInterpreter(),
+        IdentifierInterpreter(),
+        IfElseStatementInterpreter(),
+        IfStatementInterpreter(),
+        PrintLnInterpreter(),
+        ReadEnvInterpreter(StringNodeType),
+        ReadEnvInterpreter(NumberNodeType),
+        ReadEnvInterpreter(BooleanNodeType),
+        ReadInputInterpreter(StringNodeType),
+        ReadInputInterpreter(NumberNodeType),
+        ReadInputInterpreter(BooleanNodeType),
+        ReassignationInterpreter(),
+    )
+
+val declaration =
+    DeclarationNode(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringNodeType,
+        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val declaration2 =
+    DeclarationNode(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberNodeType,
+        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+    )
 
 val input_001 =
-    listOf(
-        ASTNodeImpl(
-            "println",
-            Token("println", PrintlnKeyword, Position(1, 1), Position(1, 8)),
-            PrintLnNode,
-            listOf(
-                ASTNodeImpl(
-                    "+",
-                    Token("+", Plus, Position(1, 11), Position(1, 12)),
-                    OperatorNode,
-                    listOf(
-                        ASTNodeImpl(
-                            5.0,
-                            Token("5", ValueNumber, Position(1, 10), Position(1, 11)),
-                            NumberNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            7.0,
-                            Token("7", ValueNumber, Position(1, 12), Position(1, 13)),
-                            NumberNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-            ),
-        ),
+    ReAssignationNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringLiteral("name", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_002 =
-    listOf(
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(1, 15), Position(1, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
-                    IdentifierNode,
-                    // No children for identifier node
-                    emptyList(),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(2, 15), Position(2, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "b",
-                    Token("b", Identifier, Position(2, 5), Position(2, 6)),
-                    IdentifierNode,
-                    // No children for identifier node
-                    emptyList(),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "println",
-            Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
-            PrintLnNode,
-            listOf(
-                ASTNodeImpl(
-                    "+",
-                    Token("+", Plus, Position(3, 11), Position(3, 12)),
-                    OperatorNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "a",
-                            Token("a", Identifier, Position(3, 10), Position(3, 11)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "b",
-                            Token("b", Identifier, Position(3, 12), Position(3, 13)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-            ),
-        ),
+    PrintLnNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringLiteral("Hello world", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_003 =
-    listOf(
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(1, 15), Position(1, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "number",
-                            Token("number", TypeNumber, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(2, 15), Position(2, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "b",
-                    Token("b", Identifier, Position(2, 5), Position(2, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "number",
-                            Token("number", TypeNumber, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "println",
-            Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
-            PrintLnNode,
-            listOf(
-                ASTNodeImpl(
-                    "+",
-                    Token("+", Plus, Position(3, 11), Position(3, 12)),
-                    OperatorNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "a",
-                            Token("a", Identifier, Position(3, 10), Position(3, 11)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "b",
-                            Token("b", Identifier, Position(3, 12), Position(3, 13)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-            ),
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberNodeType,
+        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(20, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val input_003let =
+    DeclarationAssignation(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberNodeType,
+        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(
+            20,
+            TokenPosition(Position(0, 0), Position(0, 0)),
         ),
     )
 
 val input_004 =
-    listOf(
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(1, 15), Position(1, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "number",
-                            Token("number", TypeNumber, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(1, 17), Position(1, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(2, 15), Position(2, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(2, 5), Position(2, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "number",
-                            Token("number", TypeNumber, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    5.0,
-                    Token("5", ValueNumber, Position(2, 17), Position(2, 18)),
-                    NumberNode,
-                    emptyList(),
-                ),
-            ),
-        ),
+    ReAssignationNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(30, TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_005 =
-    listOf(
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(1, 15), Position(1, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "string",
-                            Token("string", TypeString, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    "hola",
-                    Token("hola", ValueString, Position(1, 17), Position(1, 18)),
-                    StringNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(2, 15), Position(2, 16)),
-            AssignationNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(2, 5), Position(2, 6)),
-                    IdentifierNode,
-                    emptyList(),
-                ),
-                ASTNodeImpl(
-                    "loco",
-                    Token("loco", ValueString, Position(2, 17), Position(2, 18)),
-                    StringNode,
-                    emptyList(),
-                ),
-            ),
-        ),
-        ASTNodeImpl(
-            "println",
-            Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
-            PrintLnNode,
-            listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(3, 10), Position(3, 11)),
-                    IdentifierNode,
-                    emptyList(),
-                ),
-            ),
+    SumNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(
+            2,
+            TokenPosition(Position(0, 0), Position(0, 0)),
         ),
     )
 
 val input_006 =
-    listOf(
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(1, 15), Position(1, 16)),
-            AssignationNode,
+    SubtractNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(
+            2,
+            TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+    )
+
+val input_007 =
+    MultiplyNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(
+            2,
+            TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+    )
+
+val input_008 =
+    DivideNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        NumberLiteralNode(
+            2,
+            TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+    )
+
+val input_009 =
+    IfStatement(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        BooleanLiteralNode(true, TokenPosition(Position(0, 0), Position(0, 0))),
+        BlockNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
             listOf(
-                ASTNodeImpl(
-                    "a",
-                    Token("a", Identifier, Position(1, 5), Position(1, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "string",
-                            Token("string", TypeNumber, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    "hola",
-                    Token("hola", ValueString, Position(1, 17), Position(1, 18)),
-                    StringNode,
-                    emptyList(),
-                ),
+                input_004,
             ),
         ),
-        ASTNodeImpl(
-            "=",
-            Token("=", Assignation, Position(2, 15), Position(2, 16)),
-            AssignationNode,
+    )
+
+val input_009else =
+    IfElseStatement(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        BooleanLiteralNode(false, TokenPosition(Position(0, 0), Position(0, 0))),
+        BlockNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            listOf(),
+        ),
+        BlockNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
             listOf(
-                ASTNodeImpl(
-                    "b",
-                    Token("b", Identifier, Position(2, 5), Position(2, 6)),
-                    IdentifierNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "let",
-                            Token("let", LetKeyword, Position(1, 1), Position(1, 4)),
-                            KeywordNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "string",
-                            Token("string", TypeString, Position(1, 8), Position(1, 14)),
-                            TypeNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
-                ASTNodeImpl(
-                    "loco",
-                    Token("loco", ValueString, Position(2, 17), Position(2, 18)),
-                    StringNode,
-                    emptyList(),
-                ),
+                input_004,
             ),
         ),
-        ASTNodeImpl(
-            "println",
-            Token("println", PrintlnKeyword, Position(3, 1), Position(3, 8)),
-            PrintLnNode,
-            listOf(
-                ASTNodeImpl(
-                    "+",
-                    Token("+", Plus, Position(3, 11), Position(3, 12)),
-                    OperatorNode,
-                    listOf(
-                        ASTNodeImpl(
-                            "a",
-                            Token("a", Identifier, Position(3, 10), Position(3, 11)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                        ASTNodeImpl(
-                            "b",
-                            Token("b", Identifier, Position(3, 12), Position(3, 13)),
-                            IdentifierNode,
-                            emptyList(),
-                        ),
-                    ),
-                ),
+    )
+
+val input_010 =
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringNodeType,
+        IdentifierNode("input", TokenPosition(Position(0, 0), Position(0, 0))),
+        ReadInputNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            StringLiteral(
+                "input",
+                TokenPosition(Position(0, 0), Position(0, 0)),
             ),
+        ),
+    )
+
+val input_011 =
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringNodeType,
+        IdentifierNode("input", TokenPosition(Position(0, 0), Position(0, 0))),
+        ReadEnvNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            "PATH",
         ),
     )

@@ -1,14 +1,16 @@
 package edu.austral.ingsis.gradle.lexer
 
 import edu.austral.ingsis.gradle.common.token.LetKeyword
-import edu.austral.ingsis.gradle.common.token.TypeNumber
+import edu.austral.ingsis.gradle.common.token.NumberType
+import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.lexer.impl.IdentifierLexer
 import edu.austral.ingsis.gradle.lexer.impl.KeywordLexer
 import edu.austral.ingsis.gradle.lexer.impl.NumberLexer
 import edu.austral.ingsis.gradle.lexer.impl.OperatorLexer
 import edu.austral.ingsis.gradle.lexer.impl.StringLexer
 import edu.austral.ingsis.gradle.lexer.impl.TypeLexer
-import edu.austral.ingsis.gradle.lexer.util.createComposeLexer
+import edu.austral.ingsis.gradle.lexer.util.compareFiles
+import edu.austral.ingsis.gradle.lexer.util.convertFileToString
 import edu.austral.ingsis.gradle.lexer.util.input_001
 import edu.austral.ingsis.gradle.lexer.util.input_002_doubleQuote
 import edu.austral.ingsis.gradle.lexer.util.input_002_singleQuote
@@ -21,6 +23,7 @@ import edu.austral.ingsis.gradle.lexer.util.input_008
 import edu.austral.ingsis.gradle.lexer.util.input_009
 import edu.austral.ingsis.gradle.lexer.util.input_010
 import edu.austral.ingsis.gradle.lexer.util.input_011
+import edu.austral.ingsis.gradle.lexer.util.operators
 import edu.austral.ingsis.gradle.lexer.util.output_001
 import edu.austral.ingsis.gradle.lexer.util.output_002_doubleQuote
 import edu.austral.ingsis.gradle.lexer.util.output_002_singleQuote
@@ -33,11 +36,12 @@ import edu.austral.ingsis.gradle.lexer.util.output_008
 import edu.austral.ingsis.gradle.lexer.util.output_009
 import edu.austral.ingsis.gradle.lexer.util.output_010
 import edu.austral.ingsis.gradle.lexer.util.output_011
+import edu.austral.ingsis.gradle.lexer.util.writeTokensToFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertTrue
 
 class LexerTest {
-    // let a : string = 'hola'
     @Test
     fun test001_letKeyword() {
         val letLexer = KeywordLexer(mapOf("let" to LetKeyword))
@@ -77,7 +81,7 @@ class LexerTest {
     fun test004_typeNumber() {
         val typeLexer =
             TypeLexer(
-                mapOf("number" to TypeNumber),
+                mapOf("number" to NumberType),
             )
         val result = typeLexer.splitIntoTokens(input_004)
         assert(result.contains(output_004))
@@ -87,7 +91,7 @@ class LexerTest {
     // let n : number = (19 +5) ;
     @Test
     fun test005_operator() {
-        val operatorLexer = OperatorLexer()
+        val operatorLexer = OperatorLexer(operators)
         val result = operatorLexer.splitIntoTokens(input_005)
         assert(result.containsAll(output_005))
         assertEquals(6, result.size)
@@ -115,7 +119,7 @@ class LexerTest {
     // println(a)
     @Test
     fun test008_composeLexerWithNormalCase() {
-        val composeLexer = createComposeLexer()
+        val composeLexer = LexerDirector().createComposeLexer("1.0")
         val result = composeLexer.splitIntoTokens(input_008)
         assertEquals(output_008, result)
         // assertEquals(compareTokens(expected, result), true);
@@ -124,7 +128,7 @@ class LexerTest {
     // let variable : string = + 5 "let" + 1 + "println" + "aaalet1";
     @Test
     fun test009_composeLexerWithEdgeCase() {
-        val composeLexer = createComposeLexer()
+        val composeLexer = LexerDirector().createComposeLexer("1.0")
         val result = composeLexer.splitIntoTokens(input_009)
         assertEquals(output_009, result)
     }
@@ -134,7 +138,7 @@ class LexerTest {
     // println(name + " " + lastName);
     @Test
     fun test010_composeLexer() {
-        val composeLexer = createComposeLexer()
+        val composeLexer = LexerDirector().createComposeLexer("1.0")
         val result = composeLexer.splitIntoTokens(input_010)
         assertEquals(output_010, result)
     }
@@ -144,8 +148,36 @@ class LexerTest {
     // a = a / b;
     @Test
     fun test011_composeLexer() {
-        val composeLexer = createComposeLexer()
+        val composeLexer = LexerDirector().createComposeLexer("1.0")
         val result = composeLexer.splitIntoTokens(input_011)
         assertEquals(output_011, result)
+    }
+
+    // TODO: Add more tests with this new version.
+    @Test
+    fun test012_composeLexerWithIfElse() {
+        val composeLexer = LexerDirector().createComposeLexer("1.1")
+        val input = convertFileToString("src/test/resources/input/input_012.txt")
+        val result = composeLexer.splitIntoTokens(input)
+        val output = writeTokensToFile(result, "src/test/resources/output/output_012.txt")
+        assertTrue(compareFiles(output, "src/test/resources/output/expected_012.txt"))
+    }
+
+    @Test
+    fun test013_composeLexerWithConstKeywordAndReadInput() {
+        val composeLexer = LexerDirector().createComposeLexer("1.1")
+        val input = convertFileToString("src/test/resources/input/input_013.txt")
+        val result = composeLexer.splitIntoTokens(input)
+        val output = writeTokensToFile(result, "src/test/resources/output/output_013.txt")
+        assertTrue(compareFiles(output, "src/test/resources/output/expected_013.txt"))
+    }
+
+    @Test
+    fun test013_composeLexerWithReadEnv() {
+        val composeLexer = LexerDirector().createComposeLexer("1.1")
+        val input = convertFileToString("src/test/resources/input/input_014.txt")
+        val result = composeLexer.splitIntoTokens(input)
+        val output = writeTokensToFile(result, "src/test/resources/output/output_014.txt")
+        assertTrue(compareFiles(output, "src/test/resources/output/expected_014.txt"))
     }
 }

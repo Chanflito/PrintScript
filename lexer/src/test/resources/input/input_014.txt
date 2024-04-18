@@ -1,0 +1,1 @@
+readEnv("VARIABLE_NAME");

@@ -8,7 +8,7 @@ import edu.austral.ingsis.gradle.sca.SnakeCaseReportErrorMessage
 
 fun generateReport(reports: List<ReportResult>): ReportResult {
     val errors = reports.filterIsInstance<ReportFailure>()
-    return if (errors.isEmpty()) ReportSuccess else ReportFailure(errors.joinToString { it.failureMessage })
+    return if (errors.isEmpty()) ReportSuccess else ReportFailure(errors.flatMap { it.failureMessages })
 }
 
 val identifierRuleWithCustomErrorMap =

@@ -1,0 +1,26 @@
+let,LetKeyword
+a,Identifier
+:,Colon
+boolean,BooleanType
+=,Assignation
+true,BooleanValue
+;,SemiColon
+if,IfKeyword
+(,LeftParenthesis
+a,Identifier
+),RightParenthesis
+{,LeftBrace
+println,PrintlnKeyword
+(,LeftParenthesis
+"a is true",StringValue
+),RightParenthesis
+;,SemiColon
+},RightBrace
+else,ElseKeyword
+{,LeftBrace
+println,PrintlnKeyword
+(,LeftParenthesis
+"a is false",StringValue
+),RightParenthesis
+;,SemiColon
+},RightBrace

@@ -1,97 +1,67 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.common.ast.ProgramNode
-import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser
+import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class FormatterTest {
     @Test
-    fun test001_assignationDeclarationAndOperation() {
-        val source = "src/test/resources/config_001.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        //    let a : number = 5;
-        //    5 + 5;
-        val node = ASTNodeImpl("Program", null, ProgramNode, input_001)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a : number = 5.0;" + "\n" + "5.0 + 5.0;"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test001_formatDeclarationAssignation() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input001
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
-    fun test002_assignationDeclarationAndPrintLn() {
-        val source = "src/test/resources/config_001.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        //    let a: string = "hola"
-        //    let b: string = "loco"
-        //
-        //    println (a+b)
-        val node = ASTNodeImpl("Program", null, ProgramNode, input_002)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a : string = \"hola\";" + "\n" + "let b : string = \"loco\";" + "\n\n" + "println(a + b);"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test002_formatIfStatement() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input002
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "if (a) {\n   println(a + b);\n   let aBlue : String = \"blue\";\n}", actual = formatted)
     }
 
     @Test
-    fun test003_assignationDeclarationWithSpaceBeforeColonDisable() {
-        val source = "src/test/resources/config_002.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        // let a : number = 5;
-        val node = ASTNodeImpl("Program", token = null, ProgramNode, input_003)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a: number = 5.0;"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test003_formatIfElseStatement() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input003
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "if (a) {\n   println(a + b);\n}else {\n   println(a - b);\n}", actual = formatted)
     }
 
     @Test
-    fun test004_assignationDeclarationWithSpaceAfterColonDisable() {
-        val source = "src/test/resources/config_003.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        // let a : string = "hello";
-        val node = ASTNodeImpl("Program", token = null, ProgramNode, input_004)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a :string = \"hello\";"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test004_formatReAssignation() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input004
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "a = 1;", actual = formatted)
     }
 
     @Test
-    fun test005_assignationDeclarationWithSpaceBeforeColonAndSpaceAfterColonDisable() {
-        val source = "src/test/resources/config_004.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        // let a : string = "hello";
-        val node = ASTNodeImpl("Program", token = null, ProgramNode, input_004)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a:string = \"hello\";"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input005
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
-    fun test006_assignationDeclarationWithSpaceAroundEqualDisable() {
-        val source = "src/test/resources/config_005.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        // let a : string = "hello";
-        val node = ASTNodeImpl("Program", token = null, ProgramNode, input_004)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a : string=\"hello\";"
-        assertEquals(expected = expected, actual = formattedCode)
-    }
-
-    @Test
-    fun test007_assignationDeclarationWithAllRulesDisable() {
-        val source = "src/test/resources/config_006.json"
-        val rules = RuleParser().parseRulesFromFile(source)
-        // let a : string = "hello";
-        val node = ASTNodeImpl("Program", token = null, ProgramNode, input_004)
-        val formatter = Formatter()
-        val formattedCode = formatter.format(node, rules)
-        val expected = "let a:string=\"hello\";"
-        assertEquals(expected = expected, actual = formattedCode)
+    fun test006_testPrintLn_ReadInput() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input006
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "println(a + b);\nreadInput(Introduzca un valor);", actual = formatted)
     }
 }

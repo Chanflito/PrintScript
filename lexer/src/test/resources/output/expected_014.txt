@@ -1,0 +1,5 @@
+readEnv,ReadEnvKeyword
+(,LeftParenthesis
+"VARIABLE_NAME",StringValue
+),RightParenthesis
+;,SemiColon
