@@ -1,6 +1,6 @@
-let aCa : string = "Hello";
-
-println(aCa);
-let bCa : number = 10.0;
-
-println(bCa);
+if (aCa) {
+   
+}else {
+   
+println("bCa is less than 5");
+}

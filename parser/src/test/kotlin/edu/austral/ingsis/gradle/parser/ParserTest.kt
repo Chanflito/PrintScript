@@ -16,6 +16,7 @@ import edu.austral.ingsis.gradle.parser.input_013
 import edu.austral.ingsis.gradle.parser.input_014
 import edu.austral.ingsis.gradle.parser.input_015
 import edu.austral.ingsis.gradle.parser.input_016
+import edu.austral.ingsis.gradle.parser.input_017
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
@@ -32,6 +33,7 @@ import edu.austral.ingsis.gradle.parser.output_013
 import edu.austral.ingsis.gradle.parser.output_014
 import edu.austral.ingsis.gradle.parser.output_015
 import edu.austral.ingsis.gradle.parser.output_016
+import edu.austral.ingsis.gradle.parser.output_017
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -145,5 +147,11 @@ class ParserTest {
     fun test016_programNodeParser() {
         val actual = ProgramNodeParser().parse(InputContext(input_016)).first
         assertEquals(output_016, actual)
+    }
+
+    @Test
+    fun test017_parseMultiLineInput() {
+        val actual = ProgramNodeParser().parse(InputContext(input_017)).first
+        assertEquals(output_017, actual)
     }
 }

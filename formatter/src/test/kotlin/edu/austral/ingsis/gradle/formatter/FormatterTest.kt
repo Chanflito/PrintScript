@@ -12,7 +12,7 @@ class FormatterTest {
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast = input001
         val formatted = formatter.format(ast, defaultRules, ifBlockRules)
-        assertEquals(expected = "let aBlue : String = \"blue\";", actual = formatted)
+        assertEquals(expected = "let aBlue : string = blue;", actual = formatted)
     }
 
     @Test
@@ -22,7 +22,7 @@ class FormatterTest {
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast = input002
         val formatted = formatter.format(ast, defaultRules, ifBlockRules)
-        assertEquals(expected = "if (a) {\n   println(a + b);\n   let aBlue : String = \"blue\";\n}", actual = formatted)
+        assertEquals(expected = "if (a) {\n   println(a + b);\n   let aBlue : string = blue;\n}", actual = formatted)
     }
 
     @Test
@@ -52,7 +52,7 @@ class FormatterTest {
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast = input005
         val formatted = formatter.format(ast, defaultRules, ifBlockRules)
-        assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
+        assertEquals(expected = "let aBlue : string = blue;\na = 1;\nlet aBlue : string = blue;", actual = formatted)
     }
 
     @Test

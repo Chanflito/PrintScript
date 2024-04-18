@@ -202,3 +202,28 @@ val input_016 =
         Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
         Token("}", RightBrace, TokenPosition(Position(0, 0), Position(0, 0))),
     )
+
+val input_017 =
+    listOf(
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("a", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("number", NumberType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("5", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("b", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("number", NumberType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("6", NumberValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("println", PrintlnKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("(", LeftParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("a", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("+", Plus, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("b", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+    )

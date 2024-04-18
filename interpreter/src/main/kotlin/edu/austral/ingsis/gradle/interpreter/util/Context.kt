@@ -16,6 +16,15 @@ class Context(
         return constants[name]
     }
 
+    fun update(other: Context): Context {
+        val updatedAssignedVariables = assignedVariables + other.assignedVariables
+        val updatedConstants = constants + other.constants
+        val updatedDeclaredVariables = declaredVariables + other.declaredVariables
+        val updatedPrintValues = printValues + other.printValues
+
+        return Context(updatedAssignedVariables, updatedConstants, updatedDeclaredVariables, updatedPrintValues)
+    }
+
     fun getVariableType(name: String): NodeType? {
         return declaredVariables[name]
     }
