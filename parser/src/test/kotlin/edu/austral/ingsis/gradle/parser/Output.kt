@@ -1,9 +1,12 @@
 package edu.austral.ingsis.gradle.parser
 
+import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
+import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
@@ -117,167 +120,44 @@ val output_012 =
 val output_013 =
     ReadEnvNode(
         TokenPosition(Position(1, 1), Position(1, 4)),
-        "LUCHO_ENV"
+        "LUCHO_ENV",
     )
-//
-// val output_012 =
-//    listOf(
-//        ASTNodeImpl(
-//            "=",
-//            Token("=", Assignation, TokenPosition(Position(1, 15), Position(1, 16))),
-//            AssignationNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "a",
-//                    Token("a", Identifier, TokenPosition(Position(1, 5), Position(1, 6))),
-//                    edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                    listOf(
-//                        ASTNodeImpl(
-//                            "let",
-//                            Token("let", LetKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
-//                            KeywordNode,
-//                            emptyList(),
-//                        ),
-//                        ASTNodeImpl(
-//                            "string",
-//                            Token("string", StringType, TokenPosition(Position(1, 8), Position(1, 14))),
-//                            TypeNode,
-//                            emptyList(),
-//                        ),
-//                    ),
-//                ),
-//                ASTNodeImpl(
-//                    "hola",
-//                    Token("hola", StringValue, TokenPosition(Position(1, 17), Position(1, 18))),
-//                    StringNode,
-//                    emptyList(),
-//                ),
-//            ),
-//        ),
-//        ASTNodeImpl(
-//            "=",
-//            Token("=", Assignation, TokenPosition(Position(2, 15), Position(2, 16))),
-//            AssignationNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "b",
-//                    Token("b", Identifier, TokenPosition(Position(2, 5), Position(2, 6))),
-//                    edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                    listOf(
-//                        ASTNodeImpl(
-//                            "let",
-//                            Token("let", LetKeyword, TokenPosition(Position(2, 1), Position(2, 4))),
-//                            KeywordNode,
-//                            emptyList(),
-//                        ),
-//                        ASTNodeImpl(
-//                            "string",
-//                            Token("string", StringType, TokenPosition(Position(2, 8), Position(2, 14))),
-//                            TypeNode,
-//                            emptyList(),
-//                        ),
-//                    ),
-//                ),
-//                ASTNodeImpl(
-//                    "loco",
-//                    Token("loco", StringValue, TokenPosition(Position(2, 17), Position(2, 18))),
-//                    StringNode,
-//                    emptyList(),
-//                ),
-//            ),
-//        ),
-//        ASTNodeImpl(
-//            "println",
-//            Token("println", PrintlnKeyword, TokenPosition(Position(3, 1), Position(3, 8))),
-//            PrintLnNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "+",
-//                    Token("+", Plus, TokenPosition(Position(3, 11), Position(3, 12))),
-//                    OperatorNode,
-//                    listOf(
-//                        ASTNodeImpl(
-//                            "a",
-//                            Token("a", Identifier, TokenPosition(Position(3, 10), Position(3, 11))),
-//                            edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                            emptyList(),
-//                        ),
-//                        ASTNodeImpl(
-//                            "b",
-//                            Token("b", Identifier, TokenPosition(Position(3, 12), Position(3, 13))),
-//                            edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                            emptyList(),
-//                        ),
-//                    ),
-//                ),
-//            ),
-//        ),
-//    )
-//
-// val output_013 =
-//    listOf(
-//        ASTNodeImpl(
-//            "=",
-//            Token("=", Assignation, TokenPosition(Position(1, 15), Position(1, 16))),
-//            AssignationNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "a",
-//                    Token("a", Identifier, TokenPosition(Position(1, 5), Position(1, 6))),
-//                    edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                    listOf(
-//                        ASTNodeImpl(
-//                            "let",
-//                            Token("let", LetKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
-//                            KeywordNode,
-//                            emptyList(),
-//                        ),
-//                        ASTNodeImpl(
-//                            "string",
-//                            Token("string", StringType, TokenPosition(Position(1, 8), Position(1, 14))),
-//                            TypeNode,
-//                            emptyList(),
-//                        ),
-//                    ),
-//                ),
-//                ASTNodeImpl(
-//                    "hola",
-//                    Token("hola", StringValue, TokenPosition(Position(1, 17), Position(1, 18))),
-//                    StringNode,
-//                    emptyList(),
-//                ),
-//            ),
-//        ),
-//        ASTNodeImpl(
-//            "=",
-//            Token("=", Assignation, TokenPosition(Position(2, 15), Position(2, 16))),
-//            AssignationNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "a",
-//                    Token("a", Identifier, TokenPosition(Position(2, 5), Position(2, 6))),
-//                    edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                    emptyList(),
-//                ),
-//                ASTNodeImpl(
-//                    "loco",
-//                    Token("loco", StringValue, TokenPosition(Position(2, 17), Position(2, 18))),
-//                    StringNode,
-//                    emptyList(),
-//                ),
-//            ),
-//        ),
-//        ASTNodeImpl(
-//            "println",
-//            Token("println", PrintlnKeyword, TokenPosition(Position(3, 1), Position(3, 8))),
-//            PrintLnNode,
-//            listOf(
-//                ASTNodeImpl(
-//                    "a",
-//                    Token("a", Identifier, TokenPosition(Position(3, 10), Position(3, 11))),
-//                    edu.austral.ingsis.gradle.common.ast.IdentifierNode,
-//                    emptyList(),
-//                ),
-//            ),
-//        ),
-//    )
+
+val output_014 =
+    IfStatement(
+        TokenPosition(Position(1, 1), Position(1, 4)),
+        IdentifierNode("a", TokenPosition(Position(1, 6), Position(1, 7))),
+        BlockNode(
+            TokenPosition(Position(2, 1), Position(2, 4)),
+            listOf(
+                PrintLnNode(
+                    TokenPosition(Position(2, 1), Position(2, 4)),
+                    StringLiteral("a is true", TokenPosition(Position(2, 6), Position(2, 7))),
+                ),
+            ),
+        ),
+    )
+
+val output_015 =
+    IfElseStatement(
+        TokenPosition(Position(1, 1), Position(1, 4)),
+        IdentifierNode("a", TokenPosition(Position(1, 6), Position(1, 7))),
+        BlockNode(
+            TokenPosition(Position(2, 1), Position(2, 4)),
+            listOf(
+                PrintLnNode(
+                    TokenPosition(Position(2, 1), Position(2, 4)),
+                    StringLiteral("a is true", TokenPosition(Position(2, 6), Position(2, 7))),
+                ),
+            ),
+        ),
+        BlockNode(
+            TokenPosition(Position(4, 1), Position(4, 4)),
+            listOf(
+                PrintLnNode(
+                    TokenPosition(Position(4, 1), Position(4, 4)),
+                    StringLiteral("a is false", TokenPosition(Position(4, 6), Position(4, 7))),
+                ),
+            ),
+        ),
+    )
