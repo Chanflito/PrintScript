@@ -1,4 +1,5 @@
 import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.parser.input_001
 import edu.austral.ingsis.gradle.parser.input_002
 import edu.austral.ingsis.gradle.parser.input_003
@@ -14,6 +15,7 @@ import edu.austral.ingsis.gradle.parser.input_012
 import edu.austral.ingsis.gradle.parser.input_013
 import edu.austral.ingsis.gradle.parser.input_014
 import edu.austral.ingsis.gradle.parser.input_015
+import edu.austral.ingsis.gradle.parser.input_016
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
@@ -29,6 +31,7 @@ import edu.austral.ingsis.gradle.parser.output_012
 import edu.austral.ingsis.gradle.parser.output_013
 import edu.austral.ingsis.gradle.parser.output_014
 import edu.austral.ingsis.gradle.parser.output_015
+import edu.austral.ingsis.gradle.parser.output_016
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -137,36 +140,10 @@ class ParserTest {
         val actual = parser.parse(InputContext(input_015)).first
         assertEquals(output_015, actual)
     }
-//    //    test
-//    //    let a: number = 5
-//    //    let b: number = 5
-// //    println (a+b)
-//    @Test
-//    fun test011_parseExpressionWithPrintLnAndVariable() {
-//        val actual = parser.parse(InputContext(input_011, 0)).first
-//        val expected = ASTNodeImpl("Program", null, ProgramNode, output_011)
-//        assertEquals(expected, actual)
-//    }
-//
-//    //    test
-//    //    let a: string = "hola"
-//    //    let b: string = "loco"
-//    //    println (a+b)
-//    @Test
-//    fun test012_parseExpressionWithPrintLnAndString() {
-//        val actual = parser.parse(InputContext(input_012, 0)).first
-//        val expected = ASTNodeImpl("Program", null, ProgramNode, output_012)
-//        assertEquals(expected, actual)
-//    }
-//
-//    //    test
-// //    let a: string = "hola"
-// //    a = "loco"
-// //    println (a)
-//    @Test
-//    fun test013_parseExpressionWithPrintLnAndString() {
-//        val actual = parser.parse(InputContext(input_013, 0)).first
-//        val expected = ASTNodeImpl("Program", null, ProgramNode, output_013)
-//        assertEquals(expected, actual)
-//    }
+
+    @Test
+    fun test016_programNodeParser() {
+        val actual = ProgramNodeParser().parse(InputContext(input_016)).first
+        assertEquals(output_016, actual)
+    }
 }

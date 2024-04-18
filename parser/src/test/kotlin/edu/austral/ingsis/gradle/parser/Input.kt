@@ -174,22 +174,31 @@ val input_015 =
         Token(";", SemiColon, TokenPosition(Position(4, 18), Position(4, 19))),
         Token("}", RightBrace, TokenPosition(Position(5, 1), Position(5, 2))),
     )
-// if,IfKeyword,(2,1),(2,3)
-// (,LeftParenthesis,(2,4),(2,5)
-// a,Identifier,(2,5),(2,6)
-// ),RightParenthesis,(2,6),(2,7)
-// {,LeftBrace,(2,8),(2,9)
-// println,PrintlnKeyword,(3,6),(3,13)
-// (,LeftParenthesis,(3,13),(3,14)
-// "a is true",StringValue,(3,14),(3,25)
-// ),RightParenthesis,(3,25),(3,26)
-// ;,SemiColon,(3,26),(3,27)
-// },RightBrace,(4,1),(4,2)
-// else,ElseKeyword,(4,3),(4,7)
-// {,LeftBrace,(4,8),(4,9)
-// println,PrintlnKeyword,(5,6),(5,13)
-// (,LeftParenthesis,(5,13),(5,14)
-// "a is false",StringValue,(5,14),(5,26)
-// ),RightParenthesis,(5,26),(5,27)
-// ;,SemiColon,(5,27),(5,28)
-// },RightBrace,(6,1),(6,2)
+
+val input_016 =
+    listOf(
+        Token("readEnv", ReadEnvKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("(", LeftParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("LUCHO_ENV", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("if", IfKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("(", LeftParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("a", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("{", LeftBrace, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("println", PrintlnKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("(", LeftParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("a is true", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("}", RightBrace, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("else", ElseKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("{", LeftBrace, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("println", PrintlnKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("(", LeftParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("a is false", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(")", RightParenthesis, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(";", SemiColon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("}", RightBrace, TokenPosition(Position(0, 0), Position(0, 0))),
+    )

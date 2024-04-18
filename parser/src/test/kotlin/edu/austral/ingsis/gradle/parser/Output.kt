@@ -12,6 +12,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
@@ -157,6 +158,39 @@ val output_015 =
                 PrintLnNode(
                     TokenPosition(Position(4, 1), Position(4, 4)),
                     StringLiteral("a is false", TokenPosition(Position(4, 6), Position(4, 7))),
+                ),
+            ),
+        ),
+    )
+
+val output_016 =
+    ProgramNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        listOf(
+            ReadEnvNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                "LUCHO_ENV",
+            ),
+            IfElseStatement(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+                BlockNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    listOf(
+                        PrintLnNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            StringLiteral("a is true", TokenPosition(Position(0, 0), Position(0, 0))),
+                        ),
+                    ),
+                ),
+                BlockNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    listOf(
+                        PrintLnNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            StringLiteral("a is false", TokenPosition(Position(0, 0), Position(0, 0))),
+                        ),
+                    ),
                 ),
             ),
         ),
