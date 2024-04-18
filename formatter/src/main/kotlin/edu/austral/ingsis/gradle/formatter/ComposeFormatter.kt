@@ -23,7 +23,6 @@ class ComposeFormatter(private val formatters: List<Formatter<AST>>) : Formatter
         }
     }
 
-    // TODO
     override fun applyFormat(
         result: String,
         rule: Rule,
