@@ -33,7 +33,7 @@ class IfStatementFormatter : Formatter<AST> {
         return node is IfStatement
     }
 
-    private fun formatIfBlock(
+    fun formatIfBlock(
         nodes: List<AST>,
         rule: Rule,
         ifBlockRules: Rule,

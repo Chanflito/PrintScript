@@ -7,17 +7,17 @@ rules_file=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        -s|--source )
-            shift
-            sourceFile=$1
-            source_gradle="--source=$sourceFile"
-            shift
-        ;;
         -v|--version )
             shift
             version=$1
             version_gradle="--version=$version"
             shift
+        ;;
+        -s|--source )
+        shift
+        sourceFile=$1
+        source_gradle="--source=$sourceFile"
+        shift
         ;;
         -r|--rules )
             shift

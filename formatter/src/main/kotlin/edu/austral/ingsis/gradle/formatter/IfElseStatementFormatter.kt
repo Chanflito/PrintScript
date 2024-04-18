@@ -39,8 +39,6 @@ class IfElseStatementFormatter : Formatter<AST> {
         rule: Rule,
         ifBlockRules: Rule,
     ): String {
-        val blockFormatter = createDefaultFormatter()
-        val formattedBlock = nodes.joinToString("\n") { blockFormatter.format(it, rule, ifBlockRules) }
-        return applyFormat(formattedBlock, ifBlockRules)
+        return IfStatementFormatter().formatIfBlock(nodes, rule, ifBlockRules)
     }
 }

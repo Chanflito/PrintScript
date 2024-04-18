@@ -69,7 +69,6 @@ class ExpressionFormatter : Formatter<AST> {
         return rule.applyRule(result)
     }
 
-    // TODO - split into multiple formatters
     override fun canFormat(node: AST): Boolean {
         return node is SumNode ||
             node is SubtractNode ||

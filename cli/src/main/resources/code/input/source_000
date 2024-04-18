@@ -1,16 +1,6 @@
 readEnv("LUCHO_ENV");
 if (a) {
-   
-
-
-
-
-println("a is true");
+   println("a is true");
 }else {
-   
-
-
-
-
-println("a is false");
+   println("a is false");
 }
