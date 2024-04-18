@@ -1,0 +1,9 @@
+let a: boolean = true;
+if (a) {
+     println("a is true");
+} else {
+     println("a is false");
+}
+const b : number = 10;
+let c : number = 20;
+const d: number = b + c;
