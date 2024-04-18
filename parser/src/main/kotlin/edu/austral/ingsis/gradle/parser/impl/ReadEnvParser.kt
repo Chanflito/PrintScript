@@ -25,9 +25,9 @@ class ReadEnvParser : Parser<InputContext> {
         return Pair(
             ReadEnvNode(
                 readEnv.tokenPosition,
-                variableName.value
+                variableName.value,
             ),
-            rightParenthesisIndex
+            rightParenthesisIndex,
         )
     }
 }

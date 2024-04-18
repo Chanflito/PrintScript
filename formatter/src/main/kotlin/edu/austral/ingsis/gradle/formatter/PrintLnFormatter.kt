@@ -7,13 +7,14 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class PrintLnFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is PrintLnNode -> {
-                val value = ExpressionFormatter().format(node.expression, rule)
+                val value = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
                 val result = "println($value);"
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             else -> ""

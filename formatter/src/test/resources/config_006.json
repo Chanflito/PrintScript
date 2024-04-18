@@ -1,19 +1,21 @@
-[
-  {
-    "type": "spaceBeforeColon",
-    "allowed": false
-  },
-  {
-    "type": "spaceAfterColon",
-    "allowed": false
-  },
-  {
-    "type": "spaceAroundEqual",
-    "allowed": false
-  },
-  {
-    "type": "newlineBeforePrintln",
-    "allowed": true,
-    "maxInt": 1
-  }
-]
+{
+  "defaultRules": [
+    {
+      "type": "spaceBeforeColon",
+      "allowed": false
+    },
+    {
+      "type": "spaceAfterColon",
+      "allowed": false
+    },
+    {
+      "type": "spaceAroundEqual",
+      "allowed": false
+    },
+    {
+      "type": "newlineBeforePrintln",
+      "allowed": true,
+      "maxInt": 1
+    }
+  ]
+}

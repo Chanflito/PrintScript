@@ -3,7 +3,9 @@ package edu.austral.ingsis.gradle.cli
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
+import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
+import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import java.io.File
@@ -21,13 +23,15 @@ class ExecuteFunction : Function<String, List<Any>> {
         input: String,
         version: String,
     ): List<Any> {
-        return emptyList()
-        /*val lexer = LexerDirector().createComposeLexer("1.1")
+        val versionAdapted = version.take(3)
+        val lexer = LexerDirector().createComposeLexer(versionAdapted)
+        /*
         val tokenList = lexer.splitIntoTokens(input)
         val parser = createComposeParser()
         val astNode = parser.parse(InputContext(tokenList, 0))
         return Interpreter().interpret(astNode.first)
     }*/
+        TODO()
     }
 }
 
@@ -51,8 +55,9 @@ class FormatFunction : Function<Pair<String, File>, String> {
         val ast = createAstNode(input, version)
         val formatter = createDefaultFormatter()
         val rules = ComposeRule(createDefaultRules(input.second.absolutePath))
+        val ifBlockRules = ComposeRule(createIfBlockRules(input.second.absolutePath))
         println("Formatting...\n")
-        return formatter.format(ast.first, rules)
+        return formatter.format(ast.first, rules, ifBlockRules)
     }
 }
 

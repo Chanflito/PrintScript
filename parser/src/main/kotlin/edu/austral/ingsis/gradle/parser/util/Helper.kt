@@ -3,7 +3,10 @@ package edu.austral.ingsis.gradle.parser.util
 import edu.austral.ingsis.gradle.common.token.Assignation
 import edu.austral.ingsis.gradle.common.token.Colon
 import edu.austral.ingsis.gradle.common.token.Divide
+import edu.austral.ingsis.gradle.common.token.ElseKeyword
 import edu.austral.ingsis.gradle.common.token.Identifier
+import edu.austral.ingsis.gradle.common.token.IfKeyword
+import edu.austral.ingsis.gradle.common.token.LeftBrace
 import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.LetKeyword
 import edu.austral.ingsis.gradle.common.token.Minus
@@ -14,6 +17,7 @@ import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
 import edu.austral.ingsis.gradle.common.token.ReadEnvKeyword
 import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
+import edu.austral.ingsis.gradle.common.token.RightBrace
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.StringType
@@ -24,6 +28,7 @@ import edu.austral.ingsis.gradle.parser.impl.ComposeParser
 import edu.austral.ingsis.gradle.parser.impl.DeclarationParser
 import edu.austral.ingsis.gradle.parser.impl.ExpressionParser
 import edu.austral.ingsis.gradle.parser.impl.IdentifierParser
+import edu.austral.ingsis.gradle.parser.impl.IfParser
 import edu.austral.ingsis.gradle.parser.impl.LeftParenthesisParser
 import edu.austral.ingsis.gradle.parser.impl.PrintlnParser
 import edu.austral.ingsis.gradle.parser.impl.ReadEnvParser
@@ -94,6 +99,18 @@ fun isPrintLn(token: Token?): Boolean {
     return token != null && token.tokenType == PrintlnKeyword
 }
 
+fun isLeftBrace(token: Token?): Boolean {
+    return token != null && token.tokenType == LeftBrace
+}
+
+fun isRightBrace(token: Token?): Boolean {
+    return token != null && token.tokenType == RightBrace
+}
+
+fun isElseKeyword(token: Token?): Boolean {
+    return token != null && token.tokenType == ElseKeyword
+}
+
 fun currentToken(
     list: List<Token>,
     index: Int,
@@ -117,6 +134,7 @@ fun createComposeParser(): ComposeParser {
             PrintlnKeyword to PrintlnParser(),
             ReadInputKeyword to ReadInputParser(),
             ReadEnvKeyword to ReadEnvParser(),
+            IfKeyword to IfParser(),
             StringValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             NumberValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
