@@ -44,7 +44,7 @@ class ExpressionFormatter : Formatter<AST> {
 
             // Literal
             is StringLiteral -> {
-                val result = "\"${node.value}\""
+                val result = node.value
                 return applyFormat(result, defaultRule)
             }
 

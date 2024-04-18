@@ -3,6 +3,7 @@ package edu.austral.ingsis.gradle.formatter
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.formatter.rule.Rule
+import java.util.Locale.getDefault
 
 class DeclarationAssignationFormatter : Formatter<AST> {
     override fun format(
@@ -14,7 +15,7 @@ class DeclarationAssignationFormatter : Formatter<AST> {
             is DeclarationAssignation -> {
                 val keyword = node.keyword.value
                 val identifier = node.identifierNode.name
-                val nodeType = node.nodeType.toString()
+                val nodeType = node.nodeType.toString().lowercase(getDefault())
                 val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
                 val result = "$keyword $identifier:$nodeType=$expression;"
                 return applyFormat(result, defaultRule)

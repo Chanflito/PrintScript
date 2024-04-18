@@ -6,6 +6,8 @@ import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
+import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
 import java.io.File
@@ -61,19 +63,15 @@ class FormatFunction : Function<Pair<String, File>, String> {
     }
 }
 
-// TODO wait parser to be refactored
 private fun createAstNode(
     input: Pair<String, File>,
     version: String,
 ): Pair<AST, Int> {
-    TODO()
-    /*
-    val lexer = LexerDirector().createComposeLexer("1.1")
+    val adaptedVersion = version.take(3)
+    val lexer = LexerDirector().createComposeLexer(adaptedVersion)
     println("Lexing...")
     val tokenList = lexer.splitIntoTokens(input.first)
-
-    val parser = createComposeParser()
+    val parser = ProgramNodeParser()
     println("Parsing...")
-    return parser.parse(InputContext(tokenList, 0))
-     */
+    return parser.parse(InputContext(tokenList))
 }
