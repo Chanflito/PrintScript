@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.ASTNode
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.parser.InputContext
@@ -13,13 +13,15 @@ import edu.austral.ingsis.gradle.parser.util.currentToken
 import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
 
 class LeftParenthesisParser : Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<ASTNode, Int> {
-        val currentToken = currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+    override fun parse(input: InputContext): Pair<AST, Int> {
+        val currentToken =
+            currentToken(input.tokens, input.index) ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
         if (currentToken.tokenType != LeftParenthesis) {
             throw Exception(ExpectedTokenErrorMessage("(", currentToken).toString())
         }
         val consumeResult = consumeToken(input.tokens, input.index)
-        val innerExpression = ExpressionParser(EXPRESSION_PARSER_MAP).parse(InputContext(input.tokens, consumeResult.second))
+        val innerExpression =
+            ExpressionParser(EXPRESSION_PARSER_MAP).parse(InputContext(input.tokens, consumeResult.second))
         val consumeTokenResult = consumeToken(input.tokens, innerExpression.second)
         val token = consumeTokenResult.first
         val index = consumeTokenResult.second
@@ -29,7 +31,7 @@ class LeftParenthesisParser : Parser<InputContext> {
 
     private fun verifyIfRightParenthesisExists(
         token: Token?,
-        innerExpression: Pair<ASTNode, Int>,
+        innerExpression: Pair<AST, Int>,
     ) {
         require(isRightParenthesis(token)) {
             when {

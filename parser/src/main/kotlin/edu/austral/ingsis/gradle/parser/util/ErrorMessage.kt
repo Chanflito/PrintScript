@@ -14,7 +14,11 @@ data class NoTokenFoundErrorMessage(val index: Int) : ErrorMessage {
 
 data class ExpectedTokenErrorMessage(val expectedToken: String, val token: Token) : ErrorMessage {
     override fun toString(): String {
-        return "Expected token $expectedToken but found ${token.tokenType} between ${getStartPosition(token)} and ${getEndPosition(token)}"
+        return "Expected token $expectedToken but found ${token.tokenType} between ${getStartPosition(token)} and ${
+            getEndPosition(
+                token,
+            )
+        }"
     }
 }
 
