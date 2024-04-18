@@ -2,31 +2,17 @@ package edu.austral.ingsis.gradle.interpreter.util
 
 import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 
-class Context {
-    private val assignedVariables = mutableMapOf<String, OperationResult>()
-    private val constants= mutableMapOf<String, OperationResult>()
-    private val declaredVariables = mutableMapOf<String, NodeType>()
-    private val printValues = mutableListOf<String>()
-
-
-    fun assignVariable(name: String, value: OperationResult) {
-        assignedVariables[name] = value
-    }
-
-
-    fun assignConstant(name: String, value: OperationResult) {
-        constants[name] = value
-    }
-
-    fun declareVariable(name: String, type: NodeType) {
-        declaredVariables[name] = type
-    }
-
-    fun getVariable(name: String): OperationResult? {
+class Context(
+    private val assignedVariables: Map<String, Any> = emptyMap(),
+    private val constants: Map<String, Any> = emptyMap(),
+    private val declaredVariables: Map<String, NodeType> = emptyMap(),
+    private val printValues: List<String> = emptyList()
+) {
+    fun getVariable(name: String): Any? {
         return assignedVariables[name]
     }
 
-    fun getConstant(name: String): OperationResult? {
+    fun getConstant(name: String): Any? {
         return constants[name]
     }
 
@@ -58,27 +44,34 @@ class Context {
         return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
     }
 
-    fun addPrintValue(value: String) {
-        printValues.add(value)
-    }
-
-
-    fun getVariableOrConstant(name: String): OperationResult? {
+    fun getVariableOrConstant(name: String): Any? {
         return assignedVariables[name] ?: constants[name]
     }
 
     fun update(other: Context): Context {
-        val updatedContext = Context()
-        updatedContext.assignedVariables.putAll(this.assignedVariables)
-        updatedContext.constants.putAll(this.constants)
-        updatedContext.declaredVariables.putAll(this.declaredVariables)
-        updatedContext.printValues.addAll(this.printValues)
+        val updatedAssignedVariables = assignedVariables + other.assignedVariables
+        val updatedConstants = constants + other.constants
+        val updatedDeclaredVariables = declaredVariables + other.declaredVariables
+        val updatedPrintValues = printValues + other.printValues
 
-        updatedContext.assignedVariables.putAll(other.assignedVariables)
-        updatedContext.constants.putAll(other.constants)
-        updatedContext.declaredVariables.putAll(other.declaredVariables)
-        updatedContext.printValues.addAll(other.printValues)
+        return Context(updatedAssignedVariables, updatedConstants, updatedDeclaredVariables, updatedPrintValues)
+    }
 
-        return updatedContext
+    fun updateVariableValues(other: Context): Context {
+        val updatedAssignedVariables = assignedVariables.mapValues { (name, value) ->
+            if (declaredVariables.containsKey(name)) {
+                other.assignedVariables[name] ?: value
+            } else {
+                value
+            }
+        }
+
+        return Context(
+            updatedAssignedVariables,
+            constants,
+            declaredVariables,
+            printValues
+        )
     }
 }
+

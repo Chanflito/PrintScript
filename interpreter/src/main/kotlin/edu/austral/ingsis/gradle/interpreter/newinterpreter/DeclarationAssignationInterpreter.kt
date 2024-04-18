@@ -2,45 +2,72 @@ package edu.austral.ingsis.gradle.interpreter.newinterpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class DeclarationAssignationInterpreter (val node: AST, val context: Context): Interpreter {
+class DeclarationAssignationInterpreter : Interpreter {
+    override fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult {
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
 
+        val interpretedNode = node as DeclarationAssignation
+        val identifier = interpretedNode.identifierNode.name
+        val expression = interpretedNode.expression
+        val keyword = interpretedNode.keyword.value
+        val type = interpretedNode.nodeType
 
-    override fun interpret(): InterpretResult {
-        val declarationNode = node as DeclarationAssignation
-        interpretNode(declarationNode)
-        return InterpretResult.ContextResult(context)
+        checkIfVariableCanBeDeclared(identifier, context)
+        val result = interpretExpression(expression, type, node, context, interpreterManager)
+        checkTypeMatch(result, type)
+
+        val newContext = createContextAfterDeclaration(identifier, result, type, keyword)
+        return InterpretResult.OperationResult(newContext)
     }
-    private fun interpretNode(node:DeclarationAssignation){
-        val identifier = node.identifierNode.name
-        val expression = node.expression
-        val keyword = node.keyword.value
-        val type = node.nodeType
+
+    private fun checkIfVariableCanBeDeclared(identifier: String, context: Context) {
         if (context.isInContext(identifier)) {
-            throw RuntimeException(
-                "Variable $identifier already declared",
-            )
+            throw RuntimeException("Variable $identifier already declared")
         }
-        val expressionInterpreter = InterpreterFactory.internalGetInstance().createInterpreter<Interpreter>(expression, context, type)
-        val interpretResult = expressionInterpreter.interpret() as InterpretResult.InterpretOperationResult
-        val result= interpretResult.operationResult
-        if (!doesTypeMatch(result, type)) throw RuntimeException("Type mismatch")
-        when (keyword) {
-            "let" -> {
-                context.assignVariable(identifier, result)
-            }
-            "const" -> {
-                context.assignConstant(identifier, result)
-            }
-        }
-        context.declareVariable(identifier, type)
     }
+
+    private fun interpretExpression(
+        expression: AST,
+        type: NodeType,
+        node: AST,
+        context: Context,
+        interpreterManager: InterpreterManager
+    ): Any {
+        val expressionInterpreter = interpreterManager.getInterpreter(expression, type)
+        val interpretResult = expressionInterpreter.interpret(node, context, interpreterManager) as InterpretResult.OperationResult
+        return interpretResult.value
+    }
+
+    private fun checkTypeMatch(result: Any, type: NodeType) {
+        if (!doesTypeMatch(result, type)) {
+            throw RuntimeException("Type mismatch")
+        }
+    }
+
+    private fun createContextAfterDeclaration(identifier: String, result: Any, type: NodeType, keyword: String): Context {
+        val assignedMap = if (keyword == "let") {
+            mapOf(identifier to result)
+        } else {
+            emptyMap()
+        }
+
+        val constMap = if (keyword == "const") {
+            mapOf(identifier to result)
+        } else {
+            emptyMap()
+        }
+
+        return Context(assignedVariables = assignedMap, declaredVariables = mapOf(identifier to type), constants = constMap)
+    }
+
 
     override fun canInterpret(node: AST): Boolean {
         return node is DeclarationAssignation
     }
-
 }

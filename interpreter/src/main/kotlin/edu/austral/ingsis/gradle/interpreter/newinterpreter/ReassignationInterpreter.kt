@@ -4,38 +4,41 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class ReassignationInterpreter (val node: AST, val context: Context) : Interpreter {
-    override fun interpret(): InterpretResult {
+class ReassignationInterpreter () : Interpreter {
+    override fun interpret(node: AST, context: Context, interpreterManager: InterpreterManager): InterpretResult {
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val reassignationNode = node as ReAssignationNode
-        interpretNode(reassignationNode, context)
-        return InterpretResult.ContextResult(context)
+        val identifierInterpreter = interpreterManager.getInterpreter(reassignationNode.identifierNode)
+        val identifierResult = identifierInterpreter.interpret(reassignationNode.identifierNode, context, interpreterManager) as InterpretResult.OperationResult
+        val identifier = identifierResult.value
+        if(identifier !is String) throw RuntimeException("Identifier must be a string")
+        checkForErrors(context, identifier)
+        val expressionInterpreter = interpreterManager.getInterpreter(reassignationNode.expression, context.getVariableType(identifier))
+        val expressionResult = expressionInterpreter.interpret(reassignationNode.expression, context, interpreterManager) as InterpretResult.OperationResult
+        val expression = expressionResult.value
+        if (!context.getVariableType(identifier)?.let { doesTypeMatch(expression, it) }!!) throw RuntimeException("Type mismatch")
+        return InterpretResult.ContextResult((Context(assignedVariables = mapOf(identifier to expression)))) // Return the new context
     }
 
-    private fun interpretNode(node: ReAssignationNode, context: Context) {
-        val identifier = node.identifierNode.name
-        val expression = node.expression
-        val type = context.getVariableType(identifier)
+    private fun checkForErrors(context: Context, identifier: String) {
         if (!context.isInContext(identifier)) {
             throw RuntimeException(
                 "Variable $identifier not declared",
             )
         }
-        if(context.isConstantAssigned(identifier)){
+        if (context.isConstantAssigned(identifier)) {
             throw RuntimeException(
                 "Variable $identifier is constant",
             )
         }
-        val expressionInterpreter = InterpreterFactory.internalGetInstance().createInterpreter<Interpreter>(expression, context)
-        val interpretResult = expressionInterpreter.interpret() as InterpretResult.InterpretOperationResult
-        val result = interpretResult.operationResult
-        if (!doesTypeMatch(result, type)) throw RuntimeException("Type mismatch")
-        context.assignVariable(identifier, result)
     }
 
     override fun canInterpret(node: AST): Boolean {
         return node is ReAssignationNode
     }
+
 
 }

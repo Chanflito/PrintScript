@@ -6,13 +6,14 @@ import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
-import edu.austral.ingsis.gradle.interpreter.util.OperationResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 
-class StringLiteralInterpreter(val node: AST, val context: Context): Interpreter {
+class StringLiteralInterpreter(): Interpreter {
 
-    override fun interpret(): InterpretResult {
+    override fun interpret(node: AST, context: Context, interpreterManager:InterpreterManager): InterpretResult {
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val literalNode = node as StringLiteral
-        return InterpretResult.InterpretOperationResult(OperationResult.StringResult(literalNode.value))
+        return InterpretResult.OperationResult(literalNode.value)
     }
 
     override fun canInterpret(node: AST): Boolean {
@@ -20,11 +21,12 @@ class StringLiteralInterpreter(val node: AST, val context: Context): Interpreter
     }
 }
 
-class NumberLiteralInterpreter(val node: AST, val context: Context): Interpreter {
+class NumberLiteralInterpreter(): Interpreter {
 
-    override fun interpret(): InterpretResult {
+    override fun interpret(node: AST, context: Context, interpreterManager:InterpreterManager): InterpretResult {
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val literalNode = node as NumberLiteralNode
-        return InterpretResult.InterpretOperationResult(OperationResult.NumberResult(literalNode.value))
+        return InterpretResult.OperationResult(literalNode.value)
     }
 
     override fun canInterpret(node: AST): Boolean {
@@ -32,11 +34,12 @@ class NumberLiteralInterpreter(val node: AST, val context: Context): Interpreter
     }
 }
 
-class BooleanLiteralInterpreter(val node: AST, val context: Context): Interpreter {
+class BooleanLiteralInterpreter(): Interpreter {
 
-    override fun interpret(): InterpretResult {
+    override fun interpret(node: AST, context: Context, interpreterManager:InterpreterManager): InterpretResult {
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val literalNode = node as BooleanLiteralNode
-        return InterpretResult.InterpretOperationResult(OperationResult.BooleanResult(literalNode.value))
+        return InterpretResult.OperationResult(literalNode.value)
     }
 
     override fun canInterpret(node: AST): Boolean {
