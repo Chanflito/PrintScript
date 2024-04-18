@@ -2,9 +2,11 @@ package edu.austral.ingsis.gradle.parser.builder.impl
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.newast.Keyword
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
@@ -20,15 +22,15 @@ class AssignationNodeWithLetBuilder : AstBuilder<AST> {
         tokens: List<Token>,
         index: Int,
     ): Pair<AST, Int> {
-        val letNode = createLetNode(tokens, index)
-        val identifierToken = getIdentifierToken(tokens, letNode.second)
+        val keywordNode = createKeywordNode(tokens, index)
+        val identifierToken = getIdentifierToken(tokens, keywordNode.second)
         val typeTokenPair = getTypeToken(tokens, identifierToken.second + 1)
         val equalsTokenPair = getEqualsToken(tokens, typeTokenPair.second)
         val expressionResult = ExpressionParser().parse(InputContext(tokens, equalsTokenPair.second))
         val equalsToken = equalsTokenPair.first ?: throw Exception("No token found")
         return Pair(
             DeclarationAssignation(
-                letNode.first,
+                keywordNode.first,
                 equalsToken.tokenPosition,
                 typeTokenPair.first,
                 identifierToken.first,
@@ -38,13 +40,18 @@ class AssignationNodeWithLetBuilder : AstBuilder<AST> {
         )
     }
 
-    private fun createLetNode(
+    private fun createKeywordNode(
         tokens: List<Token>,
         index: Int,
-    ): Pair<LetKeywordNode, Int> {
+    ): Pair<Keyword, Int> {
         val consumeResult = consumeToken(tokens, index)
         val token = consumeResult.first ?: throw Exception("No token found")
-        val letNode = LetKeywordNode(token.tokenPosition)
+        val letNode =
+            when (token.value) {
+                "let" -> LetKeywordNode(token.tokenPosition)
+                "const" -> ConstKeywordNode(token.tokenPosition)
+                else -> throw Exception("Invalid keyword")
+            }
         return Pair(letNode, consumeResult.second)
     }
 

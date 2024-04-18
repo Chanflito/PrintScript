@@ -12,6 +12,7 @@ import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.common.token.NumberValue
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.StringType
@@ -24,6 +25,7 @@ import edu.austral.ingsis.gradle.parser.impl.ExpressionParser
 import edu.austral.ingsis.gradle.parser.impl.IdentifierParser
 import edu.austral.ingsis.gradle.parser.impl.LeftParenthesisParser
 import edu.austral.ingsis.gradle.parser.impl.PrintlnParser
+import edu.austral.ingsis.gradle.parser.impl.ReadInputParser
 import edu.austral.ingsis.gradle.parser.impl.ValueNumberParser
 import edu.austral.ingsis.gradle.parser.impl.ValueStringParser
 
@@ -111,6 +113,7 @@ fun createComposeParser(): ComposeParser {
     return ComposeParser(
         mapOf(
             PrintlnKeyword to PrintlnParser(),
+            ReadInputKeyword to ReadInputParser(),
             StringValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             NumberValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),

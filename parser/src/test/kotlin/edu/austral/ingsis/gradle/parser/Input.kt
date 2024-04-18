@@ -12,6 +12,7 @@ import edu.austral.ingsis.gradle.common.token.NumberValue
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
+import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.StringType
@@ -107,52 +108,20 @@ val input_010 =
 
 val input_011 =
     listOf(
-        Token("let", LetKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
-        Token("a", Identifier, TokenPosition(Position(1, 5), Position(1, 6))),
-        Token(":", Colon, TokenPosition(Position(1, 6), Position(1, 7))),
-        Token("number", NumberType, TokenPosition(Position(1, 8), Position(1, 14))),
-        Token("=", Assignation, TokenPosition(Position(1, 15), Position(1, 16))),
-        Token("5", NumberValue, TokenPosition(Position(1, 17), Position(1, 18))),
+        Token("readInput", ReadInputKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
+        Token("(", LeftParenthesis, TokenPosition(Position(1, 5), Position(1, 6))),
+        Token("hola lucho", StringValue, TokenPosition(Position(1, 6), Position(1, 7))),
+        Token(")", RightParenthesis, TokenPosition(Position(1, 17), Position(1, 18))),
         Token(";", SemiColon, TokenPosition(Position(1, 18), Position(1, 19))),
-        Token("let", LetKeyword, TokenPosition(Position(2, 1), Position(2, 4))),
-        Token("b", Identifier, TokenPosition(Position(2, 5), Position(2, 6))),
-        Token(":", Colon, TokenPosition(Position(2, 6), Position(2, 7))),
-        Token("number", NumberType, TokenPosition(Position(2, 8), Position(2, 14))),
-        Token("=", Assignation, TokenPosition(Position(2, 15), Position(2, 16))),
-        Token("5", NumberValue, TokenPosition(Position(2, 17), Position(2, 18))),
-        Token(";", SemiColon, TokenPosition(Position(2, 18), Position(2, 19))),
-        Token("println", PrintlnKeyword, TokenPosition(Position(3, 1), Position(3, 8))),
-        Token("(", LeftParenthesis, TokenPosition(Position(3, 9), Position(3, 10))),
-        Token("a", Identifier, TokenPosition(Position(3, 10), Position(3, 11))),
-        Token("+", Plus, TokenPosition(Position(3, 11), Position(3, 12))),
-        Token("b", Identifier, TokenPosition(Position(3, 12), Position(3, 13))),
-        Token(")", RightParenthesis, TokenPosition(Position(3, 13), Position(3, 14))),
-        Token(";", SemiColon, TokenPosition(Position(3, 14), Position(3, 15))),
     )
 
 val input_012 =
     listOf(
-        Token("let", LetKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
-        Token("a", Identifier, TokenPosition(Position(1, 5), Position(1, 6))),
-        Token(":", Colon, TokenPosition(Position(1, 6), Position(1, 7))),
-        Token("string", StringType, TokenPosition(Position(1, 8), Position(1, 14))),
-        Token("=", Assignation, TokenPosition(Position(1, 15), Position(1, 16))),
-        Token("hola", StringValue, TokenPosition(Position(1, 17), Position(1, 18))),
+        Token("readInput", ReadInputKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
+        Token("(", LeftParenthesis, TokenPosition(Position(1, 5), Position(1, 6))),
+        Token("5", NumberValue, TokenPosition(Position(1, 6), Position(1, 7))),
+        Token(")", RightParenthesis, TokenPosition(Position(1, 17), Position(1, 18))),
         Token(";", SemiColon, TokenPosition(Position(1, 18), Position(1, 19))),
-        Token("let", LetKeyword, TokenPosition(Position(2, 1), Position(2, 4))),
-        Token("b", Identifier, TokenPosition(Position(2, 5), Position(2, 6))),
-        Token(":", Colon, TokenPosition(Position(2, 6), Position(2, 7))),
-        Token("string", StringType, TokenPosition(Position(2, 8), Position(2, 14))),
-        Token("=", Assignation, TokenPosition(Position(2, 15), Position(2, 16))),
-        Token("loco", StringValue, TokenPosition(Position(2, 17), Position(2, 18))),
-        Token(";", SemiColon, TokenPosition(Position(2, 18), Position(2, 19))),
-        Token("println", PrintlnKeyword, TokenPosition(Position(3, 1), Position(3, 8))),
-        Token("(", LeftParenthesis, TokenPosition(Position(3, 9), Position(3, 10))),
-        Token("a", Identifier, TokenPosition(Position(3, 10), Position(3, 11))),
-        Token("+", Plus, TokenPosition(Position(3, 11), Position(3, 12))),
-        Token("b", Identifier, TokenPosition(Position(3, 12), Position(3, 13))),
-        Token(")", RightParenthesis, TokenPosition(Position(3, 13), Position(3, 14))),
-        Token(";", SemiColon, TokenPosition(Position(3, 14), Position(3, 15))),
     )
 
 val input_013 =

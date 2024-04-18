@@ -9,6 +9,8 @@ import edu.austral.ingsis.gradle.parser.input_007
 import edu.austral.ingsis.gradle.parser.input_008
 import edu.austral.ingsis.gradle.parser.input_009
 import edu.austral.ingsis.gradle.parser.input_010
+import edu.austral.ingsis.gradle.parser.input_011
+import edu.austral.ingsis.gradle.parser.input_012
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
@@ -19,6 +21,8 @@ import edu.austral.ingsis.gradle.parser.output_007
 import edu.austral.ingsis.gradle.parser.output_008
 import edu.austral.ingsis.gradle.parser.output_009
 import edu.austral.ingsis.gradle.parser.output_010
+import edu.austral.ingsis.gradle.parser.output_011
+import edu.austral.ingsis.gradle.parser.output_012
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -64,14 +68,14 @@ class ParserTest {
     //    test let a : number ;
     @Test
     fun test006_parseVariableDeclaration() {
-        val actual = parser.parse(InputContext(input_006, 0)).first
+        val actual = parser.parse(InputContext(input_006)).first
         assertEquals(output_006, actual)
     }
 
     //    test let a : number = 5 ;
     @Test
     fun test007_parseExpression() {
-        val actual = parser.parse(InputContext(input_007, 0)).first
+        val actual = parser.parse(InputContext(input_007)).first
         assertEquals(output_007, actual)
     }
 
@@ -79,25 +83,37 @@ class ParserTest {
 //    let a : number = 5 ;
     @Test
     fun test008_parseExpressionWithOperationOnOtherLine() {
-        val actual = parser.parse(InputContext(input_008, 0)).first
+        val actual = parser.parse(InputContext(input_008)).first
         assertEquals(output_008, actual)
     }
 
     //    //    test println( 5 + 7 )
     @Test
     fun test009_parseExpressionWithPrintLnAndOperatorInside() {
-        val actual = parser.parse(InputContext(input_009, 0)).first
-        val expected = output_009
-        assertEquals(expected, actual)
+        val actual = parser.parse(InputContext(input_009)).first
+        assertEquals(output_009, actual)
     }
 
     //    //    test  (5 + 7)  *4
     @Test
     fun test010_parseExpressionWithSimpleOperator() {
-        val actual = parser.parse(InputContext(input_010, 0)).first
+        val actual = parser.parse(InputContext(input_010)).first
         assertEquals(output_010, actual)
     }
-//
+
+    //   readInput("hola lucho")
+    @Test
+    fun test011_parseReadInput() {
+        val actual = parser.parse(InputContext(input_011)).first
+        assertEquals(output_011, actual)
+    }
+
+    @Test
+    fun test012_parseReadInput() {
+        val actual = parser.parse(InputContext(input_012)).first
+        assertEquals(output_012, actual)
+    }
+
 //    //    test
 //    //    let a: number = 5
 //    //    let b: number = 5
