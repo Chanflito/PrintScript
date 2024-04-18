@@ -1,6 +1,8 @@
 package edu.austral.ingsis.gradle.parser.util
 
 import edu.austral.ingsis.gradle.common.token.Assignation
+import edu.austral.ingsis.gradle.common.token.BooleanType
+import edu.austral.ingsis.gradle.common.token.BooleanValue
 import edu.austral.ingsis.gradle.common.token.Colon
 import edu.austral.ingsis.gradle.common.token.ConstKeyword
 import edu.austral.ingsis.gradle.common.token.Divide
@@ -25,6 +27,7 @@ import edu.austral.ingsis.gradle.common.token.StringType
 import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.parser.impl.AssignationParser
+import edu.austral.ingsis.gradle.parser.impl.BooleanValueParser
 import edu.austral.ingsis.gradle.parser.impl.ComposeParser
 import edu.austral.ingsis.gradle.parser.impl.DeclarationParser
 import edu.austral.ingsis.gradle.parser.impl.ExpressionParser
@@ -69,7 +72,7 @@ fun isIdentifier(token: Token?): Boolean {
 }
 
 fun isType(token: Token?): Boolean {
-    return (token != null && token.tokenType in setOf(NumberType, StringType))
+    return (token != null && token.tokenType in setOf(NumberType, StringType, BooleanType))
 }
 
 fun isValue(token: Token?): Boolean {
@@ -82,6 +85,10 @@ fun isNumberValue(token: Token?): Boolean {
 
 fun isStringValue(token: Token?): Boolean {
     return token != null && token.tokenType == StringValue
+}
+
+fun isBooleanValue(token: Token?): Boolean {
+    return token != null && token.tokenType == BooleanValue
 }
 
 fun isOperator(token: Token?): Boolean {
@@ -162,6 +169,7 @@ val EXPRESSION_PARSER_MAP =
     mapOf(
         NumberValue to ValueNumberParser(),
         StringValue to ValueStringParser(),
+        BooleanValue to BooleanValueParser(),
         LeftParenthesis to LeftParenthesisParser(),
         Identifier to IdentifierParser(),
     )
