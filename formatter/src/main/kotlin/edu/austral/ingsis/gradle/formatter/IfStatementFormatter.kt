@@ -7,14 +7,15 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class IfStatementFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is IfStatement -> {
-                val condition = ExpressionFormatter().format(node.condition, rule)
-                val block = formatIfBlock(node.ifBlock.children, rule)
+                val condition = ExpressionFormatter().format(node.condition, defaultRule, ifBlockRule)
+                val block = formatIfBlock(node.ifBlock.children, defaultRule, ifBlockRule)
                 val result = "if ($condition) {\n${block}\n}"
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             else -> ""
@@ -34,9 +35,12 @@ class IfStatementFormatter : Formatter<AST> {
 
     private fun formatIfBlock(
         nodes: List<AST>,
-        ruleData: Rule,
+        rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         val blockFormatter = createDefaultFormatter()
-        return nodes.joinToString("\n") { blockFormatter.format(it, ruleData) }
+        val formattedBlock = nodes.joinToString("\n") { blockFormatter.format(it, rule, ifBlockRules) }
+        val lines = formattedBlock.split("\n")
+        return lines.joinToString("\n") { applyFormat(it, ifBlockRules) }
     }
 }

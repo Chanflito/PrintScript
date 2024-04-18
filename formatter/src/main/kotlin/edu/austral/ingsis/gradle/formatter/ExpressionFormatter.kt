@@ -14,47 +14,48 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class ExpressionFormatter : Formatter<Expression> {
     override fun format(
         node: Expression,
-        rule: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             // Operator
             is SumNode -> {
-                val result = "${format(node.left, rule)} + ${format(node.right, rule)}"
-                return applyFormat(result, rule)
+                val result = "${format(node.left, defaultRule, ifBlockRule)} + ${format(node.right, defaultRule, ifBlockRule)}"
+                return applyFormat(result, defaultRule)
             }
 
             is SubtractNode -> {
-                val result = "${format(node.left, rule)} - ${format(node.right, rule)}"
-                return applyFormat(result, rule)
+                val result = "${format(node.left, defaultRule,ifBlockRule)} - ${format(node.right, defaultRule,ifBlockRule)}"
+                return applyFormat(result, defaultRule)
             }
 
             is MultiplyNode -> {
-                val result = "${format(node.left, rule)} * ${format(node.right, rule)}"
-                return applyFormat(result, rule)
+                val result = "${format(node.left, defaultRule, ifBlockRule)} * ${format(node.right, defaultRule, ifBlockRule)}"
+                return applyFormat(result, defaultRule)
             }
 
             is DivideNode -> {
-                val result = "${format(node.left, rule)} / ${format(node.right, rule)}"
-                return applyFormat(result, rule)
+                val result = "${format(node.left, defaultRule, ifBlockRule)} / ${format(node.right, defaultRule, ifBlockRule)}"
+                return applyFormat(result, defaultRule)
             }
 
             // Operand
-            is IdentifierNode -> return IdentifierFormatter().format(node, rule)
+            is IdentifierNode -> return IdentifierFormatter().format(node, defaultRule, ifBlockRule)
 
             // Literal
             is StringLiteral -> {
                 val result = "\"${node.value}\""
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             is NumberLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             is BooleanLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             else -> ""
