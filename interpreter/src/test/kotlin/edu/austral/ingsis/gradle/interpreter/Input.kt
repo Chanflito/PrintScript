@@ -205,3 +205,16 @@ val input_011 =
             "PATH",
         ),
     )
+
+val input_012 =
+    SumNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringLiteral(
+            "Hello ",
+            TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+        NumberLiteralNode(
+            12,
+            TokenPosition(Position(0, 0), Position(0, 0)),
+        ),
+    )

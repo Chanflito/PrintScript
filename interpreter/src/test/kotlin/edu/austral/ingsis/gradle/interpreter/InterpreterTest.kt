@@ -213,4 +213,15 @@ class InterpreterTest {
         val newContext = result.context
         assert(newContext.getConstant("input") == System.getenv("PATH"))
     }
+
+    @Test
+    fun `concatenation with number and string`() {
+        val context = Context()
+        val sumNode = input_012
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
+        assert(result is InterpretResult.OperationResult)
+        val value = (result as InterpretResult.OperationResult).value
+        assert(value == "Hello 12")
+    }
 }

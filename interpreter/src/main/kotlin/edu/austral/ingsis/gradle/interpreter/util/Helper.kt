@@ -16,3 +16,14 @@ fun doesTypeMatch(
         else -> false
     }
 }
+
+fun castToDesiredType(num: Number): Number {
+    if (num is Double) {
+        return if (num % 1 == 0.0) {
+            num.toInt()
+        } else {
+            num
+        }
+    }
+    return num
+}
