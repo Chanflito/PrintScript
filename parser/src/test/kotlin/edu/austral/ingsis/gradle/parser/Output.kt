@@ -9,6 +9,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
@@ -111,6 +112,12 @@ val output_012 =
     ReadInputNode(
         TokenPosition(Position(1, 1), Position(1, 4)),
         NumberLiteralNode(5.0, TokenPosition(Position(1, 6), Position(1, 7))),
+    )
+
+val output_013 =
+    ReadEnvNode(
+        TokenPosition(Position(1, 1), Position(1, 4)),
+        "LUCHO_ENV"
     )
 //
 // val output_012 =

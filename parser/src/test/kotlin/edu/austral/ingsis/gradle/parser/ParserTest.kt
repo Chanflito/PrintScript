@@ -11,6 +11,7 @@ import edu.austral.ingsis.gradle.parser.input_009
 import edu.austral.ingsis.gradle.parser.input_010
 import edu.austral.ingsis.gradle.parser.input_011
 import edu.austral.ingsis.gradle.parser.input_012
+import edu.austral.ingsis.gradle.parser.input_013
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
@@ -23,6 +24,7 @@ import edu.austral.ingsis.gradle.parser.output_009
 import edu.austral.ingsis.gradle.parser.output_010
 import edu.austral.ingsis.gradle.parser.output_011
 import edu.austral.ingsis.gradle.parser.output_012
+import edu.austral.ingsis.gradle.parser.output_013
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -112,6 +114,12 @@ class ParserTest {
     fun test012_parseReadInput() {
         val actual = parser.parse(InputContext(input_012)).first
         assertEquals(output_012, actual)
+    }
+
+    @Test
+    fun test013_parseReadEnv() {
+        val actual = parser.parse(InputContext(input_013)).first
+        assertEquals(output_013, actual)
     }
 
 //    //    test
