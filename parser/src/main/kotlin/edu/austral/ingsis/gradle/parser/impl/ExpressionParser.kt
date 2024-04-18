@@ -1,8 +1,15 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.ASTNode
-import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.common.ast.OperatorNode
+import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
+import edu.austral.ingsis.gradle.common.ast.newast.Expression
+import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.common.token.Divide
+import edu.austral.ingsis.gradle.common.token.Minus
+import edu.austral.ingsis.gradle.common.token.Multiply
+import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenType
 import edu.austral.ingsis.gradle.parser.InputContext
@@ -19,7 +26,7 @@ import edu.austral.ingsis.gradle.parser.util.isMultiplicativeOperator
 // Here should go expressions like 5+5, 7+2
 class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>> = EXPRESSION_PARSER_MAP) :
     Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<ASTNode, Int> {
+    override fun parse(input: InputContext): Pair<AST, Int> {
         val indexCopy = input.index
         return parsePrimaryOperator(input.tokens, indexCopy)
     }
@@ -32,12 +39,35 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
     private fun parsePrimaryOperator(
         tokens: List<Token>,
         index: Int,
-    ): Pair<ASTNode, Int> {
+    ): Pair<AST, Int> {
         var left = parseSecondaryOperator(tokens, index)
         while (isAdditiveOperator(currentToken(tokens, left.second))) {
-            val token = consumeToken(tokens, left.second)
-            val right = parseSecondaryOperator(tokens, token.second)
-            left = Pair(ASTNodeImpl(token.first?.value, token.first, OperatorNode, listOf(left.first, right.first)), right.second)
+            val tokenPair = consumeToken(tokens, left.second)
+            val right = parseSecondaryOperator(tokens, tokenPair.second)
+            val token = tokenPair.first ?: throw Exception(NoTokenFoundErrorMessage(tokenPair.second).toString())
+            when (token.tokenType) {
+                Plus ->
+                    left =
+                        Pair(
+                            SumNode(
+                                token.tokenPosition,
+                                left.first as Expression,
+                                right.first as Expression,
+                            ),
+                            right.second,
+                        )
+
+                Minus ->
+                    left =
+                        Pair(
+                            SubtractNode(
+                                token.tokenPosition,
+                                left.first as Expression,
+                                right.first as Expression,
+                            ),
+                            right.second,
+                        )
+            }
         }
 
         return left
@@ -46,12 +76,35 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
     private fun parseSecondaryOperator(
         tokens: List<Token>,
         index: Int,
-    ): Pair<ASTNode, Int> {
+    ): Pair<AST, Int> {
         var left = parseMember(tokens, index)
         while (isMultiplicativeOperator(currentToken(tokens, left.second))) {
-            val token = consumeToken(tokens, left.second)
-            val right = parseMember(tokens, token.second)
-            left = Pair(ASTNodeImpl(token.first?.value, token.first, OperatorNode, listOf(left.first, right.first)), right.second)
+            val tokenPair = consumeToken(tokens, left.second)
+            val right = parseMember(tokens, tokenPair.second)
+            val token = tokenPair.first ?: throw Exception(NoTokenFoundErrorMessage(tokenPair.second).toString())
+            when (token.tokenType) {
+                Multiply ->
+                    left =
+                        Pair(
+                            MultiplyNode(
+                                token.tokenPosition,
+                                left.first as Expression,
+                                right.first as Expression,
+                            ),
+                            right.second,
+                        )
+
+                Divide ->
+                    left =
+                        Pair(
+                            DivideNode(
+                                token.tokenPosition,
+                                left.first as Expression,
+                                right.first as Expression,
+                            ),
+                            right.second,
+                        )
+            }
         }
         return left
     }
@@ -59,9 +112,10 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
     private fun parseMember(
         tokens: List<Token>,
         index: Int,
-    ): Pair<ASTNode, Int> {
+    ): Pair<AST, Int> {
         val currentToken = currentToken(tokens, index) ?: throw Exception(NoTokenFoundErrorMessage(index).toString())
-        val parserFound = parsers[currentToken.tokenType] ?: throw Exception(InvalidTokenErrorMessage(currentToken).toString())
+        val parserFound =
+            parsers[currentToken.tokenType] ?: throw Exception(InvalidTokenErrorMessage(currentToken).toString())
         return parserFound.parse(InputContext(tokens, index))
     }
 }

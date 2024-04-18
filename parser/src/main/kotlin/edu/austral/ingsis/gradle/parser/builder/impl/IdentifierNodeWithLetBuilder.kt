@@ -1,35 +1,32 @@
 package edu.austral.ingsis.gradle.parser.builder.impl
 
-import edu.austral.ingsis.gradle.common.ast.ASTNodeImpl
-import edu.austral.ingsis.gradle.common.ast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.KeywordNode
-import edu.austral.ingsis.gradle.common.ast.TypeNode
+import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
+import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.newast.NodeType
+import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.parser.builder.AstBuilder
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 
-class IdentifierNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
+class IdentifierNodeWithLetBuilder : AstBuilder<AST> {
     override fun build(
         tokens: List<Token>,
         index: Int,
-    ): Pair<ASTNodeImpl, Int> {
+    ): Pair<AST, Int> {
         val letNode = createLetNode(tokens, index)
         val identifierToken = getIdentifierToken(tokens, letNode.second)
+        val colon = tokens[identifierToken.second]
         val typeToken = getTypeToken(tokens, identifierToken.second + 1)
         return Pair(
-            ASTNodeImpl(
-                identifierToken.first?.value,
+            DeclarationNode(
+                letNode.first,
+                colon.tokenPosition,
+                typeToken.first,
                 identifierToken.first,
-                IdentifierNode,
-                listOf(
-                    letNode.first,
-                    ASTNodeImpl(
-                        typeToken.first?.value,
-                        typeToken.first,
-                        TypeNode,
-                        listOf(),
-                    ),
-                ),
             ),
             identifierToken.second + 1,
         )
@@ -38,25 +35,32 @@ class IdentifierNodeWithLetBuilder : AstBuilder<ASTNodeImpl> {
     private fun createLetNode(
         tokens: List<Token>,
         index: Int,
-    ): Pair<ASTNodeImpl, Int> {
+    ): Pair<LetKeywordNode, Int> {
         val consumeResult = consumeToken(tokens, index)
-        val letNode = ASTNodeImpl("let", consumeResult.first, KeywordNode, listOf())
+        val token = consumeResult.first ?: throw Exception("No token found")
+        val letNode = LetKeywordNode(token.tokenPosition)
         return Pair(letNode, consumeResult.second)
     }
 
     private fun getIdentifierToken(
         tokens: List<Token>,
         index: Int,
-    ): Pair<Token?, Int> {
+    ): Pair<IdentifierNode, Int> {
         val currentToken = consumeToken(tokens, index)
-        return Pair(currentToken.first, currentToken.second)
+        val token = currentToken.first ?: throw Exception("No token found")
+        return Pair(IdentifierNode(token.value, token.tokenPosition), currentToken.second)
     }
 
     private fun getTypeToken(
         tokens: List<Token>,
         index: Int,
-    ): Pair<Token?, Int> {
+    ): Pair<NodeType, Int> {
         val currentToken = consumeToken(tokens, index)
-        return Pair(currentToken.first, currentToken.second)
+        return when (currentToken.first?.value) {
+            "number" -> Pair(NumberNodeType, currentToken.second)
+            "string" -> Pair(StringNodeType, currentToken.second)
+            "boolean" -> Pair(BooleanNodeType, currentToken.second)
+            else -> throw Exception("Invalid type")
+        }
     }
 }
