@@ -12,6 +12,7 @@ interface Formatter<AST> {
     fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String
 
     /**

@@ -19,7 +19,13 @@ fun createDefaultFormatter(): Formatter<AST> {
 }
 
 fun createDefaultRules(rulesFile: String): List<Rule> {
-    val ruleData = RuleParser().parseRulesFromFile(rulesFile)
-    val adaptedRules = ruleData.map { RuleAdapter().adapt(it) }
+    val defaultRuleData = RuleParser().parseRulesFromFile(rulesFile, "defaultRules")
+    val adaptedRules = defaultRuleData.map { RuleAdapter().adapt(it) }
+    return adaptedRules
+}
+
+fun createIfBlockRules(rulesFile: String): List<Rule> {
+    val ifBlockRuleData = RuleParser().parseRulesFromFile(rulesFile, "ifBlockRules")
+    val adaptedRules = ifBlockRuleData.map { RuleAdapter().adapt(it) }
     return adaptedRules
 }

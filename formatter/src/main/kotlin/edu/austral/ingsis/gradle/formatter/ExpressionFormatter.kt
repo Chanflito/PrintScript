@@ -15,31 +15,32 @@ class ExpressionFormatter : Formatter<Expression> {
     override fun format(
         node: Expression,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         return when (node) {
             // Operator
             is SumNode -> {
-                val result = "${format(node.left, rule)} + ${format(node.right, rule)}"
+                val result = "${format(node.left, rule, ifBlockRules)} + ${format(node.right, rule, ifBlockRules)}"
                 return applyFormat(result, rule)
             }
 
             is SubtractNode -> {
-                val result = "${format(node.left, rule)} - ${format(node.right, rule)}"
+                val result = "${format(node.left, rule,ifBlockRules)} - ${format(node.right, rule,ifBlockRules)}"
                 return applyFormat(result, rule)
             }
 
             is MultiplyNode -> {
-                val result = "${format(node.left, rule)} * ${format(node.right, rule)}"
+                val result = "${format(node.left, rule, ifBlockRules)} * ${format(node.right, rule, ifBlockRules)}"
                 return applyFormat(result, rule)
             }
 
             is DivideNode -> {
-                val result = "${format(node.left, rule)} / ${format(node.right, rule)}"
+                val result = "${format(node.left, rule, ifBlockRules)} / ${format(node.right, rule, ifBlockRules)}"
                 return applyFormat(result, rule)
             }
 
             // Operand
-            is IdentifierNode -> return IdentifierFormatter().format(node, rule)
+            is IdentifierNode -> return IdentifierFormatter().format(node, rule, ifBlockRules)
 
             // Literal
             is StringLiteral -> {

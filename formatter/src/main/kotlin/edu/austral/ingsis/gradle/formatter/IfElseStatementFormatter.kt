@@ -8,12 +8,13 @@ class IfElseStatementFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         return when (node) {
             is IfElseStatement -> {
-                val condition = ExpressionFormatter().format(node.condition, rule)
-                val ifBlock = formatIfBlock(node.ifBlock.children, rule)
-                val elseBlock = formatIfBlock(node.elseBlock.children, rule)
+                val condition = ExpressionFormatter().format(node.condition, rule, ifBlockRules)
+                val ifBlock = formatIfBlock(node.ifBlock.children, rule, ifBlockRules)
+                val elseBlock = formatIfBlock(node.elseBlock.children, rule, ifBlockRules)
                 val result = "if ($condition) {\n${ifBlock}\n}else {\n${elseBlock}\n}"
                 return applyFormat(result, rule)
             }
@@ -35,9 +36,11 @@ class IfElseStatementFormatter : Formatter<AST> {
 
     private fun formatIfBlock(
         nodes: List<AST>,
-        ruleData: Rule,
+        rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         val blockFormatter = createDefaultFormatter()
-        return nodes.joinToString("\n") { blockFormatter.format(it, ruleData) }
+        val formattedBlock = nodes.joinToString("\n") { blockFormatter.format(it, rule, ifBlockRules) }
+        return applyFormat(formattedBlock, ifBlockRules)
     }
 }

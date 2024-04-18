@@ -8,16 +8,17 @@ class ComposeFormatter(private val formatters: List<Formatter<AST>>) : Formatter
     override fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         when (node) {
             is ProgramNode -> {
                 val nodes = node.children
-                return nodes.joinToString("\n") { format(it, rule) }
+                return nodes.joinToString("\n") { format(it, rule, ifBlockRules) }
             }
 
             else -> {
                 val formatter = formatters.firstOrNull { it.canFormat(node) }
-                return formatter?.format(node, rule) ?: "Unsupported node type"
+                return formatter?.format(node, rule, ifBlockRules) ?: "Unsupported node type"
             }
         }
     }

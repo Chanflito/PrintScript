@@ -8,10 +8,11 @@ class ReadInputFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         return when (node) {
             is ReadInputNode -> {
-                val value = ExpressionFormatter().format(node.expression, rule)
+                val value = ExpressionFormatter().format(node.expression, rule, ifBlockRules)
                 val result = "readInput($value);"
                 return applyFormat(result, rule)
             }

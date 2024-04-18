@@ -8,6 +8,7 @@ class IdentifierFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         return when (node) {
             is IdentifierNode -> {

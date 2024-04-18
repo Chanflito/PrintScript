@@ -8,11 +8,12 @@ class ReAssignationFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         rule: Rule,
+        ifBlockRules: Rule,
     ): String {
         return when (node) {
             is ReAssignationNode -> {
                 val identifier = node.identifierNode.name
-                val expression = ExpressionFormatter().format(node.expression, rule)
+                val expression = ExpressionFormatter().format(node.expression, rule, ifBlockRules)
                 val result = "$identifier = $expression;"
                 return applyFormat(result, rule)
             }

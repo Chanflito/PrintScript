@@ -3,6 +3,7 @@ package edu.austral.ingsis.gradle.cli
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
+import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
@@ -51,8 +52,9 @@ class FormatFunction : Function<Pair<String, File>, String> {
         val ast = createAstNode(input, version)
         val formatter = createDefaultFormatter()
         val rules = ComposeRule(createDefaultRules(input.second.absolutePath))
+        val ifBlockRules = ComposeRule(createIfBlockRules(input.second.absolutePath))
         println("Formatting...\n")
-        return formatter.format(ast.first, rules)
+        return formatter.format(ast.first, rules, ifBlockRules)
     }
 }
 
