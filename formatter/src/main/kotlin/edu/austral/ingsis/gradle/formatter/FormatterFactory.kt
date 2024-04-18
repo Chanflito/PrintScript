@@ -11,11 +11,14 @@ fun createDefaultFormatter(): Formatter<AST> {
     return ComposeFormatter(
         listOf(
             DeclarationAssignationFormatter(),
-            ReAssignationFormatter(),
-            IfStatementFormatter(),
+            ExpressionFormatter(),
+            IdentifierFormatter(),
             IfElseStatementFormatter(),
+            IfStatementFormatter(),
             PrintLnFormatter(),
+            ReadEnvFormatter(),
             ReadInputFormatter(),
+            ReAssignationFormatter(),
         ),
     )
 }
