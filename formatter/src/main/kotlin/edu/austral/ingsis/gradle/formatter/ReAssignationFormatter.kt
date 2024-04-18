@@ -7,15 +7,15 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class ReAssignationFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
-        ifBlockRules: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is ReAssignationNode -> {
                 val identifier = node.identifierNode.name
-                val expression = ExpressionFormatter().format(node.expression, rule, ifBlockRules)
+                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
                 val result = "$identifier = $expression;"
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
             else -> ""
         }

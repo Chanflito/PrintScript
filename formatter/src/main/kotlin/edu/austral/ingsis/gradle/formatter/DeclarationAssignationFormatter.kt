@@ -7,17 +7,17 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class DeclarationAssignationFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
-        ifBlockRules: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is DeclarationAssignation -> {
                 val keyword = node.keyword.value
                 val identifier = node.identifierNode.name
                 val nodeType = node.nodeType.toString()
-                val expression = ExpressionFormatter().format(node.expression, rule, ifBlockRules)
+                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
                 val result = "$keyword $identifier:$nodeType=$expression;"
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             else -> ""

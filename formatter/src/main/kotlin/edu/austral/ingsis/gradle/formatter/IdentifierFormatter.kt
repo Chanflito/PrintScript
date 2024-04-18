@@ -7,12 +7,12 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class IdentifierFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
-        ifBlockRules: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is IdentifierNode -> {
-                return applyFormat(node.name, rule)
+                return applyFormat(node.name, defaultRule)
             }
 
             else -> ""

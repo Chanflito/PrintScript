@@ -25,7 +25,7 @@ class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -41,14 +41,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "let aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
     fun test002_formatIfStatement() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -88,14 +88,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "if (a) {\n   println(a + b);\n   let aBlue : String = \"blue\";\n}", actual = formatted)
     }
 
     @Test
     fun test003_formatIfElseStatement() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -148,14 +148,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "if (a) {\n   println(a + b);\n}else {\n   println(a - b);\n}", actual = formatted)
     }
 
     @Test
     fun test004_formatReAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -172,14 +172,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "a = 1;", actual = formatted)
     }
 
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -210,14 +210,14 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "let aBlue : String = \"blue\";\na = 1;\nlet aBlue : String = \"blue\";", actual = formatted)
     }
 
     @Test
     fun test006_testPrintLn_ReadInput() {
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast =
             ProgramNode(
@@ -247,7 +247,7 @@ class FormatterTest {
                 ),
             )
 
-        val formatted = formatter.format(ast, rules, ifBlockRules)
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
         assertEquals(expected = "println(a + b);\nreadInput(Introduzca un valor);", actual = formatted)
     }
 }

@@ -7,15 +7,15 @@ import edu.austral.ingsis.gradle.formatter.rule.Rule
 class IfStatementFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        rule: Rule,
-        ifBlockRules: Rule,
+        defaultRule: Rule,
+        ifBlockRule: Rule,
     ): String {
         return when (node) {
             is IfStatement -> {
-                val condition = ExpressionFormatter().format(node.condition, rule, ifBlockRules)
-                val block = formatIfBlock(node.ifBlock.children, rule, ifBlockRules)
+                val condition = ExpressionFormatter().format(node.condition, defaultRule, ifBlockRule)
+                val block = formatIfBlock(node.ifBlock.children, defaultRule, ifBlockRule)
                 val result = "if ($condition) {\n${block}\n}"
-                return applyFormat(result, rule)
+                return applyFormat(result, defaultRule)
             }
 
             else -> ""
