@@ -45,7 +45,7 @@ class DeclarationAssignationInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): Any {
-        val expressionInterpreter = interpreterManager.getInterpreter(expression, type)
+        val expressionInterpreter = interpreterManager.getWithTypeOrNot(expression, type)
         val interpretResult = expressionInterpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
         return interpretResult.value
     }

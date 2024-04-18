@@ -20,7 +20,7 @@ class ReadInputInterpreter(val type: NodeType) : Interpreter {
 
         val readInputNode = node as ReadInputNode
         val expression = readInputNode.expression
-        val expressionInterpreter = interpreterManager.getInterpreter(expression, type)
+        val expressionInterpreter = interpreterManager.getWithTypeOrNot(expression, type)
         val expressionResult = expressionInterpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
         val value = expressionResult.value
         interpreterManager.printer.print(value.toString())

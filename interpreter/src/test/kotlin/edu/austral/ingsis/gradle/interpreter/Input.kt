@@ -1,7 +1,6 @@
 package edu.austral.ingsis.gradle.interpreter
 import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
@@ -23,36 +22,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
-
-val interpreters =
-    listOf(
-        BlockNodeInterpreter(),
-        DeclarationInterpreter(),
-        StringLiteralInterpreter(),
-        NumberLiteralInterpreter(),
-        BooleanLiteralInterpreter(),
-        SumInterpreter(NumberNodeType),
-        SumInterpreter(StringNodeType),
-        SubtractInterpreter(NumberNodeType),
-        SubtractInterpreter(StringNodeType),
-        MultiplyInterpreter(NumberNodeType),
-        MultiplyInterpreter(StringNodeType),
-        DivideInterpreter(NumberNodeType),
-        DivideInterpreter(StringNodeType),
-        DeclarationInterpreter(),
-        DeclarationAssignationInterpreter(),
-        IdentifierInterpreter(),
-        IfElseStatementInterpreter(),
-        IfStatementInterpreter(),
-        PrintLnInterpreter(),
-        ReadEnvInterpreter(StringNodeType),
-        ReadEnvInterpreter(NumberNodeType),
-        ReadEnvInterpreter(BooleanNodeType),
-        ReadInputInterpreter(StringNodeType),
-        ReadInputInterpreter(NumberNodeType),
-        ReadInputInterpreter(BooleanNodeType),
-        ReassignationInterpreter(),
-    )
 
 val declaration =
     DeclarationNode(
@@ -217,4 +186,31 @@ val input_012 =
             12,
             TokenPosition(Position(0, 0), Position(0, 0)),
         ),
+    )
+
+val input_013 =
+    DeclarationAssignation(
+        LetKeywordNode(
+            TokenPosition(Position(1, 1), Position(1, 4)),
+        ),
+        TokenPosition(Position(1, 16), Position(1, 17)),
+        NumberNodeType,
+        IdentifierNode(
+            "b",
+            TokenPosition(Position(1, 5), Position(1, 6)),
+        ),
+        NumberLiteralNode(
+            5.0,
+            TokenPosition(Position(1, 18), Position(1, 19)),
+        ),
+    )
+
+val input999 =
+    PrintLnNode(
+        tokenPosition = TokenPosition(startPosition = Position(row = 2, column = 1), endPosition = Position(row = 2, column = 8)),
+        expression =
+            IdentifierNode(
+                name = "b",
+                tokenPosition = TokenPosition(startPosition = Position(row = 2, column = 9), endPosition = Position(row = 2, column = 10)),
+            ),
     )

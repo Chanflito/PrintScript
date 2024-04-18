@@ -35,7 +35,7 @@ class ParserIterator(
         val tokens = lexerIterator.next()
         val inputContext = InputContext(tokens, previousIndex)
         val (ast, index) = parser.parse(inputContext)
-        previousIndex = index
+        previousIndex = 0
         previousAST = ast
     }
 

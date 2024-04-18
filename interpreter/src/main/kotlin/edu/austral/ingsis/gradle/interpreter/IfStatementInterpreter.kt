@@ -15,7 +15,7 @@ class IfStatementInterpreter() : Interpreter {
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val ifStatement = node as IfStatement
-        val conditionInterpreter = interpreterManager.getInterpreter(ifStatement.condition, BooleanNodeType)
+        val conditionInterpreter = interpreterManager.getWithTypeOrNot(ifStatement.condition, BooleanNodeType)
         val conditionResult =
             conditionInterpreter.interpret(
                 ifStatement.condition,

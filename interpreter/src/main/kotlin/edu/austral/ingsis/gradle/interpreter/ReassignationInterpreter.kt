@@ -17,7 +17,7 @@ class ReassignationInterpreter() : Interpreter {
         val reassignationNode = node as ReAssignationNode
         val identifier = reassignationNode.identifierNode.name
         checkForErrors(context, identifier)
-        val expressionInterpreter = interpreterManager.getInterpreter(reassignationNode.expression, context.getVariableType(identifier))
+        val expressionInterpreter = interpreterManager.getWithTypeOrNot(reassignationNode.expression, context.getVariableType(identifier))
         val expressionResult =
             expressionInterpreter.interpret(
                 reassignationNode.expression,

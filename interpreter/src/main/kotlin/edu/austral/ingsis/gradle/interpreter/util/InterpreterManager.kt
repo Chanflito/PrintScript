@@ -21,4 +21,16 @@ class InterpreterManager(
     fun getInterpreterDisregardingType(node: AST): Interpreter {
         return interpreters.find { it.canInterpret(node) } ?: throw Exception("No interpreter found for $node")
     }
+
+    fun getWithTypeOrNot(
+        node: AST,
+        type: NodeType? = null,
+    ): Interpreter {
+        val intWithType = interpreters.find { it.canInterpret(node) && it.getNodeType() == type }
+        if (intWithType != null) {
+            return intWithType
+        } else {
+            return interpreters.find { it.canInterpret(node) } ?: throw Exception("No interpreter found for $node")
+        }
+    }
 }

@@ -1,17 +1,13 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
-import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
-import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
-import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
-import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
-import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
+import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
+import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManagerTest
 import org.junit.jupiter.api.Test
 
 class InterpreterTest {
-    private val interpreterManager = InterpreterManager(interpreters, KotlinPrinter(), KotlinEnvReader(), MockInputReader())
+    private val interpreterManager = createInterpreterManagerTest()
 
     @Test
     fun declared_variable_should_be_added_to_context() {
@@ -28,7 +24,7 @@ class InterpreterTest {
     fun `reassigning nonexistent value should throw error`() {
         val reassignationNode = input_001
         val context = Context()
-        val interpreterManager = InterpreterManager(interpreters, KotlinPrinter(), KotlinEnvReader(), KotlinInputReader())
+        val interpreterManager = createInterpreterManager()
         val reassignationInterpreter = interpreterManager.getInterpreter(reassignationNode)
         try {
             reassignationInterpreter.interpret(reassignationNode, context, interpreterManager)
@@ -113,7 +109,7 @@ class InterpreterTest {
     fun `Sum operation should be sucessful`() {
         val context = Context()
         val sumNode = input_005
-        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode)
         val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
         assert(result is InterpretResult.OperationResult)
         val value = (result as InterpretResult.OperationResult).value
@@ -124,7 +120,7 @@ class InterpreterTest {
     fun `Substraction operation should be sucessful`() {
         val context = Context()
         val sumNode = input_006
-        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode)
         val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
         assert(result is InterpretResult.OperationResult)
         val value = (result as InterpretResult.OperationResult).value
@@ -135,7 +131,7 @@ class InterpreterTest {
     fun `Multiplication operation should be sucessful`() {
         val context = Context()
         val sumNode = input_007
-        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode)
         val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
         assert(result is InterpretResult.OperationResult)
         val value = (result as InterpretResult.OperationResult).value
@@ -146,7 +142,7 @@ class InterpreterTest {
     fun `Division operation should be sucessful`() {
         val context = Context()
         val sumNode = input_008
-        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode)
         val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
         assert(result is InterpretResult.OperationResult)
         val value = (result as InterpretResult.OperationResult).value
@@ -202,7 +198,7 @@ class InterpreterTest {
     fun `input reader should work with real input reader`() {
         val context = Context()
         val readInputNode = input_011
-        val interpreterManager = InterpreterManager(interpreters, KotlinPrinter(), KotlinEnvReader(), KotlinInputReader())
+        val interpreterManager = createInterpreterManager()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(readInputNode)
         val result =
             declarationAssignationInterpreter.interpret(
@@ -218,10 +214,22 @@ class InterpreterTest {
     fun `concatenation with number and string`() {
         val context = Context()
         val sumNode = input_012
-        val sumInterpreter = interpreterManager.getInterpreter(sumNode, NumberNodeType)
+        val sumInterpreter = interpreterManager.getInterpreter(sumNode)
         val result = sumInterpreter.interpret(sumNode, context, interpreterManager)
         assert(result is InterpretResult.OperationResult)
         val value = (result as InterpretResult.OperationResult).value
         assert(value == "Hello 12")
+    }
+
+    @Test
+    fun cli_test() {
+        val context = Context()
+        val node = input_013
+        val intepreter = interpreterManager.getInterpreter(node)
+        val result = intepreter.interpret(node, context, interpreterManager)
+        assert(result is InterpretResult.ContextResult)
+        val value = (result as InterpretResult.ContextResult).context
+        val va = value.getVariable("b")
+        assert(va == 5)
     }
 }

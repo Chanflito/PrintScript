@@ -3,7 +3,6 @@ package edu.austral.ingsis.gradle.interpreter
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.NodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
@@ -11,7 +10,7 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.castToDesiredType
 
-class SumInterpreter(val type: NodeType) : Interpreter {
+class SumInterpreter() : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -57,13 +56,9 @@ class SumInterpreter(val type: NodeType) : Interpreter {
     override fun canInterpret(node: AST): Boolean {
         return node is SumNode
     }
-
-    override fun getNodeType(): NodeType {
-        return type
-    }
 }
 
-class SubtractInterpreter(val type: NodeType) : Interpreter {
+class SubtractInterpreter() : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -96,13 +91,9 @@ class SubtractInterpreter(val type: NodeType) : Interpreter {
     override fun canInterpret(node: AST): Boolean {
         return node is SubtractNode
     }
-
-    override fun getNodeType(): NodeType {
-        return type
-    }
 }
 
-class MultiplyInterpreter(val type: NodeType) : Interpreter {
+class MultiplyInterpreter() : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -135,13 +126,9 @@ class MultiplyInterpreter(val type: NodeType) : Interpreter {
     override fun canInterpret(node: AST): Boolean {
         return node is MultiplyNode
     }
-
-    override fun getNodeType(): NodeType {
-        return type
-    }
 }
 
-class DivideInterpreter(val type: NodeType) : Interpreter {
+class DivideInterpreter() : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -173,9 +160,5 @@ class DivideInterpreter(val type: NodeType) : Interpreter {
 
     override fun canInterpret(node: AST): Boolean {
         return node is DivideNode
-    }
-
-    override fun getNodeType(): NodeType {
-        return type
     }
 }
