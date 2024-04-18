@@ -25,7 +25,7 @@ tasks.check {
 koverReport {
     filters {
         excludes {
-            packages("edu.austral.ingsis.gradle.common","edu.austral.ingsis.gradle.util", "edu.austral.ingsis.gradle.cli")
+            packages("edu.austral.ingsis.gradle.common", "edu.austral.ingsis.gradle.cli")
         }
     }
 

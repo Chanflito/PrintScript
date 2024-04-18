@@ -8,13 +8,13 @@ import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.Minus
 import edu.austral.ingsis.gradle.common.token.Multiply
 import edu.austral.ingsis.gradle.common.token.Plus
+import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.RightBrace
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 import edu.austral.ingsis.gradle.common.token.TokenType
-import edu.austral.ingsis.gradle.util.calculatePosition
 
 fun createToken(
     matchResult: MatchResult,
@@ -37,6 +37,23 @@ fun isInQuotes(
             .toList()
     val resultRange = Pair(matchResult.range.first, matchResult.range.last + 1)
     return quotesMatch.any { (start, end) -> start <= resultRange.first && end >= resultRange.second }
+}
+
+fun calculatePosition(
+    code: String,
+    index: Int,
+): Position {
+    var row = 1
+    var column = 1
+    for (i in 0 until index) {
+        if (code[i] == '\n') {
+            row++
+            column = 1
+        } else {
+            column++
+        }
+    }
+    return Position(row, column)
 }
 
 val operators =

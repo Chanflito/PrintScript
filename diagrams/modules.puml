@@ -21,9 +21,6 @@ component "parser" {
 component "sca" {
 }
 
-component "util" {
-}
-
 cli --> common
 cli --> lexer
 cli --> parser
@@ -36,12 +33,9 @@ formatter --> common
 interpreter --> common
 
 lexer --> common
-lexer --> util
 
 parser --> common
 
 sca --> common
-
-util --> common
 
 @enduml
