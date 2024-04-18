@@ -260,7 +260,7 @@ class InterpreterTest {
         assert(result4 is InterpretResult.ContextResult)
         val value4 = (result4 as InterpretResult.ContextResult).context
         val newContext4 = newContext3.update(value4)
-        val expected = (5.0/9.0).toString()
+        val expected = (5.0 / 9.0).toString()
         assert(newContext4.getPrintValues().contains(expected))
     }
 }
