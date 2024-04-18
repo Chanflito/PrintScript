@@ -1,6 +1,7 @@
 package edu.austral.ingsis.gradle.parser
 
 import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
+import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
@@ -16,6 +17,8 @@ import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
@@ -227,6 +230,55 @@ val output_017 =
                         TokenPosition(Position(0, 0), Position(0, 0)),
                     ),
                 ),
+            ),
+        ),
+    )
+
+val output_018 =
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        StringNodeType,
+        IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
+        StringLiteral("\"this should be valid in 1.1\"", TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val output_019 =
+    DeclarationAssignation(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberNodeType,
+        IdentifierNode("cuenta", TokenPosition(Position(0, 0), Position(0, 0))),
+        SumNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            SubtractNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                MultiplyNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    NumberLiteralNode(
+                        5.0,
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                    NumberLiteralNode(
+                        5.0,
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                ),
+                DivideNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    NumberLiteralNode(
+                        8.0,
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                    NumberLiteralNode(
+                        4.0,
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                ),
+            ),
+            NumberLiteralNode(
+                2.0,
+                TokenPosition(Position(0, 0), Position(0, 0)),
             ),
         ),
     )

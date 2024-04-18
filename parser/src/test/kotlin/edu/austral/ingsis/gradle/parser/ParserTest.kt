@@ -17,6 +17,9 @@ import edu.austral.ingsis.gradle.parser.input_014
 import edu.austral.ingsis.gradle.parser.input_015
 import edu.austral.ingsis.gradle.parser.input_016
 import edu.austral.ingsis.gradle.parser.input_017
+import edu.austral.ingsis.gradle.parser.input_018
+import edu.austral.ingsis.gradle.parser.input_019
+import edu.austral.ingsis.gradle.parser.input_020
 import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
@@ -34,9 +37,12 @@ import edu.austral.ingsis.gradle.parser.output_014
 import edu.austral.ingsis.gradle.parser.output_015
 import edu.austral.ingsis.gradle.parser.output_016
 import edu.austral.ingsis.gradle.parser.output_017
+import edu.austral.ingsis.gradle.parser.output_018
+import edu.austral.ingsis.gradle.parser.output_019
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFailsWith
 
 class ParserTest {
     private val parser = createComposeParser()
@@ -153,5 +159,27 @@ class ParserTest {
     fun test017_parseMultiLineInput() {
         val actual = ProgramNodeParser().parse(InputContext(input_017)).first
         assertEquals(output_017, actual)
+    }
+
+    @Test
+    fun test_018_constAssignationDeclaration() {
+        val actual = parser.parse(InputContext(input_018)).first
+
+        assertEquals(output_018, actual)
+    }
+
+    @Test
+    fun test_019_complexOperation() {
+        val actual = parser.parse(InputContext(input_019)).first
+        assertEquals(output_019, actual)
+    }
+
+    @Test
+    fun test_020_stringMultiplicationShouldFail() {
+        assertFailsWith<Exception>("Cannot perform multiplication operation over strings") {
+            parser.parse(
+                InputContext(input_020),
+            )
+        }
     }
 }

@@ -2,6 +2,7 @@ package edu.austral.ingsis.gradle.parser.util
 
 import edu.austral.ingsis.gradle.common.token.Assignation
 import edu.austral.ingsis.gradle.common.token.Colon
+import edu.austral.ingsis.gradle.common.token.ConstKeyword
 import edu.austral.ingsis.gradle.common.token.Divide
 import edu.austral.ingsis.gradle.common.token.ElseKeyword
 import edu.austral.ingsis.gradle.common.token.Identifier
@@ -59,6 +60,10 @@ fun isLetKeyword(token: Token?): Boolean {
     return token != null && token.tokenType == LetKeyword
 }
 
+fun isConstKeyword(token: Token?): Boolean {
+    return token != null && token.tokenType == ConstKeyword
+}
+
 fun isIdentifier(token: Token?): Boolean {
     return token != null && token.tokenType == Identifier
 }
@@ -69,6 +74,14 @@ fun isType(token: Token?): Boolean {
 
 fun isValue(token: Token?): Boolean {
     return (token != null && token.tokenType in setOf(NumberValue, StringValue))
+}
+
+fun isNumberValue(token: Token?): Boolean {
+    return token != null && token.tokenType == NumberValue
+}
+
+fun isStringValue(token: Token?): Boolean {
+    return token != null && token.tokenType == StringValue
 }
 
 fun isOperator(token: Token?): Boolean {
@@ -139,6 +152,7 @@ fun createComposeParser(): ComposeParser {
             NumberValue to ExpressionParser(EXPRESSION_PARSER_MAP),
             LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
             LetKeyword to DeclarationParser(),
+            ConstKeyword to DeclarationParser(),
             Identifier to AssignationParser(),
         ),
     )

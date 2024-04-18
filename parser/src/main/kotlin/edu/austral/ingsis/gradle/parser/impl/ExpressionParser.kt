@@ -4,6 +4,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Divide
@@ -57,7 +58,10 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
                             right.second,
                         )
 
-                Minus ->
+                Minus -> {
+                    if (checkIfChildrenAreString(right.first, left.first)) {
+                        throw Exception("Cannot perform subtraction operation over strings")
+                    }
                     left =
                         Pair(
                             SubtractNode(
@@ -67,6 +71,7 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
                             ),
                             right.second,
                         )
+                }
             }
         }
 
@@ -83,7 +88,10 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
             val right = parseMember(tokens, tokenPair.second)
             val token = tokenPair.first ?: throw Exception(NoTokenFoundErrorMessage(tokenPair.second).toString())
             when (token.tokenType) {
-                Multiply ->
+                Multiply -> {
+                    if (checkIfChildrenAreString(right.first, left.first)) {
+                        throw Exception("Cannot perform multiplication operation over strings")
+                    }
                     left =
                         Pair(
                             MultiplyNode(
@@ -93,8 +101,12 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
                             ),
                             right.second,
                         )
+                }
 
-                Divide ->
+                Divide -> {
+                    if (checkIfChildrenAreString(right.first, left.first)) {
+                        throw Exception("Cannot perform division operation over strings")
+                    }
                     left =
                         Pair(
                             DivideNode(
@@ -104,6 +116,7 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
                             ),
                             right.second,
                         )
+                }
             }
         }
         return left
@@ -117,5 +130,12 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
         val parserFound =
             parsers[currentToken.tokenType] ?: throw Exception(InvalidTokenErrorMessage(currentToken).toString())
         return parserFound.parse(InputContext(tokens, index))
+    }
+
+    private fun checkIfChildrenAreString(
+        right: AST,
+        left: AST,
+    ): Boolean {
+        return right is StringLiteral || left is StringLiteral
     }
 }

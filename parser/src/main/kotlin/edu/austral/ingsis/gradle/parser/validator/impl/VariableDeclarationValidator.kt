@@ -1,11 +1,17 @@
 package edu.austral.ingsis.gradle.parser.validator.impl
+
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.parser.validator.SyntaxValidator
 
 class VariableDeclarationValidator(
     private val validators: List<SyntaxValidator> =
         listOf(
-            LetValidator(),
+            OrValidator(
+                listOf(
+                    ConstValidator(),
+                    LetValidator(),
+                ),
+            ),
             IdentifierValidator(),
             ColonValidator(),
             TypeValidator(),

@@ -3,7 +3,6 @@ package edu.austral.ingsis.gradle.parser.impl
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.parser.InputContext
@@ -12,6 +11,7 @@ import edu.austral.ingsis.gradle.parser.util.ExpectedTokenErrorMessage
 import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 import edu.austral.ingsis.gradle.parser.util.currentToken
+import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
 
 // Here should go only expressions with println.
 
@@ -39,7 +39,7 @@ class PrintlnParser : Parser<InputContext> {
         val newIndex = consumeResult.second
         val currentToken =
             currentToken(tokens, newIndex) ?: throw Exception(NoTokenFoundErrorMessage(newIndex).toString())
-        if (currentToken.tokenType != LeftParenthesis) {
+        if (!isLeftParenthesis(currentToken)) {
             throw Exception(ExpectedTokenErrorMessage("(", currentToken).toString())
         }
         val childNode = ExpressionParser().parse(InputContext(tokens, index + 1))
