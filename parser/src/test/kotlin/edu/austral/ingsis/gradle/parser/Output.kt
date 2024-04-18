@@ -195,3 +195,38 @@ val output_016 =
             ),
         ),
     )
+
+val output_017 =
+    ProgramNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        listOf(
+            DeclarationAssignation(
+                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                NumberNodeType,
+                IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+                NumberLiteralNode(5.0, TokenPosition(Position(0, 0), Position(0, 0))),
+            ),
+            DeclarationAssignation(
+                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                NumberNodeType,
+                IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
+                NumberLiteralNode(6.0, TokenPosition(Position(0, 0), Position(0, 0))),
+            ),
+            PrintLnNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                SumNode(
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    IdentifierNode(
+                        "a",
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                    IdentifierNode(
+                        "b",
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                    ),
+                ),
+            ),
+        ),
+    )
