@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.formatter
 
+import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
@@ -11,9 +11,9 @@ import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.formatter.rule.Rule
 
-class ExpressionFormatter : Formatter<Expression> {
+class ExpressionFormatter : Formatter<AST> {
     override fun format(
-        node: Expression,
+        node: AST,
         defaultRule: Rule,
         ifBlockRule: Rule,
     ): String {
@@ -70,7 +70,7 @@ class ExpressionFormatter : Formatter<Expression> {
     }
 
     // TODO - split into multiple formatters
-    override fun canFormat(node: Expression): Boolean {
+    override fun canFormat(node: AST): Boolean {
         return node is SumNode ||
             node is SubtractNode ||
             node is MultiplyNode ||
