@@ -172,4 +172,5 @@ val EXPRESSION_PARSER_MAP =
         BooleanValue to BooleanValueParser(),
         LeftParenthesis to LeftParenthesisParser(),
         Identifier to IdentifierParser(),
+        ReadEnvKeyword to ReadEnvParser(),
     )

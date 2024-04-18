@@ -1,6 +1,7 @@
-readEnv("LUCHO_ENV");
-if (a) {
-   println("a is true");
+let a: string = readEnv("PATH");
+let b : boolean = true;
+if (b) {
+    println(a);
 }else {
-   println("a is false");
+   println("else");
 }

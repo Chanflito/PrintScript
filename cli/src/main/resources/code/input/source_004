@@ -1,2 +1,2 @@
-const b : string = 5.0;
+const b : string = "Hello, World!";
 println(b);

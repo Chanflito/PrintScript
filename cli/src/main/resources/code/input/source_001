@@ -1,5 +1,6 @@
+let aCa : boolean = true;
 if (aCa) {
-   
+   println("aCa is true");
 }else {
-   println("bCa is less than 5");
+   println("aCa is False");
 }
