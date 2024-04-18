@@ -1,5 +1,6 @@
 package edu.austral.ingsis.gradle.formatter.rule.adapter
 
+import edu.austral.ingsis.gradle.formatter.rule.adapter.context.RuleContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.boolean
@@ -12,7 +13,7 @@ import java.io.File
 class RuleParser {
     fun parseRulesFromFile(
         filePath: String,
-        ruleContext: String,
+        ruleContext: RuleContext,
     ): List<RuleJson> {
         val json = File(filePath).readText()
         return parseRules(json, ruleContext)
@@ -20,10 +21,10 @@ class RuleParser {
 
     private fun parseRules(
         json: String,
-        ruleContext: String,
+        ruleContext: RuleContext,
     ): List<RuleJson> {
         val jsonObject = Json.parseToJsonElement(json).jsonObject
-        val contextRulesJsonArray = jsonObject[ruleContext]!!.jsonArray
+        val contextRulesJsonArray = jsonObject[ruleContext.toString()]!!.jsonArray
 
         val contextRules = parseRuleDataArray(contextRulesJsonArray)
 
