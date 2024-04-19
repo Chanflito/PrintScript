@@ -15,7 +15,7 @@ class ProgramNodeParser : Parser<InputContext> {
         while (!endOfFile(input.tokens, inputIndex) && !isSemiColon(input.tokens[inputIndex])) {
             val (node, newIndex) = createComposeParser().parse(InputContext(input.tokens, inputIndex))
             asts.add(node)
-            inputIndex = newIndex
+            inputIndex = newIndex + 1
         }
         return Pair(ProgramNode(input.tokens[0].tokenPosition, asts), inputIndex)
     }

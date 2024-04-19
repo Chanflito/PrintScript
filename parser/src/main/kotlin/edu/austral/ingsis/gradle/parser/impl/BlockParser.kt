@@ -15,14 +15,14 @@ class BlockParser : Parser<InputContext> {
         while (!isRightBrace(input.tokens[index])) {
             val (node, newIndex) = createComposeParser().parse(InputContext(input.tokens, index))
             childrenList.add(node)
-            index = newIndex
+            index = newIndex + 1
         }
         return Pair(
             BlockNode(
                 currentToken.tokenPosition,
                 childrenList,
             ),
-            index + 1,
+            index,
         )
     }
 }

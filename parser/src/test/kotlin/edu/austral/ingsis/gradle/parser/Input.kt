@@ -27,13 +27,17 @@ import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-val input_001 = listOf(Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))))
+val input_001 =
+    listOf(
+        Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
+    )
 
 val input_002 =
     listOf(
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("+", Plus, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
+        Token(";", SemiColon, TokenPosition(Position(1, 1), Position(1, 1))),
     )
 
 val input_003 =
@@ -41,6 +45,7 @@ val input_003 =
         Token("hola", StringValue, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("+", Plus, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("loco", StringValue, TokenPosition(Position(1, 1), Position(1, 1))),
+        Token(";", SemiColon, TokenPosition(Position(1, 1), Position(1, 1))),
     )
 
 val input_004 =
@@ -48,6 +53,7 @@ val input_004 =
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("*", Multiply, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
+        Token(";", SemiColon, TokenPosition(Position(1, 1), Position(1, 1))),
     )
 
 val input_005 =
@@ -55,6 +61,7 @@ val input_005 =
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("/", Divide, TokenPosition(Position(1, 1), Position(1, 1))),
         Token("5", NumberValue, TokenPosition(Position(1, 1), Position(1, 1))),
+        Token(";", SemiColon, TokenPosition(Position(1, 1), Position(1, 1))),
     )
 
 val input_006 =
@@ -100,6 +107,7 @@ val input_009 =
         Token("+", Plus, TokenPosition(Position(1, 12), Position(1, 12))),
         Token("7", NumberValue, TokenPosition(Position(1, 12), Position(1, 13))),
         Token(")", RightParenthesis, TokenPosition(Position(1, 13), Position(1, 14))),
+        Token(";", SemiColon, TokenPosition(Position(1, 14), Position(1, 15))),
     )
 
 val input_010 =
@@ -111,6 +119,7 @@ val input_010 =
         Token(")", RightParenthesis, TokenPosition(Position(1, 5), Position(1, 6))),
         Token("*", Multiply, TokenPosition(Position(1, 6), Position(1, 7))),
         Token("4", NumberValue, TokenPosition(Position(1, 7), Position(1, 8))),
+        Token(";", SemiColon, TokenPosition(Position(1, 8), Position(1, 9))),
     )
 
 val input_011 =

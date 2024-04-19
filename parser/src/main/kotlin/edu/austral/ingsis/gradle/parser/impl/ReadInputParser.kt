@@ -9,6 +9,7 @@ import edu.austral.ingsis.gradle.parser.util.ExpectedTokenErrorMessage
 import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
+import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
 
 class ReadInputParser : Parser<InputContext> {
     override fun parse(input: InputContext): Pair<AST, Int> {
@@ -18,7 +19,13 @@ class ReadInputParser : Parser<InputContext> {
         if (!isLeftParenthesis(parenthesis)) {
             throw Exception(ExpectedTokenErrorMessage("(", currentToken).toString())
         }
-        val (expression, next) = ExpressionParser().parse(InputContext(input.tokens, nextIndex))
+        val (expression, rightParenthesisIndex) = ExpressionParser().parse(InputContext(input.tokens, nextIndex))
+        val (rightParenthesis, next) = consumeToken(input.tokens, rightParenthesisIndex)
+
+        if (!isRightParenthesis(rightParenthesis)) {
+            throw Exception(ExpectedTokenErrorMessage(")", currentToken).toString())
+        }
+
         return Pair(
             ReadInputNode(
                 currentToken.tokenPosition,

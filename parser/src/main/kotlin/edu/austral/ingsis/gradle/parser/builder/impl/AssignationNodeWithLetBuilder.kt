@@ -36,7 +36,7 @@ class AssignationNodeWithLetBuilder : AstBuilder<AST> {
                 identifierToken.first,
                 expressionResult.first as Expression,
             ),
-            expressionResult.second + 1,
+            expressionResult.second,
         )
     }
 

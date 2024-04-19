@@ -30,7 +30,7 @@ class IdentifierNodeWithLetBuilder : AstBuilder<AST> {
                 typeToken.first,
                 identifierToken.first,
             ),
-            identifierToken.second + 1,
+            typeToken.second,
         )
     }
 

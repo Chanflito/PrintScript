@@ -20,7 +20,6 @@ import edu.austral.ingsis.gradle.parser.input_017
 import edu.austral.ingsis.gradle.parser.input_018
 import edu.austral.ingsis.gradle.parser.input_019
 import edu.austral.ingsis.gradle.parser.input_020
-import edu.austral.ingsis.gradle.parser.output_001
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
 import edu.austral.ingsis.gradle.parser.output_004
@@ -50,8 +49,12 @@ class ParserTest {
     //    test 5
     @Test
     fun test001_parseSingleNumber() {
-        val actual = parser.parse(InputContext(input_001)).first
-        assertEquals(output_001, actual)
+//        val actual = parser.parse(InputContext(input_001)).first
+        assertFailsWith<Exception>("Expected ; at the end of the statement") {
+            parser.parse(
+                InputContext(input_001),
+            )
+        }
     }
 
     //    test 5 + 5

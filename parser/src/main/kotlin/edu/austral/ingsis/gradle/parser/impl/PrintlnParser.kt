@@ -45,7 +45,6 @@ class PrintlnParser : Parser<InputContext> {
         val childNode = ExpressionParser().parse(InputContext(tokens, index + 1))
 
         val node = PrintLnNode(token.tokenPosition, childNode.first as Expression)
-        val forwardIndex = if (childNode.second == tokens.size - 1) (childNode.second) else (childNode.second + 1)
-        return Pair(node, forwardIndex)
+        return Pair(node, childNode.second)
     }
 }

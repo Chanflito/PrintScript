@@ -7,6 +7,7 @@ import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.InvalidTokenErrorMessage
 import edu.austral.ingsis.gradle.parser.util.currentToken
 import edu.austral.ingsis.gradle.parser.util.endOfFile
+import edu.austral.ingsis.gradle.parser.util.isRightBrace
 import edu.austral.ingsis.gradle.parser.util.isSemiColon
 
 class ComposeParser(
@@ -37,6 +38,17 @@ class ComposeParser(
         input: InputContext,
         parser: Parser<InputContext>,
     ): Pair<AST, Int> {
-        return parser.parse(InputContext(input.tokens, input.index))
+        val node = parser.parse(InputContext(input.tokens, input.index))
+        if (node.second < input.tokens.size && (isSemiColon(input.tokens[node.second]) || isRightBrace(input.tokens[node.second]))) {
+            return node
+        }
+        if (node.second >= input.tokens.size) {
+            throw Exception("Null token")
+        }
+        if (isSemiColon(input.tokens[node.second]) && !isRightBrace(input.tokens[node.second])) {
+            throw Exception("Expected ; at the end of the statement")
+        } else {
+            throw Exception("Missing } at the end of the block statement")
+        }
     }
 }
