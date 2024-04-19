@@ -17,7 +17,7 @@ class RegexPatterns {
         val IDENTIFIER_REGEX = Regex("""[a-zA-Z_][a-zA-Z0-9_]*""")
 
         // Regex pattern to match just numbers. Includes decimal and integer numbers
-        val NUMBER_REGEX = Regex("""\b-?\d+(\.\d+)?\b""")
+        val NUMBER_REGEX = Regex("""\b\d+(\.\d+)?\b""")
 
         val BOOLEAN_REGEX = Regex("""\b(true|false)\b""")
 
