@@ -6,6 +6,8 @@ import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.newast.SumNode
@@ -56,6 +58,17 @@ class ExpressionFormatter : Formatter<AST> {
             is BooleanLiteralNode -> {
                 val result = node.value.toString()
                 return applyFormat(result, defaultRule)
+            }
+
+            // function
+            is ReadEnvNode -> {
+                val result = "readEnv(\"${node.value}\")"
+                return applyFormat(result, defaultRule)
+            }
+
+            is ReadInputNode -> {
+                val value = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
+                return "readInput(\"${value}\")"
             }
 
             else -> ""

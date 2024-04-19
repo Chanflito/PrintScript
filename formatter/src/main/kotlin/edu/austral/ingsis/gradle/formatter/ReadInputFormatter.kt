@@ -13,7 +13,7 @@ class ReadInputFormatter : Formatter<AST> {
         return when (node) {
             is ReadInputNode -> {
                 val value = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
-                val result = "readInput($value);"
+                val result = "readInput(\"$value\");"
                 return applyFormat(result, defaultRule)
             }
 
