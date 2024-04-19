@@ -16,7 +16,7 @@ class StatementIterator(private val inputStream: InputStream) : Iterator<String>
     override fun next(): String {
         val currentStatement = previousStatement.ifEmpty { statementReader.read(inputStream) }
         previousStatement = ""
-        val nextStatement = statementReader.read(inputStream)
+        val nextStatement = statementReader.read(inputStream).trim()
         return when {
             nextStatement.isNotEmpty() && startsWithElse(nextStatement) -> { // else should not be separated from if
                 val ifElseStatement = currentStatement.plus(nextStatement) // add else into if statement

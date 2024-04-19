@@ -30,11 +30,12 @@ import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.lexer.iterator.LexerIterator
 import edu.austral.ingsis.gradle.parser.iterator.ParserIterator
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
+import java.io.InputStream
 
-fun execute(input: String) {
+fun execute(input: InputStream) {
     // val input = "const b: string = \"this should be valid in 1.1\";"
     val lexer = LexerDirector().createComposeLexer("1.1")
-    val lexerIterator = LexerIterator(lexer, input.byteInputStream())
+    val lexerIterator = LexerIterator(lexer, input)
     val parserIterator = ParserIterator(lexerIterator, createComposeParser())
     var context = Context()
     val interpreters =
