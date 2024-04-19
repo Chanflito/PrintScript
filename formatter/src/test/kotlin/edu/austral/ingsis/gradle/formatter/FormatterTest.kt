@@ -62,6 +62,46 @@ class FormatterTest {
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
         val ast = input006
         val formatted = formatter.format(ast, defaultRules, ifBlockRules)
-        assertEquals(expected = "println(a + b);\nreadInput(Introduzca un valor);", actual = formatted)
+        assertEquals(expected = "println(a + b);\nreadInput(\"Introduzca un valor\");", actual = formatted)
+    }
+
+    @Test
+    fun test007_test_readEnv() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input007
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let input : string = readEnv(\"PATH\");", actual = formatted)
+    }
+
+    @Test
+    fun test008_test_Declaration_Assignation_Boolean_Type() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input008
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let b : boolean = true;", actual = formatted)
+    }
+
+    @Test
+    fun test009_test_readEnv_Declaration_Assignation() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input009
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let a : string = readEnv(\"PATH\");\nlet b : boolean = true;", actual = formatted)
+    }
+
+    @Test
+    fun test009_test_Declaration_Assignation_readEnv() {
+        val formatter = createDefaultFormatter()
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
+        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val ast = input009_reversed
+        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        assertEquals(expected = "let b : boolean = true;\nlet a : string = readEnv(\"PATH\");", actual = formatted)
     }
 }

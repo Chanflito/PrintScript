@@ -173,4 +173,5 @@ val EXPRESSION_PARSER_MAP =
         LeftParenthesis to LeftParenthesisParser(),
         Identifier to IdentifierParser(),
         ReadEnvKeyword to ReadEnvParser(),
+        ReadInputKeyword to ReadInputParser(),
     )

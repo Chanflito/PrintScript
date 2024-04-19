@@ -12,7 +12,7 @@ class ReadEnvFormatter : Formatter<AST> {
     ): String {
         return when (node) {
             is ReadEnvNode -> {
-                val result = "readEnv(${node.value});"
+                val result = "readEnv(\"${node.value}\")"
                 return applyFormat(result, defaultRule)
             }
 
