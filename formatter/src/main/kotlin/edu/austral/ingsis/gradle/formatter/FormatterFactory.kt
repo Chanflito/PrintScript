@@ -25,6 +25,7 @@ fun createDefaultFormatter(): Formatter<AST> {
             PrintLnFormatter(),
             ReadEnvFormatter(),
             ReadInputFormatter(),
+            ProgramNodeFormatter(),
             ReAssignationFormatter(),
         ),
     )
