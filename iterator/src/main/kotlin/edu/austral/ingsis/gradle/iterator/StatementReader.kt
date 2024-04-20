@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.lexer.iterator
+package edu.austral.ingsis.gradle.iterator
 
 import java.io.InputStream
 import java.util.Stack

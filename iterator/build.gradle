@@ -1,0 +1,21 @@
+plugins {
+    id 'printscript.group12-common-conventions'
+    id 'printscript.group12-publish'
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':lexer')
+    implementation project(':interpreter')
+    implementation project (':parser')
+}
+
+tasks.withType(Test).configureEach {
+//    test {
+//        filter {
+//            includeTestsMatching "*FileLargeTest*"
+//            minHeapSize = "5m" // initial heap size
+//            maxHeapSize = "7m" // maximum heap size
+//        }
+//    }
+}

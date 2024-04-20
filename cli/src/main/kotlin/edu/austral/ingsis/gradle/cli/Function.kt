@@ -9,11 +9,11 @@ import edu.austral.ingsis.gradle.formatter.rule.Rules
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
+import edu.austral.ingsis.gradle.iterator.LexerIterator
+import edu.austral.ingsis.gradle.iterator.ParserIterator
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
-import edu.austral.ingsis.gradle.lexer.iterator.LexerIterator
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
-import edu.austral.ingsis.gradle.parser.iterator.ParserIterator
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter

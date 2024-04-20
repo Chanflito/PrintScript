@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.lexer.iterator
+package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.lexer.Lexer

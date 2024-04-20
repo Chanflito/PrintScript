@@ -1,8 +1,6 @@
-package edu.austral.ingsis.gradle.lexer
+package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
-import edu.austral.ingsis.gradle.lexer.iterator.LexerIterator
-import edu.austral.ingsis.gradle.lexer.util.compareTokenListWithIterator
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.FileInputStream

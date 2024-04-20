@@ -1,8 +1,9 @@
-package edu.austral.ingsis.gradle.parser
+package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
+import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.interpreter.BlockNodeInterpreter
 import edu.austral.ingsis.gradle.interpreter.BooleanLiteralInterpreter
 import edu.austral.ingsis.gradle.interpreter.DeclarationAssignationInterpreter
@@ -27,8 +28,6 @@ import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
-import edu.austral.ingsis.gradle.lexer.iterator.LexerIterator
-import edu.austral.ingsis.gradle.parser.iterator.ParserIterator
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import java.io.InputStream
 
@@ -77,5 +76,41 @@ fun execute(input: InputStream) {
         if (interpretResult is InterpretResult.ContextResult) {
             context = context.update(interpretResult.context)
         }
+    }
+}
+
+fun compareTokenListWithIterator(
+    tokens: List<Token>,
+    tokensUntilEndOfStatement: List<String>,
+): Boolean {
+    val tokensConvertedToList = tokens.map { "${it.value},${it.tokenType::class.simpleName}" }
+    if (tokensConvertedToList.size != tokensUntilEndOfStatement.size) {
+        return false
+    }
+
+    for ((index, tokenString) in tokensUntilEndOfStatement.withIndex()) {
+        val expectedTokenString = tokensConvertedToList[index]
+
+        val tokenElements = tokenString.split(",").take(2)
+        val expectedTokenElements = expectedTokenString.split(",").take(2)
+
+        if (tokenElements != expectedTokenElements) {
+            println("First two elements of line ${index + 1} do not match:")
+            println("Output: ${tokenElements.joinToString(",")}")
+            println("Expected: ${expectedTokenElements.joinToString(",")}")
+            return false
+        }
+    }
+    return true
+}
+
+fun executeWithBuffer(input: InputStream) {
+    while (true) {
+        val fileBuffer = FileBuffer(input)
+        val bufferedFile = fileBuffer.bufferFile()
+        if (bufferedFile.isEmpty()) {
+            break
+        }
+        execute(bufferedFile.byteInputStream())
     }
 }

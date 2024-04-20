@@ -9,4 +9,4 @@ plugins {
  */
 
 rootProject.name = 'PrintScript'
-include('app', 'common', 'lexer', 'parser', 'interpreter', 'cli', 'formatter', 'sca')
+include('app', 'common', 'lexer', 'parser', 'interpreter', 'cli', 'formatter', 'sca', 'iterator')

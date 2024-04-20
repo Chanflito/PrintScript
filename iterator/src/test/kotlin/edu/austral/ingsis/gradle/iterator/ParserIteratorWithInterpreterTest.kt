@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.parser
+package edu.austral.ingsis.gradle.iterator
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
