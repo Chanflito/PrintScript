@@ -11,7 +11,7 @@ class SumFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is SumNode -> {
@@ -19,19 +19,12 @@ class SumFormatter : Formatter<AST> {
                 val result = "${composeFormatter.format(
                     node.left,
                     defaultRule,
-                    ifBlockRule,
-                )} + ${composeFormatter.format(node.right, defaultRule, ifBlockRule)}"
+                    blockRule,
+                )} + ${composeFormatter.format(node.right, defaultRule, blockRule)}"
                 return applyFormat(result, defaultRule)
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -43,7 +36,7 @@ class SubtractFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is SubtractNode -> {
@@ -51,19 +44,12 @@ class SubtractFormatter : Formatter<AST> {
                 val result = "${composeFormatter.format(
                     node.left,
                     defaultRule,
-                    ifBlockRule,
-                )} - ${composeFormatter.format(node.right, defaultRule,ifBlockRule)}"
+                    blockRule,
+                )} - ${composeFormatter.format(node.right, defaultRule,blockRule)}"
                 return applyFormat(result, defaultRule)
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -75,7 +61,7 @@ class MultiplyFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is MultiplyNode -> {
@@ -83,19 +69,12 @@ class MultiplyFormatter : Formatter<AST> {
                 val result = "${composeFormatter.format(
                     node.left,
                     defaultRule,
-                    ifBlockRule,
-                )} * ${composeFormatter.format(node.right, defaultRule, ifBlockRule)}"
+                    blockRule,
+                )} * ${composeFormatter.format(node.right, defaultRule, blockRule)}"
                 return applyFormat(result, defaultRule)
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -107,7 +86,7 @@ class DivideFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is DivideNode -> {
@@ -115,19 +94,12 @@ class DivideFormatter : Formatter<AST> {
                 val result = "${composeFormatter.format(
                     node.left,
                     defaultRule,
-                    ifBlockRule,
-                )} / ${composeFormatter.format(node.right, defaultRule, ifBlockRule)}"
+                    blockRule,
+                )} / ${composeFormatter.format(node.right, defaultRule, blockRule)}"
                 return applyFormat(result, defaultRule)
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {

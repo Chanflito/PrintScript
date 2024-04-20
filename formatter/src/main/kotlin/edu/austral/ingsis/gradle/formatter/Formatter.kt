@@ -7,13 +7,13 @@ interface Formatter<AST> {
      * Convert an AST into a string.
      * @param node AST node to be converted.
      * @param defaultRule List of formatting rules to be applied.
-     * @param ifBlockRule List of formatting rules to be applied to if blocks.
+     * @param blockRule List of formatting rules to be applied to if blocks.
      * @return String representation of the AST node.
      */
     fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String
 
     /**
@@ -25,7 +25,9 @@ interface Formatter<AST> {
     fun applyFormat(
         result: String,
         rule: Rule,
-    ): String
+    ): String {
+        return rule.applyRule(result)
+    }
 
     /**
      * Checks if the formatter can format a specific AST node.

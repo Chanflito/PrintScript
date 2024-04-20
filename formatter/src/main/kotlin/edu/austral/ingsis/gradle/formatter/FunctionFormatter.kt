@@ -10,25 +10,18 @@ class PrintLnFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is PrintLnNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val value = composeFormatter.format(node.expression, defaultRule, ifBlockRule)
+                val value = composeFormatter.format(node.expression, defaultRule, blockRule)
                 val result = "println($value);"
                 return applyFormat(result, defaultRule)
             }
 
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -40,7 +33,7 @@ class ReadEnvFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is ReadEnvNode -> {
@@ -52,13 +45,6 @@ class ReadEnvFormatter : Formatter<AST> {
         }
     }
 
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
-    }
-
     override fun canFormat(node: AST): Boolean {
         return node is ReadEnvNode
     }
@@ -68,25 +54,18 @@ class ReadInputFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is ReadInputNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val value = composeFormatter.format(node.expression, defaultRule, ifBlockRule)
+                val value = composeFormatter.format(node.expression, defaultRule, blockRule)
                 val result = "readInput(\"$value\");"
                 return applyFormat(result, defaultRule)
             }
 
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {

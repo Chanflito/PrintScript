@@ -10,7 +10,7 @@ class StringFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is StringLiteral -> {
@@ -19,13 +19,6 @@ class StringFormatter : Formatter<AST> {
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -37,7 +30,7 @@ class NumberFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is NumberLiteralNode -> {
@@ -46,13 +39,6 @@ class NumberFormatter : Formatter<AST> {
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -64,7 +50,7 @@ class BooleanFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is BooleanLiteralNode -> {
@@ -73,13 +59,6 @@ class BooleanFormatter : Formatter<AST> {
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {

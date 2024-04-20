@@ -8,7 +8,7 @@ class IdentifierFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         defaultRule: Rule,
-        ifBlockRule: Rule,
+        blockRule: Rule,
     ): String {
         return when (node) {
             is IdentifierNode -> {
@@ -17,13 +17,6 @@ class IdentifierFormatter : Formatter<AST> {
 
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {
