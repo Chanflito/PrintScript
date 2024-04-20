@@ -108,7 +108,41 @@ fun createInterpreterManagerTest(): InterpreterManager {
 
     val printer = KotlinPrinter()
     val reader = KotlinEnvReader()
-    val inputReader = MockInputReader()
+    val inputReader = MockInputReader("mocked input")
 
     return InterpreterManager(interpreters, printer, reader, inputReader)
+}
+
+fun createDynamicInterpreterManager(
+    printer: Printer,
+    envReader: EnvReader,
+    inputReader: InputReader,
+): InterpreterManager {
+    val interpreters =
+        listOf(
+            BlockNodeInterpreter(),
+            DeclarationInterpreter(),
+            StringLiteralInterpreter(),
+            NumberLiteralInterpreter(),
+            BooleanLiteralInterpreter(),
+            SumInterpreter(),
+            SubtractInterpreter(),
+            MultiplyInterpreter(),
+            DivideInterpreter(),
+            DeclarationInterpreter(),
+            DeclarationAssignationInterpreter(),
+            IdentifierInterpreter(),
+            IfElseStatementInterpreter(),
+            IfStatementInterpreter(),
+            PrintLnInterpreter(),
+            ReadEnvInterpreter(StringNodeType),
+            ReadEnvInterpreter(NumberNodeType),
+            ReadEnvInterpreter(BooleanNodeType),
+            ReadInputInterpreter(StringNodeType),
+            ReadInputInterpreter(NumberNodeType),
+            ReadInputInterpreter(BooleanNodeType),
+            ReassignationInterpreter(),
+        )
+
+    return InterpreterManager(interpreters, printer, envReader, inputReader)
 }

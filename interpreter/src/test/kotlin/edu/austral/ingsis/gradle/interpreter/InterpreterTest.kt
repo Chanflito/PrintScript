@@ -2,6 +2,10 @@ package edu.austral.ingsis.gradle.interpreter
 
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
+import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
+import edu.austral.ingsis.gradle.interpreter.util.PrinterCollector
+import edu.austral.ingsis.gradle.interpreter.util.createDynamicInterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManagerTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -197,22 +201,73 @@ class InterpreterTest {
                 interpreterManager,
             ) as InterpretResult.ContextResult
         val newContext = result.context
-        assertEquals("input", newContext.getConstant("input"))
+        assertEquals("mocked input", newContext.getConstant("input"))
     }
 
     @Test
-    fun `interpreter should return 9 with mock input reader`() {
+    fun `printer collector should have both message from readInput and println value `() {
         val context = Context()
         val readInputNode = input_014
-        val declarationAssignationInterpreter = interpreterManager.getInterpreter(readInputNode)
-        val result =
+        val printNode = input_015
+        val collector = PrinterCollector()
+        val inputReader = MockInputReader("World")
+        val interpreterManager2 =
+            createDynamicInterpreterManager(
+                collector,
+                KotlinEnvReader(),
+                inputReader,
+            )
+        val declarationAssignationInterpreter = interpreterManager2.getInterpreter(readInputNode)
+        val firstResult =
             declarationAssignationInterpreter.interpret(
                 readInputNode,
                 context,
-                interpreterManager,
+                interpreterManager2,
             ) as InterpretResult.ContextResult
-        val newContext = result.context
+        val newContext = firstResult.context
+        val printInterpreter = interpreterManager2.getInterpreter(printNode)
+
+        printInterpreter.interpret(
+            printNode,
+            newContext,
+            interpreterManager2,
+        ) as InterpretResult.ContextResult
+
+        assertEquals("World", newContext.getConstant("name"))
+        assertEquals(listOf("Name: ", "Hello World!"), collector.getPrintedValues())
+    }
+
+    @Test
+    fun `printer collector should have both message from readInput and println number value `() {
+        val context = Context()
+        val readInputNode = input_016
+        val printNode = input_017
+        val collector = PrinterCollector()
+        val inputReader = MockInputReader(9)
+        val interpreterManager2 =
+            createDynamicInterpreterManager(
+                collector,
+                KotlinEnvReader(),
+                inputReader,
+            )
+        val declarationAssignationInterpreter = interpreterManager2.getInterpreter(readInputNode)
+        val firstResult =
+            declarationAssignationInterpreter.interpret(
+                readInputNode,
+                context,
+                interpreterManager2,
+            ) as InterpretResult.ContextResult
+        val newContext = firstResult.context
+        val printInterpreter = interpreterManager2.getInterpreter(printNode)
+
+        printInterpreter.interpret(
+            printNode,
+            newContext,
+            interpreterManager2,
+        ) as InterpretResult.ContextResult
+
         assertEquals(9, newContext.getConstant("number"))
+        assertEquals(listOf("Enter number: ", "9"), collector.getPrintedValues())
     }
 
     @Test

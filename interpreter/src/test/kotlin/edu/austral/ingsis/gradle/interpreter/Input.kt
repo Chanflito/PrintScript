@@ -210,14 +210,61 @@ val input_014 =
     DeclarationAssignation(
         ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
+        StringNodeType,
+        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
+        ReadInputNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            StringLiteral(
+                "Name: ",
+                TokenPosition(Position(0, 0), Position(0, 0)),
+            ),
+        ),
+    )
+
+val input_015 =
+    PrintLnNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        SumNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            StringLiteral(
+                "Hello ",
+                TokenPosition(Position(0, 0), Position(0, 0)),
+            ),
+            SumNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                IdentifierNode(
+                    "name",
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                ),
+                StringLiteral(
+                    "!",
+                    TokenPosition(Position(0, 0), Position(0, 0)),
+                ),
+            ),
+        ),
+    )
+
+val input_016 =
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
         NumberNodeType,
         IdentifierNode("number", TokenPosition(Position(0, 0), Position(0, 0))),
         ReadInputNode(
             TokenPosition(Position(0, 0), Position(0, 0)),
-            NumberLiteralNode(
-                9,
+            StringLiteral(
+                "Enter number: ",
                 TokenPosition(Position(0, 0), Position(0, 0)),
             ),
+        ),
+    )
+
+val input_017 =
+    PrintLnNode(
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberLiteralNode(
+            9,
+            TokenPosition(Position(0, 0), Position(0, 0)),
         ),
     )
 
