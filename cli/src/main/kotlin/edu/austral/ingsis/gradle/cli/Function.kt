@@ -33,7 +33,7 @@ class ExecuteFunction : Function<String, List<Any>> {
     ): List<Any> {
         val versionAdapted = version.take(3)
         val lexer = LexerDirector().createComposeLexer(versionAdapted)
-        val lexerIterator = LexerIterator(lexer, input.byteInputStream())
+        val lexerIterator = LexerIterator(lexer, input.byteInputStream().bufferedReader())
         val composeParser = createComposeParser()
         val parserIterator = ParserIterator(lexerIterator, composeParser)
         var context = Context()

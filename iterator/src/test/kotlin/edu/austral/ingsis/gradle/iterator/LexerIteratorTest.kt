@@ -2,6 +2,7 @@ package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import org.junit.jupiter.api.Test
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import kotlin.test.assertTrue
@@ -11,7 +12,7 @@ class LexerIteratorTest {
     fun `test lexer iterator with V1-0`() {
         val lexer = LexerDirector().createComposeLexer("1.0")
         val inputStream = FileInputStream("src/test/resources/input_iterator/input_001_iterator.txt")
-        val iterator = LexerIterator(lexer, inputStream)
+        val iterator = LexerIterator(lexer, BufferedReader(inputStream.bufferedReader()))
         val file = File("src/test/resources/expected_iterator/expected_001_iterator.txt").toString()
         isEquals(iterator, file)
     }
@@ -20,7 +21,7 @@ class LexerIteratorTest {
     fun `test lexer iterator with V1-1`() {
         val lexer = LexerDirector().createComposeLexer("1.1")
         val inputStream = FileInputStream("src/test/resources/input_iterator/input_002_iterator.txt")
-        val iterator = LexerIterator(lexer, inputStream)
+        val iterator = LexerIterator(lexer, BufferedReader(inputStream.bufferedReader()))
         val file = File("src/test/resources/expected_iterator/expected_002_iterator.txt").toString()
         isEquals(iterator, file)
     }

@@ -2,10 +2,10 @@ package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.lexer.Lexer
-import java.io.InputStream
+import java.io.BufferedReader
 
-class LexerIterator(private val lexer: Lexer, private val inputStream: InputStream) : Iterator<List<Token>> {
-    private val statementIterator = StatementIterator(inputStream)
+class LexerIterator(private val lexer: Lexer, private val src: BufferedReader) : Iterator<List<Token>> {
+    private val statementIterator = StatementIterator(src)
 
     override fun hasNext(): Boolean {
         return statementIterator.hasNext()

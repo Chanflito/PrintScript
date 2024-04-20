@@ -31,10 +31,10 @@ import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import java.io.InputStream
 
-fun execute(input: InputStream) {
-    // val input = "const b: string = \"this should be valid in 1.1\";"
+fun execute(input: InputStream) { // TODO: Refactor this and interpreter.
+    val fileBuffer = FileBuffer(input)
     val lexer = LexerDirector().createComposeLexer("1.1")
-    val lexerIterator = LexerIterator(lexer, input)
+    val lexerIterator = LexerIterator(lexer, fileBuffer.getFileBuffered())
     val parserIterator = ParserIterator(lexerIterator, createComposeParser())
     var context = Context()
     val interpreters =
@@ -102,15 +102,4 @@ fun compareTokenListWithIterator(
         }
     }
     return true
-}
-
-fun executeWithBuffer(input: InputStream) {
-    while (true) {
-        val fileBuffer = FileBuffer(input)
-        val bufferedFile = fileBuffer.bufferFile()
-        if (bufferedFile.isEmpty()) {
-            break
-        }
-        execute(bufferedFile.byteInputStream())
-    }
 }
