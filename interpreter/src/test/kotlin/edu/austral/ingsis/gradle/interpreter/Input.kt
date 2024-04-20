@@ -1,4 +1,5 @@
 package edu.austral.ingsis.gradle.interpreter
+
 import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
@@ -205,14 +206,19 @@ val input_013 =
         ),
     )
 
-val input999 =
-    PrintLnNode(
-        tokenPosition = TokenPosition(startPosition = Position(row = 2, column = 1), endPosition = Position(row = 2, column = 8)),
-        expression =
-            IdentifierNode(
-                name = "b",
-                tokenPosition = TokenPosition(startPosition = Position(row = 2, column = 9), endPosition = Position(row = 2, column = 10)),
+val input_014 =
+    DeclarationAssignation(
+        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
+        TokenPosition(Position(0, 0), Position(0, 0)),
+        NumberNodeType,
+        IdentifierNode("number", TokenPosition(Position(0, 0), Position(0, 0))),
+        ReadInputNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            NumberLiteralNode(
+                9,
+                TokenPosition(Position(0, 0), Position(0, 0)),
             ),
+        ),
     )
 
 val input_cli1 =

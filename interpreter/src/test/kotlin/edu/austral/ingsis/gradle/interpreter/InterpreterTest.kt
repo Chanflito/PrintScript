@@ -4,6 +4,7 @@ import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManagerTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class InterpreterTest {
@@ -65,7 +66,8 @@ class InterpreterTest {
         val declarationAssignationNode = input_003
         val context = Context()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(declarationAssignationNode)
-        val result = declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
+        val result =
+            declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
         assert(result is InterpretResult.ContextResult)
         val newContext = (result as InterpretResult.ContextResult).context
         assert(newContext.isInContext("age"))
@@ -77,7 +79,8 @@ class InterpreterTest {
         val declarationAssignationNode = input_003
         val context = Context()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(declarationAssignationNode)
-        val result = declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
+        val result =
+            declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
         assert(result is InterpretResult.ContextResult)
         val newContext = (result as InterpretResult.ContextResult).context
         val redeclarationNode = input_004
@@ -95,7 +98,8 @@ class InterpreterTest {
         val declarationAssignationNode = input_003let
         val context = Context()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(declarationAssignationNode)
-        val result = declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
+        val result =
+            declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
         val newContext = (result as InterpretResult.ContextResult).context
         val reassignationNode = input_004
         val reassignationInterpreter = interpreterManager.getInterpreter(reassignationNode)
@@ -154,7 +158,8 @@ class InterpreterTest {
         val declarationAssignationNode = input_003let
         val context = Context()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(declarationAssignationNode)
-        val result = declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
+        val result =
+            declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
         val newContext = (result as InterpretResult.ContextResult).context
         val ifNode = input_009
         val ifInterpreter = interpreterManager.getInterpreter(ifNode)
@@ -169,7 +174,8 @@ class InterpreterTest {
         val declarationAssignationNode = input_003let
         val context = Context()
         val declarationAssignationInterpreter = interpreterManager.getInterpreter(declarationAssignationNode)
-        val result = declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
+        val result =
+            declarationAssignationInterpreter.interpret(declarationAssignationNode, context, interpreterManager)
         val newContext = (result as InterpretResult.ContextResult).context
         val ifNode = input_009else
         val ifInterpreter = interpreterManager.getInterpreter(ifNode)
@@ -191,7 +197,22 @@ class InterpreterTest {
                 interpreterManager,
             ) as InterpretResult.ContextResult
         val newContext = result.context
-        assert(newContext.getConstant("input") == "mocked input")
+        assertEquals("input", newContext.getConstant("input"))
+    }
+
+    @Test
+    fun `interpreter should return 9 with mock input reader`() {
+        val context = Context()
+        val readInputNode = input_014
+        val declarationAssignationInterpreter = interpreterManager.getInterpreter(readInputNode)
+        val result =
+            declarationAssignationInterpreter.interpret(
+                readInputNode,
+                context,
+                interpreterManager,
+            ) as InterpretResult.ContextResult
+        val newContext = result.context
+        assertEquals(9, newContext.getConstant("number"))
     }
 
     @Test

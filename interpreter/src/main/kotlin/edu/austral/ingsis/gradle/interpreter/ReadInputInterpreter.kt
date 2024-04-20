@@ -21,30 +21,44 @@ class ReadInputInterpreter(val type: NodeType) : Interpreter {
         val readInputNode = node as ReadInputNode
         val expression = readInputNode.expression
         val expressionInterpreter = interpreterManager.getWithTypeOrNot(expression, type)
-        val expressionResult = expressionInterpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
+        val expressionResult =
+            expressionInterpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
         val value = expressionResult.value
         interpreterManager.printer.print(value.toString())
 
         val input =
             when (type) {
                 is StringNodeType -> {
-                    val rawInput = interpreterManager.inputReader.read() // Read raw input
+                    val rawInput = interpreterManager.inputReader.read(value.toString()) // Read raw input
                     rawInput.toString() // Convert raw input to String
                 }
+
                 is NumberNodeType -> {
-                    when (val rawInput = interpreterManager.inputReader.read()) {
+                    when (val rawInput = interpreterManager.inputReader.read(value.toString())) {
                         is Number -> rawInput // No conversion needed for Numbers
-                        is String -> rawInput.toDoubleOrNull() ?: throw RuntimeException("Invalid number input")
+                        is String -> {
+                            if (rawInput.contains(".")) {
+                                (
+                                    rawInput.toDoubleOrNull()
+                                        ?: throw RuntimeException("Invalid number input")
+                                )
+                            } else {
+                                (rawInput.toIntOrNull() ?: throw RuntimeException("Invalid number input"))
+                            }
+                        }
+
                         else -> throw RuntimeException("Invalid number input")
                     }
                 }
+
                 is BooleanNodeType -> {
-                    when (val rawInput = interpreterManager.inputReader.read()) { // Read raw input
+                    when (val rawInput = interpreterManager.inputReader.read(value.toString())) { // Read raw input
                         is Boolean -> rawInput // If raw input is already boolean, use it as is
                         is String -> rawInput.toBooleanStrictOrNull() ?: throw RuntimeException("Invalid boolean input")
                         else -> throw RuntimeException("Invalid boolean input")
                     }
                 }
+
                 else -> throw RuntimeException("Unsupported type: $type")
             }
 
