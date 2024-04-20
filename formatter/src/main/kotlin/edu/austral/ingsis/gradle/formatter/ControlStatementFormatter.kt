@@ -38,10 +38,10 @@ class IfElseStatementFormatter : Formatter<AST> {
 
     private fun formatIfBlock(
         nodes: List<AST>,
-        rule: Rule,
+        default: Rule,
         ifBlockRules: Rule,
     ): String {
-        return IfStatementFormatter().formatIfBlock(nodes, rule, ifBlockRules)
+        return IfStatementFormatter().formatIfBlock(nodes, default, ifBlockRules)
     }
 }
 
@@ -77,11 +77,11 @@ class IfStatementFormatter : Formatter<AST> {
 
     fun formatIfBlock(
         nodes: List<AST>,
-        rule: Rule,
+        defaultRule: Rule,
         ifBlockRules: Rule,
     ): String {
         val blockFormatter = createDefaultFormatter()
-        val formattedBlock = nodes.joinToString("\n") { blockFormatter.format(it, rule, ifBlockRules) }
+        val formattedBlock = nodes.joinToString("\n") { blockFormatter.format(it, defaultRule, ifBlockRules) }
         val lines = formattedBlock.split("\n")
         return lines.joinToString("\n") { applyFormat(it, ifBlockRules) }
     }
