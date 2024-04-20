@@ -11,7 +11,13 @@ fun createDefaultFormatter(): Formatter<AST> {
     return ComposeFormatter(
         listOf(
             DeclarationAssignationFormatter(),
-            ExpressionFormatter(),
+            SumFormatter(),
+            SubtractFormatter(),
+            MultiplyFormatter(),
+            DivideFormatter(),
+            StringFormatter(),
+            NumberFormatter(),
+            BooleanFormatter(),
             IdentifierFormatter(),
             IfElseStatementFormatter(),
             IfStatementFormatter(),

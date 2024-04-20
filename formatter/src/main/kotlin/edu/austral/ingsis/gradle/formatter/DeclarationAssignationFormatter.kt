@@ -16,7 +16,8 @@ class DeclarationAssignationFormatter : Formatter<AST> {
                 val keyword = node.keyword.value
                 val identifier = node.identifierNode.name
                 val nodeType = node.nodeType.toString().lowercase(getDefault())
-                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
+                val composeFormatter = createDefaultFormatter()
+                val expression = composeFormatter.format(node.expression, defaultRule, ifBlockRule)
                 val result = "$keyword $identifier:$nodeType=$expression;"
                 return applyFormat(result, defaultRule)
             }

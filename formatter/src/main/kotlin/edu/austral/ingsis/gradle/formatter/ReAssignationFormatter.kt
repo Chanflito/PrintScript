@@ -13,7 +13,8 @@ class ReAssignationFormatter : Formatter<AST> {
         return when (node) {
             is ReAssignationNode -> {
                 val identifier = node.identifierNode.name
-                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
+                val composeFormatter = createDefaultFormatter()
+                val expression = composeFormatter.format(node.expression, defaultRule, ifBlockRule)
                 val result = "$identifier = $expression;"
                 return applyFormat(result, defaultRule)
             }
