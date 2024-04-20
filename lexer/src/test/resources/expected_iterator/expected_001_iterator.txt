@@ -3,7 +3,7 @@ a,Identifier
 :,Colon
 string,StringType
 =,Assignation
-"hola",StringValue
+hola,StringValue
 ;,SemiColon
 END_OF_STATEMENT
 let,LetKeyword

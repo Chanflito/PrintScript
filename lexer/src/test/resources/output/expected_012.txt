@@ -12,7 +12,7 @@ a,Identifier
 {,LeftBrace
 println,PrintlnKeyword
 (,LeftParenthesis
-"a is true",StringValue
+a is true,StringValue
 ),RightParenthesis
 ;,SemiColon
 },RightBrace
@@ -20,7 +20,7 @@ else,ElseKeyword
 {,LeftBrace
 println,PrintlnKeyword
 (,LeftParenthesis
-"a is false",StringValue
+a is false,StringValue
 ),RightParenthesis
 ;,SemiColon
 },RightBrace

@@ -22,4 +22,16 @@ class ParserIteratorWithInterpreterTest {
         val input = "src/test/resources/b.ps"
         assertDoesNotThrow { execute(File(input).inputStream()) }
     }
+
+    @Test
+    fun test004() {
+        val input = "src/test/resources/simple-declare-assign.ps"
+        assertDoesNotThrow { execute(File(input).inputStream()) }
+    }
+
+    @Test
+    fun test005() {
+        val input = "src/test/resources/string-concat.ps"
+        assertDoesNotThrow { execute(File(input).inputStream()) }
+    }
 }

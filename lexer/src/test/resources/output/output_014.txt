@@ -1,5 +1,5 @@
 readEnv,ReadEnvKeyword,(1,1),(1,8)
 (,LeftParenthesis,(1,8),(1,9)
-"VARIABLE_NAME",StringValue,(1,9),(1,24)
+VARIABLE_NAME,StringValue,(1,9),(1,24)
 ),RightParenthesis,(1,24),(1,25)
 ;,SemiColon,(1,25),(1,26)

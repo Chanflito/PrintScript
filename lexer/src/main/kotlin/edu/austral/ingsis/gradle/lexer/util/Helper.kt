@@ -25,7 +25,7 @@ fun createToken(
     val endIndex = matchResult.range.last + 1
     val startPosition = calculatePosition(code, startIndex)
     val endPosition = calculatePosition(code, endIndex)
-    return Token(matchResult.value, tokenType, TokenPosition(startPosition, endPosition))
+    return Token(matchResult.value.replace("\"", ""), tokenType, TokenPosition(startPosition, endPosition))
 }
 
 fun isInQuotes(

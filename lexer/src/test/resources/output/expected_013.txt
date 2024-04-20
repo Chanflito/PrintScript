@@ -3,7 +3,7 @@ a,Identifier
 :,Colon
 string,StringType
 =,Assignation
-"Hello World!",StringValue
+Hello World!,StringValue
 ;,SemiColon
 let,LetKeyword
 input,Identifier
@@ -12,6 +12,6 @@ number,NumberType
 =,Assignation
 readInput,ReadInputKeyword
 (,LeftParenthesis
-"Enter a number",StringValue
+Enter a number,StringValue
 ),RightParenthesis
 ;,SemiColon
