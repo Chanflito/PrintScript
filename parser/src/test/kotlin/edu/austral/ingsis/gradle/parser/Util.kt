@@ -63,23 +63,19 @@ fun execute(input: InputStream) {
             ReadInputInterpreter(BooleanNodeType),
             ReassignationInterpreter(),
         )
-    try {
-        while (parserIterator.hasNext()) {
-            val ast = parserIterator.next()
-            val interpreterManager =
-                InterpreterManager(
-                    interpreters,
-                    KotlinPrinter(),
-                    KotlinEnvReader(),
-                    KotlinInputReader(),
-                )
-            val interpreter = ast?.let { interpreterManager.getInterpreter(it, null) }
-            val interpretResult = interpreter?.interpret(ast, context, interpreterManager)
-            if (interpretResult is InterpretResult.ContextResult) {
-                context = context.update(interpretResult.context)
-            }
+    while (parserIterator.hasNext()) {
+        val ast = parserIterator.next()
+        val interpreterManager =
+            InterpreterManager(
+                interpreters,
+                KotlinPrinter(),
+                KotlinEnvReader(),
+                KotlinInputReader(),
+            )
+        val interpreter = ast?.let { interpreterManager.getInterpreter(it, null) }
+        val interpretResult = interpreter?.interpret(ast, context, interpreterManager)
+        if (interpretResult is InterpretResult.ContextResult) {
+            context = context.update(interpretResult.context)
         }
-    } catch (e: Exception) {
-        println(e.message)
     }
 }

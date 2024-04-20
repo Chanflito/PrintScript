@@ -37,7 +37,7 @@ class AssignationParser : Parser<InputContext> {
                 expressionResult.first as Expression,
                 identifierNode,
             ),
-            expressionResult.second + 1,
+            expressionResult.second,
         )
     }
 
