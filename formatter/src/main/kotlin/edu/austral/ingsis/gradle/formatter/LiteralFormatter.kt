@@ -4,18 +4,17 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
-import edu.austral.ingsis.gradle.formatter.rule.Rule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class StringFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is StringLiteral -> {
                 val result = node.value
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
             else -> ""
         }
@@ -29,13 +28,12 @@ class StringFormatter : Formatter<AST> {
 class NumberFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is NumberLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
             else -> ""
         }
@@ -49,13 +47,12 @@ class NumberFormatter : Formatter<AST> {
 class BooleanFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is BooleanLiteralNode -> {
                 val result = node.value.toString()
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
             else -> ""
         }

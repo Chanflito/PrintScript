@@ -1,6 +1,7 @@
 package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -10,8 +11,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input001
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let aBlue : string = blue;", actual = formatted)
     }
 
@@ -20,8 +22,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input002
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "if (a) {\n   println(a + b);\n   let aBlue : string = blue;\n}", actual = formatted)
     }
 
@@ -30,8 +33,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input003
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "if (a) {\n   println(a + b);\n}else {\n   println(a - b);\n}", actual = formatted)
     }
 
@@ -40,8 +44,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input004
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "a = 1;", actual = formatted)
     }
 
@@ -50,8 +55,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input005
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let aBlue : string = blue;\na = 1;\nlet aBlue : string = blue;", actual = formatted)
     }
 
@@ -60,8 +66,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input006
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "println(a + b);\nreadInput(\"Introduzca un valor\");", actual = formatted)
     }
 
@@ -70,8 +77,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input007
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let input : string = readEnv(\"PATH\");", actual = formatted)
     }
 
@@ -80,8 +88,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input008
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let b : boolean = true;", actual = formatted)
     }
 
@@ -90,8 +99,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input009
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let a : string = readEnv(\"PATH\");\nlet b : boolean = true;", actual = formatted)
     }
 
@@ -100,8 +110,9 @@ class FormatterTest {
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
         val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val rules = Rules(defaultRules, ifBlockRules)
         val ast = input009_reversed
-        val formatted = formatter.format(ast, defaultRules, ifBlockRules)
+        val formatted = formatter.format(ast, rules)
         assertEquals(expected = "let b : boolean = true;\nlet a : string = readEnv(\"PATH\");", actual = formatted)
     }
 }

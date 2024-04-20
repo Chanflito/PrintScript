@@ -4,20 +4,19 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.formatter.rule.Rule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class PrintLnFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is PrintLnNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val value = composeFormatter.format(node.expression, defaultRule, blockRule)
+                val value = composeFormatter.format(node.expression, rules)
                 val result = "println($value);"
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
 
             else -> ""
@@ -32,13 +31,12 @@ class PrintLnFormatter : Formatter<AST> {
 class ReadEnvFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is ReadEnvNode -> {
                 val result = "readEnv(\"${node.value}\")"
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
 
             else -> ""
@@ -53,15 +51,14 @@ class ReadEnvFormatter : Formatter<AST> {
 class ReadInputFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is ReadInputNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val value = composeFormatter.format(node.expression, defaultRule, blockRule)
+                val value = composeFormatter.format(node.expression, rules)
                 val result = "readInput(\"$value\");"
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
 
             else -> ""

@@ -1,16 +1,15 @@
 package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.formatter.rule.Rule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class ComposeFormatter(private val formatters: List<Formatter<AST>>) : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        blockRule: Rule,
+        rules: Rules,
     ): String {
         val formatter = formatters.firstOrNull { it.canFormat(node) }
-        return formatter?.format(node, defaultRule, blockRule) ?: "Unsupported node type"
+        return formatter?.format(node, rules) ?: "Unsupported node type"
     }
 
     override fun canFormat(node: AST): Boolean {
