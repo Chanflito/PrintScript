@@ -2,34 +2,27 @@ package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
-import edu.austral.ingsis.gradle.formatter.rule.Rule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 import java.util.Locale.getDefault
 
 class DeclarationAssignationFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        ifBlockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is DeclarationAssignation -> {
                 val keyword = node.keyword.value
                 val identifier = node.identifierNode.name
                 val nodeType = node.nodeType.toString().lowercase(getDefault())
-                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
+                val composeFormatter = createDefaultFormatter()
+                val expression = composeFormatter.format(node.expression, rules)
                 val result = "$keyword $identifier:$nodeType=$expression;"
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
 
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {

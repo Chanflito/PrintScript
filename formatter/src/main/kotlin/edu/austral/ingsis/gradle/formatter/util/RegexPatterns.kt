@@ -1,10 +1,6 @@
 package edu.austral.ingsis.gradle.formatter.util
 
-class RegexPatterns {
-    companion object {
-        val spaceBeforeColon = Regex("(\\w+)(\\s*):")
-        val spaceAfterColon = Regex(":(\\s*)(\\w+)")
-        val spaceAroundEqual = Regex("(\\w+)(\\s*)(=)(\\s*)(\"[^\"]*\"|\\w+)")
-        val newlineBeforePrintln = Regex("(?<=\\W)println")
-    }
-}
+val spaceBeforeColonRegex = Regex("(\\w+)(\\s*):")
+val spaceAfterColonRegex = Regex(":(\\s*)(\\w+)")
+val spaceAroundEqualRegex = Regex("(\\w+)(\\s*)(=)(\\s*)(\"[^\"]*\"|\\w+)")
+val newlineBeforePrintlnRegex = Regex("(?<=\\W)println")

@@ -1,24 +1,25 @@
 package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
-class IdentifierFormatter : Formatter<AST> {
+class ProgramNodeFormatter : Formatter<AST> {
     override fun format(
         node: AST,
         rules: Rules,
     ): String {
         return when (node) {
-            is IdentifierNode -> {
-                return applyFormat(node.name, rules.defaultRule)
+            is ProgramNode -> {
+                val nodes = node.children
+                val composeFormatter = createDefaultFormatter()
+                return nodes.joinToString("\n") { composeFormatter.format(it, rules) }
             }
-
             else -> ""
         }
     }
 
     override fun canFormat(node: AST): Boolean {
-        return node is IdentifierNode
+        return node is ProgramNode
     }
 }

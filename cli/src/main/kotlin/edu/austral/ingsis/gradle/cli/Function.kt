@@ -5,6 +5,7 @@ import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
@@ -72,10 +73,11 @@ class FormatFunction : Function<Pair<String, File>, String> {
     ): String {
         val ast = createAstNode(input, version)
         val formatter = createDefaultFormatter()
-        val rules = ComposeRule(createDefaultRules(input.second.absolutePath))
+        val defaultRules = ComposeRule(createDefaultRules(input.second.absolutePath))
         val ifBlockRules = ComposeRule(createIfBlockRules(input.second.absolutePath))
+        val rules = Rules(defaultRules, ifBlockRules)
         println("Formatting...\n")
-        return formatter.format(ast.first, rules, ifBlockRules)
+        return formatter.format(ast.first, rules)
     }
 }
 

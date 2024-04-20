@@ -2,30 +2,23 @@ package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
-import edu.austral.ingsis.gradle.formatter.rule.Rule
+import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class ReAssignationFormatter : Formatter<AST> {
     override fun format(
         node: AST,
-        defaultRule: Rule,
-        ifBlockRule: Rule,
+        rules: Rules,
     ): String {
         return when (node) {
             is ReAssignationNode -> {
                 val identifier = node.identifierNode.name
-                val expression = ExpressionFormatter().format(node.expression, defaultRule, ifBlockRule)
+                val composeFormatter = createDefaultFormatter()
+                val expression = composeFormatter.format(node.expression, rules)
                 val result = "$identifier = $expression;"
-                return applyFormat(result, defaultRule)
+                return applyFormat(result, rules.defaultRule)
             }
             else -> ""
         }
-    }
-
-    override fun applyFormat(
-        result: String,
-        rule: Rule,
-    ): String {
-        return rule.applyRule(result)
     }
 
     override fun canFormat(node: AST): Boolean {

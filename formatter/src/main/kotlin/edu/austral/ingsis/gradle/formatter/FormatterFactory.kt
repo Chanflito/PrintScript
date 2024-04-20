@@ -10,14 +10,22 @@ import edu.austral.ingsis.gradle.formatter.rule.adapter.context.IfBlock
 fun createDefaultFormatter(): Formatter<AST> {
     return ComposeFormatter(
         listOf(
+            BlockFormatter(),
             DeclarationAssignationFormatter(),
-            ExpressionFormatter(),
+            SumFormatter(),
+            SubtractFormatter(),
+            MultiplyFormatter(),
+            DivideFormatter(),
+            StringFormatter(),
+            NumberFormatter(),
+            BooleanFormatter(),
             IdentifierFormatter(),
             IfElseStatementFormatter(),
             IfStatementFormatter(),
             PrintLnFormatter(),
             ReadEnvFormatter(),
             ReadInputFormatter(),
+            ProgramNodeFormatter(),
             ReAssignationFormatter(),
         ),
     )
