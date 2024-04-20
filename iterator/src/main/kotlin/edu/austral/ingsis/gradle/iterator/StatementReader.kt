@@ -1,16 +1,16 @@
 package edu.austral.ingsis.gradle.iterator
 
-import java.io.InputStream
+import java.io.BufferedReader
 import java.util.Stack
 
 class StatementReader {
-    fun read(inputStream: InputStream): String {
+    fun read(reader: BufferedReader): String {
         val statementBuilder = StringBuilder()
         val block = Stack<Char>()
         var endOfStatement = false
 
         while (!endOfStatement) {
-            val readResult = inputStream.read()
+            val readResult = reader.read()
 
             if (readResult == -1) {
                 endOfStatement = true
