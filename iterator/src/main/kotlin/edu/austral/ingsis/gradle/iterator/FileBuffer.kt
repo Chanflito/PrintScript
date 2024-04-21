@@ -8,7 +8,7 @@ class FileBuffer(private val file: InputStream) {
     private val bufferReader = BufferedReader(InputStreamReader(file))
 
     companion object {
-        const val READ_AHEAD_LIMIT = 10500
+        const val READ_AHEAD_LIMIT = 10200
     }
 
     fun canRead(): Boolean {
