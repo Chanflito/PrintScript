@@ -8,7 +8,7 @@ class FileBuffer(private val file: InputStream) {
     private val bufferReader = BufferedReader(InputStreamReader(file))
 
     companion object {
-        const val MAX_LINES = 500
+        const val MAX_LINES = 10
     }
 
     fun canRead(): Boolean {
