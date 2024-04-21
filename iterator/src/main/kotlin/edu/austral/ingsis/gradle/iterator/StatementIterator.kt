@@ -17,16 +17,8 @@ class StatementIterator(private val reader: BufferedReader) : Iterator<String> {
         val currentStatement = previousStatement.ifEmpty { statementReader.read(reader) }
         previousStatement = ""
         val nextStatement = statementReader.read(reader).trim() // this was added for /n cases
-        return when {
-            nextStatement.isNotEmpty() && startsWithElse(nextStatement) -> { // else should not be separated from if
-                val ifElseStatement = currentStatement.plus(nextStatement) // add else into if statement
-                ifElseStatement
-            }
-            else -> {
-                previousStatement = nextStatement
-                currentStatement
-            }
-        }
+        previousStatement = nextStatement
+        return currentStatement
     }
 
     private fun startsWithElse(statement: String): Boolean {

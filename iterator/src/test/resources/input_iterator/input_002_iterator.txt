@@ -1,7 +1,8 @@
 let a: boolean = true;
 if (a) {
      println("a is true");
-} else {
+}
+else{
      println("a is false");
 }
 const b : number = 10;

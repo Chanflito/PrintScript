@@ -1,11 +1,12 @@
 package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
-import kotlin.test.assertTrue
 
 class LexerIteratorTest {
     @Test
@@ -35,7 +36,7 @@ class LexerIteratorTest {
             val tokens = iterator.next()
             val expectedTokens = convertFileIntoListOfString(File(file), currentPosition).first
             currentPosition = convertFileIntoListOfString(File(file), currentPosition).second
-            assert(tokens.size == expectedTokens.size)
+            assertEquals(tokens.size, expectedTokens.size)
             assertTrue(compareTokenListWithIterator(tokens, expectedTokens))
         }
     }
