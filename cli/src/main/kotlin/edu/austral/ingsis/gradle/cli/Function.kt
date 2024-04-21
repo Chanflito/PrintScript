@@ -50,7 +50,7 @@ class ExecuteFunction : Function<String, List<Any>> {
                 else -> throw RuntimeException("Interpreter result not supported")
             }
         }
-        return context.getPrintValues()
+        return listOf(context) // TODO: change this
     }
 }
 

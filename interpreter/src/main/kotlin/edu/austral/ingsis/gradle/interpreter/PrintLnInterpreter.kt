@@ -19,7 +19,7 @@ class PrintLnInterpreter() : Interpreter {
         val interpreterResult = interpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
         val resultValue = interpreterResult.value
         interpreterManager.printer.print(resultValue.toString())
-        return InterpretResult.ContextResult(Context(printValues = listOf(resultValue.toString())))
+        return InterpretResult.ContextResult(Context())
     }
 
     override fun canInterpret(node: AST): Boolean {

@@ -62,7 +62,7 @@ fun execute(input: InputStream) { // TODO: Refactor this and interpreter.
             ReadInputInterpreter(BooleanNodeType),
             ReassignationInterpreter(),
         )
-    while (fileBuffer.canRead()) {
+    while (parserIterator.hasNext()) {
         val ast = parserIterator.next()
         val interpreterManager =
             InterpreterManager(

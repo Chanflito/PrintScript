@@ -6,7 +6,6 @@ class Context(
     private val assignedVariables: Map<String, Any> = emptyMap(),
     private val constants: Map<String, Any> = emptyMap(),
     private val declaredVariables: Map<String, NodeType> = emptyMap(),
-    private val printValues: List<String> = emptyList(),
 ) {
     fun getVariable(name: String): Any? {
         return assignedVariables[name]
@@ -20,9 +19,8 @@ class Context(
         val updatedAssignedVariables = assignedVariables + other.assignedVariables
         val updatedConstants = constants + other.constants
         val updatedDeclaredVariables = declaredVariables + other.declaredVariables
-        val updatedPrintValues = printValues + other.printValues
 
-        return Context(updatedAssignedVariables, updatedConstants, updatedDeclaredVariables, updatedPrintValues)
+        return Context(updatedAssignedVariables, updatedConstants, updatedDeclaredVariables)
     }
 
     fun getVariableType(name: String): NodeType? {
@@ -39,10 +37,6 @@ class Context(
 
     fun isConstantAssigned(name: String): Boolean {
         return constants.containsKey(name)
-    }
-
-    fun getPrintValues(): List<String> {
-        return printValues
     }
 
     fun isInContext(name: String): Boolean {
@@ -63,7 +57,6 @@ class Context(
             updatedAssignedVariables,
             constants,
             declaredVariables,
-            printValues,
         )
     }
 
