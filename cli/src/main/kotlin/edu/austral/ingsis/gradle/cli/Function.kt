@@ -6,9 +6,11 @@ import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.formatter.rule.Rules
-import edu.austral.ingsis.gradle.interpreter.util.Context
+import edu.austral.ingsis.gradle.interpreter.factory.InterpreterFactory
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
-import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
+import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
+import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
+import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
 import edu.austral.ingsis.gradle.iterator.LexerIterator
 import edu.austral.ingsis.gradle.iterator.ParserIterator
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
@@ -36,21 +38,25 @@ class ExecuteFunction : Function<String, List<Any>> {
         val lexerIterator = LexerIterator(lexer, input.byteInputStream().bufferedReader())
         val composeParser = createComposeParser()
         val parserIterator = ParserIterator(lexerIterator, composeParser)
-        var context = Context()
+        val interpreter =
+            InterpreterFactory(
+                emitter = KotlinPrinter(),
+                envReader = KotlinEnvReader(),
+                inputReader = KotlinInputReader(),
+            )
         while (parserIterator.hasNext()) {
-            val interpreterManager = createInterpreterManager()
             val ast: AST? = parserIterator.next()
             val homeDir = System.getProperty("user.home")
             val filePath = "$homeDir/Desktop/tokencomparison.txt"
             File(filePath).writeText(ast.toString())
-            val interpreter = interpreterManager.getInterpreter(ast!!)
-            val interpreterResult = interpreter.interpret(ast, context, interpreterManager)
-            when (interpreterResult) {
-                is InterpretResult.ContextResult -> context = context.update(interpreterResult.context)
+            when (val interpretResult = interpreter.interpret(ast!!)) {
+                is InterpretResult.ContextResult -> {
+                    interpreter.updateContext(interpretResult.context)
+                }
                 else -> throw RuntimeException("Interpreter result not supported")
             }
         }
-        return listOf(context) // TODO: change this
+        return listOf(interpreter.getContext())
     }
 }
 

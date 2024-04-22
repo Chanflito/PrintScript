@@ -1,29 +1,8 @@
 package edu.austral.ingsis.gradle.iterator
 
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.interpreter.BlockNodeInterpreter
-import edu.austral.ingsis.gradle.interpreter.BooleanLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.DeclarationAssignationInterpreter
-import edu.austral.ingsis.gradle.interpreter.DeclarationInterpreter
-import edu.austral.ingsis.gradle.interpreter.DivideInterpreter
-import edu.austral.ingsis.gradle.interpreter.IdentifierInterpreter
-import edu.austral.ingsis.gradle.interpreter.IfElseStatementInterpreter
-import edu.austral.ingsis.gradle.interpreter.IfStatementInterpreter
-import edu.austral.ingsis.gradle.interpreter.MultiplyInterpreter
-import edu.austral.ingsis.gradle.interpreter.NumberLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.PrintLnInterpreter
-import edu.austral.ingsis.gradle.interpreter.ReadEnvInterpreter
-import edu.austral.ingsis.gradle.interpreter.ReadInputInterpreter
-import edu.austral.ingsis.gradle.interpreter.ReassignationInterpreter
-import edu.austral.ingsis.gradle.interpreter.StringLiteralInterpreter
-import edu.austral.ingsis.gradle.interpreter.SubtractInterpreter
-import edu.austral.ingsis.gradle.interpreter.SumInterpreter
-import edu.austral.ingsis.gradle.interpreter.util.Context
+import edu.austral.ingsis.gradle.interpreter.factory.InterpreterFactory
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
-import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
@@ -36,48 +15,21 @@ fun execute(input: InputStream) { // TODO: Refactor this and interpreter.
     val lexer = LexerDirector().createComposeLexer("1.1")
     val lexerIterator = LexerIterator(lexer, fileBuffer.getFileBuffered())
     val parserIterator = ParserIterator(lexerIterator, createComposeParser())
-    var context = Context()
-    val interpreters =
-        listOf(
-            BlockNodeInterpreter(),
-            DeclarationInterpreter(),
-            StringLiteralInterpreter(),
-            NumberLiteralInterpreter(),
-            BooleanLiteralInterpreter(),
-            SumInterpreter(),
-            SubtractInterpreter(),
-            MultiplyInterpreter(),
-            DivideInterpreter(),
-            DeclarationInterpreter(),
-            DeclarationAssignationInterpreter(),
-            IdentifierInterpreter(),
-            IfElseStatementInterpreter(),
-            IfStatementInterpreter(),
-            PrintLnInterpreter(),
-            ReadEnvInterpreter(StringNodeType),
-            ReadEnvInterpreter(NumberNodeType),
-            ReadEnvInterpreter(BooleanNodeType),
-            ReadInputInterpreter(StringNodeType),
-            ReadInputInterpreter(NumberNodeType),
-            ReadInputInterpreter(BooleanNodeType),
-            ReassignationInterpreter(),
+    val interpreter =
+        InterpreterFactory(
+            emitter = KotlinPrinter(),
+            envReader = KotlinEnvReader(),
+            inputReader = KotlinInputReader(),
         )
     while (parserIterator.hasNext()) {
         val ast = parserIterator.next()
-        val interpreterManager =
-            InterpreterManager(
-                interpreters,
-                KotlinPrinter(),
-                KotlinEnvReader(),
-                KotlinInputReader(),
-            )
-        val interpreter = ast?.let { interpreterManager.getInterpreter(it, null) }
-        val interpretResult = interpreter?.interpret(ast, context, interpreterManager)
-        if (interpretResult is InterpretResult.ContextResult) {
-            context = context.update(interpretResult.context)
+        when (val interpretResult = interpreter.interpret(ast!!)) {
+            is InterpretResult.ContextResult -> {
+                interpreter.updateContext(interpretResult.context)
+            }
+            else -> throw RuntimeException("Interpreter result not supported")
         }
     }
-    fileBuffer.getFileBuffered().close()
 }
 
 fun compareTokenListWithIterator(

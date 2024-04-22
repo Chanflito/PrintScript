@@ -5,9 +5,6 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
 import edu.austral.ingsis.gradle.interpreter.util.PrinterCollector
-import edu.austral.ingsis.gradle.interpreter.util.createDynamicInterpreterManager
-import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManager
-import edu.austral.ingsis.gradle.interpreter.util.createInterpreterManagerTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -193,7 +190,8 @@ class InterpreterTest {
     fun `input reader should work with mock input reader`() {
         val context = Context()
         val readInputNode = input_010
-        val declarationAssignationInterpreter = interpreterManager.getInterpreter(readInputNode)
+        val interpreterWithMock = interpreterManager
+        val declarationAssignationInterpreter = interpreterWithMock.getInterpreter(readInputNode)
         val result =
             declarationAssignationInterpreter.interpret(
                 readInputNode,
