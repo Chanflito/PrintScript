@@ -6,7 +6,7 @@ import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.formatter.rule.Rules
-import edu.austral.ingsis.gradle.interpreter.factory.InterpreterFactory
+import edu.austral.ingsis.gradle.interpreter.ComposeInterpreter
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
@@ -39,7 +39,7 @@ class ExecuteFunction : Function<String, List<Any>> {
         val composeParser = createComposeParser()
         val parserIterator = ParserIterator(lexerIterator, composeParser)
         val interpreter =
-            InterpreterFactory(
+            ComposeInterpreter(
                 emitter = KotlinPrinter(),
                 envReader = KotlinEnvReader(),
                 inputReader = KotlinInputReader(),

@@ -1,15 +1,15 @@
-package edu.austral.ingsis.gradle.interpreter.factory
+package edu.austral.ingsis.gradle.interpreter
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.interpreter.Interpreter
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.EnvReader
 import edu.austral.ingsis.gradle.interpreter.util.InputReader
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterList
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.Printer
 
-class InterpreterFactory(
+class ComposeInterpreter(
     interpreters: List<Interpreter> = InterpreterList().getInterpreters(),
     emitter: Printer,
     envReader: EnvReader,

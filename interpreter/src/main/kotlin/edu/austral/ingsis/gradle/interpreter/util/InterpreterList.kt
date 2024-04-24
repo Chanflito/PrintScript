@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.interpreter.factory
+package edu.austral.ingsis.gradle.interpreter.util
 
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType

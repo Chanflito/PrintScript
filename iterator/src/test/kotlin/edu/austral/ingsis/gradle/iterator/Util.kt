@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.iterator
 
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.interpreter.factory.InterpreterFactory
+import edu.austral.ingsis.gradle.interpreter.ComposeInterpreter
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
@@ -16,7 +16,7 @@ fun execute(input: InputStream) { // TODO: Refactor this and interpreter.
     val lexerIterator = LexerIterator(lexer, fileBuffer.getFileBuffered())
     val parserIterator = ParserIterator(lexerIterator, createComposeParser())
     val interpreter =
-        InterpreterFactory(
+        ComposeInterpreter(
             emitter = KotlinPrinter(),
             envReader = KotlinEnvReader(),
             inputReader = KotlinInputReader(),
