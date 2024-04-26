@@ -9,20 +9,17 @@ class BlockFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is BlockNode -> {
-                val composeFormatter = createDefaultFormatter()
-                // same as ComposeFormatter case where each child is formatted
-                // in this case the format rules are applied to the entire line
-                val formatted =
-                    node.children.joinToString("\n") {
-                        composeFormatter.format(it, rules)
-                    }
-                val lines = formatted.split("\n")
-                return lines.joinToString("\n") { applyFormat(it, rules.blockRule) }
+        node as BlockNode
+
+        val composeFormatter = createDefaultFormatter()
+        // same as ComposeFormatter case where each child is formatted
+        // in this case the format rules are applied to the entire line
+        val formatted =
+            node.children.joinToString("\n") {
+                composeFormatter.format(it, rules)
             }
-            else -> ""
-        }
+        val lines = formatted.split("\n")
+        return lines.joinToString("\n") { applyFormat(it, rules.blockRule) }
     }
 
     override fun canFormat(node: AST): Boolean {
