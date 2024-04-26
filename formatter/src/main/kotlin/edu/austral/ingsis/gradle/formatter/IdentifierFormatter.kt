@@ -11,7 +11,8 @@ class IdentifierFormatter : Formatter<AST> {
     ): String {
         return when (node) {
             is IdentifierNode -> {
-                return applyFormat(node.name, rules.defaultRule)
+                val result = node.name
+                return applyFormat(result, rules.defaultRule)
             }
 
             else -> ""

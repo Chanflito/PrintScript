@@ -1,4 +1,7 @@
 package edu.austral.ingsis.gradle.formatter.rule.adapter.context
 
-// the context where the list of rules from json are going to be applied
+/**
+* Represents the context in which a list of rules from JSON will be applied.
+* Implementations of this interface define specific rule contexts, such as default rules or if-block rules.
+*/
 interface RuleContext

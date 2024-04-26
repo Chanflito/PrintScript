@@ -15,10 +15,9 @@ class SumFormatter : Formatter<AST> {
         return when (node) {
             is SumNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val result = "${composeFormatter.format(
-                    node.left,
-                    rules,
-                )} + ${composeFormatter.format(node.right, rules)}"
+                val left = composeFormatter.format(node.left, rules)
+                val right = composeFormatter.format(node.right, rules)
+                val result = "$left + $right"
                 return applyFormat(result, rules.defaultRule)
             }
             else -> ""
@@ -38,10 +37,9 @@ class SubtractFormatter : Formatter<AST> {
         return when (node) {
             is SubtractNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val result = "${composeFormatter.format(
-                    node.left,
-                    rules,
-                )} - ${composeFormatter.format(node.right, rules)}"
+                val left = composeFormatter.format(node.left, rules)
+                val right = composeFormatter.format(node.right, rules)
+                val result = "$left - $right"
                 return applyFormat(result, rules.defaultRule)
             }
             else -> ""
@@ -61,10 +59,9 @@ class MultiplyFormatter : Formatter<AST> {
         return when (node) {
             is MultiplyNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val result = "${composeFormatter.format(
-                    node.left,
-                    rules,
-                )} * ${composeFormatter.format(node.right, rules)}"
+                val left = composeFormatter.format(node.left, rules)
+                val right = composeFormatter.format(node.right, rules)
+                val result = "$left * $right"
                 return applyFormat(result, rules.defaultRule)
             }
             else -> ""
@@ -84,10 +81,9 @@ class DivideFormatter : Formatter<AST> {
         return when (node) {
             is DivideNode -> {
                 val composeFormatter = createDefaultFormatter()
-                val result = "${composeFormatter.format(
-                    node.left,
-                    rules,
-                )} / ${composeFormatter.format(node.right, rules)}"
+                val left = composeFormatter.format(node.left, rules)
+                val right = composeFormatter.format(node.right, rules)
+                val result = "$left / $right"
                 return applyFormat(result, rules.defaultRule)
             }
             else -> ""

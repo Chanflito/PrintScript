@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.cli
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.formatter.createBlockRules
 import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
-import edu.austral.ingsis.gradle.formatter.createIfBlockRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 import edu.austral.ingsis.gradle.interpreter.factory.InterpreterFactory
@@ -80,8 +80,8 @@ class FormatFunction : Function<Pair<String, File>, String> {
         val ast = createAstNode(input, version)
         val formatter = createDefaultFormatter()
         val defaultRules = ComposeRule(createDefaultRules(input.second.absolutePath))
-        val ifBlockRules = ComposeRule(createIfBlockRules(input.second.absolutePath))
-        val rules = Rules(defaultRules, ifBlockRules)
+        val blockRules = ComposeRule(createBlockRules(input.second.absolutePath))
+        val rules = Rules(defaultRules, blockRules)
         println("Formatting...\n")
         return formatter.format(ast.first, rules)
     }

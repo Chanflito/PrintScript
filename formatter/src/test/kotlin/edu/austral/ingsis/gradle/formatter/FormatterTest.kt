@@ -9,8 +9,8 @@ class FormatterTest {
     @Test
     fun test001_formatDeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input001
         val formatted = formatter.format(ast, rules)
@@ -20,8 +20,8 @@ class FormatterTest {
     @Test
     fun test002_formatIfStatement() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input002
         val formatted = formatter.format(ast, rules)
@@ -31,8 +31,8 @@ class FormatterTest {
     @Test
     fun test003_formatIfElseStatement() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input003
         val formatted = formatter.format(ast, rules)
@@ -42,8 +42,8 @@ class FormatterTest {
     @Test
     fun test004_formatReAssignation() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input004
         val formatted = formatter.format(ast, rules)
@@ -53,8 +53,8 @@ class FormatterTest {
     @Test
     fun test005_formatDeclarationAssignation_ReAssignation_DeclarationAssignation() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input005
         val formatted = formatter.format(ast, rules)
@@ -64,8 +64,8 @@ class FormatterTest {
     @Test
     fun test006_testPrintLn_ReadInput() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input006
         val formatted = formatter.format(ast, rules)
@@ -75,8 +75,8 @@ class FormatterTest {
     @Test
     fun test007_test_readEnv() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input007
         val formatted = formatter.format(ast, rules)
@@ -86,8 +86,8 @@ class FormatterTest {
     @Test
     fun test008_test_Declaration_Assignation_Boolean_Type() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input008
         val formatted = formatter.format(ast, rules)
@@ -97,8 +97,8 @@ class FormatterTest {
     @Test
     fun test009_test_readEnv_Declaration_Assignation() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input009
         val formatted = formatter.format(ast, rules)
@@ -108,8 +108,8 @@ class FormatterTest {
     @Test
     fun test009_test_Declaration_Assignation_readEnv() {
         val formatter = createDefaultFormatter()
-        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/config_001.json"))
-        val ifBlockRules = ComposeRule(createIfBlockRules("src/test/resources/config_001.json"))
+        val defaultRules = ComposeRule(createDefaultRules("src/test/resources/test_config.json"))
+        val ifBlockRules = ComposeRule(createBlockRules("src/test/resources/test_config.json"))
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input009_reversed
         val formatted = formatter.format(ast, rules)
