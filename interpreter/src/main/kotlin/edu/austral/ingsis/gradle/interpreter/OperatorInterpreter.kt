@@ -10,7 +10,7 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.castToDesiredType
 
-class SumInterpreter() : Interpreter {
+class SumInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -58,7 +58,7 @@ class SumInterpreter() : Interpreter {
     }
 }
 
-class SubtractInterpreter() : Interpreter {
+class SubtractInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -93,7 +93,7 @@ class SubtractInterpreter() : Interpreter {
     }
 }
 
-class MultiplyInterpreter() : Interpreter {
+class MultiplyInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
@@ -128,7 +128,7 @@ class MultiplyInterpreter() : Interpreter {
     }
 }
 
-class DivideInterpreter() : Interpreter {
+class DivideInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,

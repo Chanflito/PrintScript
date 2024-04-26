@@ -7,7 +7,7 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class ReassignationInterpreter() : Interpreter {
+class ReassignationInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
