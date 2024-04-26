@@ -10,12 +10,19 @@
     },
     {
       "type": "spaceAroundEqual",
-      "allowed": false
+      "allowed": true
     },
     {
       "type": "newlineBeforePrintln",
-      "allowed": true,
+      "allowed": false,
       "maxInt": 1
+    }
+  ],
+  "BlockRules": [
+    {
+      "type": "spacesAfterStartLine",
+      "allowed": true,
+      "maxInt": 3
     }
   ]
 }

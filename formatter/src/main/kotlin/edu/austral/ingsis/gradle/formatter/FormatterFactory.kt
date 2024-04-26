@@ -4,8 +4,8 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.formatter.rule.Rule
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleAdapter
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser
+import edu.austral.ingsis.gradle.formatter.rule.adapter.context.Block
 import edu.austral.ingsis.gradle.formatter.rule.adapter.context.Default
-import edu.austral.ingsis.gradle.formatter.rule.adapter.context.IfBlock
 
 fun createDefaultFormatter(): Formatter<AST> {
     return ComposeFormatter(
@@ -37,8 +37,8 @@ fun createDefaultRules(rulesFile: String): List<Rule> {
     return adaptedRules
 }
 
-fun createIfBlockRules(rulesFile: String): List<Rule> {
-    val ifBlockRuleData = RuleParser().parseRulesFromFile(rulesFile, IfBlock())
-    val adaptedRules = ifBlockRuleData.map { RuleAdapter().adapt(it) }
+fun createBlockRules(rulesFile: String): List<Rule> {
+    val blockRuleData = RuleParser().parseRulesFromFile(rulesFile, Block())
+    val adaptedRules = blockRuleData.map { RuleAdapter().adapt(it) }
     return adaptedRules
 }

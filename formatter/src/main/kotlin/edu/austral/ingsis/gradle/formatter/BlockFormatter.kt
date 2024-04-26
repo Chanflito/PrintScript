@@ -12,7 +12,8 @@ class BlockFormatter : Formatter<AST> {
         return when (node) {
             is BlockNode -> {
                 val composeFormatter = createDefaultFormatter()
-                // ComposeFormatter case where each child is formatted
+                // same as ComposeFormatter case where each child is formatted
+                // in this case the format rules are applied to the entire line
                 val formatted =
                     node.children.joinToString("\n") {
                         composeFormatter.format(it, rules)
