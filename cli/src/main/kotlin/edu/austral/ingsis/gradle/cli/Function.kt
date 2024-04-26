@@ -46,9 +46,6 @@ class ExecuteFunction : Function<String, List<Any>> {
             )
         while (parserIterator.hasNext()) {
             val ast: AST? = parserIterator.next()
-            val homeDir = System.getProperty("user.home")
-            val filePath = "$homeDir/Desktop/tokencomparison.txt"
-            File(filePath).writeText(ast.toString())
             when (val interpretResult = interpreter.interpret(ast!!)) {
                 is InterpretResult.ContextResult -> {
                     interpreter.updateContext(interpretResult.context)
