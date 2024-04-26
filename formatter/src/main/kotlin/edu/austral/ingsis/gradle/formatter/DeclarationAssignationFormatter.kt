@@ -10,19 +10,15 @@ class DeclarationAssignationFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is DeclarationAssignation -> {
-                val keyword = node.keyword.value
-                val identifier = node.identifierNode.name
-                val nodeType = node.nodeType.toString().lowercase(getDefault())
-                val composeFormatter = createDefaultFormatter()
-                val expression = composeFormatter.format(node.expression, rules)
-                val result = "$keyword $identifier:$nodeType=$expression;"
-                return applyFormat(result, rules.defaultRule)
-            }
+        node as DeclarationAssignation
 
-            else -> ""
-        }
+        val keyword = node.keyword.value
+        val identifier = node.identifierNode.name
+        val nodeType = node.nodeType.toString().lowercase(getDefault())
+        val composeFormatter = createDefaultFormatter()
+        val expression = composeFormatter.format(node.expression, rules)
+        val result = "$keyword $identifier:$nodeType=$expression;"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {

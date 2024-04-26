@@ -9,14 +9,11 @@ class ProgramNodeFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is ProgramNode -> {
-                val nodes = node.children
-                val composeFormatter = createDefaultFormatter()
-                return nodes.joinToString("\n") { composeFormatter.format(it, rules) }
-            }
-            else -> ""
-        }
+        node as ProgramNode
+
+        val nodes = node.children
+        val composeFormatter = createDefaultFormatter()
+        return nodes.joinToString("\n") { composeFormatter.format(it, rules) }
     }
 
     override fun canFormat(node: AST): Boolean {

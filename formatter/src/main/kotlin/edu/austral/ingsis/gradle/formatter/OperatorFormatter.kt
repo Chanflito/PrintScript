@@ -12,16 +12,13 @@ class SumFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is SumNode -> {
-                val composeFormatter = createDefaultFormatter()
-                val left = composeFormatter.format(node.left, rules)
-                val right = composeFormatter.format(node.right, rules)
-                val result = "$left + $right"
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        node as SumNode
+
+        val composeFormatter = createDefaultFormatter()
+        val left = composeFormatter.format(node.left, rules)
+        val right = composeFormatter.format(node.right, rules)
+        val result = "$left + $right"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -34,16 +31,13 @@ class SubtractFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is SubtractNode -> {
-                val composeFormatter = createDefaultFormatter()
-                val left = composeFormatter.format(node.left, rules)
-                val right = composeFormatter.format(node.right, rules)
-                val result = "$left - $right"
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        node as SubtractNode
+
+        val composeFormatter = createDefaultFormatter()
+        val left = composeFormatter.format(node.left, rules)
+        val right = composeFormatter.format(node.right, rules)
+        val result = "$left - $right"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -56,16 +50,13 @@ class MultiplyFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is MultiplyNode -> {
-                val composeFormatter = createDefaultFormatter()
-                val left = composeFormatter.format(node.left, rules)
-                val right = composeFormatter.format(node.right, rules)
-                val result = "$left * $right"
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        node as MultiplyNode
+
+        val composeFormatter = createDefaultFormatter()
+        val left = composeFormatter.format(node.left, rules)
+        val right = composeFormatter.format(node.right, rules)
+        val result = "$left * $right"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -78,16 +69,13 @@ class DivideFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is DivideNode -> {
-                val composeFormatter = createDefaultFormatter()
-                val left = composeFormatter.format(node.left, rules)
-                val right = composeFormatter.format(node.right, rules)
-                val result = "$left / $right"
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        node as DivideNode
+
+        val composeFormatter = createDefaultFormatter()
+        val left = composeFormatter.format(node.left, rules)
+        val right = composeFormatter.format(node.right, rules)
+        val result = "$left / $right"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
