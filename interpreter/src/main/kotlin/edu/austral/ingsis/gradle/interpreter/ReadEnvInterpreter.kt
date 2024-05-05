@@ -21,19 +21,33 @@ class ReadEnvInterpreter(val type: NodeType) : Interpreter {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val readEnvNode = node as ReadEnvNode
         val value = readEnvNode.value
+        return checkTypeAndAttemptConversion(value, interpreterManager, node)
+    }
+
+    /**
+     * Checks type assigned to the returning env variable and tries to convert it
+     */
+    private fun checkTypeAndAttemptConversion(
+        value: String,
+        interpreterManager: InterpreterManager,
+        node: AST,
+    ): InterpretResult {
         return when (type) {
             is NumberNodeType -> {
                 val number = convertToNumber(value, interpreterManager.envReader)
                 InterpretResult.OperationResult(number)
             }
+
             is StringNodeType -> {
                 val stringValue = convertToString(value, interpreterManager.envReader)
                 InterpretResult.OperationResult(stringValue)
             }
+
             is BooleanNodeType -> {
                 val booleanValue = convertToBoolean(value, interpreterManager.envReader)
                 InterpretResult.OperationResult(booleanValue)
             }
+
             else -> throw RuntimeException("Cannot interpret node $node")
         }
     }

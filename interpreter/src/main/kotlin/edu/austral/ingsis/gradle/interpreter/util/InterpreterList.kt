@@ -22,6 +22,10 @@ import edu.austral.ingsis.gradle.interpreter.StringLiteralInterpreter
 import edu.austral.ingsis.gradle.interpreter.SubtractInterpreter
 import edu.austral.ingsis.gradle.interpreter.SumInterpreter
 
+/**
+ * Default list of interpreters for ease of use.
+ */
+
 class InterpreterList {
     fun getInterpreters(): List<Interpreter> {
         return listOf(

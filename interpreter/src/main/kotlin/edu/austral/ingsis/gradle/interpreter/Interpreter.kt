@@ -13,7 +13,12 @@ interface Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult
 
+    /**
+     * Checks if interpreter is made for interpreting the node passed as parameter
+     */
+
     fun canInterpret(node: AST): Boolean
 
+    // Some interpreters use nodeType, by default its null. This is used exclusively in InterpreterManager
     fun getNodeType(): NodeType? = null
 }

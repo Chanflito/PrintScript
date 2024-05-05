@@ -6,6 +6,10 @@ import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 
+/**
+ * Interpreter for only declaring variables
+ */
+
 class DeclarationInterpreter() : Interpreter {
     override fun interpret(
         node: AST,
@@ -14,9 +18,7 @@ class DeclarationInterpreter() : Interpreter {
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val declarationNode = node as DeclarationNode
-        if (context.isInContext(declarationNode.identifierNode.name)) {
-            throw RuntimeException("Variable ${declarationNode.identifierNode.name} already declared")
-        }
+        isAlreadyDeclared(context, declarationNode)
         return when (declarationNode.keyword.value) {
             "let" -> {
                 val newContext =
@@ -27,6 +29,15 @@ class DeclarationInterpreter() : Interpreter {
                 throw RuntimeException("Cannot declare a constant without initialization")
             }
             else -> throw RuntimeException("Invalid keyword: ${declarationNode.keyword.value}")
+        }
+    }
+
+    private fun isAlreadyDeclared(
+        context: Context,
+        declarationNode: DeclarationNode,
+    ) {
+        if (context.isInContext(declarationNode.identifierNode.name)) {
+            throw RuntimeException("Variable ${declarationNode.identifierNode.name} already declared")
         }
     }
 
