@@ -19,7 +19,8 @@ class DeclarationInterpreter() : Interpreter {
         }
         return when (declarationNode.keyword.value) {
             "let" -> {
-                val newContext = Context(declaredVariables = mapOf(declarationNode.identifierNode.name to declarationNode.nodeType))
+                val newContext =
+                    Context(declaredVariablesAndConstants = mapOf(declarationNode.identifierNode.name to declarationNode.nodeType))
                 InterpretResult.ContextResult(newContext)
             }
             "const" -> {

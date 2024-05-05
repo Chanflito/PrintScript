@@ -79,7 +79,7 @@ class DeclarationAssignationInterpreter : Interpreter {
                 emptyMap()
             }
 
-        return Context(assignedVariables = assignedMap, declaredVariables = mapOf(identifier to type), constants = constMap)
+        return Context(assignedVariables = assignedMap, declaredVariablesAndConstants = mapOf(identifier to type), constants = constMap)
     }
 
     override fun canInterpret(node: AST): Boolean {

@@ -14,8 +14,8 @@ class ComposeInterpreter(
     emitter: Printer,
     envReader: EnvReader,
     inputReader: InputReader,
+    private val context: Context = Context(),
 ) {
-    private var context = Context()
     private val manager = InterpreterManager(interpreters, emitter, envReader, inputReader)
 
     fun interpret(ast: AST): InterpretResult {
@@ -23,8 +23,16 @@ class ComposeInterpreter(
         return interpreter.interpret(ast, context, manager)
     }
 
-    fun updateContext(newContext: Context) {
-        context = context.update(newContext)
+    fun updateContext(newContext: Context): ComposeInterpreter {
+        return ComposeInterpreter(manager.interpreters, manager.printer, manager.envReader, manager.inputReader, context.update(newContext))
+    }
+
+    fun interpretAndUpdateContext(ast: AST): ComposeInterpreter {
+        val interpretResult = interpret(ast)
+        if (interpretResult is InterpretResult.ContextResult) {
+            return updateContext(interpretResult.context)
+        }
+        return this
     }
 
     fun getContext(): Context {
