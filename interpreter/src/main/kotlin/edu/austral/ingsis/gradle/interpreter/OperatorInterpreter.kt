@@ -3,8 +3,9 @@ package edu.austral.ingsis.gradle.interpreter
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.newast.Operator
+import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
@@ -17,44 +18,42 @@ class SumInterpreter : Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val operatorNode = node as SumNode
-        val leftInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.left)
-        val rightInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.right)
-        val leftResult =
-            leftInterpreter.interpret(operatorNode.left, context, interpreterManager) as InterpretResult.OperationResult
-        val rightResult =
-            rightInterpreter.interpret(
-                operatorNode.right,
-                context,
-                interpreterManager,
-            ) as InterpretResult.OperationResult
-        val leftValue = leftResult.value
-        val rightValue = rightResult.value
+        val operatorNode = node as OperatorNode
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
 
+        return handleSum(leftValue, rightValue)
+    }
+
+    private fun handleSum(
+        leftValue: Any,
+        rightValue: Any,
+    ): InterpretResult {
         return when {
-            leftValue is String && rightValue is String -> InterpretResult.OperationResult(leftValue + rightValue)
+            leftValue is String && rightValue is String ->
+                InterpretResult.OperationResult(leftValue + rightValue)
+
             leftValue is Number && rightValue is Number ->
                 InterpretResult.OperationResult(
                     castToDesiredType(leftValue.toDouble() + rightValue.toDouble()),
                 )
+
             leftValue is String && rightValue is Number ->
                 InterpretResult.OperationResult(
                     leftValue +
-                        castToDesiredType(
-                            rightValue,
-                        ).toString(),
+                        castToDesiredType(rightValue).toString(),
                 )
 
             leftValue is Number && rightValue is String ->
                 InterpretResult.OperationResult(
                     castToDesiredType(leftValue).toString() + rightValue,
                 )
+
             else -> throw RuntimeException("Unsupported types for sum: $leftValue and $rightValue")
         }
     }
 
     override fun canInterpret(node: AST): Boolean {
-        return node is SumNode
+        return node is OperatorNode
     }
 }
 
@@ -66,24 +65,21 @@ class SubtractInterpreter : Interpreter {
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val operatorNode = node as SubtractNode
-        val leftInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.left)
-        val rightInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.right)
-        val leftResult =
-            leftInterpreter.interpret(operatorNode.left, context, interpreterManager) as InterpretResult.OperationResult
-        val rightResult =
-            rightInterpreter.interpret(
-                operatorNode.right,
-                context,
-                interpreterManager,
-            ) as InterpretResult.OperationResult
-        val leftValue = leftResult.value
-        val rightValue = rightResult.value
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
 
+        return handleSubtract(leftValue, rightValue)
+    }
+
+    private fun handleSubtract(
+        leftValue: Any,
+        rightValue: Any,
+    ): InterpretResult {
         return when {
             leftValue is Number && rightValue is Number ->
                 InterpretResult.OperationResult(
                     castToDesiredType(leftValue.toDouble() - rightValue.toDouble()),
                 )
+
             else -> throw RuntimeException("Unsupported types for subtraction: $leftValue and $rightValue")
         }
     }
@@ -101,24 +97,21 @@ class MultiplyInterpreter : Interpreter {
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val operatorNode = node as MultiplyNode
-        val leftInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.left)
-        val rightInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.right)
-        val leftResult =
-            leftInterpreter.interpret(operatorNode.left, context, interpreterManager) as InterpretResult.OperationResult
-        val rightResult =
-            rightInterpreter.interpret(
-                operatorNode.right,
-                context,
-                interpreterManager,
-            ) as InterpretResult.OperationResult
-        val leftValue = leftResult.value
-        val rightValue = rightResult.value
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
 
+        return handleMultiply(leftValue, rightValue)
+    }
+
+    private fun handleMultiply(
+        leftValue: Any,
+        rightValue: Any,
+    ): InterpretResult {
         return when {
             leftValue is Number && rightValue is Number ->
                 InterpretResult.OperationResult(
                     castToDesiredType(leftValue.toDouble() * rightValue.toDouble()),
                 )
+
             else -> throw RuntimeException("Unsupported types for multiplication: $leftValue and $rightValue")
         }
     }
@@ -136,24 +129,21 @@ class DivideInterpreter : Interpreter {
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
         val operatorNode = node as DivideNode
-        val leftInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.left)
-        val rightInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.right)
-        val leftResult =
-            leftInterpreter.interpret(operatorNode.left, context, interpreterManager) as InterpretResult.OperationResult
-        val rightResult =
-            rightInterpreter.interpret(
-                operatorNode.right,
-                context,
-                interpreterManager,
-            ) as InterpretResult.OperationResult
-        val leftValue = leftResult.value
-        val rightValue = rightResult.value
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
 
+        return handleDivide(leftValue, rightValue)
+    }
+
+    private fun handleDivide(
+        leftValue: Any,
+        rightValue: Any,
+    ): InterpretResult {
         return when {
             leftValue is Number && rightValue is Number ->
                 InterpretResult.OperationResult(
                     castToDesiredType(leftValue.toDouble() / rightValue.toDouble()),
                 )
+
             else -> throw RuntimeException("Unsupported types for division: $leftValue and $rightValue")
         }
     }
@@ -161,4 +151,24 @@ class DivideInterpreter : Interpreter {
     override fun canInterpret(node: AST): Boolean {
         return node is DivideNode
     }
+}
+
+private fun interpretLeftAndRight(
+    interpreterManager: InterpreterManager,
+    operatorNode: Operator,
+    context: Context,
+): Pair<Any, Any> {
+    val leftInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.left)
+    val rightInterpreter = interpreterManager.getInterpreterDisregardingType(operatorNode.right)
+    val leftResult =
+        leftInterpreter.interpret(operatorNode.left, context, interpreterManager) as InterpretResult.OperationResult
+    val rightResult =
+        rightInterpreter.interpret(
+            operatorNode.right,
+            context,
+            interpreterManager,
+        ) as InterpretResult.OperationResult
+    val leftValue = leftResult.value
+    val rightValue = rightResult.value
+    return Pair(leftValue, rightValue)
 }

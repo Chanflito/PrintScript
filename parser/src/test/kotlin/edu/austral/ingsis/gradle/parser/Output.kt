@@ -12,6 +12,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
@@ -19,21 +20,20 @@ import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
 val output_001 = NumberLiteralNode(5.0, TokenPosition(Position(1, 1), Position(1, 1)))
 
 val output_002 =
-    SumNode(
+    OperatorNode(
         TokenPosition(Position(1, 1), Position(1, 1)),
         NumberLiteralNode(5.0, TokenPosition(Position(1, 1), Position(1, 1))),
         NumberLiteralNode(5.0, TokenPosition(Position(1, 1), Position(1, 1))),
     )
 
 val output_003 =
-    SumNode(
+    OperatorNode(
         TokenPosition(Position(1, 1), Position(1, 1)),
         StringLiteral("hola", TokenPosition(Position(1, 1), Position(1, 1))),
         StringLiteral("loco", TokenPosition(Position(1, 1), Position(1, 1))),
@@ -86,7 +86,7 @@ val output_008 =
 val output_009 =
     PrintLnNode(
         TokenPosition(Position(1, 1), Position(1, 8)),
-        SumNode(
+        OperatorNode(
             TokenPosition(Position(1, 12), Position(1, 12)),
             NumberLiteralNode(5.0, TokenPosition(Position(1, 10), Position(1, 11))),
             NumberLiteralNode(7.0, TokenPosition(Position(1, 12), Position(1, 13))),
@@ -97,7 +97,7 @@ val output_009 =
 val output_010 =
     MultiplyNode(
         TokenPosition(Position(1, 6), Position(1, 7)),
-        SumNode(
+        OperatorNode(
             TokenPosition(Position(1, 3), Position(1, 4)),
             NumberLiteralNode(5.0, TokenPosition(Position(1, 2), Position(1, 3))),
             NumberLiteralNode(7.0, TokenPosition(Position(1, 4), Position(1, 5))),
@@ -219,7 +219,7 @@ val output_017 =
             ),
             PrintLnNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                SumNode(
+                OperatorNode(
                     TokenPosition(Position(0, 0), Position(0, 0)),
                     IdentifierNode(
                         "a",
@@ -249,7 +249,7 @@ val output_019 =
         TokenPosition(Position(0, 0), Position(0, 0)),
         NumberNodeType,
         IdentifierNode("cuenta", TokenPosition(Position(0, 0), Position(0, 0))),
-        SumNode(
+        OperatorNode(
             TokenPosition(Position(0, 0), Position(0, 0)),
             SubtractNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),

@@ -25,7 +25,7 @@ class InterpreterManager(
     }
 
     /**
-     * Returns inteprreter based only on type of AST
+     * Returns intepreter based only on type of AST
      */
 
     fun getInterpreterDisregardingType(node: AST): Interpreter {

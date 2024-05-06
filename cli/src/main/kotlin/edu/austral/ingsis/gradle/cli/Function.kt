@@ -7,7 +7,6 @@ import edu.austral.ingsis.gradle.formatter.createDefaultRules
 import edu.austral.ingsis.gradle.formatter.rule.ComposeRule
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 import edu.austral.ingsis.gradle.interpreter.ComposeInterpreter
-import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
@@ -38,19 +37,16 @@ class ExecuteFunction : Function<String, List<Any>> {
         val lexerIterator = LexerIterator(lexer, input.byteInputStream().bufferedReader())
         val composeParser = createComposeParser()
         val parserIterator = ParserIterator(lexerIterator, composeParser)
-        val interpreter =
+        var interpreter =
             ComposeInterpreter(
                 emitter = KotlinPrinter(),
                 envReader = KotlinEnvReader(),
                 inputReader = KotlinInputReader(),
             )
         while (parserIterator.hasNext()) {
-            val ast: AST? = parserIterator.next()
-            when (val interpretResult = interpreter.interpret(ast!!)) {
-                is InterpretResult.ContextResult -> {
-                    interpreter.updateContext(interpretResult.context)
-                }
-                else -> throw RuntimeException("Interpreter result not supported")
+            val ast = parserIterator.next()
+            if (ast != null) {
+                interpreter = interpreter.interpretAndUpdateContext(ast)
             }
         }
         return listOf(interpreter.getContext())

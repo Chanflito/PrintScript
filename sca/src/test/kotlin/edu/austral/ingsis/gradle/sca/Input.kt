@@ -7,6 +7,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
 import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
@@ -14,7 +15,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
@@ -77,7 +77,7 @@ val input_005 =
         listOf(
             PrintLnNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                SumNode(
+                OperatorNode(
                     TokenPosition(Position(0, 0), Position(0, 0)),
                     IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
                     IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
@@ -171,7 +171,7 @@ val input_011 =
                         listOf(
                             PrintLnNode(
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
+                                OperatorNode(
                                     TokenPosition(Position(0, 0), Position(0, 0)),
                                     IdentifierNode(
                                         "a",
@@ -296,7 +296,7 @@ val input_014 =
                         listOf(
                             PrintLnNode(
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
+                                OperatorNode(
                                     TokenPosition(Position(0, 0), Position(0, 0)),
                                     IdentifierNode(
                                         "aCamel",
@@ -316,7 +316,7 @@ val input_014 =
                         listOf(
                             PrintLnNode(
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
+                                OperatorNode(
                                     TokenPosition(Position(0, 0), Position(0, 0)),
                                     IdentifierNode(
                                         "aCamel",
@@ -340,7 +340,7 @@ val input_015 =
         listOf(
             ReadInputNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                SumNode(
+                OperatorNode(
                     TokenPosition(Position(0, 0), Position(0, 0)),
                     IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
                     IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
@@ -454,7 +454,7 @@ val input_018 =
                             ),
                             ReadInputNode(
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
+                                OperatorNode(
                                     TokenPosition(Position(0, 0), Position(0, 0)),
                                     IdentifierNode(
                                         "a_snake",

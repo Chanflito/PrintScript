@@ -4,11 +4,11 @@ import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
 import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
@@ -34,7 +34,7 @@ val declarationAssignation =
 // 5+5.2
 
 val simpleExpression =
-    SumNode(
+    OperatorNode(
         tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
         NumberLiteralNode(5, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
         NumberLiteralNode(5.2, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
@@ -45,7 +45,7 @@ val simpleExpression =
 val printExample =
     PrintLnNode(
         TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
-        SumNode(
+        OperatorNode(
             TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
             NumberLiteralNode(5, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
             StringLiteral("hola", TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),

@@ -37,7 +37,7 @@ data class DivideNode(
     override fun toString(): String = "/"
 }
 
-data class SumNode(
+data class OperatorNode(
     override val tokenPosition: TokenPosition,
     override val left: Expression,
     override val right: Expression,
