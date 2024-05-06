@@ -26,7 +26,7 @@ class Cli : CliktCommand(help = "Run a PrintScript file") {
     private val rulesFile by option("-r", "--rules", help = "The rules file to use")
         .file(mustExist = true)
 
-    private val source by option(help = "The source file to run")
+    private val source by option("-s", "--source", help = "The source file to run")
         .file(mustExist = true)
 
     private val version by option(help = "PrintScript version to run")

@@ -11,7 +11,7 @@ class PrintLnFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as PrintLnNode
+        if (node !is PrintLnNode) throw IllegalArgumentException("$node is not a PrintLnNode")
 
         val composeFormatter = createDefaultFormatter()
         val value = composeFormatter.format(node.expression, rules)
@@ -29,7 +29,7 @@ class ReadEnvFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as ReadEnvNode
+        if (node !is ReadEnvNode) throw IllegalArgumentException("$node is not a ReadEnvNode")
 
         val result = "readEnv(\"${node.value}\")"
         return applyFormat(result, rules.defaultRule)
@@ -45,7 +45,7 @@ class ReadInputFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as ReadInputNode
+        if (node !is ReadInputNode) throw IllegalArgumentException("$node is not a ReadInputNode")
 
         val composeFormatter = createDefaultFormatter()
         val value = composeFormatter.format(node.expression, rules)

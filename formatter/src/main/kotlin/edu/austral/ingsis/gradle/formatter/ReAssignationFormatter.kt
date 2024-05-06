@@ -9,7 +9,7 @@ class ReAssignationFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as ReAssignationNode
+        if (node !is ReAssignationNode) throw IllegalArgumentException("$node is not a ReAssignationNode")
 
         val identifier = node.identifierNode.name
         val composeFormatter = createDefaultFormatter()

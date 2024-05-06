@@ -12,6 +12,7 @@ fun createDefaultFormatter(): Formatter<AST> {
         listOf(
             BlockFormatter(),
             DeclarationAssignationFormatter(),
+            DeclarationFormatter(),
             SumFormatter(),
             SubtractFormatter(),
             MultiplyFormatter(),

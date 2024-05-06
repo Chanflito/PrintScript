@@ -12,7 +12,7 @@ class SumFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as SumNode
+        if (node !is SumNode) throw IllegalArgumentException("$node is not a SumNode")
 
         val composeFormatter = createDefaultFormatter()
         val left = composeFormatter.format(node.left, rules)
@@ -31,7 +31,7 @@ class SubtractFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as SubtractNode
+        if (node !is SubtractNode) throw IllegalArgumentException("$node is not a SubtractNode")
 
         val composeFormatter = createDefaultFormatter()
         val left = composeFormatter.format(node.left, rules)
@@ -50,7 +50,7 @@ class MultiplyFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as MultiplyNode
+        if (node !is MultiplyNode) throw IllegalArgumentException("$node is not a MultiplyNode")
 
         val composeFormatter = createDefaultFormatter()
         val left = composeFormatter.format(node.left, rules)
@@ -69,7 +69,7 @@ class DivideFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as DivideNode
+        if (node !is DivideNode) throw IllegalArgumentException("$node is not a DivideNode")
 
         val composeFormatter = createDefaultFormatter()
         val left = composeFormatter.format(node.left, rules)

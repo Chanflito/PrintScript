@@ -10,7 +10,7 @@ class IfStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as IfStatement
+        if (node !is IfStatement) throw IllegalArgumentException("$node is not a IfStatement")
 
         val composeFormatter = createDefaultFormatter()
         val condition = composeFormatter.format(node.condition, rules)
@@ -29,7 +29,7 @@ class IfElseStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as IfElseStatement
+        if (node !is IfElseStatement) throw IllegalArgumentException("$node is not a IfElseStatement")
 
         val composeFormatter = createDefaultFormatter()
         val condition = composeFormatter.format(node.condition, rules)

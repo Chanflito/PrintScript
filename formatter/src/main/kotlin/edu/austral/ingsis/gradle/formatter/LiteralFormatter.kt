@@ -11,7 +11,7 @@ class StringFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as StringLiteral
+        if (node !is StringLiteral) throw IllegalArgumentException("$node is not a StringLiteral")
 
         val result = node.value
         return applyFormat(result, rules.defaultRule)
@@ -27,7 +27,7 @@ class NumberFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as NumberLiteralNode
+        if (node !is NumberLiteralNode) throw IllegalArgumentException("$node is not a NumberLiteralNode")
 
         val result = node.value.toString()
         return applyFormat(result, rules.defaultRule)
@@ -43,7 +43,7 @@ class BooleanFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as BooleanLiteralNode
+        if (node !is BooleanLiteralNode) throw IllegalArgumentException("$node is not a BooleanLiteralNode")
 
         val result = node.value.toString()
         return applyFormat(result, rules.defaultRule)
