@@ -18,7 +18,7 @@
       "maxInt": 1
     }
   ],
-  "BlockRules": [
+  "blockRules": [
     {
       "type": "spacesAfterStartLine",
       "allowed": true,
