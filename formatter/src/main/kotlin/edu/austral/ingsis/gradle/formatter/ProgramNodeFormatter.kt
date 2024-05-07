@@ -9,7 +9,7 @@ class ProgramNodeFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as ProgramNode
+        if (node !is ProgramNode) throw IllegalArgumentException("$node is not a ProgramNode")
 
         val nodes = node.children
         val composeFormatter = createDefaultFormatter()

@@ -9,7 +9,7 @@ class BlockFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as BlockNode
+        if (node !is BlockNode) throw IllegalArgumentException("$node is not a BlockNode")
 
         val composeFormatter = createDefaultFormatter()
         // same as ComposeFormatter case where each child is formatted

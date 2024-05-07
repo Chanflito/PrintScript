@@ -9,7 +9,7 @@ class IdentifierFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        node as IdentifierNode
+        if (node !is IdentifierNode) throw IllegalArgumentException("$node is not a IdentifierNode")
 
         val result = node.name
         return applyFormat(result, rules.defaultRule)

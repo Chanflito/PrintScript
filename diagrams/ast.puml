@@ -51,10 +51,10 @@ interface Assignation implements Statement {
 class ReAssignation implements Assignation{
     -identifier
 }
+
 class DeclarationAssignation implements Assignation, Declaration{
 
 }
-
 
 interface Operator implements Expression{
     -value

@@ -1,5 +1,3 @@
-package edu.austral.ingsis.gradle.formatter
-
 import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
