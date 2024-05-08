@@ -24,12 +24,8 @@ fun doesTypeMatch(
  * Casts double to int if it has no decimal values
  */
 fun castToDesiredType(num: Number): Number {
-    if (num is Double) {
-        return if (num % 1 == 0.0) {
-            num.toInt()
-        } else {
-            num
-        }
+    return when (num) {
+        is Double -> if (num % 1 == 0.0) num.toInt() else num
+        else -> num
     }
-    return num
 }

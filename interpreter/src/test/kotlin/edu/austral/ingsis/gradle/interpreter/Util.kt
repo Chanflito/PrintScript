@@ -15,7 +15,7 @@ import edu.austral.ingsis.gradle.interpreter.util.Printer
 fun createInterpreterManager(): InterpreterManager {
     val interpreters =
         listOf(
-            BlockNodeInterpreter(),
+            BlockInterpreter(),
             DeclarationInterpreter(),
             StringLiteralInterpreter(),
             NumberLiteralInterpreter(),
@@ -36,7 +36,7 @@ fun createInterpreterManager(): InterpreterManager {
             ReadInputInterpreter(StringNodeType),
             ReadInputInterpreter(NumberNodeType),
             ReadInputInterpreter(BooleanNodeType),
-            ReassignationInterpreter(),
+            ReAssignationInterpreter(),
         )
 
     val printer = KotlinPrinter()
@@ -49,7 +49,7 @@ fun createInterpreterManager(): InterpreterManager {
 fun createInterpreterManagerTest(): InterpreterManager {
     val interpreters =
         listOf(
-            BlockNodeInterpreter(),
+            BlockInterpreter(),
             DeclarationInterpreter(),
             StringLiteralInterpreter(),
             NumberLiteralInterpreter(),
@@ -70,7 +70,7 @@ fun createInterpreterManagerTest(): InterpreterManager {
             ReadInputInterpreter(StringNodeType),
             ReadInputInterpreter(NumberNodeType),
             ReadInputInterpreter(BooleanNodeType),
-            ReassignationInterpreter(),
+            ReAssignationInterpreter(),
         )
 
     val printer = KotlinPrinter()
@@ -87,7 +87,7 @@ fun createDynamicInterpreterManager(
 ): InterpreterManager {
     val interpreters =
         listOf(
-            BlockNodeInterpreter(),
+            BlockInterpreter(),
             DeclarationInterpreter(),
             StringLiteralInterpreter(),
             NumberLiteralInterpreter(),
@@ -108,7 +108,7 @@ fun createDynamicInterpreterManager(
             ReadInputInterpreter(StringNodeType),
             ReadInputInterpreter(NumberNodeType),
             ReadInputInterpreter(BooleanNodeType),
-            ReassignationInterpreter(),
+            ReAssignationInterpreter(),
         )
 
     return InterpreterManager(interpreters, printer, envReader, inputReader)

@@ -18,13 +18,12 @@ class DeclarationAssignationInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        if (node !is DeclarationAssignation) throw RuntimeException("Cannot interpret node $node")
 
-        val interpretedNode = node as DeclarationAssignation
-        val identifier = interpretedNode.identifierNode.name
-        val expression = interpretedNode.expression
-        val keyword = interpretedNode.keyword.value
-        val type = interpretedNode.nodeType
+        val identifier = node.identifierNode.name
+        val expression = node.expression
+        val keyword = node.keyword.value
+        val type = node.nodeType
 
         checkIfVariableCanBeDeclared(identifier, context)
         val result = interpretExpression(expression, type, context, interpreterManager)

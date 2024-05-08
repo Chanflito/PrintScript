@@ -10,16 +10,16 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
  * Interpreter for blocks inside control structures like ifs, or loops.
  */
 
-class BlockNodeInterpreter() : Interpreter {
+class BlockInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val blockNode = node as BlockNode
+        if (node !is BlockNode) throw RuntimeException("Cannot interpret node $node")
+
         var newContext = context // this context will be used to update the outer scope
-        blockNode.children.forEach { child ->
+        node.children.forEach { child ->
             val interpreter = interpreterManager.getInterpreter(child)
             val result = interpreter.interpret(child, context, interpreterManager)
             if (result is InterpretResult.ContextResult) {

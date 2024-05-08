@@ -43,7 +43,11 @@ class Context(
         return declaredVariablesAndConstants[name]
     }
 
-    fun isVariableDeclared(name: String): Boolean {
+    fun isInContext(name: String): Boolean {
+        return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
+    }
+
+    private fun isVariableDeclared(name: String): Boolean {
         return declaredVariablesAndConstants.containsKey(name)
     }
 
@@ -53,10 +57,6 @@ class Context(
 
     fun isConstantAssigned(name: String): Boolean {
         return constants.containsKey(name)
-    }
-
-    fun isInContext(name: String): Boolean {
-        return isVariableDeclared(name) || isVariableAssigned(name) || isConstantAssigned(name)
     }
 
     /**

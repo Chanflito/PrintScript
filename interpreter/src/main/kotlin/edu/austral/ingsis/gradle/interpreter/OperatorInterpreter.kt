@@ -17,10 +17,9 @@ class SumInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val operatorNode = node as OperatorNode
-        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
+        if (node !is OperatorNode) throw RuntimeException("Cannot interpret node $node")
 
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleSum(leftValue, rightValue)
     }
 
@@ -63,10 +62,9 @@ class SubtractInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val operatorNode = node as SubtractNode
-        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
+        if (node !is SubtractNode) throw RuntimeException("Cannot interpret node $node")
 
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleSubtract(leftValue, rightValue)
     }
 
@@ -95,10 +93,9 @@ class MultiplyInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val operatorNode = node as MultiplyNode
-        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
+        if (node !is MultiplyNode) throw RuntimeException("Cannot interpret node $node")
 
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleMultiply(leftValue, rightValue)
     }
 
@@ -127,10 +124,9 @@ class DivideInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val operatorNode = node as DivideNode
-        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, operatorNode, context)
+        if (node !is DivideNode) throw RuntimeException("Cannot interpret node $node")
 
+        val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleDivide(leftValue, rightValue)
     }
 

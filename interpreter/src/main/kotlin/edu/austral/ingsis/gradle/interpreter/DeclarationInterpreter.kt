@@ -10,35 +10,36 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
  * Interpreter for only declaring variables
  */
 
-class DeclarationInterpreter() : Interpreter {
+class DeclarationInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val declarationNode = node as DeclarationNode
-        isAlreadyDeclared(context, declarationNode)
-        return when (declarationNode.keyword.value) {
+        if (node !is DeclarationNode) throw RuntimeException("Cannot interpret node $node")
+
+        if (isAlreadyDeclared(context, node)) {
+            throw RuntimeException("Variable ${node.identifierNode.name} already declared")
+        }
+
+        return when (node.keyword.value) {
             "let" -> {
                 val newContext =
-                    Context(declaredVariablesAndConstants = mapOf(declarationNode.identifierNode.name to declarationNode.nodeType))
+                    Context(declaredVariablesAndConstants = mapOf(node.identifierNode.name to node.nodeType))
                 InterpretResult.ContextResult(newContext)
             }
             "const" -> {
                 throw RuntimeException("Cannot declare a constant without initialization")
             }
-            else -> throw RuntimeException("Invalid keyword: ${declarationNode.keyword.value}")
+            else -> throw RuntimeException("Invalid keyword: ${node.keyword.value}")
         }
     }
 
     private fun isAlreadyDeclared(
         context: Context,
-        declarationNode: DeclarationNode,
-    ) {
-        if (context.isInContext(declarationNode.identifierNode.name)) {
-            throw RuntimeException("Variable ${declarationNode.identifierNode.name} already declared")
-        }
+        node: DeclarationNode,
+    ): Boolean {
+        return context.isInContext(node.identifierNode.name)
     }
 
     override fun canInterpret(node: AST): Boolean {

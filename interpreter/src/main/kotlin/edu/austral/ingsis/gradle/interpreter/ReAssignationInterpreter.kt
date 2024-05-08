@@ -7,20 +7,20 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
-class ReassignationInterpreter : Interpreter {
+class ReAssignationInterpreter : Interpreter {
     override fun interpret(
         node: AST,
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        val reassignationNode = node as ReAssignationNode
-        val identifier = reassignationNode.identifierNode.name
+        if (node !is ReAssignationNode) throw RuntimeException("Cannot interpret node $node")
+
+        val identifier = node.identifierNode.name
         checkForErrors(context, identifier)
-        val expressionInterpreter = interpreterManager.getWithTypeOrNot(reassignationNode.expression, context.getVariableType(identifier))
+        val expressionInterpreter = interpreterManager.getWithTypeOrNot(node.expression, context.getVariableType(identifier))
         val expressionResult =
             expressionInterpreter.interpret(
-                reassignationNode.expression,
+                node.expression,
                 context,
                 interpreterManager,
             ) as InterpretResult.OperationResult
