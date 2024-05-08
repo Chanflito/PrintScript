@@ -14,7 +14,8 @@ class IfStatementInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is IfStatement) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as IfStatement
 
         val conditionInterpreter = interpreterManager.getWithTypeOrNot(node.condition, BooleanNodeType)
         val conditionResult =
@@ -47,7 +48,8 @@ class IfElseStatementInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is IfElseStatement) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as IfElseStatement
 
         val conditionInterpreter = interpreterManager.getWithTypeOrNot(node.condition, BooleanNodeType)
         val conditionResult =

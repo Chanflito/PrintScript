@@ -13,7 +13,8 @@ class ReAssignationInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is ReAssignationNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as ReAssignationNode
 
         val identifier = node.identifierNode.name
         checkForErrors(context, identifier)

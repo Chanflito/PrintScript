@@ -19,7 +19,8 @@ class PrintLnInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is PrintLnNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as PrintLnNode
 
         val expression = node.expression
         val interpreter = interpreterManager.getInterpreter(expression)
@@ -40,7 +41,8 @@ class ReadEnvInterpreter(private val type: NodeType) : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is ReadEnvNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as ReadEnvNode
 
         val value = node.value
         return checkTypeAndAttemptConversion(value, interpreterManager, node)
@@ -118,7 +120,8 @@ class ReadInputInterpreter(private val type: NodeType) : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is ReadInputNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as ReadInputNode
 
         val expression = node.expression
         val expressionInterpreter = interpreterManager.getWithTypeOrNot(expression, type)

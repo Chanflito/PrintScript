@@ -18,7 +18,8 @@ class DeclarationAssignationInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is DeclarationAssignation) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as DeclarationAssignation
 
         val identifier = node.identifierNode.name
         val expression = node.expression

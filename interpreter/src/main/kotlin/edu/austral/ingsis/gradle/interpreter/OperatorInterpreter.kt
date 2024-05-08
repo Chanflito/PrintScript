@@ -17,7 +17,8 @@ class SumInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is SumNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as SumNode
 
         val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleSum(leftValue, rightValue)
@@ -62,7 +63,8 @@ class SubtractInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is SubtractNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as SubtractNode
 
         val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleSubtract(leftValue, rightValue)
@@ -93,7 +95,8 @@ class MultiplyInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is MultiplyNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as MultiplyNode
 
         val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleMultiply(leftValue, rightValue)
@@ -124,7 +127,8 @@ class DivideInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is DivideNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as DivideNode
 
         val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleDivide(leftValue, rightValue)

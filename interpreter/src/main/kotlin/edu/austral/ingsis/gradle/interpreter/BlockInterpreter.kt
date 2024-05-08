@@ -16,7 +16,8 @@ class BlockInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is BlockNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as BlockNode
 
         var newContext = context // this context will be used to update the outer scope
         node.children.forEach { child ->

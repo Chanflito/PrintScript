@@ -15,7 +15,8 @@ class StringLiteralInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is StringLiteral) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as StringLiteral
 
         return InterpretResult.OperationResult(node.value)
     }
@@ -31,7 +32,8 @@ class NumberLiteralInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is NumberLiteralNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as NumberLiteralNode
 
         return InterpretResult.OperationResult(castToDesiredType(node.value))
     }
@@ -47,7 +49,8 @@ class BooleanLiteralInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is BooleanLiteralNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as BooleanLiteralNode
 
         return InterpretResult.OperationResult(node.value)
     }

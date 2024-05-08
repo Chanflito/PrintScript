@@ -16,7 +16,8 @@ class DeclarationInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is DeclarationNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as DeclarationNode
 
         if (isAlreadyDeclared(context, node)) {
             throw RuntimeException("Variable ${node.identifierNode.name} already declared")

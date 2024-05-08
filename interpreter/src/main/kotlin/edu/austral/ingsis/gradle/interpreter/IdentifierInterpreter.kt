@@ -15,7 +15,8 @@ class IdentifierInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is IdentifierNode) throw RuntimeException("Cannot interpret node $node")
+        if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as IdentifierNode
 
         val identifier = node.name
         if (!context.isInContext(identifier)) {
