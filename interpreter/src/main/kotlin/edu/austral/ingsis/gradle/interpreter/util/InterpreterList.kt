@@ -1,9 +1,9 @@
-package edu.austral.ingsis.gradle.interpreter.factory
+package edu.austral.ingsis.gradle.interpreter.util
 
 import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
-import edu.austral.ingsis.gradle.interpreter.BlockNodeInterpreter
+import edu.austral.ingsis.gradle.interpreter.BlockInterpreter
 import edu.austral.ingsis.gradle.interpreter.BooleanLiteralInterpreter
 import edu.austral.ingsis.gradle.interpreter.DeclarationAssignationInterpreter
 import edu.austral.ingsis.gradle.interpreter.DeclarationInterpreter
@@ -15,17 +15,21 @@ import edu.austral.ingsis.gradle.interpreter.Interpreter
 import edu.austral.ingsis.gradle.interpreter.MultiplyInterpreter
 import edu.austral.ingsis.gradle.interpreter.NumberLiteralInterpreter
 import edu.austral.ingsis.gradle.interpreter.PrintLnInterpreter
+import edu.austral.ingsis.gradle.interpreter.ReAssignationInterpreter
 import edu.austral.ingsis.gradle.interpreter.ReadEnvInterpreter
 import edu.austral.ingsis.gradle.interpreter.ReadInputInterpreter
-import edu.austral.ingsis.gradle.interpreter.ReassignationInterpreter
 import edu.austral.ingsis.gradle.interpreter.StringLiteralInterpreter
 import edu.austral.ingsis.gradle.interpreter.SubtractInterpreter
 import edu.austral.ingsis.gradle.interpreter.SumInterpreter
 
+/**
+ * Default list of interpreters for ease of use.
+ */
+
 class InterpreterList {
     fun getInterpreters(): List<Interpreter> {
         return listOf(
-            BlockNodeInterpreter(),
+            BlockInterpreter(),
             DeclarationInterpreter(),
             StringLiteralInterpreter(),
             NumberLiteralInterpreter(),
@@ -46,7 +50,7 @@ class InterpreterList {
             ReadInputInterpreter(StringNodeType),
             ReadInputInterpreter(NumberNodeType),
             ReadInputInterpreter(BooleanNodeType),
-            ReassignationInterpreter(),
+            ReAssignationInterpreter(),
         )
     }
 }

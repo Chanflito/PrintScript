@@ -1,4 +1,4 @@
-let a: string = readEnv("PATH");
+let a: string = readInput("PATH");
 let b : boolean = true;
 if (b) {
     println(a);

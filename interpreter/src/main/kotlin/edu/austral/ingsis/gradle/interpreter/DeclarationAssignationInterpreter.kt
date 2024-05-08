@@ -8,6 +8,10 @@ import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
 import edu.austral.ingsis.gradle.interpreter.util.doesTypeMatch
 
+/**
+ * Interpreter for when variables or constants are declared and have a value assigned in the same line
+ */
+
 class DeclarationAssignationInterpreter : Interpreter {
     override fun interpret(
         node: AST,
@@ -15,12 +19,12 @@ class DeclarationAssignationInterpreter : Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
+        node as DeclarationAssignation
 
-        val interpretedNode = node as DeclarationAssignation
-        val identifier = interpretedNode.identifierNode.name
-        val expression = interpretedNode.expression
-        val keyword = interpretedNode.keyword.value
-        val type = interpretedNode.nodeType
+        val identifier = node.identifierNode.name
+        val expression = node.expression
+        val keyword = node.keyword.value
+        val type = node.nodeType
 
         checkIfVariableCanBeDeclared(identifier, context)
         val result = interpretExpression(expression, type, context, interpreterManager)
@@ -29,6 +33,10 @@ class DeclarationAssignationInterpreter : Interpreter {
         val newContext = createContextAfterDeclaration(identifier, result, type, keyword)
         return InterpretResult.ContextResult(newContext)
     }
+
+    /**
+     * Checks if variables isn't already declared
+     */
 
     private fun checkIfVariableCanBeDeclared(
         identifier: String,
@@ -39,6 +47,9 @@ class DeclarationAssignationInterpreter : Interpreter {
         }
     }
 
+    /**
+     * Returns result of interpreting expression on the right-hand side of the assignation
+     */
     private fun interpretExpression(
         expression: AST,
         type: NodeType,
@@ -50,6 +61,9 @@ class DeclarationAssignationInterpreter : Interpreter {
         return interpretResult.value
     }
 
+    /**
+     * Uses utility function to check if the declared NodeType matches the returning type of interpreting the expression
+     */
     private fun checkTypeMatch(
         result: Any,
         type: NodeType,
@@ -58,6 +72,10 @@ class DeclarationAssignationInterpreter : Interpreter {
             throw RuntimeException("Type mismatch")
         }
     }
+
+    /**
+     * Returns a new context with the declared variable or constant
+     */
 
     private fun createContextAfterDeclaration(
         identifier: String,
@@ -79,7 +97,7 @@ class DeclarationAssignationInterpreter : Interpreter {
                 emptyMap()
             }
 
-        return Context(assignedVariables = assignedMap, declaredVariables = mapOf(identifier to type), constants = constMap)
+        return Context(assignedVariables = assignedMap, declaredVariablesAndConstants = mapOf(identifier to type), constants = constMap)
     }
 
     override fun canInterpret(node: AST): Boolean {

@@ -24,3 +24,7 @@ run.doFirst {
     environment 'RELEASE_DATE', project.findProperty('release.date')
     environment 'RELEASE_VERSIONS', project.findProperty('release.versions')
 }
+
+run {
+    standardInput = System.in
+}

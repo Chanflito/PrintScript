@@ -37,4 +37,4 @@ if [ -z "$source_gradle" ] || [ -z "$argument" ]; then
   exit 1
 fi
 
-  ./gradlew --quiet :cli:run --args="$source_gradle $version_gradle $rules_file $argument"
+  ./gradlew --quiet --console plain :cli:run --args="$source_gradle $version_gradle $rules_file $argument"
