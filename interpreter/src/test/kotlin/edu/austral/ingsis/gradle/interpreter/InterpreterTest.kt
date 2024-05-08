@@ -58,8 +58,8 @@ class InterpreterTest {
         val printInterpreter = interpreterManager.getInterpreter(printNode)
         val result = printInterpreter.interpret(printNode, context, interpreterManager)
         assert(result is InterpretResult.ContextResult)
-        val contextAfterPrint = (result as InterpretResult.ContextResult).context
-        // assert(contextAfterPrint.getPrintValues().contains("Hello world"))
+        val printer = interpreterManager.printer as PrinterCollector
+        assert(printer.getPrintedValues().contains("Hello world"))
     }
 
     @Test
@@ -310,31 +310,51 @@ class InterpreterTest {
     @Test
     fun cli_test2() {
         val context = Context()
+        val newContext1 = cli_test2_part1(context)
+        val newContext2 = cli_test2_part2(newContext1)
+        val newContext3 = cli_test2_part3(newContext2)
+        val result4 = cli_test2_part4(newContext3)
+
+        assert_cli_test2_Part5(result4)
+    }
+
+    private fun cli_test2_part1(context: Context): Context {
         val node1 = input_cli1
-        val intepreter1 = interpreterManager.getInterpreter(node1)
-        val result1 = intepreter1.interpret(node1, context, interpreterManager)
+        val interpreter1 = interpreterManager.getInterpreter(node1)
+        val result1 = interpreter1.interpret(node1, context, interpreterManager)
         assert(result1 is InterpretResult.ContextResult)
         val value1 = (result1 as InterpretResult.ContextResult).context
-        val newContext1 = context.update(value1)
+        return context.update(value1)
+    }
+
+    private fun cli_test2_part2(context: Context): Context {
         val node2 = input_cli2
-        val intepreter2 = interpreterManager.getInterpreter(node2)
-        val result2 = intepreter2.interpret(node2, newContext1, interpreterManager)
+        val interpreter2 = interpreterManager.getInterpreter(node2)
+        val result2 = interpreter2.interpret(node2, context, interpreterManager)
         assert(result2 is InterpretResult.ContextResult)
         val value2 = (result2 as InterpretResult.ContextResult).context
-        val newContext2 = newContext1.update(value2)
+        return context.update(value2)
+    }
+
+    private fun cli_test2_part3(context: Context): Context {
         val node3 = input_cli3
-        val intepreter3 = interpreterManager.getInterpreter(node3)
-        val result3 = intepreter3.interpret(node3, newContext2, interpreterManager)
+        val interpreter3 = interpreterManager.getInterpreter(node3)
+        val result3 = interpreter3.interpret(node3, context, interpreterManager)
         assert(result3 is InterpretResult.ContextResult)
         val value3 = (result3 as InterpretResult.ContextResult).context
-        val newContext3 = newContext2.update(value3)
+        return context.update(value3)
+    }
+
+    private fun cli_test2_part4(context: Context): InterpretResult {
         val node4 = input_cli4
-        val intepreter4 = interpreterManager.getInterpreter(node4)
-        val result4 = intepreter4.interpret(node4, newContext3, interpreterManager)
-        assert(result4 is InterpretResult.ContextResult)
-        val value4 = (result4 as InterpretResult.ContextResult).context
-        val newContext4 = newContext3.update(value4)
+        val interpreter4 = interpreterManager.getInterpreter(node4)
+        return interpreter4.interpret(node4, context, interpreterManager)
+    }
+
+    private fun assert_cli_test2_Part5(result: InterpretResult) {
+        assert(result is InterpretResult.ContextResult)
         val expected = (5.0 / 9.0).toString()
-//        assert(newContext4.getPrintValues().contains(expected))
+        val printer = interpreterManager.printer as PrinterCollector
+        assert(printer.getPrintedValues().contains(expected))
     }
 }
