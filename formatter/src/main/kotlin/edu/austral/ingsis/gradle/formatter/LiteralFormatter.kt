@@ -11,13 +11,10 @@ class StringFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is StringLiteral -> {
-                val result = node.value
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        if (node !is StringLiteral) throw IllegalArgumentException("$node is not a StringLiteral")
+
+        val result = node.value
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -30,13 +27,10 @@ class NumberFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is NumberLiteralNode -> {
-                val result = node.value.toString()
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        if (node !is NumberLiteralNode) throw IllegalArgumentException("$node is not a NumberLiteralNode")
+
+        val result = node.value.toString()
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -49,13 +43,10 @@ class BooleanFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is BooleanLiteralNode -> {
-                val result = node.value.toString()
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        if (node !is BooleanLiteralNode) throw IllegalArgumentException("$node is not a BooleanLiteralNode")
+
+        val result = node.value.toString()
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {

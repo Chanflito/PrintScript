@@ -9,14 +9,10 @@ class IdentifierFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is IdentifierNode -> {
-                val result = node.name
-                return applyFormat(result, rules.defaultRule)
-            }
+        if (node !is IdentifierNode) throw IllegalArgumentException("$node is not a IdentifierNode")
 
-            else -> ""
-        }
+        val result = node.name
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {

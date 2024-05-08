@@ -1,5 +1,0 @@
-let aVariable : number = 10;
-let bVariable : number = 20;
-let cVariable : number = aVariable + bVariable;
-
-println(cVariable);

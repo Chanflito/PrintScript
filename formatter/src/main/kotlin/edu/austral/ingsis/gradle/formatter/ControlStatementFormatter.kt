@@ -10,17 +10,13 @@ class IfStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is IfStatement -> {
-                val composeFormatter = createDefaultFormatter()
-                val condition = composeFormatter.format(node.condition, rules)
-                val block = composeFormatter.format(node.ifBlock, rules)
-                val result = "if ($condition) {\n${block}\n}"
-                return applyFormat(result, rules.defaultRule)
-            }
+        if (node !is IfStatement) throw IllegalArgumentException("$node is not a IfStatement")
 
-            else -> ""
-        }
+        val composeFormatter = createDefaultFormatter()
+        val condition = composeFormatter.format(node.condition, rules)
+        val block = composeFormatter.format(node.ifBlock, rules)
+        val result = "if ($condition) {\n${block}\n}"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
@@ -33,18 +29,14 @@ class IfElseStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is IfElseStatement -> {
-                val composeFormatter = createDefaultFormatter()
-                val condition = composeFormatter.format(node.condition, rules)
-                val ifBlock = composeFormatter.format(node.ifBlock, rules)
-                val elseBlock = composeFormatter.format(node.elseBlock, rules)
-                val result = "if ($condition) {\n${ifBlock}\n}else {\n${elseBlock}\n}"
-                return applyFormat(result, rules.defaultRule)
-            }
+        if (node !is IfElseStatement) throw IllegalArgumentException("$node is not a IfElseStatement")
 
-            else -> ""
-        }
+        val composeFormatter = createDefaultFormatter()
+        val condition = composeFormatter.format(node.condition, rules)
+        val ifBlock = composeFormatter.format(node.ifBlock, rules)
+        val elseBlock = composeFormatter.format(node.elseBlock, rules)
+        val result = "if ($condition) {\n${ifBlock}\n}else {\n${elseBlock}\n}"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {

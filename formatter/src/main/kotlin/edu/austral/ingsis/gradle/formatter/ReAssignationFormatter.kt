@@ -9,16 +9,13 @@ class ReAssignationFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        return when (node) {
-            is ReAssignationNode -> {
-                val identifier = node.identifierNode.name
-                val composeFormatter = createDefaultFormatter()
-                val expression = composeFormatter.format(node.expression, rules)
-                val result = "$identifier = $expression;"
-                return applyFormat(result, rules.defaultRule)
-            }
-            else -> ""
-        }
+        if (node !is ReAssignationNode) throw IllegalArgumentException("$node is not a ReAssignationNode")
+
+        val identifier = node.identifierNode.name
+        val composeFormatter = createDefaultFormatter()
+        val expression = composeFormatter.format(node.expression, rules)
+        val result = "$identifier = $expression;"
+        return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
