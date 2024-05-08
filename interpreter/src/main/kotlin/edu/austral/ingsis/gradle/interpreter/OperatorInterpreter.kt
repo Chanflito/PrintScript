@@ -4,8 +4,8 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.Operator
-import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
@@ -17,7 +17,7 @@ class SumInterpreter : Interpreter {
         context: Context,
         interpreterManager: InterpreterManager,
     ): InterpretResult {
-        if (node !is OperatorNode) throw RuntimeException("Cannot interpret node $node")
+        if (node !is SumNode) throw RuntimeException("Cannot interpret node $node")
 
         val (leftValue, rightValue) = interpretLeftAndRight(interpreterManager, node, context)
         return handleSum(leftValue, rightValue)
@@ -52,7 +52,7 @@ class SumInterpreter : Interpreter {
     }
 
     override fun canInterpret(node: AST): Boolean {
-        return node is OperatorNode
+        return node is SumNode
     }
 }
 

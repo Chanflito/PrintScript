@@ -3,8 +3,8 @@ package edu.austral.ingsis.gradle.formatter
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class SumFormatter : Formatter<AST> {
@@ -13,7 +13,7 @@ class SumFormatter : Formatter<AST> {
         rules: Rules,
     ): String {
         return when (node) {
-            is OperatorNode -> {
+            is SumNode -> {
                 val composeFormatter = createDefaultFormatter()
                 val left = composeFormatter.format(node.left, rules)
                 val right = composeFormatter.format(node.right, rules)
@@ -25,7 +25,7 @@ class SumFormatter : Formatter<AST> {
     }
 
     override fun canFormat(node: AST): Boolean {
-        return node is OperatorNode
+        return node is SumNode
     }
 }
 

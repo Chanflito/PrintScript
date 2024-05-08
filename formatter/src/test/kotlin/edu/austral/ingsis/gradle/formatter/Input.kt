@@ -9,7 +9,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
 import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
 import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
@@ -18,6 +17,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.defaultTokenPosition
 
 val input001 =
@@ -47,7 +47,7 @@ val input002 =
                         listOf(
                             PrintLnNode(
                                 defaultTokenPosition(),
-                                OperatorNode(
+                                SumNode(
                                     defaultTokenPosition(),
                                     IdentifierNode(
                                         "a",
@@ -85,7 +85,7 @@ val input003 =
                         listOf(
                             PrintLnNode(
                                 defaultTokenPosition(),
-                                OperatorNode(
+                                SumNode(
                                     defaultTokenPosition(),
                                     IdentifierNode(
                                         "a",
@@ -173,7 +173,7 @@ val input006 =
         listOf(
             PrintLnNode(
                 defaultTokenPosition(),
-                OperatorNode(
+                SumNode(
                     defaultTokenPosition(),
                     IdentifierNode(
                         "a",

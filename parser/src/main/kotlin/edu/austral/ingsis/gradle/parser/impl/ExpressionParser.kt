@@ -4,9 +4,9 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.newast.Expression
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Divide
 import edu.austral.ingsis.gradle.common.token.Minus
 import edu.austral.ingsis.gradle.common.token.Multiply
@@ -50,7 +50,7 @@ class ExpressionParser(private val parsers: Map<TokenType, Parser<InputContext>>
                 Plus ->
                     left =
                         Pair(
-                            OperatorNode(
+                            SumNode(
                                 token.tokenPosition,
                                 left.first as Expression,
                                 right.first as Expression,

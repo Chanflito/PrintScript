@@ -13,7 +13,6 @@ import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.OperatorNode
 import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
@@ -21,6 +20,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
 import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.newast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
@@ -82,7 +82,7 @@ val input_004 =
     )
 
 val input_005 =
-    OperatorNode(
+    SumNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
         NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
         NumberLiteralNode(
@@ -177,7 +177,7 @@ val input_011 =
     )
 
 val input_012 =
-    OperatorNode(
+    SumNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
         StringLiteral(
             "Hello ",
@@ -224,13 +224,13 @@ val input_014 =
 val input_015 =
     PrintLnNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        OperatorNode(
+        SumNode(
             TokenPosition(Position(0, 0), Position(0, 0)),
             StringLiteral(
                 "Hello ",
                 TokenPosition(Position(0, 0), Position(0, 0)),
             ),
-            OperatorNode(
+            SumNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
                 IdentifierNode(
                     "name",
