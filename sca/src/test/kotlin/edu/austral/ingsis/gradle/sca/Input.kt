@@ -19,70 +19,45 @@ import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
 val input_001 =
-    ProgramNode(
+    DeclarationAssignation(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            DeclarationAssignation(
-                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringNodeType,
-                IdentifierNode("aBlue", TokenPosition(Position(0, 0), Position(0, 0))),
-                StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        StringNodeType,
+        IdentifierNode("aBlue", TokenPosition(Position(0, 0), Position(0, 0))),
+        StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_002 =
-    ProgramNode(
+    DeclarationAssignation(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            DeclarationAssignation(
-                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringNodeType,
-                IdentifierNode("a_Blue", TokenPosition(Position(0, 0), Position(0, 0))),
-                StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        StringNodeType,
+        IdentifierNode("a_Blue", TokenPosition(Position(0, 0), Position(0, 0))),
+        StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_003 =
-    ProgramNode(
+    DeclarationAssignation(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            DeclarationAssignation(
-                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringNodeType,
-                IdentifierNode("a_blue", TokenPosition(Position(0, 0), Position(0, 0))),
-                StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        StringNodeType,
+        IdentifierNode("a_blue", TokenPosition(Position(0, 0), Position(0, 0))),
+        StringLiteral("blue", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_004 =
-    ProgramNode(
+    PrintLnNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            PrintLnNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_005 =
-    ProgramNode(
+    PrintLnNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            PrintLnNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                SumNode(
-                    TokenPosition(Position(0, 0), Position(0, 0)),
-                    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
-                    IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
-                ),
-            ),
+        SumNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+            IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
         ),
     )
 
@@ -105,286 +80,232 @@ val input_006 =
     )
 
 val input_007 =
-    ProgramNode(
+    DeclarationNode(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            DeclarationNode(
-                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringNodeType,
-                IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        StringNodeType,
+        IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_008 =
-    ProgramNode(
+    DeclarationNode(
+        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            DeclarationNode(
-                LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringNodeType,
-                IdentifierNode("a_snake", TokenPosition(Position(0, 0), Position(0, 0))),
-            ),
-        ),
+        StringNodeType,
+        IdentifierNode("a_snake", TokenPosition(Position(0, 0), Position(0, 0))),
     )
 
 val input_009 =
-    ProgramNode(
+    PrintLnNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            PrintLnNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                ReadInputNode(
-                    TokenPosition(Position(0, 0), Position(0, 0)),
-                    StringLiteral("SOME_INPUT", TokenPosition(Position(0, 0), Position(0, 0))),
-                ),
-            ),
+        ReadInputNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            StringLiteral("SOME_INPUT", TokenPosition(Position(0, 0), Position(0, 0))),
         ),
     )
 
 val input_010 =
-    ProgramNode(
+    PrintLnNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            PrintLnNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                ReadEnvNode(
-                    TokenPosition(Position(0, 0), Position(0, 0)),
-                    "SOME_ENV",
-                ),
-            ),
+        ReadEnvNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            "SOME_ENV",
         ),
     )
 
 val input_011 =
-    ProgramNode(
+
+    IfElseStatement(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            IfElseStatement(
+        condition = IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+        ifBlock =
+            BlockNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                condition = IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
-                ifBlock =
-                    BlockNode(
+                listOf(
+                    PrintLnNode(
                         TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
+                        SumNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            IdentifierNode(
+                                "a",
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                    IdentifierNode(
-                                        "a",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                    IdentifierNode(
-                                        "b",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                ),
+                            ),
+                            IdentifierNode(
+                                "b",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
                             ),
                         ),
                     ),
-                elseBlock =
-                    BlockNode(
-                        TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                SubtractNode(
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                    IdentifierNode(
-                                        "a",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                    IdentifierNode(
-                                        "b",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
+                ),
             ),
-        ),
+        elseBlock =
+            BlockNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    PrintLnNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        SubtractNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            IdentifierNode(
+                                "a",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                            IdentifierNode(
+                                "b",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
     )
 
 val input_012 =
-    ProgramNode(
+    IfElseStatement(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            IfElseStatement(
+        condition = IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
+        ifBlock =
+            BlockNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                condition = IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
-                ifBlock =
-                    BlockNode(
+                listOf(
+                    PrintLnNode(
                         TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                IdentifierNode(
-                                    "aCamel",
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                ),
-                            ),
+                        IdentifierNode(
+                            "aCamel",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
                         ),
                     ),
-                elseBlock =
-                    BlockNode(
-                        TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                IdentifierNode(
-                                    "aCamel",
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                ),
-                            ),
-                        ),
-                    ),
+                ),
             ),
-        ),
+        elseBlock =
+            BlockNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    PrintLnNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        IdentifierNode(
+                            "aCamel",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                        ),
+                    ),
+                ),
+            ),
     )
 
 val input_013 =
-    ProgramNode(
+    IfElseStatement(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            IfElseStatement(
+        condition = IdentifierNode("a_snake", TokenPosition(Position(0, 0), Position(0, 0))),
+        ifBlock =
+            BlockNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                condition = IdentifierNode("a_snake", TokenPosition(Position(0, 0), Position(0, 0))),
-                ifBlock =
-                    BlockNode(
+                listOf(
+                    PrintLnNode(
                         TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                IdentifierNode(
-                                    "a_snake",
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                ),
-                            ),
+                        IdentifierNode(
+                            "a_snake",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
                         ),
                     ),
-                elseBlock =
-                    BlockNode(
-                        TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                IdentifierNode(
-                                    "a_snake",
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                ),
-                            ),
-                        ),
-                    ),
+                ),
             ),
-        ),
+        elseBlock =
+            BlockNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    PrintLnNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        IdentifierNode(
+                            "a_snake",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                        ),
+                    ),
+                ),
+            ),
     )
 
 val input_014 =
-    ProgramNode(
+    IfElseStatement(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            IfElseStatement(
+        condition = IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
+        ifBlock =
+            BlockNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                condition = IdentifierNode("aCamel", TokenPosition(Position(0, 0), Position(0, 0))),
-                ifBlock =
-                    BlockNode(
+                listOf(
+                    PrintLnNode(
                         TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
+                        SumNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            IdentifierNode(
+                                "aCamel",
                                 TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                    IdentifierNode(
-                                        "aCamel",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                    IdentifierNode(
-                                        "aCamelCase",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                ),
+                            ),
+                            IdentifierNode(
+                                "aCamelCase",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
                             ),
                         ),
                     ),
-                elseBlock =
-                    BlockNode(
-                        TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            PrintLnNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                SumNode(
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                    IdentifierNode(
-                                        "aCamel",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                    IdentifierNode(
-                                        "aCamelCase",
-                                        TokenPosition(Position(0, 0), Position(0, 0)),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
+                ),
             ),
-        ),
+        elseBlock =
+            BlockNode(
+                TokenPosition(Position(0, 0), Position(0, 0)),
+                listOf(
+                    PrintLnNode(
+                        TokenPosition(Position(0, 0), Position(0, 0)),
+                        SumNode(
+                            TokenPosition(Position(0, 0), Position(0, 0)),
+                            IdentifierNode(
+                                "aCamel",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                            IdentifierNode(
+                                "aCamelCase",
+                                TokenPosition(Position(0, 0), Position(0, 0)),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
     )
 
 val input_015 =
-    ProgramNode(
+    ReadInputNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            ReadInputNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                SumNode(
-                    TokenPosition(Position(0, 0), Position(0, 0)),
-                    IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
-                    IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
-                ),
-            ),
+        SumNode(
+            TokenPosition(Position(0, 0), Position(0, 0)),
+            IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+            IdentifierNode("b", TokenPosition(Position(0, 0), Position(0, 0))),
         ),
     )
 
 val input_016 =
-    ProgramNode(
+    ReadInputNode(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            ReadInputNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
-                StringLiteral(
-                    "SOME_INPUT",
-                    TokenPosition(Position(0, 0), Position(0, 0)),
-                ),
-            ),
+        StringLiteral(
+            "SOME_INPUT",
+            TokenPosition(Position(0, 0), Position(0, 0)),
         ),
     )
 
 val input_017 =
-    ProgramNode(
+    IfStatement(
         TokenPosition(Position(0, 0), Position(0, 0)),
-        listOf(
-            IfStatement(
+        condition = IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
+        ifBlock =
+            BlockNode(
                 TokenPosition(Position(0, 0), Position(0, 0)),
-                condition = IdentifierNode("a", TokenPosition(Position(0, 0), Position(0, 0))),
-                ifBlock =
-                    BlockNode(
+                listOf(
+                    ReadInputNode(
                         TokenPosition(Position(0, 0), Position(0, 0)),
-                        listOf(
-                            ReadInputNode(
-                                TokenPosition(Position(0, 0), Position(0, 0)),
-                                IdentifierNode(
-                                    "a",
-                                    TokenPosition(Position(0, 0), Position(0, 0)),
-                                ),
-                            ),
+                        IdentifierNode(
+                            "a",
+                            TokenPosition(Position(0, 0), Position(0, 0)),
                         ),
                     ),
+                ),
             ),
-        ),
     )
 
 val input_018 =
