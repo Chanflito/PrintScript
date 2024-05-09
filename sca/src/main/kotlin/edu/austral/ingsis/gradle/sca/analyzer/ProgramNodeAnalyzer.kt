@@ -25,8 +25,14 @@ class ProgramNodeAnalyzer : Analyzer {
         val report =
             programNode.children.map {
                 when (it) {
-                    is Statement -> StatementAnalyzer().analyze(it, rules)
-                    is Function -> FunctionAnalyzer().analyze(it, rules)
+                    is Statement -> {
+                        val result = StatementAnalyzer().analyze(it, rules)
+                        result
+                    }
+                    is Function -> {
+                        val result = FunctionAnalyzer().analyze(it, rules)
+                        result
+                    }
                     else -> ReportSuccess
                 }
             }

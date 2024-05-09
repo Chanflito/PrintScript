@@ -2,6 +2,8 @@ package edu.austral.ingsis.gradle.sca.analyzer
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.Function
+import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess
@@ -22,6 +24,16 @@ class FunctionAnalyzer : Analyzer {
         rules: List<Rule<AST>>,
     ): ReportResult {
         val report = rules.map { it.verify(function) }
-        return generateReport(report)
+        return when (function) {
+            is PrintLnNode -> {
+                val expressionReport = ExpressionAnalyzer().analyze(function.expression, rules)
+                generateReport(report + expressionReport)
+            }
+            is ReadInputNode -> {
+                val expressionReport = ExpressionAnalyzer().analyze(function.expression, rules)
+                generateReport(report + expressionReport)
+            }
+            else -> generateReport(report)
+        }
     }
 }
