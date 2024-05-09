@@ -4,8 +4,7 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.util.ExpectedTokenErrorMessage
-import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
+import edu.austral.ingsis.gradle.parser.util.MissingTokenException
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
 import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
@@ -13,25 +12,24 @@ import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
 class ReadEnvParser : Parser<InputContext> {
     override fun parse(input: InputContext): Pair<AST, Int> {
         val (readEnvToken, parenthesisIndex) = consumeToken(input.tokens, input.index)
-        val readEnv = readEnvToken ?: throw Exception(NoTokenFoundErrorMessage(parenthesisIndex).toString())
+
         val (leftParenthesisToken, expressionIndex) = consumeToken(input.tokens, parenthesisIndex)
 
         if (!isLeftParenthesis(leftParenthesisToken)) {
-            throw Exception(ExpectedTokenErrorMessage("(", leftParenthesisToken!!).toString())
+            throw MissingTokenException(leftParenthesisToken, "(")
         }
 
-        val (value, rightParenthesisIndex) = consumeToken(input.tokens, expressionIndex)
-        val variableName = value ?: throw Exception(NoTokenFoundErrorMessage(rightParenthesisIndex).toString())
+        val (variableName, rightParenthesisIndex) = consumeToken(input.tokens, expressionIndex)
 
         val (rightParenthesisToken, next) = consumeToken(input.tokens, rightParenthesisIndex)
 
         if (!isRightParenthesis(rightParenthesisToken)) {
-            throw Exception(ExpectedTokenErrorMessage(")", rightParenthesisToken!!).toString())
+            throw MissingTokenException(rightParenthesisToken, ")")
         }
 
         return Pair(
             ReadEnvNode(
-                readEnv.tokenPosition,
+                readEnvToken.tokenPosition,
                 variableName.value,
             ),
             next,

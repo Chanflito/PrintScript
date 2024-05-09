@@ -56,7 +56,7 @@ val output_005 =
 val output_006 =
     DeclarationNode(
         LetKeywordNode(TokenPosition(Position(1, 1), Position(1, 4))),
-        TokenPosition(Position(1, 7), Position(1, 8)),
+        TokenPosition(Position(1, 1), Position(1, 4)),
         NumberNodeType,
         IdentifierNode("a", TokenPosition(Position(1, 5), Position(1, 6))),
     )
