@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.sca.adapter.json
 
 import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.sca.IdentifierRule
 import edu.austral.ingsis.gradle.sca.Rule
 import edu.austral.ingsis.gradle.sca.adapter.ScaAdapter
+import edu.austral.ingsis.gradle.sca.rule.IdentifierRule
 import edu.austral.ingsis.gradle.sca.util.CamelCaseRule
 import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
 import kotlinx.serialization.json.JsonObject

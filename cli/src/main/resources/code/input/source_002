@@ -1,3 +1,3 @@
-let a_snake : string = "snake";
-let b_fire : string = "fire";
+let a_snake : string = snake;
+let b_fire : string = fire;
 println(a_snake + b_fire);

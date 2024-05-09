@@ -1,6 +1,8 @@
 package edu.austral.ingsis.gradle.sca
 
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
+import edu.austral.ingsis.gradle.sca.analyzer.DefaultAnalyzer
+import edu.austral.ingsis.gradle.sca.rule.ComposeRule
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -37,9 +39,10 @@ class AdapterTest {
         val source = File("src/test/resources/config.json")
         val adapter = FileToJsonAdapter()
         val rule = adapter.adapt(source)
-        val node = input_002
-        val result = rule.verify(node)
         assert(rule is ComposeRule)
+        val composeRule = rule as ComposeRule
+        val node = input_002
+        val result = DefaultAnalyzer().analyze(node, composeRule.getRules())
         assert(result is ReportSuccess)
     }
 }
