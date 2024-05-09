@@ -8,7 +8,6 @@ import edu.austral.ingsis.gradle.common.token.ConstKeyword
 import edu.austral.ingsis.gradle.common.token.Divide
 import edu.austral.ingsis.gradle.common.token.ElseKeyword
 import edu.austral.ingsis.gradle.common.token.Identifier
-import edu.austral.ingsis.gradle.common.token.IfKeyword
 import edu.austral.ingsis.gradle.common.token.LeftBrace
 import edu.austral.ingsis.gradle.common.token.LeftParenthesis
 import edu.austral.ingsis.gradle.common.token.LetKeyword
@@ -18,33 +17,18 @@ import edu.austral.ingsis.gradle.common.token.NumberType
 import edu.austral.ingsis.gradle.common.token.NumberValue
 import edu.austral.ingsis.gradle.common.token.Plus
 import edu.austral.ingsis.gradle.common.token.PrintlnKeyword
-import edu.austral.ingsis.gradle.common.token.ReadEnvKeyword
-import edu.austral.ingsis.gradle.common.token.ReadInputKeyword
 import edu.austral.ingsis.gradle.common.token.RightBrace
 import edu.austral.ingsis.gradle.common.token.RightParenthesis
 import edu.austral.ingsis.gradle.common.token.SemiColon
 import edu.austral.ingsis.gradle.common.token.StringType
 import edu.austral.ingsis.gradle.common.token.StringValue
 import edu.austral.ingsis.gradle.common.token.Token
-import edu.austral.ingsis.gradle.parser.impl.AssignationParser
-import edu.austral.ingsis.gradle.parser.impl.BooleanValueParser
-import edu.austral.ingsis.gradle.parser.impl.ComposeParser
-import edu.austral.ingsis.gradle.parser.impl.DeclarationParser
-import edu.austral.ingsis.gradle.parser.impl.ExpressionParser
-import edu.austral.ingsis.gradle.parser.impl.IdentifierParser
-import edu.austral.ingsis.gradle.parser.impl.IfParser
-import edu.austral.ingsis.gradle.parser.impl.LeftParenthesisParser
-import edu.austral.ingsis.gradle.parser.impl.PrintlnParser
-import edu.austral.ingsis.gradle.parser.impl.ReadEnvParser
-import edu.austral.ingsis.gradle.parser.impl.ReadInputParser
-import edu.austral.ingsis.gradle.parser.impl.ValueNumberParser
-import edu.austral.ingsis.gradle.parser.impl.ValueStringParser
 
 fun endOfFile(
     tokens: List<Token>,
     currentIndex: Int,
 ): Boolean {
-    return currentIndex > (tokens.size - 1)
+    return currentIndex >= tokens.size
 }
 
 fun isColon(token: Token?): Boolean {
@@ -134,44 +118,17 @@ fun isElseKeyword(token: Token?): Boolean {
 fun currentToken(
     list: List<Token>,
     index: Int,
-): Token? {
-    return if (index < list.size) list[index] else null
+): Token {
+    if (endOfFile(list, index)) throw EndOfFileException()
+    return list[index]
 }
 
 // Returns new index and the last token consumed.
 fun consumeToken(
     list: List<Token>,
     index: Int,
-): Pair<Token?, Int> {
+): Pair<Token, Int> {
     val current = currentToken(list, index)
     val nextIndex = index + 1
     return Pair(current, nextIndex)
 }
-
-fun createComposeParser(): ComposeParser {
-    return ComposeParser(
-        mapOf(
-            PrintlnKeyword to PrintlnParser(),
-            ReadInputKeyword to ReadInputParser(),
-            ReadEnvKeyword to ReadEnvParser(),
-            IfKeyword to IfParser(),
-            StringValue to ExpressionParser(EXPRESSION_PARSER_MAP),
-            NumberValue to ExpressionParser(EXPRESSION_PARSER_MAP),
-            LeftParenthesis to ExpressionParser(EXPRESSION_PARSER_MAP),
-            LetKeyword to DeclarationParser(),
-            ConstKeyword to DeclarationParser(),
-            Identifier to AssignationParser(),
-        ),
-    )
-}
-
-val EXPRESSION_PARSER_MAP =
-    mapOf(
-        NumberValue to ValueNumberParser(),
-        StringValue to ValueStringParser(),
-        BooleanValue to BooleanValueParser(),
-        LeftParenthesis to LeftParenthesisParser(),
-        Identifier to IdentifierParser(),
-        ReadEnvKeyword to ReadEnvParser(),
-        ReadInputKeyword to ReadInputParser(),
-    )

@@ -2,29 +2,75 @@ package edu.austral.ingsis.gradle.parser.util
 
 import edu.austral.ingsis.gradle.common.token.Token
 
-interface ErrorMessage {
-    override fun toString(): String
-}
-
-data class NoTokenFoundErrorMessage(val index: Int) : ErrorMessage {
+class CustomException(message: String) : Exception(message) {
     override fun toString(): String {
-        return "No token found at index $index of the token's list."
+        return message.toString()
     }
 }
 
-data class ExpectedTokenErrorMessage(val expectedToken: String, val token: Token) : ErrorMessage {
+class NoTokenFoundException() : Exception("Null token found") {
     override fun toString(): String {
-        return "Expected token $expectedToken but found ${token.tokenType} between ${getStartPosition(token)} and ${
+        return message.toString()
+    }
+}
+
+class NoParserFoundException(token: Token) : Exception("No parser found for token ${token.tokenType}") {
+    override fun toString(): String {
+        return message.toString()
+    }
+}
+
+class EndOfFileException : Exception("End of file reached, index out of bounds") {
+    override fun toString(): String {
+        return message.toString()
+    }
+}
+
+class MissingTokenException(token: Token, tokenType: String) :
+    Exception("Missing token $tokenType at position ${getStartPosition(token)}") {
+    override fun toString(): String {
+        return message.toString()
+    }
+}
+
+class ExpectedTokenException(expectedToken: String, token: Token) :
+    Exception(
+        "Expected token $expectedToken but found ${token.tokenType} between ${getStartPosition(token)} and ${
             getEndPosition(
                 token,
             )
-        }"
+        }",
+    ) {
+    override fun toString(): String {
+        return message.toString()
     }
 }
 
-data class InvalidTokenErrorMessage(val token: Token) : ErrorMessage {
+class InvalidTokenException(token: Token) :
+    Exception("Invalid token ${token.tokenType} at position ${getStartPosition(token)}") {
     override fun toString(): String {
-        return "Invalid token ${token.tokenType} between ${getStartPosition(token)} and ${getEndPosition(token)}"
+        return message.toString()
+    }
+}
+
+class InvalidOperatorException(token: Token) :
+    Exception("Invalid operator ${token.tokenType} at position ${getStartPosition(token)}") {
+    override fun toString(): String {
+        return message.toString()
+    }
+}
+
+class InvalidKeywordException(token: Token) :
+    Exception("Invalid keyword ${token.tokenType} at position ${getStartPosition(token)}") {
+    override fun toString(): String {
+        return message.toString()
+    }
+}
+
+class InvalidTypeException(token: Token) :
+    Exception("Invalid type ${token.tokenType} at position ${getStartPosition(token)}") {
+    override fun toString(): String {
+        return message.toString()
     }
 }
 

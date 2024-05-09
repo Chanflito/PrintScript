@@ -4,7 +4,9 @@ import edu.austral.ingsis.gradle.common.ast.newast.AST
 import edu.austral.ingsis.gradle.common.token.TokenType
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.util.InvalidTokenErrorMessage
+import edu.austral.ingsis.gradle.parser.util.CustomException
+import edu.austral.ingsis.gradle.parser.util.MissingTokenException
+import edu.austral.ingsis.gradle.parser.util.NoParserFoundException
 import edu.austral.ingsis.gradle.parser.util.currentToken
 import edu.austral.ingsis.gradle.parser.util.endOfFile
 import edu.austral.ingsis.gradle.parser.util.isRightBrace
@@ -15,22 +17,8 @@ class ComposeParser(
 ) :
     Parser<InputContext> {
     override fun parse(input: InputContext): Pair<AST, Int> {
-        val indexCopy = input.index + 1
-        if (input.tokens.size == 1 && !endOfFile(input.tokens, input.index)) return handleResult(input)
-        if (endOfFile(input.tokens, indexCopy) || currentToken(input.tokens, indexCopy) == null) {
-            throw Exception("NULL TOKEN")
-        }
-        return if (isSemiColon(input.tokens[indexCopy])) {
-            this.parse(InputContext(input.tokens, indexCopy + 1))
-        } else {
-            handleResult(input)
-        }
-    }
-
-    private fun handleResult(input: InputContext): Pair<AST, Int> {
         val result = currentToken(input.tokens, input.index)
-        val parserFound =
-            parsers[result?.tokenType] ?: throw Exception(result?.let { InvalidTokenErrorMessage(it).toString() })
+        val parserFound = parsers[result.tokenType] ?: throw NoParserFoundException(result)
         return parseWith(input, parserFound)
     }
 
@@ -38,17 +26,17 @@ class ComposeParser(
         input: InputContext,
         parser: Parser<InputContext>,
     ): Pair<AST, Int> {
-        val node = parser.parse(InputContext(input.tokens, input.index))
-        if (node.second < input.tokens.size && (isSemiColon(input.tokens[node.second]) || isRightBrace(input.tokens[node.second]))) {
-            return node
+        // result of the parser, including the ast node (.first) and the next index to parse (.second)
+        val result = parser.parse(input)
+        // if the index reaches or passes the end of the tokens list return the parsed node
+        if (endOfFile(input.tokens, result.second)) {
+            throw CustomException("Missing ';' or '}' at the end of the line")
         }
-        if (node.second >= input.tokens.size) {
-            throw Exception("Null token")
+        val nextToken = currentToken(input.tokens, result.second)
+        // if the next token isn't a right brace or a semicolon, throw exception. Remember this parser only parses one line at the time
+        if (!isSemiColon(nextToken) && !isRightBrace(nextToken)) {
+            throw MissingTokenException(nextToken, "';' or '}'")
         }
-        if (isSemiColon(input.tokens[node.second]) && !isRightBrace(input.tokens[node.second])) {
-            throw Exception("Expected ; at the end of the statement")
-        } else {
-            throw Exception("Missing } at the end of the block statement")
-        }
+        return result
     }
 }
