@@ -4,7 +4,7 @@ import java.io.InputStream
 class MockInputStream(line: String, private val numberOfLines: Int) : InputStream() {
     var lineNumber = 0
     private var index = 0
-    private val lineBytes: IntArray = line.toCharArray().map { it.toInt() }.toIntArray()
+    private val lineBytes: IntArray = line.toCharArray().map { it.code }.toIntArray()
 
     override fun read(): Int {
         if (index >= lineBytes.size) {
