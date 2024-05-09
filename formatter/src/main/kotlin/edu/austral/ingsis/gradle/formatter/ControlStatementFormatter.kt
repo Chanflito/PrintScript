@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.IfElseStatement
+import edu.austral.ingsis.gradle.common.ast.IfStatement
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class IfStatementFormatter : Formatter<AST> {

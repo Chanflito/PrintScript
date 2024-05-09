@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignation
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 import java.util.Locale.getDefault
 

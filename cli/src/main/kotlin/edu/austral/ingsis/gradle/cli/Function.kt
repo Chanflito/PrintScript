@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.cli
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.formatter.createBlockRules
 import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules

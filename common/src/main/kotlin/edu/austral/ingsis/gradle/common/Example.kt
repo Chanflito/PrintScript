@@ -1,14 +1,14 @@
 package edu.austral.ingsis.gradle.common
 
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
-import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
-import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
-import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.common.token.defaultTokenPosition
 
 // let a : string ="hola"

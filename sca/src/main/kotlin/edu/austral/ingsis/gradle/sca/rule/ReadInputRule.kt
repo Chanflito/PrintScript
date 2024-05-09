@@ -1,11 +1,11 @@
 package edu.austral.ingsis.gradle.sca.rule
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.Operand
-import edu.austral.ingsis.gradle.common.ast.newast.Operator
-import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.Operand
+import edu.austral.ingsis.gradle.common.ast.Operator
+import edu.austral.ingsis.gradle.common.ast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
 import edu.austral.ingsis.gradle.sca.PrintlnReportErrorMessage
 import edu.austral.ingsis.gradle.sca.ReportFailure
 import edu.austral.ingsis.gradle.sca.ReportResult

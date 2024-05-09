@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.sca.analyzer
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.ControlStatement
-import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.ControlStatement
+import edu.austral.ingsis.gradle.common.ast.IfElseStatement
+import edu.austral.ingsis.gradle.common.ast.IfStatement
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess

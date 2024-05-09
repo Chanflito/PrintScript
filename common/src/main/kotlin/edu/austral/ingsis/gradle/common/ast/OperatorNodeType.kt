@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.common.ast.newast
+package edu.austral.ingsis.gradle.common.ast
 
 interface OperatorNodeType
 

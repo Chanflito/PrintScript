@@ -1,10 +1,10 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
-import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.DivideNode
+import edu.austral.ingsis.gradle.common.ast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class SumFormatter : Formatter<AST> {
