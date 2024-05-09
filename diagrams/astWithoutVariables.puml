@@ -1,0 +1,75 @@
+@startuml
+
+interface AST
+
+interface Expression implements Statement
+
+class IdentifierNode implements Operand
+
+interface Statement implements AST
+
+interface Type <T> implements AST
+
+interface Literal<T> implements Operand
+
+class StringLiteralNode implements Literal
+
+class NumberLiteralNode implements Literal
+
+class BooleanLiteralNode implements Literal
+
+interface Keyword implements AST
+
+class LetKeyword implements Keyword
+
+class ConstKeyword implements Keyword
+
+interface Declaration implements Statement
+
+class DeclarationNode implements Declaration
+
+interface Assignation implements Statement
+
+class ReAssignationNode implements Assignation
+
+class DeclarationAssignationNode implements Assignation, Declaration
+
+interface Operator implements Expression
+
+interface Operand implements Expression
+
+interface Function implements AST
+
+class MultiplyNode implements Operator
+
+class DivideNode implements Operator
+
+class SumNode implements Operator
+
+class SubtractNode implements Operator
+
+class BooleanNodeType implements Type
+class StringNodeType implements Type
+class NumberNodeType implements Type
+
+class PrintlnNode implements Function
+
+class ReadInputNode implements Function, Expression
+
+class ReadEnvNode implements Function, Expression
+
+interface ControlStatement implements Statement
+
+class IfStatementNode implements ControlStatement
+
+class IfElseStatementNode implements ControlStatement
+
+class BlockNode implements Statement
+
+interface OperatorNodeType
+class SumOperatorNode implements OperatorNodeType
+class DivideOperatorNode implements OperatorNodeType
+class MultiplyOperatorNode implements OperatorNodeType
+class SubtractOperatorNode implements OperatorNodeType
+
+@enduml

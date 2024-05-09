@@ -4,8 +4,8 @@ interface OperatorNodeType
 
 object SumOperatorNode : OperatorNodeType
 
-object DivideOperatorNode : OperatorNodeType
+object SubtractOperatorNode : OperatorNodeType
 
 object MultiplyOperatorNode : OperatorNodeType
 
-object SubtractOperatorNode : OperatorNodeType
+object DivideOperatorNode : OperatorNodeType

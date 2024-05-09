@@ -17,26 +17,6 @@ sealed interface Literal<T> : Operand {
     val value: T
 }
 
-data class MultiplyNode(
-    override val tokenPosition: TokenPosition,
-    override val left: Expression,
-    override val right: Expression,
-) : Operator {
-    override val operatorNodeType: OperatorNodeType = MultiplyOperatorNode
-
-    override fun toString(): String = "*"
-}
-
-data class DivideNode(
-    override val tokenPosition: TokenPosition,
-    override val left: Expression,
-    override val right: Expression,
-) : Operator {
-    override val operatorNodeType: OperatorNodeType = DivideOperatorNode
-
-    override fun toString(): String = "/"
-}
-
 data class SumNode(
     override val tokenPosition: TokenPosition,
     override val left: Expression,
@@ -57,7 +37,34 @@ data class SubtractNode(
     override fun toString(): String = "-"
 }
 
+data class MultiplyNode(
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator {
+    override val operatorNodeType: OperatorNodeType = MultiplyOperatorNode
+
+    override fun toString(): String = "*"
+}
+
+data class DivideNode(
+    override val tokenPosition: TokenPosition,
+    override val left: Expression,
+    override val right: Expression,
+) : Operator {
+    override val operatorNodeType: OperatorNodeType = DivideOperatorNode
+
+    override fun toString(): String = "/"
+}
+
 data class IdentifierNode(val name: String, override val tokenPosition: TokenPosition) : Operand
+
+data class NumberLiteralNode(
+    override val value: Number,
+    override val tokenPosition: TokenPosition,
+) : Literal<Number> {
+    override val nodeType: NodeType = NumberNodeType
+}
 
 data class StringLiteral(
     override val value: String,
@@ -71,11 +78,4 @@ data class BooleanLiteralNode(
     override val tokenPosition: TokenPosition,
 ) : Literal<Boolean> {
     override val nodeType: NodeType = BooleanNodeType
-}
-
-data class NumberLiteralNode(
-    override val value: Number,
-    override val tokenPosition: TokenPosition,
-) : Literal<Number> {
-    override val nodeType: NodeType = NumberNodeType
 }

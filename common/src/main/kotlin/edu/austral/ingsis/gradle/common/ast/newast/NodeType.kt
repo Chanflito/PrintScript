@@ -2,9 +2,9 @@ package edu.austral.ingsis.gradle.common.ast.newast
 
 interface NodeType
 
-object BooleanNodeType : NodeType {
+object NumberNodeType : NodeType {
     override fun toString(): String {
-        return "Boolean"
+        return "Number"
     }
 }
 
@@ -14,8 +14,8 @@ object StringNodeType : NodeType {
     }
 }
 
-object NumberNodeType : NodeType {
+object BooleanNodeType : NodeType {
     override fun toString(): String {
-        return "Number"
+        return "Boolean"
     }
 }
