@@ -12,17 +12,17 @@ class PrintlnReportErrorMessage : ReportErrorMessage {
             " ${getTokenEndRowPosition(tokenPosition)} column ${getTokenEndColumnPosition(tokenPosition)}"
 }
 
-class SnakeCaseReportErrorMessage : ReportErrorMessage { // How should i add the identifier name?
+class SnakeCaseReportErrorMessage : ReportErrorMessage {
     override fun build(tokenPosition: TokenPosition): String =
         "Linter ERROR: Identifier is not in snake case " +
-            "between  ${getTokenStartRowPosition(tokenPosition)} and ${getTokenEndRowPosition(tokenPosition)} line, " +
+            "between line ${getTokenStartRowPosition(tokenPosition)} and ${getTokenEndRowPosition(tokenPosition)}, " +
             "column ${getTokenStartColumnPosition(tokenPosition)} and ${getTokenEndColumnPosition(tokenPosition)}. "
 }
 
 class CamelCaseReportErrorMessage : ReportErrorMessage {
     override fun build(tokenPosition: TokenPosition): String =
         "Linter ERROR: Identifier is not in camel case " +
-            "between  ${getTokenStartRowPosition(tokenPosition)} and ${getTokenEndRowPosition(tokenPosition)} line, " +
+            "between line ${getTokenStartRowPosition(tokenPosition)} and ${getTokenEndRowPosition(tokenPosition)}, " +
             "column ${getTokenStartColumnPosition(tokenPosition)} and ${getTokenEndColumnPosition(tokenPosition)}. "
 }
 
