@@ -38,4 +38,8 @@ class ComposeInterpreter(
     fun getContext(): Context {
         return context
     }
+
+    fun getPrinter(): Printer {
+        return manager.printer
+    }
 }

@@ -3,6 +3,7 @@ package edu.austral.ingsis.gradle.interpreter
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
+import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
 import edu.austral.ingsis.gradle.interpreter.util.PrinterCollector
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -284,6 +285,12 @@ class InterpreterTest {
         assert(newContext.getConstant("input") == System.getenv("PATH"))
     }
 
+    // @Test
+    // fun checkInterpreterList(){
+    // val interpreterList = InterpreterList()
+    // assert(interpreterList.getInterpreters() is List<Interpreter>)
+    // }
+
     @Test
     fun `concatenation with number and string`() {
         val context = Context()
@@ -355,6 +362,25 @@ class InterpreterTest {
         assert(result is InterpretResult.ContextResult)
         val expected = (5.0 / 9.0).toString()
         val printer = interpreterManager.printer as PrinterCollector
+        assert(printer.getPrintedValues().contains(expected))
+    }
+
+    @Test
+    fun `compose interpreter should interpret any input`() {
+        val composeInterpreter =
+            ComposeInterpreter(
+                interpreterManager.interpreters,
+                PrinterCollector(),
+                KotlinEnvReader(),
+                KotlinInputReader(),
+            )
+        val composeInterpreter2 = composeInterpreter.interpretAndUpdateContext(input_cli1)
+        val composeInterpreter3 = composeInterpreter2.interpretAndUpdateContext(input_cli2)
+        assert(composeInterpreter3.getContext().getConstant("b") == 9)
+        val composeInterpreter4 = composeInterpreter3.interpretAndUpdateContext(input_cli3)
+        val composeInterpreter5 = composeInterpreter4.interpretAndUpdateContext(input_cli4)
+        val expected = (5.0 / 9.0).toString()
+        val printer = composeInterpreter5.getPrinter() as PrinterCollector
         assert(printer.getPrintedValues().contains(expected))
     }
 }
