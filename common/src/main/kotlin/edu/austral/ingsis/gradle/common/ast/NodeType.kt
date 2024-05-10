@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.common.ast
 
-interface NodeType
+sealed interface NodeType
 
 object NumberNodeType : NodeType {
     override fun toString(): String {
