@@ -27,13 +27,13 @@ class StringLiteralNode implements Literal {
 }
 
 class NumberLiteralNode implements Literal {
-    -value: String,
-    -tokenPosition: TokenPosition,
+    -value: String
+    -tokenPosition: TokenPosition
 }
 
 class BooleanLiteralNode implements Literal {
-    -value: String,
-    -tokenPosition: TokenPosition,
+    -value: String
+    -tokenPosition: TokenPosition
 }
 
 interface Keyword implements AST {
@@ -143,7 +143,7 @@ class IfElseStatementNode implements ControlStatement {
     -tokenPosition
     -condition: Expression
     -ifBlock: BlockNode
-    -elseBlock:BlockNode
+    -elseBlock: BlockNode
 }
 
 class BlockNode implements Statement {
