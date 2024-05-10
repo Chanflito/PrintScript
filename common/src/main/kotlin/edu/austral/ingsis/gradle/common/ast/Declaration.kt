@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-interface Declaration : Statement {
+sealed interface Declaration : Statement {
     val keyword: Keyword
     val identifierNode: IdentifierNode
     val nodeType: NodeType

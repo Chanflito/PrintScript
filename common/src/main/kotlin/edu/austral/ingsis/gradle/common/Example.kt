@@ -1,20 +1,20 @@
 package edu.austral.ingsis.gradle.common
 
-import edu.austral.ingsis.gradle.common.ast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignationNode
 import edu.austral.ingsis.gradle.common.ast.IdentifierNode
 import edu.austral.ingsis.gradle.common.ast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.PrintLnNode
 import edu.austral.ingsis.gradle.common.ast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.common.ast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.common.token.defaultTokenPosition
 
 // let a : string ="hola"
 
-val declarationAssignation =
-    DeclarationAssignation(
+val declarationAssignationNode =
+    DeclarationAssignationNode(
         keyword = LetKeywordNode(defaultTokenPosition()),
         tokenPosition = defaultTokenPosition(),
         nodeType = StringNodeType,
@@ -24,7 +24,7 @@ val declarationAssignation =
                 tokenPosition = defaultTokenPosition(),
             ),
         expression =
-            StringLiteral(
+            StringLiteralNode(
                 "hola",
                 tokenPosition = defaultTokenPosition(),
             ),
@@ -47,13 +47,13 @@ val printExample =
         SumNode(
             defaultTokenPosition(),
             NumberLiteralNode(5, defaultTokenPosition()),
-            StringLiteral("hola", defaultTokenPosition()),
+            StringLiteralNode("hola", defaultTokenPosition()),
         ),
     )
 
 // let a : string = readInput ("aaa")
 val readInput =
-    DeclarationAssignation(
+    DeclarationAssignationNode(
         keyword = LetKeywordNode(defaultTokenPosition()),
         tokenPosition = defaultTokenPosition(),
         nodeType = StringNodeType,
@@ -65,7 +65,7 @@ val readInput =
         expression =
             ReadInputNode(
                 defaultTokenPosition(),
-                StringLiteral("aaa", defaultTokenPosition()),
+                StringLiteralNode("aaa", defaultTokenPosition()),
             ),
     )
 

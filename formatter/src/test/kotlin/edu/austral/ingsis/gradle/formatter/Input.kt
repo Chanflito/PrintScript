@@ -1,10 +1,10 @@
 import edu.austral.ingsis.gradle.common.ast.BlockNode
 import edu.austral.ingsis.gradle.common.ast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.BooleanNodeType
-import edu.austral.ingsis.gradle.common.ast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignationNode
 import edu.austral.ingsis.gradle.common.ast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.IfElseStatementNode
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
 import edu.austral.ingsis.gradle.common.ast.LetKeywordNode
 import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
 import edu.austral.ingsis.gradle.common.ast.PrintLnNode
@@ -12,7 +12,7 @@ import edu.austral.ingsis.gradle.common.ast.ProgramNode
 import edu.austral.ingsis.gradle.common.ast.ReAssignationNode
 import edu.austral.ingsis.gradle.common.ast.ReadEnvNode
 import edu.austral.ingsis.gradle.common.ast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.common.ast.StringNodeType
 import edu.austral.ingsis.gradle.common.ast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.SumNode
@@ -22,12 +22,12 @@ val input001 =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 StringNodeType,
                 IdentifierNode("aBlue", defaultTokenPosition()),
-                StringLiteral("blue", defaultTokenPosition()),
+                StringLiteralNode("blue", defaultTokenPosition()),
             ),
         ),
     )
@@ -36,7 +36,7 @@ val input002 =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            IfStatement(
+            IfStatementNode(
                 defaultTokenPosition(),
                 condition = IdentifierNode("a", defaultTokenPosition()),
                 ifBlock =
@@ -57,12 +57,12 @@ val input002 =
                                     ),
                                 ),
                             ),
-                            DeclarationAssignation(
+                            DeclarationAssignationNode(
                                 LetKeywordNode(defaultTokenPosition()),
                                 defaultTokenPosition(),
                                 StringNodeType,
                                 IdentifierNode("aBlue", defaultTokenPosition()),
-                                StringLiteral("blue", defaultTokenPosition()),
+                                StringLiteralNode("blue", defaultTokenPosition()),
                             ),
                         ),
                     ),
@@ -74,7 +74,7 @@ val input003 =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            IfElseStatement(
+            IfElseStatementNode(
                 defaultTokenPosition(),
                 condition = IdentifierNode("a", defaultTokenPosition()),
                 ifBlock =
@@ -140,12 +140,12 @@ val input005 =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 StringNodeType,
                 IdentifierNode("aBlue", defaultTokenPosition()),
-                StringLiteral("blue", defaultTokenPosition()),
+                StringLiteralNode("blue", defaultTokenPosition()),
             ),
             ReAssignationNode(
                 defaultTokenPosition(),
@@ -155,12 +155,12 @@ val input005 =
                 ),
                 IdentifierNode("a", defaultTokenPosition()),
             ),
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 StringNodeType,
                 IdentifierNode("aBlue", defaultTokenPosition()),
-                StringLiteral("blue", defaultTokenPosition()),
+                StringLiteralNode("blue", defaultTokenPosition()),
             ),
         ),
     )
@@ -194,7 +194,7 @@ val input006 =
     )
 
 val input007 =
-    DeclarationAssignation(
+    DeclarationAssignationNode(
         LetKeywordNode(defaultTokenPosition()),
         defaultTokenPosition(),
         StringNodeType,
@@ -206,7 +206,7 @@ val input007 =
     )
 
 val input008 =
-    DeclarationAssignation(
+    DeclarationAssignationNode(
         LetKeywordNode(defaultTokenPosition()),
         defaultTokenPosition(),
         BooleanNodeType,
@@ -218,7 +218,7 @@ val input009 =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 StringNodeType,
@@ -228,7 +228,7 @@ val input009 =
                     "PATH",
                 ),
             ),
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 BooleanNodeType,
@@ -242,14 +242,14 @@ val input009_reversed =
     ProgramNode(
         defaultTokenPosition(),
         listOf(
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 BooleanNodeType,
                 IdentifierNode("b", defaultTokenPosition()),
                 BooleanLiteralNode(true, defaultTokenPosition()),
             ),
-            DeclarationAssignation(
+            DeclarationAssignationNode(
                 LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
                 StringNodeType,

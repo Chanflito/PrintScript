@@ -1,5 +1,5 @@
 package edu.austral.ingsis.gradle.common.ast
 
-interface Assignation : Statement {
+sealed interface Assignation : Statement {
     val expression: Expression
 }

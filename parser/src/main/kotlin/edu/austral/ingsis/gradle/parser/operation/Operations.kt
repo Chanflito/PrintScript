@@ -4,7 +4,7 @@ import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.common.ast.DivideNode
 import edu.austral.ingsis.gradle.common.ast.Expression
 import edu.austral.ingsis.gradle.common.ast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.common.ast.SubtractNode
 import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.common.token.Divide
@@ -29,7 +29,7 @@ val SECONDARY_OPERATIONS_MAP =
 fun childrenAreString(
     left: AST,
     right: AST,
-) = left is StringLiteral || right is StringLiteral
+) = left is StringLiteralNode || right is StringLiteralNode
 
 interface Operation {
     fun execute(

@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.formatter
 
 import edu.austral.ingsis.gradle.common.ast.AST
-import edu.austral.ingsis.gradle.common.ast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.IfElseStatementNode
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class IfStatementFormatter : Formatter<AST> {
@@ -10,7 +10,7 @@ class IfStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        if (node !is IfStatement) throw IllegalArgumentException("$node is not a IfStatement")
+        if (node !is IfStatementNode) throw IllegalArgumentException("$node is not a IfStatement")
 
         val composeFormatter = createDefaultFormatter()
         val condition = composeFormatter.format(node.condition, rules)
@@ -20,7 +20,7 @@ class IfStatementFormatter : Formatter<AST> {
     }
 
     override fun canFormat(node: AST): Boolean {
-        return node is IfStatement
+        return node is IfStatementNode
     }
 }
 
@@ -29,7 +29,7 @@ class IfElseStatementFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        if (node !is IfElseStatement) throw IllegalArgumentException("$node is not a IfElseStatement")
+        if (node !is IfElseStatementNode) throw IllegalArgumentException("$node is not a IfElseStatement")
 
         val composeFormatter = createDefaultFormatter()
         val condition = composeFormatter.format(node.condition, rules)
@@ -40,6 +40,6 @@ class IfElseStatementFormatter : Formatter<AST> {
     }
 
     override fun canFormat(node: AST): Boolean {
-        return node is IfElseStatement
+        return node is IfElseStatementNode
     }
 }

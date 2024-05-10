@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.parser.impl
 
 import edu.austral.ingsis.gradle.common.ast.AST
-import edu.austral.ingsis.gradle.common.ast.DeclarationAssignation
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignationNode
 import edu.austral.ingsis.gradle.common.ast.DeclarationNode
 import edu.austral.ingsis.gradle.common.ast.Expression
 import edu.austral.ingsis.gradle.common.ast.IdentifierNode
@@ -76,7 +76,7 @@ class DeclarationParser(
         expression: AST,
         next: Int,
     ) = Pair(
-        DeclarationAssignation(
+        DeclarationAssignationNode(
             keywordNode,
             equalsToken.tokenPosition,
             typeTokenNode,

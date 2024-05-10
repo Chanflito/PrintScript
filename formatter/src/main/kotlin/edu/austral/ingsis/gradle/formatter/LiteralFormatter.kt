@@ -3,7 +3,7 @@ package edu.austral.ingsis.gradle.formatter
 import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.common.ast.BooleanLiteralNode
 import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class StringFormatter : Formatter<AST> {
@@ -11,14 +11,14 @@ class StringFormatter : Formatter<AST> {
         node: AST,
         rules: Rules,
     ): String {
-        if (node !is StringLiteral) throw IllegalArgumentException("$node is not a StringLiteral")
+        if (node !is StringLiteralNode) throw IllegalArgumentException("$node is not a StringLiteralNode")
 
         val result = node.value
         return applyFormat(result, rules.defaultRule)
     }
 
     override fun canFormat(node: AST): Boolean {
-        return node is StringLiteral
+        return node is StringLiteralNode
     }
 }
 

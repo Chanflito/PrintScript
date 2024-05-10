@@ -1,11 +1,11 @@
 package edu.austral.ingsis.gradle.common.ast
 
-interface OperatorNodeType
+sealed interface OperatorNodeType
 
-object SumOperatorNode : OperatorNodeType
+data object SumOperatorNode : OperatorNodeType
 
-object SubtractOperatorNode : OperatorNodeType
+data object SubtractOperatorNode : OperatorNodeType
 
-object MultiplyOperatorNode : OperatorNodeType
+data object MultiplyOperatorNode : OperatorNodeType
 
-object DivideOperatorNode : OperatorNodeType
+data object DivideOperatorNode : OperatorNodeType

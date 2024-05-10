@@ -6,7 +6,7 @@ sealed interface Expression : Statement
 
 sealed interface Operand : Expression
 
-interface Operator : Expression {
+sealed interface Operator : Expression {
     val operatorNodeType: OperatorNodeType
     val left: Expression
     val right: Expression
@@ -57,7 +57,10 @@ data class DivideNode(
     override fun toString(): String = "/"
 }
 
-data class IdentifierNode(val name: String, override val tokenPosition: TokenPosition) : Operand
+data class IdentifierNode(
+    val name: String,
+    override val tokenPosition: TokenPosition,
+) : Operand
 
 data class NumberLiteralNode(
     override val value: Number,
@@ -66,7 +69,7 @@ data class NumberLiteralNode(
     override val nodeType: NodeType = NumberNodeType
 }
 
-data class StringLiteral(
+data class StringLiteralNode(
     override val value: String,
     override val tokenPosition: TokenPosition,
 ) : Literal<String> {
