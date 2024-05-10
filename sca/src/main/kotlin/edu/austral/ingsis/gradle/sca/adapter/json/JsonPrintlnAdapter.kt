@@ -11,7 +11,10 @@ import kotlinx.serialization.json.jsonPrimitive
 
 class JsonPrintlnAdapter(private val expectedInput: String = "enforce_literal_or_identifier_in_println_rule") :
     ScaAdapter<JsonObject> {
-    // Println rule is optional, so if its disabled returns a disable rule that contains a ReportSuccess as default
+    /**
+     * Println rule is optional, so if its disabled returns a disable rule that contains a ReportSuccess as default
+     **/
+
     override fun adapt(input: JsonObject): Rule<AST> {
         if (input.containsKey(expectedInput)) {
             val isEnable = input.getValue(expectedInput).jsonPrimitive.boolean // If it's not boolean fails.
