@@ -4,17 +4,10 @@ import edu.austral.ingsis.gradle.common.token.TokenPosition
 
 sealed interface Expression : Statement
 
-sealed interface Operand : Expression
-
 sealed interface Operator : Expression {
     val operatorNodeType: OperatorNodeType
     val left: Expression
     val right: Expression
-}
-
-sealed interface Literal<T> : Operand {
-    val nodeType: NodeType
-    val value: T
 }
 
 data class SumNode(
@@ -57,10 +50,17 @@ data class DivideNode(
     override fun toString(): String = "/"
 }
 
+sealed interface Operand : Expression
+
 data class IdentifierNode(
     val name: String,
     override val tokenPosition: TokenPosition,
 ) : Operand
+
+sealed interface Literal<T> : Operand {
+    val nodeType: NodeType
+    val value: T
+}
 
 data class NumberLiteralNode(
     override val value: Number,

@@ -8,7 +8,7 @@ class IdentifierNode implements Operand
 
 interface Statement implements AST
 
-interface Type <T> implements AST
+interface NodeType implements AST
 
 interface Literal<T> implements Operand
 
@@ -48,9 +48,9 @@ class SumNode implements Operator
 
 class SubtractNode implements Operator
 
-class BooleanNodeType implements Type
-class StringNodeType implements Type
-class NumberNodeType implements Type
+class BooleanNodeType implements NodeType
+class StringNodeType implements NodeType
+class NumberNodeType implements NodeType
 
 class PrintlnNode implements Function
 
