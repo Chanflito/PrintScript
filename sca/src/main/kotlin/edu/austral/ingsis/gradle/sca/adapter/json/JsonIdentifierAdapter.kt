@@ -10,8 +10,10 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 class JsonIdentifierAdapter(private val expectedInput: String = "identifier_rule") : ScaAdapter<JsonObject> {
-    // This one should be always implemented, so if is not defined throws exception
-    // camelCase and snakeCase
+    /**
+     *Should be always implemented, so if is not defined throws exception
+     **/
+
     override fun adapt(input: JsonObject): Rule<AST> {
         if (input.containsKey(expectedInput)) {
             val case = input.getValue(expectedInput).jsonPrimitive.content

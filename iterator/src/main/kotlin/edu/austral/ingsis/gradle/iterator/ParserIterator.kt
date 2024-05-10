@@ -33,7 +33,7 @@ class ParserIterator(
     private fun parseNewTokenList() {
         val tokens = lexerIterator.next()
         val inputContext = InputContext(tokens, previousIndex)
-        val (ast, index) = parser.parse(inputContext)
+        val (ast, _) = parser.parse(inputContext)
         previousIndex = 0
         previousAST = ast
     }

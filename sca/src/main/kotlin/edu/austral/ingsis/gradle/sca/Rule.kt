@@ -1,6 +1,11 @@
 package edu.austral.ingsis.gradle.sca
 
 interface Rule<T> {
+    /**
+     *Should implement the rule for specific node type
+     * @param node the node to verify
+     * @return report result which should be either ReportSuccess or ReportFailure
+     **/
     fun verify(node: T): ReportResult
 }
 
