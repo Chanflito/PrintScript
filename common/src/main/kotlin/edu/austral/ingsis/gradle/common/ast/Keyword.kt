@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-sealed interface Keyword : AST {
+interface Keyword : AST {
     val value: String
 }
 

@@ -4,7 +4,7 @@ import edu.austral.ingsis.gradle.common.token.TokenPosition
 
 sealed interface Expression : Statement
 
-sealed interface Operator : Expression {
+interface Operator : Expression {
     val operatorNodeType: OperatorNodeType
     val left: Expression
     val right: Expression

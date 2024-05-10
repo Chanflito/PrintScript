@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.common.ast
 
-sealed interface OperatorNodeType
+interface OperatorNodeType
 
 data object SumOperatorNode : OperatorNodeType
 

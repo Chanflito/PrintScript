@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-sealed interface Function : AST
+interface Function : AST
 
 data class PrintLnNode(
     override val tokenPosition: TokenPosition,

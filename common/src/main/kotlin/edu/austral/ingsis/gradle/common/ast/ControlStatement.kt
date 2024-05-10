@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-sealed interface ControlStatement : Statement
+interface ControlStatement : Statement
 
 data class IfStatementNode(
     override val tokenPosition: TokenPosition,

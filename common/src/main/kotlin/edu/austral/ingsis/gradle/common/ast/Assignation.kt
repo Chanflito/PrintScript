@@ -2,7 +2,7 @@ package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
-sealed interface Assignation : Statement {
+interface Assignation : Statement {
     val expression: Expression
 }
 
