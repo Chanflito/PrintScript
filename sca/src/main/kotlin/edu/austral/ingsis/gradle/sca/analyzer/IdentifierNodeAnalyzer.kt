@@ -1,30 +1,27 @@
 package edu.austral.ingsis.gradle.sca.analyzer
 
 import edu.austral.ingsis.gradle.common.ast.AST
-import edu.austral.ingsis.gradle.common.ast.Operator
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess
 import edu.austral.ingsis.gradle.sca.Rule
 import edu.austral.ingsis.gradle.sca.util.generateReport
 
-class OperatorAnalyzer : Analyzer {
+class IdentifierNodeAnalyzer : Analyzer {
     override fun analyze(
         ast: AST,
         rules: List<Rule<AST>>,
     ): ReportResult {
-        if (ast !is Operator) return ReportSuccess
+        if (ast !is IdentifierNode) return ReportSuccess
         return analyzeOperator(ast, rules)
     }
 
     private fun analyzeOperator(
-        operator: Operator,
+        operator: IdentifierNode,
         rules: List<Rule<AST>>,
     ): ReportResult {
-        val left = operator.left
-        val right = operator.right
-        val leftReport = ExpressionAnalyzer().analyze(left, rules)
-        val rightReport = ExpressionAnalyzer().analyze(right, rules)
-        return generateReport(listOf(leftReport, rightReport))
+        val result = rules.map { it.verify(operator) }
+        return generateReport(result)
     }
 }

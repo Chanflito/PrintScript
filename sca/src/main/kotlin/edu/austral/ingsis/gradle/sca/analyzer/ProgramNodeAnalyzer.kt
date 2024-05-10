@@ -1,12 +1,11 @@
 package edu.austral.ingsis.gradle.sca.analyzer
 import edu.austral.ingsis.gradle.common.ast.AST
-import edu.austral.ingsis.gradle.common.ast.Function
 import edu.austral.ingsis.gradle.common.ast.ProgramNode
-import edu.austral.ingsis.gradle.common.ast.Statement
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess
 import edu.austral.ingsis.gradle.sca.Rule
+import edu.austral.ingsis.gradle.sca.factory.createComposeAnalyzer
 import edu.austral.ingsis.gradle.sca.util.generateReport
 
 class ProgramNodeAnalyzer : Analyzer {
@@ -24,17 +23,7 @@ class ProgramNodeAnalyzer : Analyzer {
     ): ReportResult {
         val report =
             programNode.children.map {
-                when (it) {
-                    is Statement -> {
-                        val result = StatementAnalyzer().analyze(it, rules)
-                        result
-                    }
-                    is Function -> {
-                        val result = FunctionAnalyzer().analyze(it, rules)
-                        result
-                    }
-                    else -> ReportSuccess
-                }
+                createComposeAnalyzer().analyze(it, rules)
             }
         return generateReport(report)
     }
