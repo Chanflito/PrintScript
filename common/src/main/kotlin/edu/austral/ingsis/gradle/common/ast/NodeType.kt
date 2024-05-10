@@ -1,22 +1,21 @@
-
 package edu.austral.ingsis.gradle.common.ast
 
-interface NodeType
+sealed interface NodeType
 
-object NumberNode : NodeType
+object NumberNodeType : NodeType {
+    override fun toString(): String {
+        return "Number"
+    }
+}
 
-object OperatorNode : NodeType
+object StringNodeType : NodeType {
+    override fun toString(): String {
+        return "String"
+    }
+}
 
-object AssignationNode : NodeType
-
-object TypeNode : NodeType
-
-object PrintLnNode : NodeType
-
-object StringNode : NodeType
-
-object KeywordNode : NodeType
-
-object IdentifierNode : NodeType
-
-object ProgramNode : NodeType
+object BooleanNodeType : NodeType {
+    override fun toString(): String {
+        return "Boolean"
+    }
+}

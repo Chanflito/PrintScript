@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.IfElseStatementNode
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
@@ -15,7 +15,7 @@ class IfStatementInterpreter : Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        node as IfStatement
+        node as IfStatementNode
 
         val conditionInterpreter = interpreterManager.getWithTypeOrNot(node.condition, BooleanNodeType)
         val conditionResult =
@@ -38,7 +38,7 @@ class IfStatementInterpreter : Interpreter {
     }
 
     override fun canInterpret(node: AST): Boolean {
-        return node is IfStatement
+        return node is IfStatementNode
     }
 }
 
@@ -49,7 +49,7 @@ class IfElseStatementInterpreter : Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        node as IfElseStatement
+        node as IfElseStatementNode
 
         val conditionInterpreter = interpreterManager.getWithTypeOrNot(node.condition, BooleanNodeType)
         val conditionResult =
@@ -74,6 +74,6 @@ class IfElseStatementInterpreter : Interpreter {
     }
 
     override fun canInterpret(node: AST): Boolean {
-        return node is IfElseStatement
+        return node is IfElseStatementNode
     }
 }

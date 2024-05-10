@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.MissingTokenException
@@ -11,7 +11,7 @@ import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
 import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
 
 class IfStatementParser : Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<IfStatement, Int> {
+    override fun parse(input: InputContext): Pair<IfStatementNode, Int> {
         val (ifToken, parenthesisIndex) = consumeToken(input.tokens, input.index)
 
         val (leftParenthesisToken, conditionIndex) = consumeToken(input.tokens, parenthesisIndex)
@@ -31,7 +31,7 @@ class IfStatementParser : Parser<InputContext> {
         val (ifBlock, endifBlockIndex) = BlockParser().parse(InputContext(input.tokens, blockIndex))
 
         return Pair(
-            IfStatement(
+            IfStatementNode(
                 ifToken.tokenPosition,
                 condition as Expression,
                 ifBlock,

@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.EnvReader
 import edu.austral.ingsis.gradle.interpreter.util.InputReader

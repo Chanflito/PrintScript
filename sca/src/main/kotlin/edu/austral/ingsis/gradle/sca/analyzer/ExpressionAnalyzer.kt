@@ -1,10 +1,10 @@
 package edu.austral.ingsis.gradle.sca.analyzer
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.Function
-import edu.austral.ingsis.gradle.common.ast.newast.Operand
-import edu.austral.ingsis.gradle.common.ast.newast.Operator
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.Function
+import edu.austral.ingsis.gradle.common.ast.Operand
+import edu.austral.ingsis.gradle.common.ast.Operator
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess

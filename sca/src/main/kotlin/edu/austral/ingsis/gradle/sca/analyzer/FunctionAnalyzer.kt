@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.sca.analyzer
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.Function
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.Function
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
 import edu.austral.ingsis.gradle.sca.Analyzer
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.ReportSuccess

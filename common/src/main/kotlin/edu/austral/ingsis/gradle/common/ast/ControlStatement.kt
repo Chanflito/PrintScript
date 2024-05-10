@@ -1,16 +1,16 @@
-package edu.austral.ingsis.gradle.common.ast.newast
+package edu.austral.ingsis.gradle.common.ast
 
 import edu.austral.ingsis.gradle.common.token.TokenPosition
 
 interface ControlStatement : Statement
 
-data class IfStatement(
+data class IfStatementNode(
     override val tokenPosition: TokenPosition,
     val condition: Expression,
     val ifBlock: BlockNode,
 ) : ControlStatement
 
-data class IfElseStatement(
+data class IfElseStatementNode(
     override val tokenPosition: TokenPosition,
     val condition: Expression,
     val ifBlock: BlockNode,

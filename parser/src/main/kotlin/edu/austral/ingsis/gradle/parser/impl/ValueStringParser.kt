@@ -1,7 +1,7 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.MissingTokenException
@@ -16,6 +16,6 @@ class ValueStringParser : Parser<InputContext> {
             throw MissingTokenException(currentToken, "String")
         }
 
-        return Pair(StringLiteral(currentToken.value, currentToken.tokenPosition), next)
+        return Pair(StringLiteralNode(currentToken.value, currentToken.tokenPosition), next)
     }
 }

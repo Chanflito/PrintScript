@@ -1,8 +1,8 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.ExpectedTokenException

@@ -1,13 +1,13 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.NodeType
-import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.BooleanNodeType
+import edu.austral.ingsis.gradle.common.ast.NodeType
+import edu.austral.ingsis.gradle.common.ast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.StringNodeType
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.EnvReader
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult

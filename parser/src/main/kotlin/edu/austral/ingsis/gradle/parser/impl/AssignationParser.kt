@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.ReAssignationNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 import edu.austral.ingsis.gradle.parser.util.MissingTokenException
