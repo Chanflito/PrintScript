@@ -79,12 +79,20 @@ class ReadEnvInterpreter(private val type: NodeType) : Interpreter {
     private fun convertToNumber(
         value: String,
         envReader: EnvReader,
-    ): Int {
+    ): Number {
         return when (val valueFromEnv = envReader.readEnv(value)) {
-            is String -> valueFromEnv.toIntOrNull()
-            is Number -> valueFromEnv.toInt() // If it's already a number, just take the integer value
+            is String -> convertStringToDoubleOrInt(valueFromEnv)
+            is Number -> valueFromEnv // If it's already a number, just take the integer value
             else -> null
         } ?: throw RuntimeException("Cannot convert $value to number")
+    }
+
+    private fun convertStringToDoubleOrInt(string: String): Number {
+        return if (string.contains(".")) {
+            string.toDoubleOrNull() ?: throw RuntimeException("Invalid number input")
+        } else {
+            string.toIntOrNull() ?: throw RuntimeException("Invalid number input")
+        }
     }
 
     private fun convertToString(
@@ -129,44 +137,50 @@ class ReadInputInterpreter(private val type: NodeType) : Interpreter {
             expressionInterpreter.interpret(expression, context, interpreterManager) as InterpretResult.OperationResult
         val value = expressionResult.value
         interpreterManager.printer.print(value.toString())
+        return InterpretResult.OperationResult(getInput(interpreterManager, value))
+    }
 
-        val input =
-            when (type) {
-                is StringNodeType -> {
-                    val rawInput = interpreterManager.inputReader.read(value.toString()) // Read raw input
-                    rawInput.toString() // Convert raw input to String
-                }
-
-                is NumberNodeType -> {
-                    when (val rawInput = interpreterManager.inputReader.read(value.toString())) {
-                        is Number -> rawInput // No conversion needed for Numbers
-                        is String -> {
-                            if (rawInput.contains(".")) {
-                                (
-                                    rawInput.toDoubleOrNull()
-                                        ?: throw RuntimeException("Invalid number input")
-                                )
-                            } else {
-                                (rawInput.toIntOrNull() ?: throw RuntimeException("Invalid number input"))
-                            }
-                        }
-
-                        else -> throw RuntimeException("Invalid number input")
-                    }
-                }
-
-                is BooleanNodeType -> {
-                    when (val rawInput = interpreterManager.inputReader.read(value.toString())) { // Read raw input
-                        is Boolean -> rawInput // If raw input is already boolean, use it as is
-                        is String -> rawInput.toBooleanStrictOrNull() ?: throw RuntimeException("Invalid boolean input")
-                        else -> throw RuntimeException("Invalid boolean input")
-                    }
-                }
-
-                else -> throw RuntimeException("Unsupported type: $type")
+    private fun getInput(
+        interpreterManager: InterpreterManager,
+        value: Any,
+    ): Any {
+        val rawInput = interpreterManager.inputReader.read(value.toString())
+        return when (type) {
+            is StringNodeType -> {
+                // Read raw input
+                rawInput.toString() // Convert raw input to String
             }
 
-        return InterpretResult.OperationResult(input)
+            is NumberNodeType -> {
+                convertToNumber(rawInput)
+            }
+
+            is BooleanNodeType -> {
+                when (val rawInput = interpreterManager.inputReader.read(value.toString())) { // Read raw input
+                    is Boolean -> rawInput // If raw input is already boolean, use it as is
+                    is String -> rawInput.toBooleanStrictOrNull() ?: throw RuntimeException("Invalid boolean input")
+                    else -> throw RuntimeException("Invalid boolean input")
+                }
+            }
+
+            else -> throw RuntimeException("Unsupported type: $type")
+        }
+    }
+
+    private fun convertToNumber(rawInput: Any): Number {
+        return when (rawInput) {
+            is Number -> rawInput
+            is String -> convertStringToDoubleOrInt(rawInput)
+            else -> throw RuntimeException("Cannot convert $rawInput to number")
+        }
+    }
+
+    private fun convertStringToDoubleOrInt(string: String): Number {
+        return if (string.contains(".")) {
+            string.toDoubleOrNull() ?: throw RuntimeException("Invalid number input")
+        } else {
+            string.toIntOrNull() ?: throw RuntimeException("Invalid number input")
+        }
     }
 
     override fun canInterpret(node: AST): Boolean {
