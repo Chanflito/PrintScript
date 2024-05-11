@@ -2,6 +2,7 @@ package edu.austral.ingsis.gradle.interpreter
 
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
+import edu.austral.ingsis.gradle.interpreter.util.InterpreterList
 import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
@@ -285,12 +286,6 @@ class InterpreterTest {
         assert(newContext.getConstant("input") == System.getenv("PATH"))
     }
 
-    // @Test
-    // fun checkInterpreterList(){
-    // val interpreterList = InterpreterList()
-    // assert(interpreterList.getInterpreters() is List<Interpreter>)
-    // }
-
     @Test
     fun `concatenation with number and string`() {
         val context = Context()
@@ -369,7 +364,7 @@ class InterpreterTest {
     fun `compose interpreter should interpret any input`() {
         val composeInterpreter =
             ComposeInterpreter(
-                interpreterManager.interpreters,
+                InterpreterList().getInterpreters(),
                 PrinterCollector(),
                 KotlinEnvReader(),
                 KotlinInputReader(),
