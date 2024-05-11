@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.cli
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.formatter.createBlockRules
 import edu.austral.ingsis.gradle.formatter.createDefaultFormatter
 import edu.austral.ingsis.gradle.formatter.createDefaultRules
@@ -14,10 +14,11 @@ import edu.austral.ingsis.gradle.iterator.LexerIterator
 import edu.austral.ingsis.gradle.iterator.ParserIterator
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.parser.builder.createComposeParser
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
-import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter
+import edu.austral.ingsis.gradle.sca.analyzer.DefaultAnalyzer
 import java.io.File
 
 interface Function<in T, out O> {
@@ -58,10 +59,11 @@ class AnalyzeFunction : Function<Pair<String, File>, ReportResult> {
         input: Pair<String, File>,
         version: String,
     ): ReportResult {
-        val ast = createAstNode(input, version)
+        val ast = createAstNode(input, version).first
         val sca = FileToJsonAdapter().adapt(input.second)
+        val composeRule = sca as edu.austral.ingsis.gradle.sca.rule.ComposeRule
         println("Analyzing...\n")
-        return sca.verify(ast.first)
+        return DefaultAnalyzer().analyze(ast, composeRule.getRules())
     }
 }
 
@@ -75,7 +77,7 @@ class FormatFunction : Function<Pair<String, File>, String> {
         val defaultRules = ComposeRule(createDefaultRules(input.second.absolutePath))
         val blockRules = ComposeRule(createBlockRules(input.second.absolutePath))
         val rules = Rules(defaultRules, blockRules)
-        println("Formatting...\n")
+        println("Formatting...")
         return formatter.format(ast.first, rules)
     }
 }

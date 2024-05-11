@@ -1,5 +1,10 @@
 package edu.austral.ingsis.gradle.sca
 
+import edu.austral.ingsis.gradle.sca.analyzer.DefaultAnalyzer
+import edu.austral.ingsis.gradle.sca.analyzer.ProgramNodeAnalyzer
+import edu.austral.ingsis.gradle.sca.rule.IdentifierRule
+import edu.austral.ingsis.gradle.sca.rule.PrintlnRule
+import edu.austral.ingsis.gradle.sca.rule.ReadInputRule
 import edu.austral.ingsis.gradle.sca.util.CamelCaseRule
 import edu.austral.ingsis.gradle.sca.util.SnakeCaseRule
 import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
@@ -11,7 +16,7 @@ class ScaTest {
     fun test001_camelCaseRuleWithValidInputShouldReturnSuccess() {
         val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_001
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assertEquals(ReportSuccess, result)
     }
 
@@ -19,7 +24,7 @@ class ScaTest {
     fun test002_camelCaseRuleWithNoValidInputShouldReturnFailure() {
         val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_002
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
     }
 
@@ -27,7 +32,7 @@ class ScaTest {
     fun test003_snakeCaseRuleWithValidInputShouldReturnSuccess() {
         val rule = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_003
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -35,7 +40,7 @@ class ScaTest {
     fun test004_snakeCaseRuleWithNoValidInputShouldReturnFailure() {
         val rule = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_001
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
     }
 
@@ -43,7 +48,7 @@ class ScaTest {
     fun test005_printlnRuleWithValidInputShouldReturnSuccess() {
         val rule = PrintlnRule()
         val node = input_004
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -51,7 +56,7 @@ class ScaTest {
     fun test006_printlnRuleWithValidInputShouldReturnSuccess() {
         val rule = PrintlnRule()
         val node = input_005
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
     }
 
@@ -59,9 +64,9 @@ class ScaTest {
     fun test007_composeRuleWithValidInputShouldReturnSuccess() {
         val rule1 = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
         val rule2 = PrintlnRule()
-        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val rules = listOf(rule1, rule2)
         val node = input_006
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportSuccess)
     }
 
@@ -69,7 +74,7 @@ class ScaTest {
     fun test008_camelCaseRuleWithNoAssignationWithValidInputShouldReturnSuccess() {
         val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_007
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -77,7 +82,7 @@ class ScaTest {
     fun test009_snakeCaseRuleWithNoAssignationWithValidInputShouldReturnSuccess() {
         val rule = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_008
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -85,7 +90,7 @@ class ScaTest {
     fun test010_camelCaseRuleWithNoAssignationWithInvalidInputShouldReturnFailure() {
         val rule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val node = input_008
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
     }
 
@@ -93,7 +98,7 @@ class ScaTest {
     fun test011_enforceLiteralOrIdentifierInPrintlnWithReadInputShouldReturnFailure() {
         val rule = PrintlnRule()
         val node = input_009
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert((result as ReportFailure).failureMessages.size == 1)
     }
 
@@ -101,7 +106,7 @@ class ScaTest {
     fun test011_enforceLiteralOrIdentifierInPrintlnWithReadEnvShouldReturnFailure() {
         val rule = PrintlnRule()
         val node = input_010
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 1)
     }
@@ -110,7 +115,7 @@ class ScaTest {
     fun test012_enforceLiteralOrIdentifierInPrintlnWithIfElseAndExpressionShouldReturnFailure() {
         val rule = PrintlnRule()
         val node = input_011
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 2)
     }
@@ -119,9 +124,9 @@ class ScaTest {
     fun test013_composeRuleWithCamelCaseRuleAndEnforceLiteralOrIdentifierInPrintln() {
         val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val rule2 = PrintlnRule()
-        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val rules = listOf(rule1, rule2)
         val node = input_012
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportSuccess)
     }
 
@@ -129,9 +134,9 @@ class ScaTest {
     fun test014_composeRuleWithCamelCaseRuleAndEnforceLiteralOrIdentifierInPrintln() {
         val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val rule2 = PrintlnRule()
-        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val rules = listOf(rule1, rule2)
         val node = input_013
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 3)
     }
@@ -140,9 +145,9 @@ class ScaTest {
     fun test015_composeRuleWithSnakeCaseAndEnforceLiteralOrIdentifierInPrintln() {
         val rule1 = IdentifierRule(SnakeCaseRule, identifierRuleWithCustomErrorMap)
         val rule2 = PrintlnRule()
-        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val rules = listOf(rule1, rule2)
         val node = input_012
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 3)
     }
@@ -151,9 +156,9 @@ class ScaTest {
     fun test016_composeRuleWithCamelCaseAndEnforceLiteralOrIdentifierInPrintln() {
         val rule1 = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
         val rule2 = PrintlnRule()
-        val composeRule = ComposeRule(listOf(rule1, rule2))
+        val rules = listOf(rule1, rule2)
         val node = input_014
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 2)
     }
@@ -162,16 +167,16 @@ class ScaTest {
     fun test017_enforceLiteralOrIdentifierInReadInputWithExpressionShouldReportFailure() {
         val rule = ReadInputRule()
         val node = input_015
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 1)
     }
 
-    @Test
+    @Test // readInput("SOME_INPUT")
     fun test018_enforceLiteralOrIdentifierInReadInputWithLiteralShouldReportSuccess() {
         val rule = ReadInputRule()
         val node = input_016
-        val result = rule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -179,7 +184,7 @@ class ScaTest {
     fun test019_enforceLiteralOrIdentifierInReadInputWithLiteralOnIfStatementShouldReportSuccess() {
         val rule = ReadInputRule()
         val node = input_017
-        val result = rule.verify(node)
+        val result = ProgramNodeAnalyzer().analyze(node, listOf(rule))
         assert(result is ReportSuccess)
     }
 
@@ -191,9 +196,9 @@ class ScaTest {
         val readInputRule = ReadInputRule()
         val printlnRule = PrintlnRule()
         val camelCaseRule = IdentifierRule(CamelCaseRule, identifierRuleWithCustomErrorMap)
-        val composeRule = ComposeRule(listOf(readInputRule, printlnRule, camelCaseRule))
+        val rules = listOf(readInputRule, printlnRule, camelCaseRule)
         val node = input_018
-        val result = composeRule.verify(node)
+        val result = DefaultAnalyzer().analyze(node, rules)
         assert(result is ReportFailure)
         assert((result as ReportFailure).failureMessages.size == 6)
     }

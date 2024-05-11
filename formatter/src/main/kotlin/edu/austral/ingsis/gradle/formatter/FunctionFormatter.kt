@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
 import edu.austral.ingsis.gradle.formatter.rule.Rules
 
 class PrintLnFormatter : Formatter<AST> {

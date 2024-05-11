@@ -283,3 +283,34 @@ val input_020 =
         Token("*", Multiply, TokenPosition(Position(0, 0), Position(0, 0))),
         Token("loco", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
     )
+
+val input_021 =
+    listOf(
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("cuenta", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("string", StringType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("hola", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("/", Divide, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("loco", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val input_022 =
+    listOf(
+        Token("let", LetKeyword, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("cuenta", Identifier, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token(":", Colon, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("string", StringType, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("=", Assignation, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("hola", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("-", Minus, TokenPosition(Position(0, 0), Position(0, 0))),
+        Token("loco", StringValue, TokenPosition(Position(0, 0), Position(0, 0))),
+    )
+
+val input_023 =
+    listOf(
+        Token("readEnv", ReadEnvKeyword, TokenPosition(Position(1, 1), Position(1, 4))),
+        Token("LUCHO_ENV", StringValue, TokenPosition(Position(1, 6), Position(1, 7))),
+        Token(";", SemiColon, TokenPosition(Position(1, 18), Position(1, 19))),
+    )

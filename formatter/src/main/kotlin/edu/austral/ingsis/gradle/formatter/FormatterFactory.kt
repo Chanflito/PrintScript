@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.formatter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.formatter.rule.Rule
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleAdapter
 import edu.austral.ingsis.gradle.formatter.rule.adapter.RuleParser

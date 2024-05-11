@@ -1,104 +1,160 @@
 @startuml
-interface AST{
+
+interface AST {
     -tokenPosition
 }
-interface Expression implements Statement{
+
+interface Expression implements Statement
+
+class IdentifierNode implements Operand {
+    -name: String
+    -tokenPosition: TokenPosition
 }
 
-class Identifier implements Operand{
-    -name
+interface Statement implements AST
+
+interface NodeType implements AST
+
+interface Literal<T> implements Operand {
+    -nodeType: NodeType
+    -value: T
 }
 
-interface Statement implements AST{
-
+class StringLiteralNode implements Literal {
+    -value: String
+    -tokenPosition: TokenPosition
+    -nodeType: NodeType = StringNodeType
 }
 
-interface Type <T> implements AST{
+class NumberLiteralNode implements Literal {
+    -value: String
+    -tokenPosition: TokenPosition
 }
 
-interface Literal<T> implements Operand{
-    -type
-    -value
+class BooleanLiteralNode implements Literal {
+    -value: String
+    -tokenPosition: TokenPosition
 }
 
-class StringLiteral implements Literal
-class NumberLiteral implements Literal
-class BooleanLiteral implements Literal
-
-interface KeywordNode implements AST {
-    -value : string
+interface Keyword implements AST {
+    -value: String
 }
 
-class LetKeyword implements KeywordNode{
-    -value: string
+class LetKeyword implements Keyword {
+    -value: String = "let"
 }
 
-class ConstKeyword implements KeywordNode{
-    -value: string
+class ConstKeyword implements Keyword {
+    -value: String = "const"
 }
 
+interface Declaration implements Statement {
+    -keyword: Keyword
+    -identifier: IdentifierNode
+    -nodeType: NodeType
+}
 
-interface Declaration implements Statement{
-    -keywordNode
-    -identifier
-    -type
+class DeclarationNode implements Declaration {
+     -keyword: Keyword
+     -tokenPosition: TokenPosition
+     -nodeType: NodeType
+     -identifierNode: IdentifierNode
 }
 
 interface Assignation implements Statement {
-    -expression
+    -expression: Expression
 }
 
-class ReAssignation implements Assignation{
-    -identifier
+class ReAssignationNode implements Assignation {
+    -tokenPosition: TokenPosition
+    -expression: Expression
+    -identifierNode: IdentifierNode
 }
 
-class DeclarationAssignation implements Assignation, Declaration{
-
+class DeclarationAssignationNode implements Assignation, Declaration {
+    -keyword: Keyword
+    -tokenPosition: TokenPosition
+    -nodeType: NodeType
+    -identifierNode: IdentifierNode
+    -expression: Expression
 }
 
-interface Operator implements Expression{
-    -value
+interface Operator implements Expression {
+    -operatorNodeType: OperatorNodeType
+    -left: Expression
+    -right: Expression
 }
-interface Operand implements Expression{
-}
-
+interface Operand implements Expression
 
 interface Function implements AST
 
-
-class PlusNode implements Operator
-class SubtractNode implements Operator
-class MultiplyNode implements Operator
-class DivideNode implements Operator
-
-
-class BooleanType implements Type
-class StringType implements Type
-class NumberType implements Type
-
-class Println implements Function{
-    -expression
+class MultiplyNode implements Operator {
+    -tokenPosition: TokenPosition
+    -left: Expression
+    -right: Expression
 }
 
-class ReadInput implements Function
+class DivideNode implements Operator {
+    -tokenPosition: TokenPosition
+    -left: Expression
+    -right: Expression
+}
 
-interface ControlStatement implements Statement{}
+class SumNode implements Operator {
+    -tokenPosition: TokenPosition
+    -left: Expression
+    -right: Expression
+}
 
-class IfStatement implements ControlStatement{
+class SubtractNode implements Operator {
+    -tokenPosition: TokenPosition
+    -left: Expression
+    -right: Expression
+}
+
+class BooleanNodeType implements NodeType
+class StringNodeType implements NodeType
+class NumberNodeType implements NodeType
+
+class PrintlnNode implements Function {
+    -tokenPosition: TokenPosition
+    -expression: Expression
+}
+
+class ReadInputNode implements Function, Expression {
+    -tokenPosition: TokenPosition
+    -expression: Expression
+}
+
+class ReadEnvNode implements Function, Expression {
+    -tokenPosition: TokenPosition
+    -expression: Expression
+}
+
+interface ControlStatement implements Statement
+
+class IfStatementNode implements ControlStatement{
+    -tokenPosition
     -condition: Expression
-    -ifBlock: Block
-
+    -ifBlock: BlockNode
 }
 
-class IfElseStatement implements ControlStatement{
+class IfElseStatementNode implements ControlStatement {
+    -tokenPosition
     -condition: Expression
-    -ifBlock: Block
-    -elseBlock:Block
+    -ifBlock: BlockNode
+    -elseBlock: BlockNode
 }
 
-class Block implements Statement{
+class BlockNode implements Statement {
+    -tokenPosition
     -children: List<AST>
-    }
+}
 
-Assignation --> Expression
+interface OperatorNodeType
+class SumOperatorNode implements OperatorNodeType
+class DivideOperatorNode implements OperatorNodeType
+class MultiplyOperatorNode implements OperatorNodeType
+class SubtractOperatorNode implements OperatorNodeType
+
 @enduml

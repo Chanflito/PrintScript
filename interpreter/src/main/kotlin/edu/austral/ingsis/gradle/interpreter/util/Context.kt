@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.interpreter.util
 
-import edu.austral.ingsis.gradle.common.ast.newast.NodeType
+import edu.austral.ingsis.gradle.common.ast.NodeType
 
 /**
  * Context class represents the context in which code is being interpreted.

@@ -1,132 +1,133 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.BlockNode
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.ConstKeywordNode
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationNode
-import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
-import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.newast.IfElseStatement
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
-import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
-import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.NumberNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReAssignationNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadEnvNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
-import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.common.ast.BlockNode
+import edu.austral.ingsis.gradle.common.ast.BooleanLiteralNode
+import edu.austral.ingsis.gradle.common.ast.ConstKeywordNode
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignationNode
+import edu.austral.ingsis.gradle.common.ast.DeclarationNode
+import edu.austral.ingsis.gradle.common.ast.DivideNode
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.IfElseStatementNode
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
+import edu.austral.ingsis.gradle.common.ast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.NumberNodeType
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReAssignationNode
+import edu.austral.ingsis.gradle.common.ast.ReadEnvNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
+import edu.austral.ingsis.gradle.common.ast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.common.token.Position
 import edu.austral.ingsis.gradle.common.token.TokenPosition
+import edu.austral.ingsis.gradle.common.token.defaultTokenPosition
 
 val declaration =
     DeclarationNode(
-        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        LetKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         StringNodeType,
-        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("name", defaultTokenPosition()),
     )
 
 val declaration2 =
     DeclarationNode(
-        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        LetKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
-        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("age", defaultTokenPosition()),
     )
 
 val input_001 =
     ReAssignationNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        StringLiteral("name", TokenPosition(Position(0, 0), Position(0, 0))),
-        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        StringLiteralNode("name", defaultTokenPosition()),
+        IdentifierNode("name", defaultTokenPosition()),
     )
 
 val input_002 =
     PrintLnNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        StringLiteral("Hello world", TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        StringLiteralNode("Hello world", defaultTokenPosition()),
     )
 
 val input_003 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
-        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
-        NumberLiteralNode(20, TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("age", defaultTokenPosition()),
+        NumberLiteralNode(20, defaultTokenPosition()),
     )
 
 val input_003let =
-    DeclarationAssignation(
-        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        LetKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
-        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("age", defaultTokenPosition()),
         NumberLiteralNode(
             20,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_004 =
     ReAssignationNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        NumberLiteralNode(30, TokenPosition(Position(0, 0), Position(0, 0))),
-        IdentifierNode("age", TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        NumberLiteralNode(30, defaultTokenPosition()),
+        IdentifierNode("age", defaultTokenPosition()),
     )
 
 val input_005 =
     SumNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        NumberLiteralNode(2, defaultTokenPosition()),
         NumberLiteralNode(
             2,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_006 =
     SubtractNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        NumberLiteralNode(2, defaultTokenPosition()),
         NumberLiteralNode(
             2,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_007 =
     MultiplyNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        NumberLiteralNode(2, defaultTokenPosition()),
         NumberLiteralNode(
             2,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_008 =
     DivideNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        NumberLiteralNode(2, TokenPosition(Position(0, 0), Position(0, 0))),
+        defaultTokenPosition(),
+        NumberLiteralNode(2, defaultTokenPosition()),
         NumberLiteralNode(
             2,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_009 =
-    IfStatement(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        BooleanLiteralNode(true, TokenPosition(Position(0, 0), Position(0, 0))),
+    IfStatementNode(
+        defaultTokenPosition(),
+        BooleanLiteralNode(true, defaultTokenPosition()),
         BlockNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
             listOf(
                 input_004,
             ),
@@ -134,15 +135,15 @@ val input_009 =
     )
 
 val input_009else =
-    IfElseStatement(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        BooleanLiteralNode(false, TokenPosition(Position(0, 0), Position(0, 0))),
+    IfElseStatementNode(
+        defaultTokenPosition(),
+        BooleanLiteralNode(false, defaultTokenPosition()),
         BlockNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
             listOf(),
         ),
         BlockNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
             listOf(
                 input_004,
             ),
@@ -150,47 +151,47 @@ val input_009else =
     )
 
 val input_010 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         StringNodeType,
-        IdentifierNode("input", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("input", defaultTokenPosition()),
         ReadInputNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
-            StringLiteral(
+            defaultTokenPosition(),
+            StringLiteralNode(
                 "input",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
         ),
     )
 
 val input_011 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         StringNodeType,
-        IdentifierNode("input", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("input", defaultTokenPosition()),
         ReadEnvNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
             "PATH",
         ),
     )
 
 val input_012 =
     SumNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
-        StringLiteral(
+        defaultTokenPosition(),
+        StringLiteralNode(
             "Hello ",
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
         NumberLiteralNode(
             12,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_013 =
-    DeclarationAssignation(
+    DeclarationAssignationNode(
         LetKeywordNode(
             TokenPosition(Position(1, 1), Position(1, 4)),
         ),
@@ -207,122 +208,122 @@ val input_013 =
     )
 
 val input_014 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         StringNodeType,
-        IdentifierNode("name", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("name", defaultTokenPosition()),
         ReadInputNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
-            StringLiteral(
+            defaultTokenPosition(),
+            StringLiteralNode(
                 "Name: ",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
         ),
     )
 
 val input_015 =
     PrintLnNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        defaultTokenPosition(),
         SumNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
-            StringLiteral(
+            defaultTokenPosition(),
+            StringLiteralNode(
                 "Hello ",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
             SumNode(
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
                 IdentifierNode(
                     "name",
-                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    defaultTokenPosition(),
                 ),
-                StringLiteral(
+                StringLiteralNode(
                     "!",
-                    TokenPosition(Position(0, 0), Position(0, 0)),
+                    defaultTokenPosition(),
                 ),
             ),
         ),
     )
 
 val input_016 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
-        IdentifierNode("number", TokenPosition(Position(0, 0), Position(0, 0))),
+        IdentifierNode("number", defaultTokenPosition()),
         ReadInputNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
-            StringLiteral(
+            defaultTokenPosition(),
+            StringLiteralNode(
                 "Enter number: ",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
         ),
     )
 
 val input_017 =
     PrintLnNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        defaultTokenPosition(),
         NumberLiteralNode(
             9,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_cli1 =
-    DeclarationAssignation(
-        LetKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        LetKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
         IdentifierNode(
             "a",
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
         NumberLiteralNode(
             5.0,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_cli2 =
-    DeclarationAssignation(
-        ConstKeywordNode(TokenPosition(Position(0, 0), Position(0, 0))),
-        TokenPosition(Position(0, 0), Position(0, 0)),
+    DeclarationAssignationNode(
+        ConstKeywordNode(defaultTokenPosition()),
+        defaultTokenPosition(),
         NumberNodeType,
         IdentifierNode(
             "b",
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
         NumberLiteralNode(
             9.0,
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_cli3 =
     ReAssignationNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        defaultTokenPosition(),
         DivideNode(
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
             IdentifierNode(
                 "a",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
             IdentifierNode(
                 "b",
-                TokenPosition(Position(0, 0), Position(0, 0)),
+                defaultTokenPosition(),
             ),
         ),
         IdentifierNode(
             "a",
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )
 
 val input_cli4 =
     PrintLnNode(
-        TokenPosition(Position(0, 0), Position(0, 0)),
+        defaultTokenPosition(),
         IdentifierNode(
             "a",
-            TokenPosition(Position(0, 0), Position(0, 0)),
+            defaultTokenPosition(),
         ),
     )

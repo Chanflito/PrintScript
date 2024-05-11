@@ -1,31 +1,38 @@
 package edu.austral.ingsis.gradle.parser.impl
 
-import edu.austral.ingsis.gradle.common.ast.newast.Expression
-import edu.austral.ingsis.gradle.common.ast.newast.IfStatement
+import edu.austral.ingsis.gradle.common.ast.Expression
+import edu.austral.ingsis.gradle.common.ast.IfStatementNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.util.NoTokenFoundErrorMessage
+import edu.austral.ingsis.gradle.parser.util.MissingTokenException
 import edu.austral.ingsis.gradle.parser.util.consumeToken
+import edu.austral.ingsis.gradle.parser.util.isLeftBrace
+import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
+import edu.austral.ingsis.gradle.parser.util.isRightParenthesis
 
 class IfStatementParser : Parser<InputContext> {
-    override fun parse(input: InputContext): Pair<IfStatement, Int> {
-        val (ifToken, ifIndex) = consumeToken(input.tokens, input.index)
+    override fun parse(input: InputContext): Pair<IfStatementNode, Int> {
+        val (ifToken, parenthesisIndex) = consumeToken(input.tokens, input.index)
 
-        val ifStart = ifToken ?: throw Exception(NoTokenFoundErrorMessage(input.index).toString())
+        val (leftParenthesisToken, conditionIndex) = consumeToken(input.tokens, parenthesisIndex)
 
-        val (leftParenthesisToken, leftParenthesisIndex) = consumeToken(input.tokens, ifIndex)
+        if (!isLeftParenthesis(leftParenthesisToken)) throw MissingTokenException(leftParenthesisToken, "(")
 
-        val (condition, conditionIndex) = ExpressionParser().parse(InputContext(input.tokens, leftParenthesisIndex))
+        val (condition, rightParIndex) = ExpressionParser().parse(InputContext(input.tokens, conditionIndex))
 
-        val (rightParenthesisToken, rightParenthesisIndex) = consumeToken(input.tokens, conditionIndex)
+        val (rightParenthesisToken, braceIndex) = consumeToken(input.tokens, rightParIndex)
 
-        val (leftBraceToken, leftBraceIndex) = consumeToken(input.tokens, rightParenthesisIndex)
+        if (!isRightParenthesis(rightParenthesisToken)) throw MissingTokenException(rightParenthesisToken, ")")
 
-        val (ifBlock, endifBlockIndex) = BlockParser().parse(InputContext(input.tokens, leftBraceIndex))
+        val (leftBraceToken, blockIndex) = consumeToken(input.tokens, braceIndex)
+
+        if (!isLeftBrace(leftBraceToken)) throw MissingTokenException(leftBraceToken, "{")
+
+        val (ifBlock, endifBlockIndex) = BlockParser().parse(InputContext(input.tokens, blockIndex))
 
         return Pair(
-            IfStatement(
-                ifStart.tokenPosition,
+            IfStatementNode(
+                ifToken.tokenPosition,
                 condition as Expression,
                 ifBlock,
             ),

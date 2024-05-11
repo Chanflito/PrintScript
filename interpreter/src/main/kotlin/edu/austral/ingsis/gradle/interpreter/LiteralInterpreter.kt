@@ -1,9 +1,9 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.BooleanLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.BooleanLiteralNode
+import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager
@@ -16,13 +16,13 @@ class StringLiteralInterpreter : Interpreter {
         interpreterManager: InterpreterManager,
     ): InterpretResult {
         if (!canInterpret(node)) throw RuntimeException("Cannot interpret node $node")
-        node as StringLiteral
+        node as StringLiteralNode
 
         return InterpretResult.OperationResult(node.value)
     }
 
     override fun canInterpret(node: AST): Boolean {
-        return node is StringLiteral
+        return node is StringLiteralNode
     }
 }
 

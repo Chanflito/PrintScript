@@ -1,33 +1,32 @@
 package edu.austral.ingsis.gradle.common
 
-import edu.austral.ingsis.gradle.common.ast.newast.DeclarationAssignation
-import edu.austral.ingsis.gradle.common.ast.newast.IdentifierNode
-import edu.austral.ingsis.gradle.common.ast.newast.LetKeywordNode
-import edu.austral.ingsis.gradle.common.ast.newast.NumberLiteralNode
-import edu.austral.ingsis.gradle.common.ast.newast.PrintLnNode
-import edu.austral.ingsis.gradle.common.ast.newast.ReadInputNode
-import edu.austral.ingsis.gradle.common.ast.newast.StringLiteral
-import edu.austral.ingsis.gradle.common.ast.newast.StringNodeType
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
-import edu.austral.ingsis.gradle.common.token.Position
-import edu.austral.ingsis.gradle.common.token.TokenPosition
+import edu.austral.ingsis.gradle.common.ast.DeclarationAssignationNode
+import edu.austral.ingsis.gradle.common.ast.IdentifierNode
+import edu.austral.ingsis.gradle.common.ast.LetKeywordNode
+import edu.austral.ingsis.gradle.common.ast.NumberLiteralNode
+import edu.austral.ingsis.gradle.common.ast.PrintLnNode
+import edu.austral.ingsis.gradle.common.ast.ReadInputNode
+import edu.austral.ingsis.gradle.common.ast.StringLiteralNode
+import edu.austral.ingsis.gradle.common.ast.StringNodeType
+import edu.austral.ingsis.gradle.common.ast.SumNode
+import edu.austral.ingsis.gradle.common.token.defaultTokenPosition
 
 // let a : string ="hola"
 
-val declarationAssignation =
-    DeclarationAssignation(
-        keyword = LetKeywordNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
-        tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
+val declarationAssignationNode =
+    DeclarationAssignationNode(
+        keyword = LetKeywordNode(defaultTokenPosition()),
+        tokenPosition = defaultTokenPosition(),
         nodeType = StringNodeType,
         identifierNode =
             IdentifierNode(
                 name = "x",
-                tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
+                tokenPosition = defaultTokenPosition(),
             ),
         expression =
-            StringLiteral(
+            StringLiteralNode(
                 "hola",
-                tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
+                tokenPosition = defaultTokenPosition(),
             ),
     )
 
@@ -35,38 +34,38 @@ val declarationAssignation =
 
 val simpleExpression =
     SumNode(
-        tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
-        NumberLiteralNode(5, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
-        NumberLiteralNode(5.2, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
+        tokenPosition = defaultTokenPosition(),
+        NumberLiteralNode(5, defaultTokenPosition()),
+        NumberLiteralNode(5.2, defaultTokenPosition()),
     )
 
 // println(5+"hola")
 
 val printExample =
     PrintLnNode(
-        TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
+        defaultTokenPosition(),
         SumNode(
-            TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3)),
-            NumberLiteralNode(5, TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
-            StringLiteral("hola", TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
+            defaultTokenPosition(),
+            NumberLiteralNode(5, defaultTokenPosition()),
+            StringLiteralNode("hola", defaultTokenPosition()),
         ),
     )
 
 // let a : string = readInput ("aaa")
 val readInput =
-    DeclarationAssignation(
-        keyword = LetKeywordNode(TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 3))),
-        tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
+    DeclarationAssignationNode(
+        keyword = LetKeywordNode(defaultTokenPosition()),
+        tokenPosition = defaultTokenPosition(),
         nodeType = StringNodeType,
         identifierNode =
             IdentifierNode(
                 name = "x",
-                tokenPosition = TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0)),
+                tokenPosition = defaultTokenPosition(),
             ),
         expression =
             ReadInputNode(
-                TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 20)),
-                StringLiteral("aaa", TokenPosition(startPosition = Position(0, 0), endPosition = Position(0, 0))),
+                defaultTokenPosition(),
+                StringLiteralNode("aaa", defaultTokenPosition()),
             ),
     )
 

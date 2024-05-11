@@ -1,17 +1,19 @@
 package edu.austral.ingsis.gradle.sca.adapter.json
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.sca.IdentifierRule
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.sca.Rule
 import edu.austral.ingsis.gradle.sca.adapter.ScaAdapter
+import edu.austral.ingsis.gradle.sca.rule.IdentifierRule
 import edu.austral.ingsis.gradle.sca.util.CamelCaseRule
 import edu.austral.ingsis.gradle.sca.util.identifierRuleWithCustomErrorMap
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 class JsonIdentifierAdapter(private val expectedInput: String = "identifier_rule") : ScaAdapter<JsonObject> {
-    // This one should be always implemented, so if is not defined throws exception
-    // camelCase and snakeCase
+    /**
+     *Should be always implemented, so if is not defined throws exception
+     **/
+
     override fun adapt(input: JsonObject): Rule<AST> {
         if (input.containsKey(expectedInput)) {
             val case = input.getValue(expectedInput).jsonPrimitive.content

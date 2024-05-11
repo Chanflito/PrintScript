@@ -1,11 +1,11 @@
 package edu.austral.ingsis.gradle.interpreter
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
-import edu.austral.ingsis.gradle.common.ast.newast.DivideNode
-import edu.austral.ingsis.gradle.common.ast.newast.MultiplyNode
-import edu.austral.ingsis.gradle.common.ast.newast.Operator
-import edu.austral.ingsis.gradle.common.ast.newast.SubtractNode
-import edu.austral.ingsis.gradle.common.ast.newast.SumNode
+import edu.austral.ingsis.gradle.common.ast.AST
+import edu.austral.ingsis.gradle.common.ast.DivideNode
+import edu.austral.ingsis.gradle.common.ast.MultiplyNode
+import edu.austral.ingsis.gradle.common.ast.Operator
+import edu.austral.ingsis.gradle.common.ast.SubtractNode
+import edu.austral.ingsis.gradle.common.ast.SumNode
 import edu.austral.ingsis.gradle.interpreter.util.Context
 import edu.austral.ingsis.gradle.interpreter.util.InterpretResult
 import edu.austral.ingsis.gradle.interpreter.util.InterpreterManager

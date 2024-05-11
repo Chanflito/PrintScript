@@ -1,4 +1,5 @@
 import edu.austral.ingsis.gradle.parser.InputContext
+import edu.austral.ingsis.gradle.parser.builder.createComposeParser
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.parser.input_001
 import edu.austral.ingsis.gradle.parser.input_002
@@ -20,6 +21,9 @@ import edu.austral.ingsis.gradle.parser.input_017
 import edu.austral.ingsis.gradle.parser.input_018
 import edu.austral.ingsis.gradle.parser.input_019
 import edu.austral.ingsis.gradle.parser.input_020
+import edu.austral.ingsis.gradle.parser.input_021
+import edu.austral.ingsis.gradle.parser.input_022
+import edu.austral.ingsis.gradle.parser.input_023
 import edu.austral.ingsis.gradle.parser.output_002
 import edu.austral.ingsis.gradle.parser.output_003
 import edu.austral.ingsis.gradle.parser.output_004
@@ -38,7 +42,6 @@ import edu.austral.ingsis.gradle.parser.output_016
 import edu.austral.ingsis.gradle.parser.output_017
 import edu.austral.ingsis.gradle.parser.output_018
 import edu.austral.ingsis.gradle.parser.output_019
-import edu.austral.ingsis.gradle.parser.util.createComposeParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFailsWith
@@ -49,12 +52,14 @@ class ParserTest {
     //    test 5
     @Test
     fun test001_parseSingleNumber() {
-//        val actual = parser.parse(InputContext(input_001)).first
-        assertFailsWith<Exception>("Expected ; at the end of the statement") {
-            parser.parse(
-                InputContext(input_001),
-            )
-        }
+        val exc =
+            assertFailsWith<Exception> {
+                parser.parse(
+                    InputContext(input_001),
+                )
+            }
+
+        assertEquals("Missing ';' or '}' at the end of the line", exc.message)
     }
 
     //    test 5 + 5
@@ -179,10 +184,45 @@ class ParserTest {
 
     @Test
     fun test_020_stringMultiplicationShouldFail() {
-        assertFailsWith<Exception>("Cannot perform multiplication operation over strings") {
-            parser.parse(
-                InputContext(input_020),
-            )
-        }
+        val exc =
+            assertFailsWith<Exception> {
+                parser.parse(
+                    InputContext(input_020),
+                )
+            }
+        assertEquals("Cannot multiply strings", exc.message)
+    }
+
+    @Test
+    fun test_021_stringDivisionShouldFail() {
+        val exc =
+            assertFailsWith<Exception> {
+                parser.parse(
+                    InputContext(input_021),
+                )
+            }
+        assertEquals("Cannot divide strings", exc.message)
+    }
+
+    @Test
+    fun test_022_stringSubtractionShouldFail() {
+        val exc =
+            assertFailsWith<Exception> {
+                parser.parse(
+                    InputContext(input_022),
+                )
+            }
+        assertEquals("Cannot subtract strings", exc.message)
+    }
+
+    @Test
+    fun test_023_missingReadEnvParenthesisShouldFail() {
+        val exc =
+            assertFailsWith<Exception> {
+                parser.parse(
+                    InputContext(input_023),
+                )
+            }
+        assertEquals("Missing token ( at position Position(row=1, column=6)", exc.message)
     }
 }

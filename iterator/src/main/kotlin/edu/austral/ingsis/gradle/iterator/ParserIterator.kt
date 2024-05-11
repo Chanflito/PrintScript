@@ -1,6 +1,6 @@
 package edu.austral.ingsis.gradle.iterator
 
-import edu.austral.ingsis.gradle.common.ast.newast.AST
+import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
 
@@ -33,7 +33,7 @@ class ParserIterator(
     private fun parseNewTokenList() {
         val tokens = lexerIterator.next()
         val inputContext = InputContext(tokens, previousIndex)
-        val (ast, index) = parser.parse(inputContext)
+        val (ast, _) = parser.parse(inputContext)
         previousIndex = 0
         previousAST = ast
     }
