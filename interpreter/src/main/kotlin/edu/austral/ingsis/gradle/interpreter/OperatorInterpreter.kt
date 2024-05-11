@@ -29,27 +29,68 @@ class SumInterpreter : Interpreter {
         rightValue: Any,
     ): InterpretResult {
         return when {
-            leftValue is String && rightValue is String ->
-                InterpretResult.OperationResult(leftValue + rightValue)
-
-            leftValue is Number && rightValue is Number ->
-                InterpretResult.OperationResult(
-                    castToDesiredType(leftValue.toDouble() + rightValue.toDouble()),
-                )
-
-            leftValue is String && rightValue is Number ->
-                InterpretResult.OperationResult(
-                    leftValue +
-                        castToDesiredType(rightValue).toString(),
-                )
-
-            leftValue is Number && rightValue is String ->
-                InterpretResult.OperationResult(
-                    castToDesiredType(leftValue).toString() + rightValue,
-                )
-
+            areBothStrings(leftValue, rightValue) -> handleStringSum(leftValue as String, rightValue as String)
+            areBothNumbers(leftValue, rightValue) -> handleNumberSum(leftValue as Number, rightValue as Number)
+            isStringAndNumber(leftValue, rightValue) -> handleStringAndNumberSum(leftValue as String, rightValue as Number)
+            isNumberAndString(leftValue, rightValue) -> handleNumberAndStringSum(leftValue as Number, rightValue as String)
             else -> throw RuntimeException("Unsupported types for sum: $leftValue and $rightValue")
         }
+    }
+
+    private fun areBothStrings(
+        leftValue: Any,
+        rightValue: Any,
+    ): Boolean {
+        return leftValue is String && rightValue is String
+    }
+
+    private fun areBothNumbers(
+        leftValue: Any,
+        rightValue: Any,
+    ): Boolean {
+        return leftValue is Number && rightValue is Number
+    }
+
+    private fun isStringAndNumber(
+        leftValue: Any,
+        rightValue: Any,
+    ): Boolean {
+        return leftValue is String && rightValue is Number
+    }
+
+    private fun isNumberAndString(
+        leftValue: Any,
+        rightValue: Any,
+    ): Boolean {
+        return leftValue is Number && rightValue is String
+    }
+
+    private fun handleStringSum(
+        leftValue: String,
+        rightValue: String,
+    ): InterpretResult {
+        return InterpretResult.OperationResult(leftValue + rightValue)
+    }
+
+    private fun handleNumberSum(
+        leftValue: Number,
+        rightValue: Number,
+    ): InterpretResult {
+        return InterpretResult.OperationResult(castToDesiredType(leftValue.toDouble() + rightValue.toDouble()))
+    }
+
+    private fun handleStringAndNumberSum(
+        leftValue: String,
+        rightValue: Number,
+    ): InterpretResult {
+        return InterpretResult.OperationResult(leftValue + castToDesiredType(rightValue).toString())
+    }
+
+    private fun handleNumberAndStringSum(
+        leftValue: Number,
+        rightValue: String,
+    ): InterpretResult {
+        return InterpretResult.OperationResult(castToDesiredType(leftValue).toString() + rightValue)
     }
 
     override fun canInterpret(node: AST): Boolean {
@@ -75,14 +116,24 @@ class SubtractInterpreter : Interpreter {
         rightValue: Any,
     ): InterpretResult {
         return when {
-            leftValue is Number && rightValue is Number ->
+            bothNumbers(leftValue, rightValue) ->
                 InterpretResult.OperationResult(
-                    castToDesiredType(leftValue.toDouble() - rightValue.toDouble()),
+                    handleNumberSubtract(leftValue as Number, rightValue as Number),
                 )
 
             else -> throw RuntimeException("Unsupported types for subtraction: $leftValue and $rightValue")
         }
     }
+
+    private fun handleNumberSubtract(
+        leftValue: Number,
+        rightValue: Number,
+    ) = castToDesiredType(leftValue.toDouble() - rightValue.toDouble())
+
+    private fun bothNumbers(
+        leftValue: Any,
+        rightValue: Any,
+    ) = leftValue is Number && rightValue is Number
 
     override fun canInterpret(node: AST): Boolean {
         return node is SubtractNode
@@ -107,14 +158,24 @@ class MultiplyInterpreter : Interpreter {
         rightValue: Any,
     ): InterpretResult {
         return when {
-            leftValue is Number && rightValue is Number ->
+            bothNumbers(leftValue, rightValue) ->
                 InterpretResult.OperationResult(
-                    castToDesiredType(leftValue.toDouble() * rightValue.toDouble()),
+                    handleNumberMultiply(leftValue as Number, rightValue as Number),
                 )
 
             else -> throw RuntimeException("Unsupported types for multiplication: $leftValue and $rightValue")
         }
     }
+
+    private fun handleNumberMultiply(
+        leftValue: Number,
+        rightValue: Number,
+    ) = castToDesiredType(leftValue.toDouble() * rightValue.toDouble())
+
+    private fun bothNumbers(
+        leftValue: Any,
+        rightValue: Any,
+    ) = leftValue is Number && rightValue is Number
 
     override fun canInterpret(node: AST): Boolean {
         return node is MultiplyNode
@@ -139,14 +200,24 @@ class DivideInterpreter : Interpreter {
         rightValue: Any,
     ): InterpretResult {
         return when {
-            leftValue is Number && rightValue is Number ->
+            bothNumbers(leftValue, rightValue) ->
                 InterpretResult.OperationResult(
-                    castToDesiredType(leftValue.toDouble() / rightValue.toDouble()),
+                    handleNumberDivide(leftValue as Number, rightValue as Number),
                 )
 
             else -> throw RuntimeException("Unsupported types for division: $leftValue and $rightValue")
         }
     }
+
+    private fun handleNumberDivide(
+        leftValue: Number,
+        rightValue: Number,
+    ) = castToDesiredType(leftValue.toDouble() / rightValue.toDouble())
+
+    private fun bothNumbers(
+        leftValue: Any,
+        rightValue: Any,
+    ) = leftValue is Number && rightValue is Number
 
     override fun canInterpret(node: AST): Boolean {
         return node is DivideNode
