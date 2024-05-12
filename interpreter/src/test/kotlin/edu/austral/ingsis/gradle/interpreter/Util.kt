@@ -11,6 +11,7 @@ import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
 import edu.austral.ingsis.gradle.interpreter.util.MockInputReader
 import edu.austral.ingsis.gradle.interpreter.util.Printer
+import edu.austral.ingsis.gradle.interpreter.util.PrinterCollector
 
 fun createInterpreterManager(): InterpreterManager {
     val interpreters =
@@ -73,7 +74,7 @@ fun createInterpreterManagerTest(): InterpreterManager {
             ReAssignationInterpreter(),
         )
 
-    val printer = KotlinPrinter()
+    val printer = PrinterCollector()
     val reader = KotlinEnvReader()
     val inputReader = MockInputReader("mocked input")
 
