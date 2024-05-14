@@ -5,7 +5,7 @@ publishing {
     repositories {
         maven {
             name = 'GitHubPackages'
-            url = uri("https://maven.pkg.github.com/chanflito/PrintScript")
+            url = uri("https://maven.pkg.github.com/ingsis-group-12/PrintScript")
             version = project.findProperty('release.version')
             credentials {
                 username = project.findProperty('gpr.user') ?: System.getenv('GITHUB_ACTOR')
