@@ -12,8 +12,6 @@ import edu.austral.ingsis.gradle.sca.ReportSuccess
 import edu.austral.ingsis.gradle.sca.Rule
 import edu.austral.ingsis.gradle.sca.util.IdentifierRuleType
 
-// TODO: Add compose OR, with rules not defined.
-// ^([a-z]+|[A-Z]+)$
 class IdentifierRule(
     private val identifierRuleType: IdentifierRuleType,
     private val ruleTypeErrorMessageMap: Map<IdentifierRuleType, ReportErrorMessage>,

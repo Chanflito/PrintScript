@@ -6,6 +6,7 @@ interface IdentifierRuleType {
 
 object CamelCaseRule : IdentifierRuleType {
     // Add and or for cases where is not camelCase such as "number" or "NUMBER"
+    // ^([a-z]+|[A-Z]+)$
     override val regex = "^[a-zA-Z]+([A-Z][a-z]+)+\$|^([a-z]+|[A-Z]+)\$".toRegex()
 }
 
