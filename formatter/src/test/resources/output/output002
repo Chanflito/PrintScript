@@ -1,4 +1,4 @@
 if (a) {
    println(a + b);
-   let aBlue : string = blue;
+   let aBlue : string = "blue";
 }

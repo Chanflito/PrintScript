@@ -5,7 +5,7 @@ import edu.austral.ingsis.gradle.common.token.Token
 import edu.austral.ingsis.gradle.common.token.TokenType
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.builder.EXPRESSION_PARSER_MAP
+import edu.austral.ingsis.gradle.parser.factory.EXPRESSION_PARSER_MAP
 import edu.austral.ingsis.gradle.parser.operation.Operation
 import edu.austral.ingsis.gradle.parser.operation.PRIMARY_OPERATIONS_MAP
 import edu.austral.ingsis.gradle.parser.operation.SECONDARY_OPERATIONS_MAP

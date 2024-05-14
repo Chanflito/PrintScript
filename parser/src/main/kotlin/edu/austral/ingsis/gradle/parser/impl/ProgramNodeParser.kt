@@ -4,7 +4,7 @@ import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.common.ast.ProgramNode
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.builder.createComposeParser
+import edu.austral.ingsis.gradle.parser.factory.createComposeParser
 import edu.austral.ingsis.gradle.parser.util.endOfFile
 import edu.austral.ingsis.gradle.parser.util.isSemiColon
 

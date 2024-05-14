@@ -14,7 +14,7 @@ import edu.austral.ingsis.gradle.iterator.LexerIterator
 import edu.austral.ingsis.gradle.iterator.ParserIterator
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
 import edu.austral.ingsis.gradle.parser.InputContext
-import edu.austral.ingsis.gradle.parser.builder.createComposeParser
+import edu.austral.ingsis.gradle.parser.factory.createComposeParser
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.sca.ReportResult
 import edu.austral.ingsis.gradle.sca.adapter.FileToJsonAdapter

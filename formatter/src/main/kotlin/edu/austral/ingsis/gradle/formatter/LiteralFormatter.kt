@@ -13,7 +13,7 @@ class StringFormatter : Formatter<AST> {
     ): String {
         if (node !is StringLiteralNode) throw IllegalArgumentException("$node is not a StringLiteralNode")
 
-        val result = node.value
+        val result = "\"${node.value}\""
         return applyFormat(result, rules.defaultRule)
     }
 

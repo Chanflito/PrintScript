@@ -6,7 +6,7 @@ import edu.austral.ingsis.gradle.interpreter.util.KotlinEnvReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinInputReader
 import edu.austral.ingsis.gradle.interpreter.util.KotlinPrinter
 import edu.austral.ingsis.gradle.lexer.director.LexerDirector
-import edu.austral.ingsis.gradle.parser.builder.createComposeParser
+import edu.austral.ingsis.gradle.parser.factory.createComposeParser
 import java.io.InputStream
 
 fun execute(input: InputStream) { // TODO: Refactor this and interpreter.

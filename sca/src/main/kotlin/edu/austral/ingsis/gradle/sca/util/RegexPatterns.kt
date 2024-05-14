@@ -5,9 +5,11 @@ interface IdentifierRuleType {
 }
 
 object CamelCaseRule : IdentifierRuleType {
-    override val regex = "([a-z]+[A-Z]+\\w+)+".toRegex()
+    // Add and or for cases where is not camelCase such as "number" or "NUMBER"
+    override val regex = "^[a-zA-Z]+([A-Z][a-z]+)+\$|^([a-z]+|[A-Z]+)\$".toRegex()
 }
 
+// Add and or for cases where is not snake_case such as "number" or "NUMBER"
 object SnakeCaseRule : IdentifierRuleType {
-    override val regex = "([a-z]+_\\w+)+".toRegex()
+    override val regex = "([a-z]+_\\w+)+|^([a-z]+|[A-Z]+)\$".toRegex()
 }

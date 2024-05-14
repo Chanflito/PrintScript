@@ -1,5 +1,5 @@
 import edu.austral.ingsis.gradle.parser.InputContext
-import edu.austral.ingsis.gradle.parser.builder.createComposeParser
+import edu.austral.ingsis.gradle.parser.factory.createComposeParser
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.parser.input_001
 import edu.austral.ingsis.gradle.parser.input_002

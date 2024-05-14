@@ -156,15 +156,20 @@ class ReadInputInterpreter(private val type: NodeType) : Interpreter {
             }
 
             is BooleanNodeType -> {
-                when (val rawInput = interpreterManager.inputReader.read(value.toString())) { // Read raw input
-                    is Boolean -> rawInput // If raw input is already boolean, use it as is
-                    is String -> rawInput.toBooleanStrictOrNull() ?: throw RuntimeException("Invalid boolean input")
-                    else -> throw RuntimeException("Invalid boolean input")
-                }
+                convertToBoolean(interpreterManager, value)
             }
 
             else -> throw RuntimeException("Unsupported type: $type")
         }
+    }
+
+    private fun convertToBoolean(
+        interpreterManager: InterpreterManager,
+        value: Any,
+    ) = when (val rawInput = interpreterManager.inputReader.read(value.toString())) { // Read raw input
+        is Boolean -> rawInput // If raw input is already boolean, use it as is
+        is String -> rawInput.toBooleanStrictOrNull() ?: throw RuntimeException("Invalid boolean input")
+        else -> throw RuntimeException("Invalid boolean input")
     }
 
     private fun convertToNumber(rawInput: Any): Number {

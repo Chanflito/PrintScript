@@ -1,4 +1,4 @@
-package edu.austral.ingsis.gradle.parser.builder
+package edu.austral.ingsis.gradle.parser.factory
 
 import edu.austral.ingsis.gradle.common.token.BooleanValue
 import edu.austral.ingsis.gradle.common.token.ConstKeyword

@@ -29,7 +29,7 @@ class Cli : CliktCommand(help = "Run a PrintScript file") {
     private val source by option("-s", "--source", help = "The source file to run")
         .file(mustExist = true)
 
-    private val version by option(help = "PrintScript version to run")
+    private val version by option("-v", "--version", help = "PrintScript version to run")
         .default(RELEASE_VERSION)
         .validate {
             require(it in RELEASE_VERSIONS) { "Available versions: ${RELEASE_VERSIONS.joinToString(", ")}" }

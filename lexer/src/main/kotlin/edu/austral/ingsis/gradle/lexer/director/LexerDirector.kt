@@ -25,13 +25,12 @@ import edu.austral.ingsis.gradle.lexer.util.operators
 class LexerDirector {
     fun createComposeLexer(version: String): Lexer {
         val builder = LexerBuilderImp(listOf())
-        val newVersionTokens = listOf("const", "if", "else", "readInput", "readEnv", "true", "false", "boolean")
         return when (version) {
             "1.0" -> {
                 builder
                     .withLexer(KeywordLexer(mapOf("let" to LetKeyword, "println" to PrintlnKeyword)))
                     .withLexer(TypeLexer(mapOf("string" to StringType, "number" to NumberType)))
-                    .withLexer(IdentifierLexer(listOf("let", "println", "number", "string") + newVersionTokens))
+                    .withLexer(IdentifierLexer(listOf("let", "println", "number", "string")))
                     .withLexer(NumberLexer())
                     .withLexer(
                         OperatorLexer(

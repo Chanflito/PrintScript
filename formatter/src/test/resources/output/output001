@@ -1,1 +1,1 @@
-let aBlue : string = blue;
+let aBlue : string = "blue";

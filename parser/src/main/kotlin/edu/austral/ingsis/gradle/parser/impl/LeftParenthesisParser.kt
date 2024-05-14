@@ -3,7 +3,7 @@ package edu.austral.ingsis.gradle.parser.impl
 import edu.austral.ingsis.gradle.common.ast.AST
 import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.Parser
-import edu.austral.ingsis.gradle.parser.builder.EXPRESSION_PARSER_MAP
+import edu.austral.ingsis.gradle.parser.factory.EXPRESSION_PARSER_MAP
 import edu.austral.ingsis.gradle.parser.util.MissingTokenException
 import edu.austral.ingsis.gradle.parser.util.consumeToken
 import edu.austral.ingsis.gradle.parser.util.isLeftParenthesis
