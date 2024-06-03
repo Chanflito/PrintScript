@@ -27,14 +27,14 @@ class StatementReader {
                 block.push(char)
             }
 
-            if (containsLeftBrace(char, block)) return statementBuilder.append(char).toString()
+            if (isRightBraceAndStackContainsLeftBrace(char, block)) return statementBuilder.append(char).toString()
 
             statementBuilder.append(char)
         }
         return statementBuilder.toString()
     }
 
-    private fun containsLeftBrace(
+    private fun isRightBraceAndStackContainsLeftBrace(
         char: Char,
         block: Stack<Char>,
     ): Boolean {
