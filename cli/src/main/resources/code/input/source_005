@@ -1,2 +1,4 @@
 let a : string = readEnv("PATH");
 let b : boolean = true;
+println(a);
+println(b);

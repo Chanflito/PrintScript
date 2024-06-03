@@ -14,30 +14,40 @@ class StatementReader {
 
             if (readResult == -1) {
                 endOfStatement = true
-            } else {
-                val char = readResult.toChar()
-
-                when {
-                    char == ';' && block.isEmpty() -> return statementBuilder.append(char).toString()
-                    char == '{' -> block.push(char)
-                    char == '}' && haveLeftBrace(block) -> {
-                        block.pop()
-                        if (block.isEmpty()) {
-                            return statementBuilder.append(char).toString()
-                        }
-                    }
-                }
-
-                statementBuilder.append(char)
+                continue
             }
+
+            val char = readResult.toChar()
+
+            if (char == ';' && block.isEmpty()) {
+                return statementBuilder.append(char).toString()
+            }
+
+            if (char == '{') {
+                block.push(char)
+            }
+
+            if (containsLeftBrace(char, block)) return statementBuilder.append(char).toString()
+
+            statementBuilder.append(char)
         }
         return statementBuilder.toString()
     }
 
-    private fun haveLeftBrace(stack: Stack<Char>): Boolean {
-        if (stack.isNotEmpty()) {
-            return stack.peek() == '{'
+    private fun containsLeftBrace(
+        char: Char,
+        block: Stack<Char>,
+    ): Boolean {
+        if (char == '}' && haveLeftBrace(block)) {
+            block.pop()
+            if (block.isEmpty()) {
+                return true
+            }
         }
         return false
+    }
+
+    private fun haveLeftBrace(stack: Stack<Char>): Boolean {
+        return stack.isNotEmpty() && stack.peek() == '{'
     }
 }
