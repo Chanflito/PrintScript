@@ -378,4 +378,10 @@ class InterpreterTest {
         val printer = composeInterpreter5.getPrinter() as PrinterCollector
         assert(printer.getPrintedValues().contains(expected))
     }
+
+
+    @Test
+    fun faillingtest(){
+        assert(false)
+    }
 }
