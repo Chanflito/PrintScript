@@ -380,8 +380,4 @@ class InterpreterTest {
     }
 
 
-    @Test
-    fun faillingtest(){
-        assert(false)
-    }
 }
