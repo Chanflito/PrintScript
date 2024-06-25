@@ -183,11 +183,14 @@ val input006 =
                     ),
                 ),
             ),
-            ReadInputNode(
+            DeclarationAssignationNode(
+                LetKeywordNode(defaultTokenPosition()),
                 defaultTokenPosition(),
-                IdentifierNode(
-                    "Introduzca un valor",
+                StringNodeType,
+                IdentifierNode("a", defaultTokenPosition()),
+                ReadInputNode(
                     defaultTokenPosition(),
+                    StringLiteralNode("Introduzca un valor", defaultTokenPosition()),
                 ),
             ),
         ),

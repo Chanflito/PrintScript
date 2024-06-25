@@ -1,2 +1,2 @@
 println(a + b);
-readInput("Introduzca un valor");
+let a : string = readInput("Introduzca un valor");

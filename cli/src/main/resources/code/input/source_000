@@ -1,7 +1,7 @@
-let a: string = readInput("PATH");
+let a : string = readInput("PATH");
 let b : boolean = true;
 if (b) {
-    println(a);
+   println(a);
 }else {
    println("else");
 }

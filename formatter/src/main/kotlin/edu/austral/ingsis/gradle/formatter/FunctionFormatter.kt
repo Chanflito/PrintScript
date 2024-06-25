@@ -49,7 +49,7 @@ class ReadInputFormatter : Formatter<AST> {
 
         val composeFormatter = createDefaultFormatter()
         val value = composeFormatter.format(node.expression, rules)
-        val result = "readInput(\"${value}\");"
+        val result = "readInput($value)"
         return applyFormat(result, rules.defaultRule)
     }
 

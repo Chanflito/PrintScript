@@ -85,7 +85,9 @@ class FormatterTest {
         val rules = Rules(defaultRules, ifBlockRules)
         val ast = input006
         val expected = File("src/test/resources/output/output006").readText()
+        println(expected)
         val formatted = formatter.format(ast, rules)
+        println(formatted)
         assertEquals(expected = expected, actual = formatted)
     }
 
