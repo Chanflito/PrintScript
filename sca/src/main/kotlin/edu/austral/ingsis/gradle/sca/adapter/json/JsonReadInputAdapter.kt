@@ -9,7 +9,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonPrimitive
 
-class JsonReadInputAdapter(private val expectedInput: String = "enforce_literal_or_identifier_in_read_input_rule") :
+class JsonReadInputAdapter(private val expectedInput: String = "enforceLiteralOrIdentifierInReadInputRule") :
     ScaAdapter<JsonObject> {
     override fun adapt(input: JsonObject): Rule<AST> {
         if (input.containsKey(expectedInput)) {
